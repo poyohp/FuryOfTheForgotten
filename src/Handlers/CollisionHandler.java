@@ -1,25 +1,24 @@
-package Handler;
+package Handlers;
 import Entities.*;
-import World.Tile;
 
 public class CollisionHandler {
-    void checkEntityWithAttackCollision(Entity entity, Attack attack) {
-        /*
-    IF attack.directions.contains(UP):
-        IF attackTop ABOVE EntityBottom:
-            Return true;
-    IF attack.directions.contains(DOWN):
-        IF attackBottom BELOW EntityTop:
-            Return true;
-    IF attack.directions.contains(LEFT):
-        IF attackLeft LEFT-OF EntityRight:
-            Return true;
-    IF attack.directions.contains(RIGHT):
-        IF attackRight RIGHT-OF EntityLeft:
-            Return true;
-    ELSE return false
-         */
-    }
+//    void checkEntityWithAttackCollision(Entity entity, Attack attack) {
+//        /*
+//    IF attack.directions.contains(UP):
+//        IF attackTop ABOVE EntityBottom:
+//            Return true;
+//    IF attack.directions.contains(DOWN):
+//        IF attackBottom BELOW EntityTop:
+//            Return true;
+//    IF attack.directions.contains(LEFT):
+//        IF attackLeft LEFT-OF EntityRight:
+//            Return true;
+//    IF attack.directions.contains(RIGHT):
+//        IF attackRight RIGHT-OF EntityLeft:
+//            Return true;
+//    ELSE return false
+//         */
+//    }
 
     void playerWithTileCollision(Player player) {
         /*
