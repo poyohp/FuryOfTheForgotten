@@ -1,5 +1,5 @@
 package Entities;
-import Handler.KeyHandler;
+import Handlers.KeyHandler;
 
 public class Player extends Entity {
     Boolean isColliding, interact, attack;
