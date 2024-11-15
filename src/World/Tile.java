@@ -9,6 +9,8 @@ public class Tile {
     private int worldXPos, worldtileYPos;
     private int screenXPos, screenYPos;
 
+    boolean isCollidable;
+
     // CURRENT IMAGE
     // IMAGE LIST
 
