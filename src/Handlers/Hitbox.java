@@ -1,4 +1,4 @@
-package Handler;
+package Handlers;
 
 public class Hitbox {
 
