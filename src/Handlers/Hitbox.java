@@ -1,5 +1,7 @@
 package Handlers;
 
+import java.awt.*;
+
 public class Hitbox {
 
     private int xOffset, yOffset;
