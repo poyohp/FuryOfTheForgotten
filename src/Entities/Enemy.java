@@ -1,5 +1,7 @@
 package Entities;
 
+import java.awt.*;
+
 public class Enemy extends Entity {
     private int vision;
 
@@ -24,6 +26,13 @@ public class Enemy extends Entity {
         IF player is within enemy vision:
 			DISPLAY attack image
             Create NEW enemyAttack(worldX, worldY)
+         */
+    }
+
+    @Override
+    void draw(Graphics2D g2) {
+        /*
+        DRAW enemy image
          */
     }
 }

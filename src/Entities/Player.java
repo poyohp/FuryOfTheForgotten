@@ -1,5 +1,8 @@
 package Entities;
 import Handlers.KeyHandler;
+import System.GamePanel;
+
+import java.awt.*;
 
 public class Player extends Entity {
     Boolean isColliding, interact, attack;
@@ -7,7 +10,15 @@ public class Player extends Entity {
 
     Player(int health, int speed, int width, int height, String name) {
         super(health, speed, width, height, name);
+
+        setScreenPosition();
+
         keyhandler = new KeyHandler();
+    }
+
+    void setScreenPosition() {
+        this.screenX = (int) GamePanel.screenHeight / 2 - this.getWidth() / 2;
+        this.screenY = (int) GamePanel.screenWidth / 2 - this.getHeight() / 2;
     }
 
     // ResourceBar healthBar;
@@ -34,19 +45,8 @@ public class Player extends Entity {
 
     }
 
-    void interact () {
-        if (interact) {
-            //
-        }
-    }
-
-    void defend () {
-    }
-
-    void attack () {
+    @Override
+    void draw(Graphics2D g) {
 
     }
-
-
-
 }

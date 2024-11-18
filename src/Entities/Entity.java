@@ -1,5 +1,7 @@
 package Entities;
 
+import java.awt.*;
+
 public abstract class Entity {
     private int health, speed, attackCooldown;
     private int width, height;
@@ -12,9 +14,7 @@ public abstract class Entity {
 
     //public Hitbox hitbox;
 
-    void drawEntity(String name) {
-        //Draw the image “name”
-    }
+    abstract void draw(Graphics2D g2);
 
     abstract void update();
 
