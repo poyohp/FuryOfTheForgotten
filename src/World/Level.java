@@ -11,7 +11,7 @@ public class Level {
     private Map map;
 
 
-    Level(String mapDirectory) {
+    public Level(String mapDirectory) {
         this.mapDirectory = mapDirectory;
 
         map = new Map(mapDirectory);
@@ -23,8 +23,10 @@ public class Level {
         }
     }
 
-    public void drawMap(Graphics2D g2) {
-
+    public Map getMap() {
+        return map;
     }
+
+
 
 }

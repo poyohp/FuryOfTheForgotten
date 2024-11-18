@@ -1,10 +1,12 @@
 package World;
 
+import Entities.Player;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import java.awt.*;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -35,8 +37,8 @@ public class Map {
         // Parse the JSON file
         JSONObject jsonMapObject = (JSONObject) parser.parse(reader);
 
-        mapWidth = Integer.parseInt(jsonMapObject.get("mapWidth").toString());
-        mapHeight = Integer.parseInt(jsonMapObject.get("mapHeight").toString());
+        mapWidth = Integer.parseInt(jsonMapObject.get("width").toString());
+        mapHeight = Integer.parseInt(jsonMapObject.get("height").toString());
 
         baseMapTiles = new Tile[mapWidth][mapHeight];
         obstacleMapTiles = new Tile[mapWidth][mapHeight];
@@ -61,6 +63,36 @@ public class Map {
 
             }
         }
+    }
+
+    public void drawMap(Graphics2D g2, Player player) {
+        for(int i = 0; i < mapHeight; i++) {
+            for(int j = 0; j < mapWidth; j++) {
+                setScreenPositions(i, j, player);
+                g2.setColor(Color.BLUE);
+                g2.fillRect(baseMapTiles[i][j].getScreenXPos(), baseMapTiles[i][j].getScreenYPos(), Tile.tileSize, Tile.tileSize);
+
+                g2.setColor(Color.ORANGE);
+                g2.drawRect(obstacleMapTiles[i][j].getScreenXPos(), obstacleMapTiles[i][j].getScreenYPos(), Tile.tileSize, Tile.tileSize);
+            }
+        }
+    }
+
+    private void setScreenPositions(int x, int y, Player player) {
+        baseMapTiles[x][y].setScreenXPos(baseMapTiles[x][y].getWorldXPos() - player.worldX + player.screenX);
+        obstacleMapTiles[x][y].setScreenXPos(obstacleMapTiles[x][y].getWorldXPos() - player.worldX + player.screenX);
+
+        baseMapTiles[x][y].setScreenYPos(baseMapTiles[x][y].getWorldYPos() - player.worldY + player.screenY);
+        obstacleMapTiles[x][y].setScreenYPos(obstacleMapTiles[x][y].getWorldYPos() - player.worldY + player.screenY);
 
     }
+
+    public int getMapWidth() {
+        return mapWidth;
+    }
+
+    public int getMapHeight() {
+        return mapHeight;
+    }
+
 }

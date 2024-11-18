@@ -1,8 +1,11 @@
 package World;
 
+import System.GamePanel;
+
 public class Tile {
     public static final int startingTileSize = 16;
-    public static final int tileMultipler = 4;
+    private static final int numToMultiply = 3;
+    public static final int tileMultipler = (int) (GamePanel.screenWidth/GamePanel.screenHeight * numToMultiply);
     public static final int tileSize = startingTileSize*tileMultipler;
 
     private int value;
@@ -17,15 +20,15 @@ public class Tile {
         this.col = col;
         this.value = value;
 
-        setWorldX();
-        setWorldY();
+        setWorldXPos();
+        setWorldYPos();
     }
 
-    private void setWorldX() {
+    private void setWorldXPos() {
         worldXPos = col * tileSize;
     }
 
-    private void setWorldY() {
+    private void setWorldYPos() {
         worldYPos = row * tileSize;
     }
 
@@ -33,45 +36,33 @@ public class Tile {
     // IMAGE LIST
 
     //ANIMATION METHOD
-
-    // Getters and Setters
-    public int getWorldXPos() {
-        return worldXPos;
-    }
-
-    public void setWorldXPos(int worldXPos) {
-        this.worldXPos = worldXPos;
-    }
-
-    public int getWorldYPos() {
-        return worldYPos;
-    }
-
-    public void setWorldYPos(int worldYPos) {
-        this.worldYPos = worldYPos;
-    }
+    //
 
     public int getScreenXPos() {
         return screenXPos;
-    }
-
-    public void setScreenXPos(int screenXPos) {
-        this.screenXPos = screenXPos;
     }
 
     public int getScreenYPos() {
         return screenYPos;
     }
 
-    public void setScreenYPos(int screenYPos) {
-        this.screenYPos = screenYPos;
-    }
-
     public int getValue() {
         return value;
     }
 
-    public void setValue(int value) {
-        this.value = value;
+    public int getWorldXPos() {
+        return worldXPos;
+    }
+
+    public int getWorldYPos() {
+        return worldYPos;
+    }
+
+    public void setScreenXPos(int screenXPos) {
+        this.screenXPos = screenXPos;
+    }
+
+    public void setScreenYPos(int screenYPos) {
+        this.screenYPos = screenYPos;
     }
 }

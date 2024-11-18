@@ -1,5 +1,9 @@
 package System;
 
+import Entities.Player;
+import Handlers.LevelHandler;
+import World.Tile;
+
 import javax.swing.JPanel;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -15,6 +19,8 @@ public class GamePanel extends JPanel implements Runnable{
     Thread gameThread;
 
     //Create objects for GAME LOGIC
+    public Player player;
+    LevelHandler levelHandler;
 
     public GamePanel() {
         this.setDoubleBuffered(true);
@@ -22,7 +28,13 @@ public class GamePanel extends JPanel implements Runnable{
 
         hideCursor();
 
+        //Starting game
         gameThread = new Thread(this);
+
+        //Handling ALL LOADING
+        player = new Player(100, 5, Tile.tileSize, Tile.tileSize, "Player");
+        levelHandler = new LevelHandler(1);
+
     }
 
     public void initiateGamePanel() {
@@ -57,7 +69,7 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     void update() {
-
+        player.update();
     }
 
     /**
@@ -69,9 +81,8 @@ public class GamePanel extends JPanel implements Runnable{
         Graphics2D g2 = (Graphics2D)g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-
-        g2.setPaint(Color.BLACK);
-        g2.drawRect(0, 0, 20, 20);
+        levelHandler.getCurrentLevel().getMap().drawMap(g2, player);
+        player.draw(g2);
 
     }
 }

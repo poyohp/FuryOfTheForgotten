@@ -4,18 +4,18 @@ public class Hitbox {
 
     private int xOffset, yOffset;
     private int width, height;
-    private int xWorldPos, yWorldPos;
+    private int worldXPos, worldYPos;
 
-    Hitbox(int xOffset, int yOffset, int xworldPos, int yWorldPos) {
-        this.xWorldPos = xworldPos;
-        this.yWorldPos = yWorldPos;
+    Hitbox(int xOffset, int yOffset, int worldXPos, int worldYPos) {
+        this.worldXPos = worldXPos;
+        this.worldYPos = worldYPos;
         this.xOffset = xOffset;
         this.yOffset = yOffset;
     }
 
     void setHitbox() {
-        xWorldPos += xOffset;
-        yWorldPos += yOffset;
+        worldXPos += xOffset;
+        worldYPos += yOffset;
     }
 
     public int getxOffset() {
@@ -50,19 +50,19 @@ public class Hitbox {
         this.height = height;
     }
 
-    public int getxWorldPos() {
-        return xWorldPos;
+    public int getWorldXPos() {
+        return worldXPos;
     }
 
-    public void setxWorldPos(int xWorldPos) {
-        this.xWorldPos = xWorldPos;
+    public void setWorldXPos(int xWorldPos) {
+        this.worldXPos = xWorldPos;
     }
 
-    public int getyWorldPos() {
-        return yWorldPos;
+    public int getWorldYPos() {
+        return this.worldYPos;
     }
 
-    public void setyWorldPos(int yWorldPos) {
-        this.yWorldPos = yWorldPos;
+    public void setWorldYPos(int yWorldPos) {
+        this.worldYPos = yWorldPos;
     }
 }
