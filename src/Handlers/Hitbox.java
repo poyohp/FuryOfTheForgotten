@@ -8,11 +8,13 @@ public class Hitbox {
     private int width, height;
     private int worldXPos, worldYPos;
 
-    public Hitbox(int worldXPos, int worldYPos, int xOffset, int yOffset) {
+    public Hitbox(int worldXPos, int worldYPos, int xOffset, int yOffset, int width, int height) {
         this.worldXPos = worldXPos;
         this.worldYPos = worldYPos;
         this.xOffset = xOffset;
         this.yOffset = yOffset;
+        this.width = width;
+        this.height = height;
     }
 
     public void setHitbox() {

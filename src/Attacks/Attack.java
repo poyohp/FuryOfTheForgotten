@@ -1,27 +1,32 @@
 package Attacks;
 
 import Entities.Entity;
+import Handlers.Hitbox;
+
 import java.awt.*;
 
 public abstract class Attack {
 
-    private int damage, range, width, x, y;
-    private char direction;
+    private int damage, range, width, x, y, xOffset, yOffset, duration;
+    private char[] direction = new char[2];
+    Hitbox hitbox;
     Entity entity;
 
-    Attack (int damage, int range, int width, char direction, Entity entity) {
+    Attack (int damage, int range, int width, char direction, Entity entity, int xOffset, int yOffset, int duration) {
         this.damage = damage;
         this.range = range;
         this.width = width;
-        this.direction = direction;
+        this.direction[0] = entity.direction;
+        this.direction[1] = direction;
         this.entity = entity;
+        this.duration = duration;
     }
 
     abstract void draw();
 
-    public int getDamage() {
-        return damage;
-    }
+    abstract void setInitialHitbox(char[] direction);
+
+    public int getDamage() { return damage; }
 
     public void setDamage(int damage) {
         this.damage = damage;
@@ -43,27 +48,21 @@ public abstract class Attack {
         this.width = width;
     }
 
-    public char getDirection() {
+    public char[] getDirection() {
         return direction;
     }
 
-    public void setDirection(char direction) {
-        this.direction = direction;
-    }
+    public void setDirection(char[] direction) { this.direction = direction; }
 
-    public int getX() {
-        return x;
-    }
+    public int getX() { return x; }
 
-    public void setX(int x) {
-        this.x = x;
-    }
+    public void setX(int x) { this.x = x; }
 
-    public int getY() {
-        return y;
-    }
+    public int getY() { return y; }
 
-    public void setY(int y) {
-        this.y = y;
-    }
+    public void setY(int y) { this.y = y; }
+
+    public int getXOffset() { return xOffset; }
+
+    public int getYOffset() { return yOffset; }
 }
