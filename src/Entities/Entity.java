@@ -1,5 +1,6 @@
 package Entities;
 
+import Handlers.Hitbox;
 import java.awt.*;
 
 public abstract class Entity {
@@ -17,13 +18,13 @@ public abstract class Entity {
     public int entityTop;
     public int entityBottom;
 
-    //public Hitbox hitbox;
+    public Hitbox hitbox;
 
     abstract void draw(Graphics2D g2);
 
     abstract void update();
 
-    Entity (int health, int speed, int width, int height, String name) {
+    public Entity (int health, int speed, int width, int height, String name, int worldX, int worldY, int xOffset, int yOffset) {
         this.health = health;
         this.speed = speed;
         this.width = width;
@@ -32,10 +33,16 @@ public abstract class Entity {
         this.name = name;
         this.direction = 'r';
 
-        int entityLeft = this.worldX;
-        int entityRight = this.worldX + this.width;
-        int entityTop = this.worldY;
-        int entityBottom = this.worldY + this.height;
+        this.worldX = worldX;
+        this.worldY = worldY;
+
+        entityLeft = worldX;
+        entityRight = worldX + width;
+        entityTop = worldY;
+        entityBottom = worldY + height;
+
+        hitbox = new Hitbox(xOffset, yOffset, worldX, worldY);
+        hitbox.setHitbox();
     }
 
     public int getHealth() {
