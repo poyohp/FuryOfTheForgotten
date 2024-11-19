@@ -35,14 +35,13 @@ public abstract class Entity {
 
         this.worldX = worldX;
         this.worldY = worldY;
-
-        entityLeft = worldX;
-        entityRight = worldX + width;
-        entityTop = worldY;
-        entityBottom = worldY + height;
-
         hitbox = new Hitbox(worldX, worldY, xOffset, yOffset);
         hitbox.setHitbox();
+
+        entityLeft = hitbox.getWorldXPos();
+        entityRight = entityLeft + hitbox.getWidth();
+        entityTop = hitbox.getWorldYPos();
+        entityBottom = entityTop + hitbox.getHeight();
     }
 
     public int getHealth() {

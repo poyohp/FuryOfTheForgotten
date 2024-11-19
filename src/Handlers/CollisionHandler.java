@@ -30,32 +30,41 @@ public class CollisionHandler {
     private boolean isTileRowCollidable (Tile tile) {
         return true;
     }
-    void playerWithTileCollision(Player player, Tile[][] tiles) {
-        int row = (int)player.entityTop/Tile.tileSize - 1;
+
+    boolean playerWithTileCollision(Player player, Tile[][] tiles) {
+        int topRow = (int)player.entityTop/Tile.tileSize;
+        int bottomRow = (int)player.entityBottom/Tile.tileSize;
         int leftCol = (int)player.entityLeft/Tile.tileSize;
         int rightCol = (int)player.entityRight/Tile.tileSize;
 
-        switch (player.direction) {
-            case 'u':
-                for (int i = leftCol; i < rightCol; i++) {
-
+        if (player.direction == 'u') {
+            for (int i = leftCol; i < rightCol; i++) {
+                if (!(tiles[topRow - 1][i].isCollidable)) {
+                    return false;
                 }
-
-        /*
-            IF player.direction is UP:
-                if Tile(s)AbovePlayer AND Tile(s)AbovePlayer.isCollidable
-                    RETURN true
-            ELSE-IF player.direction is DOWN:
-                if TilesBelowPlayer AND Tile(s)AbovePlayer.isCollidable
-                    RETURN  true
-            ELSE-IF player.direction is RIGHT:
-                if TilesOnRightOfPlayer AND Tile(s)AbovePlayer.isCollidable
-                    RETURN true
-            ELSE-IF player.direction is LEFT:
-                if TilesOnLeftOfPlayer AND Tile(s)AbovePlayer.isCollidable
-                    RETURN  true
-            ELSE RETURN false;
-         */
+            }
+            return true;
+        } else if (player.direction == 'd') {
+            for (int i = leftCol; i < rightCol; i++) {
+                if (!(tiles[bottomRow + 1][i].isCollidable)) {
+                    return false;
+                }
+            }
+            return true;
+        } else if (player.direction == 'l') {
+            for (int i = topRow; i < bottomRow; i++) {
+                if (!(tiles[i][leftCol].isCollidable)) {
+                    return false;
+                }
+            }
+            return true;
+        } else {
+            for (int i = topRow; i < bottomRow; i++) {
+                if (!(tiles[i][rightCol].isCollidable)) {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 
