@@ -12,6 +12,11 @@ public abstract class Entity {
     public int worldX, worldY, screenX, screenY;
     public char direction;
 
+    public int entityLeft;
+    public int entityRight;
+    public int entityTop;
+    public int entityBottom;
+
     //public Hitbox hitbox;
 
     abstract void draw(Graphics2D g2);
@@ -26,6 +31,11 @@ public abstract class Entity {
 
         this.name = name;
         this.direction = 'r';
+
+        int entityLeft = this.worldX;
+        int entityRight = this.worldX + this.width;
+        int entityTop = this.worldY;
+        int entityBottom = this.worldY + this.height;
     }
 
     public int getHealth() {
