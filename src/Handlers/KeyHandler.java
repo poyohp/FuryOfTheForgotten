@@ -14,15 +14,27 @@ public class KeyHandler implements KeyListener {
     public void keyPressed(KeyEvent e) {
         if(e.getKeyCode() == KeyEvent.VK_W) {
             upPress = true;
+            downPress = false;
+            rightPress = false;
+            leftPress = false;
         }
         if(e.getKeyCode() == KeyEvent.VK_S) {
             downPress = true;
+            upPress = false;
+            rightPress = false;
+            leftPress = false;
         }
         if(e.getKeyCode() == KeyEvent.VK_A) {
             leftPress = true;
+            upPress = false;
+            downPress = false;
+            rightPress = false;
         }
         if(e.getKeyCode() == KeyEvent.VK_D) {
             rightPress = true;
+            upPress = false;
+            downPress = false;
+            leftPress = false;
         }
     }
 
