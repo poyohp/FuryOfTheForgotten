@@ -41,7 +41,7 @@ public abstract class Entity {
         entityTop = worldY;
         entityBottom = worldY + height;
 
-        hitbox = new Hitbox(xOffset, yOffset, worldX, worldY);
+        hitbox = new Hitbox(worldX, worldY, xOffset, yOffset);
         hitbox.setHitbox();
     }
 

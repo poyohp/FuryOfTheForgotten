@@ -9,8 +9,8 @@ public class Player extends Entity {
     Boolean isColliding, interact, attack;
     KeyHandler keyhandler;
 
-    public Player(int health, int speed, int width, int height, String name) {
-        super(health, speed, width, height, name);
+    public Player(int health, int speed, int width, int height, String name, int worldX, int worldY, int xOffset, int yOffset) {
+        super(health, speed, width, height, name, worldX, worldY, xOffset, yOffset);
 
         setScreenPosition();
 

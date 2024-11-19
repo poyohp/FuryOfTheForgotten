@@ -8,7 +8,7 @@ public class Hitbox {
     private int width, height;
     private int worldXPos, worldYPos;
 
-    public Hitbox(int xOffset, int yOffset, int worldXPos, int worldYPos) {
+    public Hitbox(int worldXPos, int worldYPos, int xOffset, int yOffset) {
         this.worldXPos = worldXPos;
         this.worldYPos = worldYPos;
         this.xOffset = xOffset;

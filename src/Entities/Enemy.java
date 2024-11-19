@@ -5,8 +5,8 @@ import java.awt.*;
 public class Enemy extends Entity {
     private int vision;
 
-    Enemy(int health, int speed, int width, int height, String name) {
-        super(health, speed, width, height, name);
+    Enemy(int health, int speed, int width, int height, String name, int worldX, int worldY, int xOffset, int yOffset) {
+        super(health, speed, width, height, name, worldX, worldY, xOffset, yOffset);
     }
 
     @Override

@@ -32,7 +32,7 @@ public class GamePanel extends JPanel implements Runnable{
         gameThread = new Thread(this);
 
         //Handling ALL LOADING
-        player = new Player(100, 5, Tile.tileSize, Tile.tileSize, "Player");
+        player = new Player(100, 5, Tile.tileSize, Tile.tileSize, "Player", 0, 0, 0, 0);
         levelHandler = new LevelHandler(1);
 
     }
