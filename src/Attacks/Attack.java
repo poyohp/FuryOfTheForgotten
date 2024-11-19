@@ -3,13 +3,11 @@ package Attacks;
 import Entities.Entity;
 import Handlers.Hitbox;
 
-import java.awt.*;
-
 public abstract class Attack {
 
     private int damage, range, width, x, y, xOffset, yOffset, duration;
     private char[] direction = new char[2];
-    Hitbox hitbox;
+    public Hitbox hitbox;
     Entity entity;
 
     Attack (int damage, int range, int width, char direction, Entity entity, int xOffset, int yOffset, int duration) {
@@ -21,6 +19,8 @@ public abstract class Attack {
         this.entity = entity;
         this.duration = duration;
     }
+
+
 
     abstract void draw();
 
@@ -48,8 +48,8 @@ public abstract class Attack {
         this.width = width;
     }
 
-    public char[] getDirection() {
-        return direction;
+    public char getDirection(int index) {
+        return direction[index];
     }
 
     public void setDirection(char[] direction) { this.direction = direction; }

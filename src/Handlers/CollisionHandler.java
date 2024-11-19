@@ -4,28 +4,28 @@ import Entities.*;
 import World.Tile;
 
 public class CollisionHandler {
-    public void checkEntityWithAttackCollision(Entity entity, Attack attack) {
-        if (attack.getDirection() == 'u') {
+    boolean checkEntityWithAttackCollision(Entity entity, Attack attack) {
+        Hitbox attackHitbox = attack.hitbox;
+        int attackTop = attackHitbox.getWorldYPos();
+        int attackBottom = attackTop + attackHitbox.getHeight();
+        int attackLeft = attackHitbox.getWorldXPos();
+        int attackRight = attackLeft + attackHitbox.getWidth();
 
+        char attackDirection = attack.getDirection(0);
+        if (attackDirection == 'u') {
+            if (attackTop < entity.entityBottom && attackRight < entity.entityRight && attackLeft > entity.entityLeft) {
+                return true;
+            }
+        } else if (attackDirection == 'd') {
+            if (attackBottom > entity.entityTop && attackRight < entity.entityRight && attackLeft > entity.entityLeft) return true;
+
+        } else if (attackDirection == 'l') {
+            if (attackLeft < entity.entityRight && attackTop > entity.entityTop && attackBottom < entity.entityBottom) return true;
+        } else {
+            if (attackRight > entity.entityLeft && attackTop > entity.entityTop && attackBottom < entity.entityBottom) return true;
         }
+        return false;
     }
-//    void checkEntityWithAttackCollision(Entity entity, Attack attack) {
-//        /*
-//    IF attack.directions.contains(UP):
-//        IF attackTop ABOVE EntityBottom:
-//            Return true;
-//    IF attack.directions.contains(DOWN):
-//        IF attackBottom BELOW EntityTop:
-//            Return true;
-//    IF attack.directions.contains(LEFT):
-//        IF attackLeft LEFT-OF EntityRight:
-//            Return true;
-//    IF attack.directions.contains(RIGHT):
-//        IF attackRight RIGHT-OF EntityLeft:
-//            Return true;
-//    ELSE return false
-//         */
-//    }
 
     boolean playerWithTileCollision(Player player, Tile[][] tiles) {
         int topRow = (int)player.entityTop/Tile.tileSize;
