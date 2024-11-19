@@ -27,10 +27,6 @@ public class CollisionHandler {
 //         */
 //    }
 
-    private boolean isTileRowCollidable (Tile tile) {
-        return true;
-    }
-
     boolean playerWithTileCollision(Player player, Tile[][] tiles) {
         int topRow = (int)player.entityTop/Tile.tileSize;
         int bottomRow = (int)player.entityBottom/Tile.tileSize;
