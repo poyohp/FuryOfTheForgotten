@@ -7,14 +7,16 @@ import java.awt.*;
 
 public class Player extends Entity {
     Boolean isColliding, interact, attack;
-    KeyHandler keyhandler;
+    public KeyHandler keyHandler;
 
-    public Player(int health, int speed, int width, int height, String name, int worldX, int worldY, int xOffset, int yOffset) {
+    public Player(int health, int speed, int width, int height, String name, int worldX, int worldY, int xOffset, int yOffset, KeyHandler keyHandler) {
         super(health, speed, width, height, name, worldX, worldY, xOffset, yOffset);
 
         setScreenPosition();
 
-        keyhandler = new KeyHandler();
+        isColliding = false;
+
+        this.keyHandler = keyHandler;
 
     }
 
@@ -27,20 +29,21 @@ public class Player extends Entity {
 
     public void update() {
         if (!isColliding) move();
+        System.out.println(this.worldY);
     }
 
     private void move() {
-        if (keyhandler.upPress) {
-            worldY -= getSpeed();
+        if (keyHandler.upPress) {
+            this.worldY -= getSpeed();
             direction = 'u';
-        } else if (keyhandler.downPress) {
+        } else if (keyHandler.downPress) {
             worldY += getSpeed();
             direction = 'd';
         }
-        if (keyhandler.leftPress) {
+        if (keyHandler.leftPress) {
             worldX -= getSpeed();
             direction = 'l';
-        } else if (keyhandler.rightPress) {
+        } else if (keyHandler.rightPress) {
             worldX += getSpeed();
             direction = 'r';
         }

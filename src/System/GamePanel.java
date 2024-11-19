@@ -1,6 +1,7 @@
 package System;
 
 import Entities.Player;
+import Handlers.KeyHandler;
 import Handlers.LevelHandler;
 import World.Tile;
 
@@ -21,10 +22,12 @@ public class GamePanel extends JPanel implements Runnable{
     //Create objects for GAME LOGIC
     public Player player;
     LevelHandler levelHandler;
+    KeyHandler keyHandler;
 
     public GamePanel() {
         this.setDoubleBuffered(true);
         this.setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
+        setFocusable(true);
 
         hideCursor();
 
@@ -32,8 +35,11 @@ public class GamePanel extends JPanel implements Runnable{
         gameThread = new Thread(this);
 
         //Handling ALL LOADING
-        player = new Player(100, 5, Tile.tileSize, Tile.tileSize, "Player", 0, 0, 0, 0);
+        keyHandler = new KeyHandler();
+        player = new Player(100, 5, Tile.tileSize, Tile.tileSize, "Player", 0, 0, 0, 0, keyHandler);
         levelHandler = new LevelHandler(1);
+
+        this.addKeyListener(keyHandler);
 
     }
 
@@ -78,11 +84,16 @@ public class GamePanel extends JPanel implements Runnable{
      */
     @Override
     public void paintComponent(Graphics g) {
+
+        super.paintComponent(g);
+
         Graphics2D g2 = (Graphics2D)g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         levelHandler.getCurrentLevel().getMap().drawMap(g2, player);
         player.draw(g2);
+
+        g2.dispose();
 
     }
 }
