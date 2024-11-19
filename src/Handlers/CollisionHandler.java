@@ -34,34 +34,32 @@ public class CollisionHandler {
         int rightCol = (int)player.entityRight/Tile.tileSize;
 
         if (player.direction == 'u') {
-            for (int i = leftCol; i < rightCol; i++) {
-                if (!(tiles[topRow - 1][i].isCollidable)) {
-                    return false;
-                }
-            }
-            return true;
+            return isCollidableTileInRow(topRow - 1, leftCol, rightCol, tiles);
         } else if (player.direction == 'd') {
-            for (int i = leftCol; i < rightCol; i++) {
-                if (!(tiles[bottomRow + 1][i].isCollidable)) {
-                    return false;
-                }
-            }
-            return true;
+            return isCollidableTileInRow(bottomRow + 1, leftCol, rightCol, tiles);
         } else if (player.direction == 'l') {
-            for (int i = topRow; i < bottomRow; i++) {
-                if (!(tiles[i][leftCol].isCollidable)) {
-                    return false;
-                }
-            }
-            return true;
+            return isCollidableTileInColumn(leftCol - 1, topRow, bottomRow, tiles);
         } else {
-            for (int i = topRow; i < bottomRow; i++) {
-                if (!(tiles[i][rightCol].isCollidable)) {
-                    return false;
-                }
-            }
-            return true;
+            return isCollidableTileInColumn(rightCol + 1, topRow, bottomRow, tiles);
         }
+    }
+
+    private boolean isCollidableTileInRow(int row, int leftCol, int rightCol, Tile[][] tiles) {
+        for (int col = leftCol; col <= rightCol; col++) {
+            if (!(tiles[row][col].isCollidable)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isCollidableTileInColumn(int col, int topRow, int bottomRow, Tile[][] tiles) {
+        for (int row = topRow; row <= bottomRow; row++) {
+            if (!(tiles[row][col].isCollidable)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     void enemyWithPlayerAttackCollision(Player player) {
