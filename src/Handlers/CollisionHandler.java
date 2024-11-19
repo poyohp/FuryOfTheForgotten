@@ -1,7 +1,14 @@
 package Handlers;
+import Attacks.Attack;
 import Entities.*;
+import World.Tile;
 
 public class CollisionHandler {
+    public void checkEntityWithAttackCollision(Entity entity, Attack attack) {
+        if (attack.getDirection() == 'u') {
+
+        }
+    }
 //    void checkEntityWithAttackCollision(Entity entity, Attack attack) {
 //        /*
 //    IF attack.directions.contains(UP):
@@ -20,7 +27,20 @@ public class CollisionHandler {
 //         */
 //    }
 
-    void playerWithTileCollision(Player player) {
+    private boolean isTileRowCollidable (Tile tile) {
+        return true;
+    }
+    void playerWithTileCollision(Player player, Tile[][] tiles) {
+        int row = (int)player.entityTop/Tile.tileSize - 1;
+        int leftCol = (int)player.entityLeft/Tile.tileSize;
+        int rightCol = (int)player.entityRight/Tile.tileSize;
+
+        switch (player.direction) {
+            case 'u':
+                for (int i = leftCol; i < rightCol; i++) {
+
+                }
+
         /*
             IF player.direction is UP:
                 if Tile(s)AbovePlayer AND Tile(s)AbovePlayer.isCollidable
@@ -36,6 +56,7 @@ public class CollisionHandler {
                     RETURN  true
             ELSE RETURN false;
          */
+        }
     }
 
     void enemyWithPlayerAttackCollision(Player player) {
