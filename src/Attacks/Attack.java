@@ -52,6 +52,10 @@ public abstract class Attack {
         return direction[index];
     }
 
+    public char[] getDirection() {
+        return direction;
+    }
+
     public void setDirection(char[] direction) { this.direction = direction; }
 
     public int getX() { return x; }
