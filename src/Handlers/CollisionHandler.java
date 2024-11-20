@@ -5,24 +5,25 @@ import World.Tile;
 
 public class CollisionHandler {
     boolean checkEntityWithAttackCollision(Entity entity, Attack attack) {
-        Hitbox attackHitbox = attack.hitbox;
-        int attackTop = attackHitbox.getWorldYPos();
-        int attackBottom = attackTop + attackHitbox.getHeight();
-        int attackLeft = attackHitbox.getWorldXPos();
-        int attackRight = attackLeft + attackHitbox.getWidth();
+        int attackTop = attack.hitbox.getWorldYPos();
+        int attackBottom = attackTop + attack.hitbox.getHeight();
+        int attackLeft = attack.hitbox.getWorldXPos();
+        int attackRight = attackLeft + attack.hitbox.getWidth();
 
-        char attackDirection = attack.getDirection(0);
-        if (attackDirection == 'u') {
-            if (attackTop < entity.entityBottom && attackRight < entity.entityRight && attackLeft > entity.entityLeft) {
-                return true;
-            }
-        } else if (attackDirection == 'd') {
-            if (attackBottom > entity.entityTop && attackRight < entity.entityRight && attackLeft > entity.entityLeft) return true;
+        char attackDirection1 = attack.getDirection()[0];
+        char attackDirection2 = attack.getDirection()[1];
 
-        } else if (attackDirection == 'l') {
-            if (attackLeft < entity.entityRight && attackTop > entity.entityTop && attackBottom < entity.entityBottom) return true;
-        } else {
-            if (attackRight > entity.entityLeft && attackTop > entity.entityTop && attackBottom < entity.entityBottom) return true;
+        if (attackDirection1 == 'u' || attackDirection2 == 'u') {
+            if (attackTop <= entity.entityBottom && attackLeft <= entity.entityRight && attackRight >= entity.entityLeft) return true;
+        }
+        if (attackDirection1 == 'd' || attackDirection2 == 'd') {
+            if (attackBottom >= entity.entityTop && attackLeft <= entity.entityRight && attackRight >= entity.entityLeft) return true;
+        }
+        if (attackDirection1 == 'l' || attackDirection2 == 'l') {
+            if (attackLeft <= entity.entityRight && attackTop > entity.entityBottom && attackBottom < entity.entityTop) return true;
+        }
+        if(attackDirection1 == 'd' || attackDirection2 == 'd') {
+            if (attackRight > entity.entityLeft && attackTop > entity.entityBottom && attackBottom < entity.entityTop) return true;
         }
         return false;
     }
