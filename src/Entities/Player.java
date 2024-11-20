@@ -1,7 +1,6 @@
 package Entities;
 import Handlers.KeyHandler;
 import System.GamePanel;
-import World.Level;
 
 import java.awt.*;
 
