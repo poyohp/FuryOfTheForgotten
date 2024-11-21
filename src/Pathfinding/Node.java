@@ -17,8 +17,4 @@ public class Node {
         row = tile.getRow();
         col = tile.getCol();
     }
-
-    public void getFCost () {
-        this.fCost = this.gCost + this.hCost;
-    }
 }
