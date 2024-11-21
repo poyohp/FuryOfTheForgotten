@@ -65,4 +65,10 @@ public class Tile {
     public void setScreenYPos(int screenYPos) {
         this.screenYPos = screenYPos;
     }
+
+    public int getCol() { return this.col; }
+
+    public int getRow() { return this.col; }
+
+
 }

@@ -1,30 +1,24 @@
 package Pathfinding;
 
+import World.Tile;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class Node extends JButton implements ActionListener {
-    public int col, row;
-    public int gCost, hCost, fCost;
-    public boolean isCollidable;
-    Node parent;
+public class Node {
+    public Tile tile;
+    public Node parent;
+    public int row, col;
+    public double gCost, hCost, fCost;
 
-    public Node(int col, int row) {
-        this.col = col;
-        this.row = row;
-        this.isCollidable = false;
-        this.setBackground(Color.WHITE);
-        this.addActionListener(this);
+    public Node(Tile tile) {
+        this.tile = tile;
+        row = tile.getRow();
+        col = tile.getCol();
     }
 
     public void getFCost () {
-
         this.fCost = this.gCost + this.hCost;
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        System.out.println(col + " " + row);
     }
 }
