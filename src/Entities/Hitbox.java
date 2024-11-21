@@ -1,6 +1,4 @@
-package Handlers;
-
-import java.awt.*;
+package Entities;
 
 public class Hitbox {
 

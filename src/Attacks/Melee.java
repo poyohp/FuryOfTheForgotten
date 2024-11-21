@@ -1,7 +1,7 @@
 package Attacks;
 
 import Entities.Entity;
-import Handlers.Hitbox;
+import Entities.Hitbox;
 
 import java.awt.*;
 
