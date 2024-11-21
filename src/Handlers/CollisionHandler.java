@@ -1,6 +1,7 @@
 package Handlers;
 import Attacks.Attack;
 import Entities.*;
+import World.Level;
 import World.Tile;
 
 public class CollisionHandler {
@@ -63,13 +64,14 @@ public class CollisionHandler {
         return false;
     }
 
-    void enemyWithPlayerAttackCollision(Player player) {
+    void enemyWithPlayerAttackCollision(Level level) {
         /*
     For playerAttack in playerAttackList in Level:
         IF playerAttack closeTo Enemy //compare x and y
         IF entityWithAttackCollision(enemy, playerAttack):
             return playerAttack;
          */
+
     }
 
     void playerWithEnemyAttackCollision(Enemy enemy) {
