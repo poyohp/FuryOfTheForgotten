@@ -79,11 +79,11 @@ public class Map {
     }
 
     private void setScreenPositions(int x, int y, Player player) {
-        baseMapTiles[x][y].setScreenXPos(baseMapTiles[x][y].getWorldXPos() - player.worldX + player.screenX);
-        obstacleMapTiles[x][y].setScreenXPos(obstacleMapTiles[x][y].getWorldXPos() - player.worldX + player.screenX);
+        baseMapTiles[x][y].setScreenXPos((int)(baseMapTiles[x][y].getWorldXPos() - player.worldX + player.screenX));
+        obstacleMapTiles[x][y].setScreenXPos((int)(obstacleMapTiles[x][y].getWorldXPos() - player.worldX + player.screenX));
 
-        baseMapTiles[x][y].setScreenYPos(baseMapTiles[x][y].getWorldYPos() - player.worldY + player.screenY);
-        obstacleMapTiles[x][y].setScreenYPos(obstacleMapTiles[x][y].getWorldYPos() - player.worldY + player.screenY);
+        baseMapTiles[x][y].setScreenYPos((int)(baseMapTiles[x][y].getWorldYPos() - player.worldY + player.screenY));
+        obstacleMapTiles[x][y].setScreenYPos((int)(obstacleMapTiles[x][y].getWorldYPos() - player.worldY + player.screenY));
 
     }
 

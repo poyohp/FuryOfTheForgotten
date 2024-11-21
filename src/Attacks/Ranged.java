@@ -3,6 +3,8 @@ package Attacks;
 import Entities.Entity;
 import Handlers.Hitbox;
 
+import java.awt.*;
+
 public class Ranged extends Attack{
 
     int speed;
@@ -22,7 +24,7 @@ public class Ranged extends Attack{
                 setX((int)(entity.worldX - getRange()*Math.cos(45.0)));
                 setY((int)(entity.worldY - getRange()*Math.sin(45.0)));
             } else {
-                setX(entity.worldX + entity.getWidth() / 2 - getWidth() / 2);
+                setX(entity.worldX + (double) entity.getWidth() / 2 - (double) getWidth() / 2);
                 setY(entity.worldY - getRange());
             }
         } else if (direction[0] == 'r') {
@@ -34,7 +36,7 @@ public class Ranged extends Attack{
                 setY(entity.worldY + entity.getHeight());
             } else {
                 setX(entity.worldX + entity.getWidth() + getRange());
-                setY(entity.worldY + entity.getHeight() / 2 - getWidth() / 2);
+                setY(entity.worldY + (double) entity.getHeight() / 2 - (double) getWidth() / 2);
             }
         } else if (direction[0] == 'd') {
             if (direction[1] == 'r') {
@@ -44,7 +46,7 @@ public class Ranged extends Attack{
                 setX((int)(entity.worldX - getRange()*Math.cos(45.0)));
                 setY((int)(entity.worldY + entity.getHeight() + getRange()*Math.sin(45)));
             } else {
-                setX(entity.worldX + entity.getWidth() / 2 - getWidth() / 2);
+                setX(entity.worldX + (double) entity.getWidth() / 2 - (double) getWidth() / 2);
                 setY(entity.worldY + getRange());
             }
         } else {
@@ -56,27 +58,27 @@ public class Ranged extends Attack{
                 setY((int)(entity.worldY - getRange()*Math.sin(45.0)));
             } else {
                 setX(entity.worldX - getRange());
-                setY(entity.worldY + entity.getHeight() / 2 - getRange() / 2);
+                setY(entity.worldY + (double) entity.getHeight() / 2 - (double) getRange() / 2);
             }
         }
 
         if (direction[0] == 'u' || direction[0] == 'd') {
             if (direction[1] == 'r' || direction[1] == 'l') {
-                hitbox = new Hitbox(getX(), getY(), getXOffset(), getYOffset(), (int)(getRange()*Math.cos(45.0)), (int)(getWidth()*Math.cos(45.0)));
+                hitbox = new Hitbox((int) getX(), (int) getY(), getXOffset(), getYOffset(), (int)(getRange()*Math.cos(45.0)), (int)(getWidth()*Math.cos(45.0)));
             } else {
-                hitbox = new Hitbox(getX(), getY(), getXOffset(), getYOffset(), getWidth(), getRange());
+                hitbox = new Hitbox((int) getX(), (int) getY(), getXOffset(), getYOffset(), getWidth(), getRange());
             }
         } else {
             if (direction[1] == 'u' || direction[1] == 'd') {
-                hitbox = new Hitbox(getX(), getY(), getXOffset(), getYOffset(), (int)(getRange()*Math.cos(45.0)), (int)(getWidth()*Math.cos(45.0)));
+                hitbox = new Hitbox((int) getX(), (int) getY(), getXOffset(), getYOffset(), (int)(getRange()*Math.cos(45.0)), (int)(getWidth()*Math.cos(45.0)));
             } else {
-                hitbox = new Hitbox(getX(), getY(), getXOffset(), getYOffset(), getRange(), getWidth());
+                hitbox = new Hitbox((int) getX(), (int) getY(), getXOffset(), getYOffset(), getRange(), getWidth());
             }
         }
     }
 
     @Override
-    void draw() {
+    void draw(Graphics2D g2) {
 
     }
 

@@ -4,19 +4,18 @@ import Handlers.Hitbox;
 import java.awt.*;
 
 public abstract class Entity {
-    private int health, speed, attackCooldown;
+    private int health, attackCooldown;
+    private double speed;
     private int width, height;
     private int defenseReduction;
 
     String name;
 
-    public int worldX, worldY, screenX, screenY;
+    public double worldX, worldY;
+    public double screenX, screenY;
     public char direction;
 
-    public int entityLeft;
-    public int entityRight;
-    public int entityTop;
-    public int entityBottom;
+    public double entityLeft, entityRight, entityTop, entityBottom;
 
     public Hitbox hitbox;
 
@@ -24,7 +23,7 @@ public abstract class Entity {
 
     abstract void update();
 
-    public Entity (int health, int speed, int width, int height, String name, int worldX, int worldY, int xOffset, int yOffset) {
+    public Entity (int health, double speed, int width, int height, String name, double worldX, double worldY, int xOffset, int yOffset) {
         this.health = health;
         this.speed = speed;
         this.width = width;
@@ -35,61 +34,29 @@ public abstract class Entity {
 
         this.worldX = worldX;
         this.worldY = worldY;
-        hitbox = new Hitbox(worldX, worldY, xOffset, yOffset, width, height);
+        hitbox = new Hitbox((int)worldX, (int)worldY, xOffset, yOffset, width, height);
         hitbox.setHitbox();
 
         entityLeft = hitbox.getWorldXPos();
-        entityRight = entityLeft + hitbox.getWidth();
+        entityRight = entityLeft + (double) hitbox.getWidth();
         entityTop = hitbox.getWorldYPos();
-        entityBottom = entityTop + hitbox.getHeight();
+        entityBottom = entityTop + (double) hitbox.getHeight();
     }
 
     public int getHealth() {
         return health;
     }
 
-    public void setHealth(int health) {
-        this.health = health;
-    }
-
-    public int getSpeed() {
+    public double getSpeed() {
         return speed;
-    }
-
-    public void setSpeed(int speed) {
-        this.speed = speed;
-    }
-
-    public int getAttackCooldown() {
-        return attackCooldown;
-    }
-
-    public void setAttackCooldown(int attackCooldown) {
-        this.attackCooldown = attackCooldown;
     }
 
     public int getWidth() {
         return width;
     }
 
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
     public int getHeight() {
         return height;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
-    public int getDefenseReduction() {
-        return defenseReduction;
-    }
-
-    public void setDefenseReduction(int defenseReduction) {
-        this.defenseReduction = defenseReduction;
     }
 
 }

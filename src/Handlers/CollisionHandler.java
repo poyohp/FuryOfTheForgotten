@@ -6,10 +6,10 @@ import World.Tile;
 
 public class CollisionHandler {
     boolean checkEntityWithAttackCollision(Entity entity, Attack attack) {
-        int attackTop = attack.hitbox.getWorldYPos();
-        int attackBottom = attackTop + attack.hitbox.getHeight();
-        int attackLeft = attack.hitbox.getWorldXPos();
-        int attackRight = attackLeft + attack.hitbox.getWidth();
+        double attackTop = attack.hitbox.getWorldYPos();
+        double attackBottom = attackTop + attack.hitbox.getHeight();
+        double attackLeft = attack.hitbox.getWorldXPos();
+        double attackRight = attackLeft + attack.hitbox.getWidth();
 
         char attackDirection1 = attack.getDirection()[0];
         char attackDirection2 = attack.getDirection()[1];

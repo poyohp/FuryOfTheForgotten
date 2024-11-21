@@ -3,9 +3,12 @@ package Attacks;
 import Entities.Entity;
 import Handlers.Hitbox;
 
+import java.awt.*;
+
 public abstract class Attack {
 
-    private int damage, range, width, x, y, xOffset, yOffset, duration;
+    private int damage, range, width, xOffset, yOffset, duration;
+    private double worldX, worldY;
     private char[] direction = new char[2];
     public Hitbox hitbox;
     Entity entity;
@@ -20,45 +23,31 @@ public abstract class Attack {
         this.duration = duration;
     }
 
-
-
-    abstract void draw();
+    abstract void draw(Graphics2D g2);
 
     abstract void setInitialHitbox(char[] direction);
 
     public int getDamage() { return damage; }
 
-    public void setDamage(int damage) {
-        this.damage = damage;
-    }
-
     public int getRange() {
         return range;
-    }
-
-    public void setRange(int range) {
-        this.range = range;
     }
 
     public int getWidth() {
         return width;
     }
 
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
     public char[] getDirection() {
         return direction;
     }
 
-    public int getX() { return x; }
+    public double getX() { return worldX; }
 
-    public void setX(int x) { this.x = x; }
+    public void setX(double x) { this.worldX = x; }
 
-    public int getY() { return y; }
+    public double getY() { return worldY; }
 
-    public void setY(int y) { this.y = y; }
+    public void setY(double y) { this.worldY = y; }
 
     public int getXOffset() { return xOffset; }
 

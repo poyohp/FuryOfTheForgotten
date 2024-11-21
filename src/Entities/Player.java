@@ -8,7 +8,7 @@ public class Player extends Entity {
     Boolean isColliding, interact, attack;
     public KeyHandler keyHandler;
 
-    public Player(int health, int speed, int width, int height, String name, int worldX, int worldY, int xOffset, int yOffset, KeyHandler keyHandler) {
+    public Player(int health, double speed, int width, int height, String name, double worldX, double worldY, int xOffset, int yOffset, KeyHandler keyHandler) {
         super(health, speed, width, height, name, worldX, worldY, xOffset, yOffset);
 
         setScreenPosition();
@@ -20,15 +20,14 @@ public class Player extends Entity {
     }
 
     void setScreenPosition() {
-        this.screenX = (int) (GamePanel.screenWidth / 2) - this.getWidth() / 2;
-        this.screenY = (int) (GamePanel.screenHeight / 2) - this.getHeight() / 2;
+        this.screenX = (int) (GamePanel.screenWidth / 2) - (double) this.getWidth() / 2;
+        this.screenY = (int) (GamePanel.screenHeight / 2) - (double) this.getHeight() / 2;
     }
 
     // ResourceBar healthBar;
 
     public void update() {
         if (!isColliding) move();
-        System.out.println(this.worldY);
     }
 
     private void move() {
@@ -52,8 +51,8 @@ public class Player extends Entity {
     @Override
     public void draw(Graphics2D g2) {
         g2.setColor(Color.GREEN);
-        g2.fillRect(screenX, screenY, this.getWidth(), this.getHeight());
+        g2.fillRect((int) screenX, (int) screenY, this.getWidth(), this.getHeight());
         g2.setColor(Color.RED);
-        g2.drawRect(screenX, screenY, this.getWidth(), this.getHeight());
+        g2.drawRect((int) screenX, (int) screenY, this.getWidth(), this.getHeight());
     }
 }

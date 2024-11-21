@@ -3,6 +3,8 @@ package Attacks;
 import Entities.Entity;
 import Handlers.Hitbox;
 
+import java.awt.*;
+
 public class Melee extends Attack{
 
     Hitbox hitbox;
@@ -16,28 +18,28 @@ public class Melee extends Attack{
     @Override
     public void setInitialHitbox(char[] direction) {
         if (direction[0] == 'u') {
-            setX(entity.worldX + entity.getWidth() / 2 - getWidth() / 2);
+            setX(entity.worldX + (double) entity.getWidth() / 2 - (double) getWidth() / 2);
             setY(entity.worldY - getRange());
         } else if (direction[0] == 'r') {
             setX(entity.worldX + entity.getWidth() + getRange());
-            setY(entity.worldY + entity.getHeight() / 2 - getWidth() / 2);
+            setY(entity.worldY + (double) entity.getHeight() / 2 - (double) getWidth() / 2);
         } else if (direction[0] == 'd') {
-            setX(entity.worldX + entity.getWidth() / 2 - getWidth() / 2);
+            setX(entity.worldX + (double) entity.getWidth() / 2 - (double) getWidth() / 2);
             setY(entity.worldY + getRange());
         } else {
             setX(entity.worldX - getRange());
-            setY(entity.worldY + entity.getHeight() / 2 - getRange() / 2);
+            setY(entity.worldY + (double) entity.getHeight() / 2 - (double) getRange() / 2);
         }
 
         if (direction[0] == 'u' || direction[0] == 'd') {
-            hitbox = new Hitbox(getX(), getY(), getXOffset(), getYOffset(), getWidth(), getRange());
+            hitbox = new Hitbox((int) getX(), (int) getY(), getXOffset(), getYOffset(), getWidth(), getRange());
         } else {
-            hitbox = new Hitbox(getX(), getY(), getXOffset(), getYOffset(), getRange(), getWidth());
+            hitbox = new Hitbox((int) getX(), (int) getY(), getXOffset(), getYOffset(), getRange(), getWidth());
         }
     }
 
     @Override
-    void draw() {
+    void draw(Graphics2D g2) {
 
     }
 
