@@ -77,9 +77,16 @@ public class Ranged extends Attack{
         }
     }
 
+    void move(int xSpeed, int ySpeed) {
+        setX(getX() + xSpeed);
+        setY(getY() + ySpeed);
+    }
+
     @Override
     void draw(Graphics2D g2) {
 
     }
+
+
 
 }
