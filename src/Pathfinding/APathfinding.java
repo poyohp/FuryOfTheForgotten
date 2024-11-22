@@ -1,12 +1,7 @@
 package Pathfinding;
 
-import Handlers.LevelHandler;
 import World.Tile;
-
 import java.util.ArrayList;
-import java.util.Stack;
-
-import java.awt.*;
 
 public class APathfinding {
 
