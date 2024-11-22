@@ -1,6 +1,7 @@
 package World;
 
 import Attacks.Attack;
+import Entities.Enemy;
 import org.json.simple.parser.ParseException;
 
 import java.awt.*;
@@ -12,8 +13,10 @@ public class Level {
     private String mapDirectory;
     private Map map;
 
-    ArrayList<Attack> playerAttacks = new ArrayList<>();
-    ArrayList<Attack> enemyAttacks = new ArrayList<>();
+    public ArrayList<Enemy> enemies = new ArrayList<>();
+
+    public ArrayList<Attack> playerAttacks = new ArrayList<>();
+    public ArrayList<Attack> enemyAttacks = new ArrayList<>();
 
     public Level(String mapDirectory) {
         this.mapDirectory = mapDirectory;
