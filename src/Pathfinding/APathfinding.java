@@ -18,9 +18,13 @@ public class APathfinding {
     public Node endNode;
     public Node currentNode;
 
+    public MyQueue shortestPath;
+
     public APathfinding (Tile[][] tileArray) {
         openList = new ArrayList();
         closedList = new ArrayList<Node>();
+
+        shortestPath = new MyQueue();
 
         nodeArray = new Node[tileArray.length][tileArray[0].length];
         //loops through tile array and copies over its values to a node array
@@ -33,10 +37,10 @@ public class APathfinding {
         }
     }
 
-    public ArrayList<Node> findPath(Tile startTile, Tile endTile) {
-        //initialize starting and ending nodes
-        endNode = new Node(endTile);
-        startNode = new Node(startTile);
+    public MyQueue findPath(Tile startTile, Tile endTile) {
+        //initialize starting and ending nodes to the ones in the 2D Node array
+        endNode = nodeArray[endTile.getRow()][endTile.getCol()];
+        startNode = nodeArray[startTile.getRow()][startTile.getCol()];
 
         //initialize the starting node
         startNode.gCost = 0;
@@ -48,7 +52,7 @@ public class APathfinding {
             openList.remove(currentNode);
             closedList.add(currentNode);
 
-            if (currentNode.col == endNode.col && currentNode.row == endNode.row) {
+            if (currentNode == endNode) {
                 return getShortestPath();
             }
 
@@ -64,7 +68,7 @@ public class APathfinding {
             }
         }
         //will return empty arrayList if there was no shortest path found
-        return new ArrayList<>();
+        return new MyQueue();
     }
 
     private ArrayList<Node> getNeighbours(Node currentNode) {
@@ -75,9 +79,9 @@ public class APathfinding {
 
         // get neighbours (only when they are part of the map!)
         if (row > 0) neighbours.add(nodeArray[row - 1][col]); // up
-        if (row < nodeArray[0].length) neighbours.add(nodeArray[row + 1][col]); // down
+        if (row < nodeArray.length) neighbours.add(nodeArray[row + 1][col]); // down
         if (col > 0) neighbours.add(nodeArray[currentNode.row][currentNode.col - 1]); // left
-        if (col < nodeArray.length) neighbours.add(nodeArray[currentNode.row][currentNode.col + 1]); // right
+        if (col < nodeArray[0].length) neighbours.add(nodeArray[currentNode.row][currentNode.col + 1]); // right
 
         return neighbours;
     }
@@ -123,13 +127,15 @@ public class APathfinding {
         node.fCost = node.gCost + node.hCost;
     }
 
-    /**
-     * write this class later try to use a stack
-     * @return
-     */
-    private ArrayList<Node> getShortestPath () {
-        ArrayList<Node> shortestPath = new ArrayList<>();
+    private MyQueue getShortestPath () {
+        shortestPath = new MyQueue();
+        Node current = endNode;
 
+        while (current != startNode) {
+            shortestPath.enqueue(current);
+            current = current.parent;
+        }
+        shortestPath.enqueue(startNode);
         return shortestPath;
     }
 
