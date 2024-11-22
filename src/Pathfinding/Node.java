@@ -2,15 +2,17 @@ package Pathfinding;
 
 import World.Tile;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-
 public class Node {
     public Tile tile;
     public Node parent;
+    public boolean walkable;
     public int row, col;
-    public double gCost, hCost, fCost;
+    /*
+    g cost is the lowest cost path from start to node (initially set to infinity)
+    h cost is the lowest cost path from node to end
+    f cost is the sum of g and h costs
+     */
+    public int gCost = Integer.MAX_VALUE, hCost, fCost;
 
     public Node(Tile tile) {
         this.tile = tile;
