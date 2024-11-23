@@ -47,7 +47,7 @@ public class CollisionHandler {
 
     private boolean isCollidableTileInRow(int row, int leftCol, int rightCol, Tile[][] tiles) {
         for (int col = leftCol; col <= rightCol; col++) {
-            if (!(tiles[row][col].isCollidable)) {
+            if (!(tiles[row][col].walkable)) {
                 return true;
             }
         }
@@ -56,7 +56,7 @@ public class CollisionHandler {
 
     private boolean isCollidableTileInColumn(int col, int topRow, int bottomRow, Tile[][] tiles) {
         for (int row = topRow; row <= bottomRow; row++) {
-            if (!(tiles[row][col].isCollidable)) {
+            if (!(tiles[row][col].walkable)) {
                 return true;
             }
         }

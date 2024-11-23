@@ -13,7 +13,7 @@ public class Tile {
     private int worldXPos, worldYPos;
     private int screenXPos, screenYPos;
 
-    public boolean isCollidable;
+    public boolean walkable;
 
     Tile(int row, int col, int value) {
         this.row = row;
