@@ -32,13 +32,23 @@ public class APathfinding {
         }
     }
 
+    public void initializeNodeCosts() {
+        for (int row = 0; row < nodeArray.length; row++) {
+            for (int col = 0; col < nodeArray[row].length; col++) {
+                setCosts(nodeArray[row][col]);
+            }
+        }
+    }
+
     public MyQueue findPath(Tile startTile, Tile endTile) {
         //initialize starting and ending nodes to the ones in the 2D Node array
         endNode = nodeArray[endTile.getRow()][endTile.getCol()];
         startNode = nodeArray[startTile.getRow()][startTile.getCol()];
 
+        // sets all the node costs
+        initializeNodeCosts();
+
         //initialize the starting node
-        startNode.gCost = 0;
         openList.add(startNode);
 
         //while there are still nodes to be evalutated, look for the path
@@ -55,10 +65,10 @@ public class APathfinding {
                 //skips obstacles and nodes that have already been evaluated
                 if (!neighbour.walkable || inList(closedList, neighbour)) continue;
 
-                if (checkGCost(neighbour) || !inList(openList, neighbour)) {
-                    setCosts(neighbour);
+                // if neighbour is not in open list
+                if (!inList(openList, neighbour)) {
                     neighbour.parent = currentNode;
-                    if (!inList(openList, neighbour)) openList.add(neighbour);
+                    openList.add(neighbour);
                 }
             }
         }
@@ -96,30 +106,16 @@ public class APathfinding {
         return lowestCost;
     }
 
-    /**
-     * Checks to see if the new g cost is lower than the initial g cost of a node
-     * @param newNode Node to check
-     * @return returns whether the new path to the neighbour is shorter or not
-     */
-    private boolean checkGCost(Node newNode) {
-        //gets the g cost for a new node, taking the path from the current node
-        int xDistance = Math.abs(newNode.col - currentNode.col);
-        int yDistance = Math.abs(newNode.row - currentNode.row);
-        int newGCost = currentNode.gCost + xDistance + yDistance;
+    private void setCosts (Node currentNode) {
+        int xDistance = Math.abs(currentNode.col - startNode.col);
+        int yDistance = Math.abs(currentNode.row - startNode.row);
+        currentNode.gCost = xDistance + yDistance;
 
-        if (newGCost < newNode.gCost) {
-            newNode.gCost = newGCost;
-            return true;
-        }
-        return false;
-    }
+        xDistance = Math.abs(currentNode.col - endNode.col);
+        yDistance = Math.abs(currentNode.row - endNode.row);
+        currentNode.hCost = xDistance + yDistance;
 
-    private void setCosts (Node node) {
-        int xDistance = Math.abs(node.col - endNode.col);
-        int yDistance = Math.abs(node.row - endNode.row);
-        node.hCost = xDistance + yDistance;
-
-        node.fCost = node.gCost + node.hCost;
+        currentNode.fCost = currentNode.gCost + currentNode.hCost;
     }
 
     private MyQueue getShortestPath () {
@@ -130,6 +126,7 @@ public class APathfinding {
             shortestPath.enqueue(current);
             current = current.parent;
         }
+
         shortestPath.enqueue(startNode);
         return shortestPath;
     }
