@@ -7,6 +7,7 @@ public class Node {
     public Node parent;
     public boolean walkable;
     public int row, col;
+
     /*
     g cost is the lowest cost path from start to node (initially set to infinity)
     h cost is the lowest cost path from node to end
