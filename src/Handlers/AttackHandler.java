@@ -39,24 +39,59 @@ public class AttackHandler {
 
 
     void checkForPlayerAttack(KeyHandler keyHandler, Player player) {
+        char dir1;
+        char dir2;
+        if (player.direction == 'u' || player.direction == 'd') {
+            dir1 = 'r';
+            dir2 = 'l';
+        } else {
+            dir1 = 'u';
+            dir2 = 'd';
+        }
         if (keyHandler.attackPress && canAttack) {
-            createMelee(5, 50, 100, 'u', player, 0, 0, 30);
+            createRanged(5, 50, 50, player.direction, player, 0, 0, 150, 10);
+            createRanged(5, 50, 50, dir1, player, 0, 0, 150, 10);
+            createRanged(5, 50, 50, dir2, player, 0, 0, 150, 10);
             canAttack = false;
         }
     }
 
-
+    // Must be updated when other entities are included to take an asrraylist of all entities as a parameter, not just a player)
     public void update(Player player) {
         checkForPlayerAttack(keyHandler, player);
         for (Attack a : attacks) {
-            if (player.direction == 'u') {
-                a.move((int)a.determineXVelocity(90, a.getSpeed()), (int)a.determineYVelocity(90, a.getSpeed()));
-            } else if (player.direction == 'r') {
-                a.move((int)a.determineXVelocity(0, a.getSpeed()), (int)a.determineYVelocity(0, a.getSpeed()));
-            } else if (player.direction == 'd') {
-                a.move((int)a.determineXVelocity(270, a.getSpeed()), (int)a.determineYVelocity(270, a.getSpeed()));
+            if (a.getDirection()[0] == 'u') {
+                if (a.getDirection()[1] == 'u' || a.getDirection()[1] == 'd') {
+                    a.move((int) a.determineXVelocity(Math.PI / 2, a.getSpeed()), (int) a.determineYVelocity(Math.PI / 2, a.getSpeed()));
+                } else if (a.getDirection()[1] == 'r') {
+                    a.move((int) a.determineXVelocity(Math.PI / 4, a.getSpeed()), (int) a.determineYVelocity(Math.PI / 4, a.getSpeed()));
+                } else {
+                    a.move((int) a.determineXVelocity(3*Math.PI / 4, a.getSpeed()), (int) a.determineYVelocity(3*Math.PI / 4, a.getSpeed()));
+                }
+            } else if (a.getDirection()[0] == 'r') {
+                if (a.getDirection()[1] == 'r' || a.getDirection()[1] == 'l') {
+                    a.move((int) a.determineXVelocity(0, a.getSpeed()), (int) a.determineYVelocity(0, a.getSpeed()));
+                } else if (a.getDirection()[1] == 'u') {
+                    a.move((int) a.determineXVelocity(Math.PI / 4, a.getSpeed()), (int) a.determineYVelocity(Math.PI / 4, a.getSpeed()));
+                } else {
+                    a.move((int) a.determineXVelocity(7*Math.PI / 4, a.getSpeed()), (int) a.determineYVelocity(7*Math.PI / 4, a.getSpeed()));
+                }
+            } else if (a.getDirection()[0] == 'd') {
+                if (a.getDirection()[1] == 'd' || a.getDirection()[1] == 'u') {
+                    a.move((int) a.determineXVelocity(3*Math.PI/2, a.getSpeed()), (int) a.determineYVelocity(3*Math.PI/2, a.getSpeed()));
+                } else if (a.getDirection()[1] == 'l') {
+                    a.move((int) a.determineXVelocity(5*Math.PI / 4, a.getSpeed()), (int) a.determineYVelocity(5*Math.PI / 4, a.getSpeed()));
+                } else {
+                    a.move((int) a.determineXVelocity(7*Math.PI / 4, a.getSpeed()), (int) a.determineYVelocity(7*Math.PI / 4, a.getSpeed()));
+                }
             } else {
-                a.move((int)a.determineXVelocity(180, a.getSpeed()), (int)a.determineYVelocity(180, a.getSpeed()));
+                if (a.getDirection()[1] == 'l' || a.getDirection()[1] == 'r') {
+                    a.move((int) a.determineXVelocity(Math.PI, a.getSpeed()), (int) a.determineYVelocity(Math.PI, a.getSpeed()));
+                } else if (a.getDirection()[1] == 'd') {
+                    a.move((int) a.determineXVelocity(5*Math.PI / 4, a.getSpeed()), (int) a.determineYVelocity(5*Math.PI / 4, a.getSpeed()));
+                } else {
+                    a.move((int) a.determineXVelocity(3*Math.PI / 4, a.getSpeed()), (int) a.determineYVelocity(3*Math.PI / 4, a.getSpeed()));
+                }
             }
         }
         if (!canAttack) {

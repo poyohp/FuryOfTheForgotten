@@ -76,10 +76,8 @@ public class Melee extends Attack{
         g2.setColor(Color.BLACK);
         if (getDirection()[0] == 'u' || getDirection()[0] == 'd') {
             g2.fillRect((int) getScreenX(), (int) getScreenY(), getWidth(), getRange());
-            System.out.println(getScreenX() + " " + getScreenY() + " " + getWidth() + " " + getRange());
         } else {
             g2.fillRect((int) getScreenX(), (int) getScreenY(), getRange(), getWidth());
-            System.out.println(getScreenX() + " " + getScreenY() + " " + getWidth() + " " + getRange());
         }
     }
 

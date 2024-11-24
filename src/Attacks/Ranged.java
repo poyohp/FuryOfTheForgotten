@@ -2,6 +2,7 @@ package Attacks;
 import Entities.Entity;
 import Entities.Hitbox;
 import java.awt.*;
+import System.GamePanel;
 
 public class Ranged extends Attack{
     public Ranged(int damage, int range, int width, char direction, Entity entity, int xOffset, int yOffset, int duration, int speed) {
@@ -31,7 +32,7 @@ public class Ranged extends Attack{
                 setX(entity.worldX + entity.getWidth());
                 setY(entity.worldY + entity.getHeight());
             } else {
-                setX(entity.worldX + entity.getWidth() + getRange());
+                setX(entity.worldX + entity.getWidth());
                 setY(entity.worldY + (double) entity.getHeight() / 2 - (double) getWidth() / 2);
             }
         } else if (direction[0] == 'd') {
@@ -40,21 +41,21 @@ public class Ranged extends Attack{
                 setY(entity.worldY + entity.getHeight());
             } else if (direction[1] == 'l') {
                 setX((int)(entity.worldX - getRange()*Math.cos(Math.PI/4)));
-                setY((int)(entity.worldY + entity.getHeight() + getRange()*Math.sin(45)));
+                setY((int)(entity.worldY + entity.getHeight()));
             } else {
                 setX(entity.worldX + (double) entity.getWidth() / 2 - (double) getWidth() / 2);
-                setY(entity.worldY + getRange());
+                setY(entity.worldY + entity.getHeight());
             }
         } else {
             if (direction[1] == 'd') {
                 setX((int)(entity.worldX - getRange()*Math.cos(Math.PI/4)));
-                setY((int)(entity.worldY + entity.getHeight() + getRange()*Math.sin(Math.PI/4)));
+                setY((int)(entity.worldY + entity.getHeight()));
             } else if (direction[1] == 'u') {
                 setX((int)(entity.worldX - getRange()*Math.cos(Math.PI/4)));
                 setY((int)(entity.worldY - getRange()*Math.sin(Math.PI/4)));
             } else {
                 setX(entity.worldX - getRange());
-                setY(entity.worldY + (double) entity.getHeight() / 2 - (double) getRange() / 2);
+                setY(entity.worldY + (double) entity.getHeight() / 2 - (double) getWidth() / 2);
             }
         }
 
@@ -119,12 +120,39 @@ public class Ranged extends Attack{
 
     @Override
     public void setScreenPosition() {
+        int screenTop = (int)(entity.worldY + entity.getHeight()/2 - GamePanel.screenHeight/2);
+        int screenRight = (int)(entity.worldX + entity.getWidth()/2 + GamePanel.screenWidth/2);
+        int screenBottom = (int)(entity.worldY + entity.getHeight()/2 + GamePanel.screenHeight/2);
+        int screenLeft = (int)(entity.worldX + entity.getWidth()/2 - GamePanel.screenWidth/2);
+        int top = (int)(getY());
+        int left = (int)(getX());
+        int bottom = (int)(getY() + getRange());
+        int right = (int)(getX() + getWidth());
 
+        if ((bottom > screenTop && right > screenLeft) || (bottom > screenTop && left < screenRight) || (top < screenBottom && right > screenLeft) || (top < screenBottom && left > screenRight)) {
+            setScreenX(getX() - screenLeft);
+            setScreenY(getY() - screenTop);
+        }
 
     }
 
     @Override
     public void draw(Graphics2D g2) {
-
+        setScreenPosition();
+        g2.setColor(Color.BLACK);
+        if (getDirection()[0] == 'u' || getDirection()[0] == 'd') {
+            if (getDirection()[1] == 'u' || getDirection()[1] == 'd') {
+                g2.fillRect((int) getScreenX(), (int) getScreenY(), getWidth(), getRange());
+            } else {
+                g2.fillRect((int) getScreenX(), (int) getScreenY(), (int)(getRange() * Math.cos(Math.PI/4)), (int)(getRange() * Math.cos(Math.PI/4)));
+            }
+        } else {
+            if (getDirection()[1] == 'u' || getDirection()[1] == 'd') {
+                g2.fillRect((int) getScreenX(), (int) getScreenY(), (int)(getRange() * Math.cos(Math.PI/4)), (int)(getRange() * Math.cos(Math.PI/4)));
+            } else {
+                g2.fillRect((int) getScreenX(), (int) getScreenY(), getRange(), getWidth());
+            }
+        }
     }
+
 }
