@@ -5,6 +5,7 @@ import Entities.Player;
 import Handlers.AttackHandler;
 import Handlers.KeyHandler;
 import Handlers.LevelHandler;
+import Pathfinding.APathfinding;
 import World.Tile;
 
 
@@ -25,6 +26,8 @@ public class GamePanel extends JPanel implements Runnable{
     //Create objects for GAME RUNNING
     Thread gameThread;
 
+    //Pathfinding object
+    APathfinding pathfinding;
 
     //Create objects for GAME LOGIC
     public Player player;
@@ -51,7 +54,7 @@ public class GamePanel extends JPanel implements Runnable{
         player = new Player(100, 5, Tile.tileSize, Tile.tileSize, "Player", 0, 0, 0, 0, keyHandler);
         levelHandler = new LevelHandler(1);
         attackHandler = new AttackHandler(keyHandler);
-
+        pathfinding = new APathfinding(levelHandler.getCurrentLevel().getMap().baseMapTiles);
 
         this.addKeyListener(keyHandler);
 

@@ -2,6 +2,7 @@ package Pathfinding;
 
 import World.Tile;
 import java.util.ArrayList;
+import System.GamePanel;
 
 public class APathfinding {
 
@@ -13,9 +14,13 @@ public class APathfinding {
     public Node endNode;
     public Node currentNode;
 
+    boolean goalReached = false;
+    int step;
     public MyQueue shortestPath;
 
     public APathfinding (Tile[][] tileArray) {
+        step = 0;
+
         openList = new ArrayList();
         closedList = new ArrayList<Node>();
 
@@ -40,7 +45,7 @@ public class APathfinding {
         }
     }
 
-    public MyQueue findPath(Tile startTile, Tile endTile) {
+    public boolean findPath(Tile startTile, Tile endTile) {
         //initialize starting and ending nodes to the ones in the 2D Node array
         endNode = nodeArray[endTile.getRow()][endTile.getCol()];
         startNode = nodeArray[startTile.getRow()][startTile.getCol()];
@@ -52,13 +57,15 @@ public class APathfinding {
         openList.add(startNode);
 
         //while there are still nodes to be evalutated, look for the path
-        while (!openList.isEmpty()) {
+        //Limit on steps makes sure that the path doesn't continually look for a path if there isn't one
+        while (!openList.isEmpty() && step < 500 && !goalReached) {
             currentNode = getLowestFCost();
             openList.remove(currentNode);
             closedList.add(currentNode);
 
             if (currentNode == endNode) {
-                return getShortestPath();
+                goalReached = true;
+                getShortestPath();
             }
 
             for (Node neighbour: getNeighbours(currentNode)) {
@@ -71,9 +78,10 @@ public class APathfinding {
                     openList.add(neighbour);
                 }
             }
+            step++;
         }
         //will return empty arrayList if there was no shortest path found
-        return new MyQueue();
+        return goalReached;
     }
 
     private ArrayList<Node> getNeighbours(Node currentNode) {
@@ -99,9 +107,14 @@ public class APathfinding {
     }
 
     private Node getLowestFCost() {
+        //Takes the first node and sets it up initially to have the lowest cost
         Node lowestCost = openList.get(0);
+
         for (Node node: openList) {
-            if (node.fCost <= lowestCost.fCost) lowestCost = node;
+            if (node.fCost < lowestCost.fCost) lowestCost = node;
+
+            //If the f cost is equal, get the one with the lower gcost
+            if (node.gCost < lowestCost.gCost) lowestCost = node;
         }
         return lowestCost;
     }
@@ -118,7 +131,7 @@ public class APathfinding {
         currentNode.fCost = currentNode.gCost + currentNode.hCost;
     }
 
-    private MyQueue getShortestPath () {
+    private void getShortestPath () {
         shortestPath = new MyQueue();
         Node current = endNode;
 
@@ -128,7 +141,6 @@ public class APathfinding {
         }
 
         shortestPath.enqueue(startNode);
-        return shortestPath;
     }
 
 }

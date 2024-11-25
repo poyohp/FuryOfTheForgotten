@@ -18,8 +18,8 @@ public class Map {
     FileReader reader;
 
     private int mapWidth, mapHeight;
-    Tile[][] baseMapTiles;
-    Tile[][] obstacleMapTiles;
+    public Tile[][] baseMapTiles;
+    public Tile[][] obstacleMapTiles;
 
 
     Map(String mapDirectory) {
