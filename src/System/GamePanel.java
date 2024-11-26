@@ -54,11 +54,12 @@ public class GamePanel extends JPanel implements Runnable{
         //Handling ALL LOADING
         keyHandler = new KeyHandler();
         player = new Player(100, 5, Tile.tileSize, Tile.tileSize, "Player", 0, 0, 0, 0, keyHandler);
-        enemy = new Enemy(100, 4, Tile.tileSize, Tile.tileSize, "Enemy", 2*Tile.tileSize, 2*Tile.tileSize, 0, 0);
 
         levelHandler = new LevelHandler(1);
         attackHandler = new AttackHandler(keyHandler);
-        pathfinding = new APathfinding(levelHandler.getCurrentLevel().getMap().baseMapTiles);
+        Tile[][] currentTileset = levelHandler.getCurrentLevel().getMap().baseMapTiles;
+        pathfinding = new APathfinding(currentTileset);
+        enemy = new Enemy(100, 4, Tile.tileSize, Tile.tileSize, "Enemy", 2*Tile.tileSize, 2*Tile.tileSize, 0, 0, player, currentTileset);
 
         this.addKeyListener(keyHandler);
 
