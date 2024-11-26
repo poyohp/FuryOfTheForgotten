@@ -1,16 +1,21 @@
 package Entities;
 
+import Pathfinding.APathfinding;
+import Pathfinding.Node;
 import World.Tile;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Enemy extends Entity {
     private int vision;
     public boolean onPath;
     Player player;
+    APathfinding pathFinder;
 
-    Enemy(int health, int speed, int width, int height, String name, int worldX, int worldY, int xOffset, int yOffset, Player player) {
+    Enemy(int health, int speed, int width, int height, String name, int worldX, int worldY, int xOffset, int yOffset, Player player, Tile[][] tileset) {
         super(health, speed, width, height, name, worldX, worldY, xOffset, yOffset);
+        pathFinder = new APathfinding(tileset);
         player = this.player;
     }
 
@@ -22,12 +27,12 @@ public class Enemy extends Entity {
     void move() {
 
         if (onPath) {
-            int topRow = (int)player.entityTop/ Tile.tileSize; //top row of the player
+            int goalRow = (int)player.entityTop/ Tile.tileSize; //top row of the player
             int bottomRow = (int)player.entityBottom/Tile.tileSize;
-            int leftCol = (int)player.entityLeft/Tile.tileSize; //left row of the player
+            int goalCol = (int)player.entityLeft/Tile.tileSize; //left row of the player
             int rightCol = (int)player.entityRight/Tile.tileSize;
 
-            searchPath(topRow, leftCol);
+            searchPath(goalRow, goalCol);
 
         } //else: different random actions if the player is not in enemy vision
 
@@ -45,9 +50,24 @@ public class Enemy extends Entity {
          */
     }
 
-    public void searchPath(int goalCol, int goalRow) {
-        int startCol = (int)this.entityTop/ Tile.tileSize; //top row of the enemy
-        int startRow = (int)player.entityLeft/Tile.tileSize; //left row of the enemy
+    public void searchPath(int goalRow, int goalCol) {
+        int startRow = (int)this.entityTop/ Tile.tileSize; //top row of the enemy
+        int startCol = (int)player.entityLeft/Tile.tileSize; //left row of the enemy
+
+        if (pathFinder.findPath(pathFinder.tileArray[startRow][startCol], pathFinder.tileArray[goalRow][goalCol])) {
+            ArrayList<Node> path = pathFinder.shortestPath;
+            double nextWorldX = path.get(0).col * Tile.tileSize;
+            double nextWorldY = path.get(0).row * Tile.tileSize;
+
+            if (worldX > nextWorldX) worldX -= getSpeed();
+            else if (worldX < nextWorldX) worldX += getSpeed();
+            else if (worldY > nextWorldY) worldY -= getSpeed();
+            else if (worldY < nextWorldY) worldY += getSpeed();
+
+            if (nextWorldX == goalRow && nextWorldY == goalCol) onPath = false;
+        }
+
+
     }
 
     @Override

@@ -6,25 +6,26 @@ import System.GamePanel;
 
 public class APathfinding {
 
-    public ArrayList<Node> closedList = new ArrayList<>();
+    public ArrayList<Node> closedList;
     public ArrayList<Node> openList;
 
     public Node[][] nodeArray;
+    public Tile[][] tileArray;
     public Node startNode;
     public Node endNode;
     public Node currentNode;
 
     boolean goalReached = false;
     int step;
-    public MyQueue shortestPath;
+    public ArrayList<Node> shortestPath;
 
     public APathfinding (Tile[][] tileArray) {
+        this.tileArray = tileArray;
+
         step = 0;
 
         openList = new ArrayList();
         closedList = new ArrayList<Node>();
-
-        shortestPath = new MyQueue();
 
         nodeArray = new Node[tileArray.length][tileArray[0].length];
         //loops through tile array and copies over its values to a node array
@@ -80,7 +81,6 @@ public class APathfinding {
             }
             step++;
         }
-        //will return empty arrayList if there was no shortest path found
         return goalReached;
     }
 
@@ -132,15 +132,14 @@ public class APathfinding {
     }
 
     private void getShortestPath () {
-        shortestPath = new MyQueue();
+        shortestPath = new ArrayList<Node>();
         Node current = endNode;
 
         while (current != startNode) {
-            shortestPath.enqueue(current);
+            shortestPath.add(current);
             current = current.parent;
         }
-
-        shortestPath.enqueue(startNode);
+        shortestPath.add(startNode);
     }
 
 }
