@@ -18,8 +18,8 @@ public class Map {
     FileReader reader;
 
     private int mapWidth, mapHeight;
-    public Tile[][] baseMapTiles;
-    public Tile[][] obstacleMapTiles;
+    public Tile[][] baseLayerTiles;
+    public Tile[][] spawnLayerTiles;
 
 
     Map(String mapDirectory) {
@@ -40,10 +40,11 @@ public class Map {
         mapWidth = Integer.parseInt(jsonMapObject.get("width").toString());
         mapHeight = Integer.parseInt(jsonMapObject.get("height").toString());
 
-        baseMapTiles = new Tile[mapWidth][mapHeight];
-        obstacleMapTiles = new Tile[mapWidth][mapHeight];
+        baseLayerTiles = new Tile[mapWidth][mapHeight];
+        spawnLayerTiles = new Tile[mapWidth][mapHeight];
 
         JSONArray layers = (JSONArray) jsonMapObject.get("layers");
+
 
         for(int i = 0; i < layers.size(); i++) {
             JSONObject currentLayer = (JSONObject) layers.get(i);
@@ -51,15 +52,11 @@ public class Map {
 
             for(int j = 0; j < dataArray.size(); j++) {
 
-                for(int m = 0; m < mapHeight; m++) {
-                    for(int n = 0; n < mapWidth; n++) {
-                        if(i == 0) {
-                            baseMapTiles[m][n] = new Tile(m, n, Integer.parseInt(dataArray.get(j).toString()));
-                        } else if(i == 1) {
-                            obstacleMapTiles[m][n] = new Tile(m, n, Integer.parseInt(dataArray.get(j).toString()));
-                        }
-                    }
-                }
+                int m = j / mapWidth;
+                int n = j % mapWidth;
+
+                baseLayerTiles[m][n] = new Tile(m, n, Integer.parseInt(dataArray.get(j).toString()));
+                spawnLayerTiles[m][n] = new Tile(m, n, Integer.parseInt(dataArray.get(j).toString()));
 
             }
         }
@@ -70,20 +67,23 @@ public class Map {
             for(int j = 0; j < mapWidth; j++) {
                 setScreenPositions(i, j, player);
                 g2.setColor(Color.BLUE);
-                g2.fillRect(baseMapTiles[i][j].getScreenXPos(), baseMapTiles[i][j].getScreenYPos(), Tile.tileSize, Tile.tileSize);
+                g2.fillRect(baseLayerTiles[i][j].getScreenXPos(), baseLayerTiles[i][j].getScreenYPos(), Tile.tileSize, Tile.tileSize);
 
-                g2.setColor(Color.ORANGE);
-                g2.drawRect(obstacleMapTiles[i][j].getScreenXPos(), obstacleMapTiles[i][j].getScreenYPos(), Tile.tileSize, Tile.tileSize);
+                if(spawnLayerTiles[i][j].getValue() > 0) {
+                    g2.setColor(Color.ORANGE);
+                    g2.fillRect(spawnLayerTiles[i][j].getScreenXPos(), spawnLayerTiles[i][j].getScreenYPos(), Tile.tileSize, Tile.tileSize);
+
+                }
             }
         }
     }
 
     private void setScreenPositions(int x, int y, Player player) {
-        baseMapTiles[x][y].setScreenXPos((int)(baseMapTiles[x][y].getWorldXPos() - player.worldX + player.screenX));
-        obstacleMapTiles[x][y].setScreenXPos((int)(obstacleMapTiles[x][y].getWorldXPos() - player.worldX + player.screenX));
+        baseLayerTiles[x][y].setScreenXPos((int)(baseLayerTiles[x][y].getWorldXPos() - player.worldX + player.screenX));
+        spawnLayerTiles[x][y].setScreenXPos((int)(spawnLayerTiles[x][y].getWorldXPos() - player.worldX + player.screenX));
 
-        baseMapTiles[x][y].setScreenYPos((int)(baseMapTiles[x][y].getWorldYPos() - player.worldY + player.screenY));
-        obstacleMapTiles[x][y].setScreenYPos((int)(obstacleMapTiles[x][y].getWorldYPos() - player.worldY + player.screenY));
+        baseLayerTiles[x][y].setScreenYPos((int)(baseLayerTiles[x][y].getWorldYPos() - player.worldY + player.screenY));
+        spawnLayerTiles[x][y].setScreenYPos((int)(spawnLayerTiles[x][y].getWorldYPos() - player.worldY + player.screenY));
 
     }
 

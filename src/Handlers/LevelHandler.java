@@ -40,7 +40,7 @@ public class LevelHandler {
     }
 
     private void addLevels() {
-        levels[0] = new Level("src/Assets/Maps/Levels/Level1.json");
+        levels[0] = new Level("src/Assets/Maps/Levels/Level1Map.json");
         //ADD MORE LEVELS LATER
     }
 
