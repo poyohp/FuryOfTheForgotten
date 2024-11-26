@@ -1,6 +1,7 @@
 package System;
 
 
+import Entities.Enemy;
 import Entities.Player;
 import Handlers.AttackHandler;
 import Handlers.KeyHandler;
@@ -31,6 +32,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     //Create objects for GAME LOGIC
     public Player player;
+    public Enemy enemy;
     LevelHandler levelHandler;
     KeyHandler keyHandler;
     AttackHandler attackHandler;
@@ -52,6 +54,8 @@ public class GamePanel extends JPanel implements Runnable{
         //Handling ALL LOADING
         keyHandler = new KeyHandler();
         player = new Player(100, 5, Tile.tileSize, Tile.tileSize, "Player", 0, 0, 0, 0, keyHandler);
+        enemy = new Enemy(100, 4, Tile.tileSize, Tile.tileSize, "Enemy", 2*Tile.tileSize, 2*Tile.tileSize, 0, 0);
+
         levelHandler = new LevelHandler(1);
         attackHandler = new AttackHandler(keyHandler);
         pathfinding = new APathfinding(levelHandler.getCurrentLevel().getMap().baseMapTiles);

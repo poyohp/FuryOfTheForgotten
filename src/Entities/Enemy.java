@@ -13,7 +13,7 @@ public class Enemy extends Entity {
     Player player;
     APathfinding pathFinder;
 
-    Enemy(int health, int speed, int width, int height, String name, int worldX, int worldY, int xOffset, int yOffset, Player player, Tile[][] tileset) {
+    public Enemy(int health, int speed, int width, int height, String name, int worldX, int worldY, int xOffset, int yOffset, Player player, Tile[][] tileset) {
         super(health, speed, width, height, name, worldX, worldY, xOffset, yOffset);
         pathFinder = new APathfinding(tileset);
         player = this.player;
