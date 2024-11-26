@@ -52,6 +52,7 @@ public class AttackHandler {
             createRanged(5, 50, 50, player.direction, player, 0, 0, 150, 10);
             createRanged(5, 50, 50, dir1, player, 0, 0, 150, 10);
             createRanged(5, 50, 50, dir2, player, 0, 0, 150, 10);
+            //createMelee(5, 50, 100, dir2, player, 0, 0, 30);
             canAttack = false;
         }
     }

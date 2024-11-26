@@ -23,6 +23,8 @@ public class GamePanel extends JPanel implements Runnable{
     public static final double screenHeight = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
     public static final double FPS = 60;
 
+    //Variables for animation
+    int playerUpdateFrames = 7;
 
     //Create objects for GAME RUNNING
     Thread gameThread;
@@ -54,7 +56,7 @@ public class GamePanel extends JPanel implements Runnable{
         //Handling ALL LOADING
         keyHandler = new KeyHandler();
         player = new Player(100, 5, Tile.tileSize, Tile.tileSize, "Player", 0, 0, 0, 0, keyHandler);
-
+        player.loadImages();
         levelHandler = new LevelHandler(1);
         attackHandler = new AttackHandler(keyHandler);
         Tile[][] currentTileset = levelHandler.getCurrentLevel().getMap().baseMapTiles;
@@ -105,6 +107,16 @@ public class GamePanel extends JPanel implements Runnable{
 
     void update() {
         player.update();
+        if (playerUpdateFrames == 0) {
+            if (player.animationState < 3) {
+                player.animationState++;
+            } else {
+                player.animationState = 0;
+            }
+            playerUpdateFrames = 7;
+        } else {
+            playerUpdateFrames--;
+        }
         attackHandler.update(player);
     }
 

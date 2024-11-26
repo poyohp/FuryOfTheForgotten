@@ -54,7 +54,7 @@ public class Enemy extends Entity {
     }
 
     void setScreenPosition() {
-        this.screenX = (int) (GamePanel.screenWidth / 2) - (double) this.getWidth() / 2;
+        this.screenX = (int) (GamePanel.screenWidth / 2) - (double) this.getWidth() / 2 + 100;
         this.screenY = (int) (GamePanel.screenHeight / 2) - (double) this.getHeight() / 2;
     }
 
