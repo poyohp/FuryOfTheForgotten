@@ -3,6 +3,7 @@ package Entities;
 import Pathfinding.APathfinding;
 import Pathfinding.Node;
 import World.Tile;
+import System.GamePanel;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -17,14 +18,16 @@ public class Enemy extends Entity {
         super(health, speed, width, height, name, worldX, worldY, xOffset, yOffset);
         pathFinder = new APathfinding(tileset);
         player = this.player;
+
+        setScreenPosition();
     }
 
     @Override
-    void update() {
+    public void update() {
         move();
     }
 
-    void move() {
+    public void move() {
 
         if (onPath) {
             int goalRow = (int)player.entityTop/ Tile.tileSize; //top row of the player
@@ -50,6 +53,11 @@ public class Enemy extends Entity {
          */
     }
 
+    void setScreenPosition() {
+        this.screenX = (int) (GamePanel.screenWidth / 2) - (double) this.getWidth() / 2;
+        this.screenY = (int) (GamePanel.screenHeight / 2) - (double) this.getHeight() / 2;
+    }
+
     public void searchPath(int goalRow, int goalCol) {
         int startRow = (int)this.entityTop/ Tile.tileSize; //top row of the enemy
         int startCol = (int)player.entityLeft/Tile.tileSize; //left row of the enemy
@@ -71,9 +79,10 @@ public class Enemy extends Entity {
     }
 
     @Override
-    void draw(Graphics2D g2) {
-        /*
-        DRAW enemy image
-         */
+    public void draw(Graphics2D g2) {
+        g2.setColor(Color.PINK);
+        g2.fillRect((int) screenX, (int) screenY, this.getWidth(), this.getHeight());
+        g2.setColor(Color.RED);
+        g2.drawRect((int) screenX, (int) screenY, this.getWidth(), this.getHeight());
     }
 }

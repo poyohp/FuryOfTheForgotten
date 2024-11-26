@@ -126,6 +126,7 @@ public class GamePanel extends JPanel implements Runnable{
 
         levelHandler.getCurrentLevel().getMap().drawMap(g2, player);
         player.draw(g2);
+        enemy.draw(g2);
         attackHandler.draw(g2);
 
 
