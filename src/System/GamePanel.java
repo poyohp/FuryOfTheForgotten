@@ -24,7 +24,7 @@ public class GamePanel extends JPanel implements Runnable{
     public static final double FPS = 60;
 
     //Variables for animation
-    int playerUpdateFrames = 7;
+    int playerUpdateFrames = 12;
 
     //Create objects for GAME RUNNING
     Thread gameThread;
@@ -61,7 +61,7 @@ public class GamePanel extends JPanel implements Runnable{
         attackHandler = new AttackHandler(keyHandler);
         Tile[][] currentTileset = levelHandler.getCurrentLevel().getMap().baseMapTiles;
         pathfinding = new APathfinding(currentTileset);
-        enemy = new Enemy(100, 4, Tile.tileSize, Tile.tileSize, "Enemy", 2*Tile.tileSize, 2*Tile.tileSize, 0, 0, player, currentTileset);
+        //enemy = new Enemy(100, 4, Tile.tileSize, Tile.tileSize, "Enemy", 2*Tile.tileSize, 2*Tile.tileSize, 0, 0, player, currentTileset);
 
         this.addKeyListener(keyHandler);
 
@@ -113,7 +113,7 @@ public class GamePanel extends JPanel implements Runnable{
             } else {
                 player.animationState = 0;
             }
-            playerUpdateFrames = 7;
+            playerUpdateFrames = 12;
         } else {
             playerUpdateFrames--;
         }
@@ -138,7 +138,7 @@ public class GamePanel extends JPanel implements Runnable{
 
         levelHandler.getCurrentLevel().getMap().drawMap(g2, player);
         player.draw(g2);
-        enemy.draw(g2);
+        //enemy.draw(g2);
         attackHandler.draw(g2);
 
 
