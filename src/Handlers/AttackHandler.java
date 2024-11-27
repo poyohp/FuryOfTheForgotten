@@ -4,6 +4,7 @@ package Handlers;
 import Attacks.Attack;
 import Attacks.Melee;
 import Attacks.Ranged;
+import Entities.Enemy;
 import Entities.Entity;
 import Entities.Hitbox;
 import Entities.Player;
@@ -69,9 +70,7 @@ public class AttackHandler {
 
     }
 
-    // Must be updated when other entities are included to take an asrraylist of all entities as a parameter, not just a player)
-    public void update(Player player) {
-        checkForPlayerAttack(keyHandler, player);
+    void determinePlayerRangedAttackVelocity() {
         for (Attack a : attacks) {
             if (a.getDirection()[0] == 'u') {
                 if (a.getDirection()[1] == 'u' || a.getDirection()[1] == 'd') {
@@ -107,6 +106,12 @@ public class AttackHandler {
                 }
             }
         }
+    }
+
+    // Must be updated when other entities are included to take an arraylist of all entities as a parameter, not just a player)
+    public void update(Player player) {
+        checkForPlayerAttack(keyHandler, player);
+        determinePlayerRangedAttackVelocity();
         if (!canAttack) {
             if (cooldown == 0) {
                 canAttack = true;

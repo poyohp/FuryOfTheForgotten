@@ -221,7 +221,7 @@ public class Player extends Entity {
                         case 1:
                             g2.drawImage(sprites, (int) screenX, (int) screenY, (int) screenX + getWidth(), (int) screenY + this.getHeight(), column2, row13, column2 + 16, row13 + 16, transparent, null);
                             break;
-                        case 2:
+                        case 2, 3:
                             g2.drawImage(sprites, (int) screenX, (int) screenY, (int) screenX + getWidth(), (int) screenY + this.getHeight(), column3, row13, column3 + 16, row13 + 16, transparent, null);
                             break;
                     }
