@@ -13,9 +13,13 @@ public class Enemy extends Entity {
     public boolean onPath;
     Player player;
     APathfinding pathFinder;
+    Tile[][] tileset;
 
-    public Enemy(int health, int speed, int width, int height, String name, int worldX, int worldY, int xOffset, int yOffset, int hitBoxWidth, int hitBoxHeight, Tile[][] tileset) {
+    public Enemy(int health, int speed, int width, int height, String name, int worldX, int worldY, int xOffset, int yOffset, int hitBoxWidth, int hitBoxHeight, Player player, Tile[][] tileset) {
         super(health, speed, width, height, name, worldX, worldY, xOffset, yOffset, hitBoxWidth, hitBoxHeight);
+        this.player = player;
+        this.tileset = tileset;
+
         pathFinder = new APathfinding(tileset);
 
         setScreenPosition();
@@ -58,20 +62,27 @@ public class Enemy extends Entity {
     }
 
     public void searchPath(int goalRow, int goalCol) {
-        int startRow = (int)this.entityTop/ Tile.tileSize; //top row of the enemy
-        int startCol = (int)player.entityLeft/Tile.tileSize; //left row of the enemy
+        int startRow = (int) (this.entityTop/Tile.tileSize); //top row of the enemy
+        int startCol = (int) (player.entityLeft/Tile.tileSize); //left row of the enemy
 
-        if (pathFinder.findPath(pathFinder.tileArray[startRow][startCol], pathFinder.tileArray[goalRow][goalCol])) {
+        pathFinder.setNodes(tileset[startRow][startCol], tileset[goalRow][goalCol]);
+
+        if (pathFinder.search()) {
             ArrayList<Node> path = pathFinder.shortestPath;
-            double nextWorldX = path.get(0).col * Tile.tileSize;
-            double nextWorldY = path.get(0).row * Tile.tileSize;
+
+            double nextCol = path.get(0).col;
+            double nextRow = path.get(0).row;
+
+            double nextWorldX = nextCol * Tile.tileSize;
+            double nextWorldY = nextRow * Tile.tileSize;
 
             if (worldX > nextWorldX) worldX -= getSpeed();
             else if (worldX < nextWorldX) worldX += getSpeed();
             else if (worldY > nextWorldY) worldY -= getSpeed();
             else if (worldY < nextWorldY) worldY += getSpeed();
 
-            if (nextWorldX == goalRow && nextWorldY == goalCol) onPath = false;
+
+            if (nextRow == goalRow && nextCol == goalCol) onPath = false;
         }
 
 

@@ -2,144 +2,171 @@ package Pathfinding;
 
 import World.Tile;
 import java.util.ArrayList;
-import System.GamePanel;
 
 public class APathfinding {
 
-    public ArrayList<Node> closedList;
-    public ArrayList<Node> openList;
+    public Node[][] nodes;
 
-    public Node[][] nodeArray;
+    public ArrayList<Node> openList = new ArrayList<Node>();
+    public ArrayList<Node> checkedList = new ArrayList<Node>();
+
     public Tile[][] tileArray;
+    int maxRows;
+    int maxCols;
+
     public Node startNode;
     public Node endNode;
     public Node currentNode;
 
-    boolean goalReached = false;
-    int step;
-    public ArrayList<Node> shortestPath;
+    boolean goalReached;
+    int steps;
+    public ArrayList<Node> shortestPath = new ArrayList<Node>();
 
     public APathfinding (Tile[][] tileArray) {
         this.tileArray = tileArray;
 
-        step = 0;
+        this.steps = 0;
+        this.goalReached = false;
 
-        openList = new ArrayList();
-        closedList = new ArrayList<Node>();
+        maxRows = tileArray.length;
+        maxCols = tileArray[0].length;
 
-        nodeArray = new Node[tileArray.length][tileArray[0].length];
-        //loops through tile array and copies over its values to a node array
-        for (int row = 0; row < tileArray.length; row++) {
-            for (int col = 0; col < tileArray[row].length; col++) {
-                nodeArray[row][col] = new Node(tileArray[row][col]);
-                if (tileArray[row][col].walkable) nodeArray[row][col].walkable = true;
-                else nodeArray[row][col].walkable = false;
+        initializeNodes();
+    }
+
+    public void initializeNodes() {
+        nodes = new Node[maxRows][maxCols];
+
+        for (int row = 0; row < maxRows; row++) {
+            for (int col = 0; col < maxCols; col++) {
+                Node node = new Node(tileArray[row][col]);
+                nodes[row][col] = node;
             }
         }
     }
 
-    public void initializeNodeCosts() {
-        for (int row = 0; row < nodeArray.length; row++) {
-            for (int col = 0; col < nodeArray[row].length; col++) {
-                setCosts(nodeArray[row][col]);
+    private void resetNodes() {
+        for (int row = 0; row < maxRows; row++) {
+            for (int col = 0; col < maxCols; col++) {
+                nodes[row][col].walkable = true;
+                nodes[row][col].checked = false;
+                nodes[row][col].open = false;
+            }
+        }
+
+        //Reset all lists and variables
+        openList.clear();
+        checkedList.clear();
+        goalReached = false;
+        steps = 0;
+        shortestPath.clear();
+    }
+
+    public void setNodes(Tile startTile, Tile endTile) {
+
+        resetNodes();
+
+        //Setting all the important nodes
+        startNode = nodes[startTile.getRow()][startTile.getCol()];
+        endNode = nodes[endTile.getRow()][endTile.getCol()];
+        currentNode = startNode;
+
+        openList.add(currentNode);
+
+        // Setting values for nodes
+        for (int row = 0; row < maxRows; row++) {
+            for (int col = 0; col < maxCols; col++) {
+                // If corresponding Tile is walkable, then node is walkable
+                if (tileArray[row][col].walkable) nodes[row][col].walkable = true;
+                else nodes[row][col].walkable = false;
+                setCost(nodes[row][col]);
             }
         }
     }
 
-    public boolean findPath(Tile startTile, Tile endTile) {
-        //initialize starting and ending nodes to the ones in the 2D Node array
-        endNode = nodeArray[endTile.getRow()][endTile.getCol()];
-        startNode = nodeArray[startTile.getRow()][startTile.getCol()];
+    private void setCost (Node node) {
+        int xDistance = Math.abs(node.col - startNode.col);
+        int yDistance = Math.abs(node.row - startNode.row);
+        node.gCost = xDistance + yDistance;
 
-        // sets all the node costs
-        initializeNodeCosts();
+        xDistance = Math.abs(node.col - endNode.col);
+        yDistance = Math.abs(node.row - endNode.row);
+        node.hCost = xDistance + yDistance;
 
-        //initialize the starting node
-        openList.add(startNode);
+        node.fCost = node.gCost + node.hCost;
+    }
 
-        //while there are still nodes to be evalutated, look for the path
-        //Limit on steps makes sure that the path doesn't continually look for a path if there isn't one
-        while (!openList.isEmpty() && step < 500 && !goalReached) {
-            currentNode = getLowestFCost();
+    public boolean search() {
+        // Limit of 400 steps ensures that if there is no path, the program stops searching
+        while (!goalReached && steps < 400) {
+            int row = currentNode.row;
+            int col = currentNode.col;
+
+            currentNode.checked = true; // We have already stepped on this node as a best path candidate
+            checkedList.add(currentNode);
             openList.remove(currentNode);
-            closedList.add(currentNode);
+
+
+            // open neighbours of the current node (only when they are part of the map!)
+            if ((row - 1) >= 0) openNode(nodes[row - 1][col]); // up
+            if ((row + 1) < maxRows) openNode(nodes[row + 1][col]); // down
+            if ((col - 1) >= 0) openNode(nodes[row][col - 1]); // left
+            if ((col + 1) < maxCols) openNode(nodes[row][col + 1]); // right
+
+            // If there are no more nodes in the open list, end the loop!
+            if (openList.isEmpty()) break;
+
+            currentNode = getLowestFCost(); //Current node is the next most promising node
 
             if (currentNode == endNode) {
                 goalReached = true;
                 getShortestPath();
             }
-
-            for (Node neighbour: getNeighbours(currentNode)) {
-                //skips obstacles and nodes that have already been evaluated
-                if (!neighbour.walkable || inList(closedList, neighbour)) continue;
-
-                // if neighbour is not in open list
-                if (!inList(openList, neighbour)) {
-                    neighbour.parent = currentNode;
-                    openList.add(neighbour);
-                }
-            }
-            step++;
+            steps++;
         }
+
         return goalReached;
     }
 
-    private ArrayList<Node> getNeighbours(Node currentNode) {
-        ArrayList<Node> neighbours = new ArrayList<>();
-
-        int row = currentNode.row;
-        int col = currentNode.col;
-
-        // get neighbours (only when they are part of the map!)
-        if (row > 0) neighbours.add(nodeArray[row - 1][col]); // up
-        if (row < nodeArray[0].length - 1) neighbours.add(nodeArray[row + 1][col]); // down
-        if (col > 0) neighbours.add(nodeArray[currentNode.row][currentNode.col - 1]); // left
-        if (col < nodeArray.length - 1) neighbours.add(nodeArray[currentNode.row][currentNode.col + 1]); // right
-
-        return neighbours;
-    }
-
-    private boolean inList(ArrayList<Node> list, Node node) {
-        for (Node n: list) {
-            if (n.equals(node)) return true;
+    void openNode (Node node) {
+        if (!node.open && !node.checked && !node.walkable) {
+            //If node is walkable, not checked yet, and not opened yet, open it for evaluation
+            node.open = true;
+            node.parent = currentNode;
+            openList.add(node);
         }
-        return false;
     }
 
     private Node getLowestFCost() {
         //Takes the first node and sets it up initially to have the lowest cost
-        Node lowestCost = openList.get(0);
+        Node bestNode = openList.get(0);
+        int bestNodeFCost = 999; //Setting an inital lowest fCost
 
         for (Node node: openList) {
-            if (node.fCost < lowestCost.fCost) lowestCost = node;
-
-            //If the f cost is equal, get the one with the lower gcost
-            if (node.gCost < lowestCost.gCost) lowestCost = node;
+            //Check for a better fcost
+            if (node.fCost < bestNodeFCost) {
+                bestNode = node;
+                bestNodeFCost = node.fCost;
+            } else if (node.fCost == bestNodeFCost) {
+                // If there is an equal fcost, get the node with the lower gCost
+                if (node.gCost < bestNode.gCost) {
+                    bestNode = node;
+                }
+            }
         }
-        return lowestCost;
+        return bestNode;
     }
 
-    private void setCosts (Node currentNode) {
-        int xDistance = Math.abs(currentNode.col - startNode.col);
-        int yDistance = Math.abs(currentNode.row - startNode.row);
-        currentNode.gCost = xDistance + yDistance;
-
-        xDistance = Math.abs(currentNode.col - endNode.col);
-        yDistance = Math.abs(currentNode.row - endNode.row);
-        currentNode.hCost = xDistance + yDistance;
-
-        currentNode.fCost = currentNode.gCost + currentNode.hCost;
-    }
-
+    /**
+     * Returns list of nodes with the correct path, the first index being the first node in the path
+     */
     private void getShortestPath () {
-        shortestPath = new ArrayList<Node>();
         Node current = endNode;
 
         while (current != startNode) {
-            shortestPath.add(current);
+            shortestPath.add(0, current); // Adds node to the start of the list
             current = current.parent;
         }
-        shortestPath.add(startNode);
     }
 
 }

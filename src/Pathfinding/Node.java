@@ -5,7 +5,6 @@ import World.Tile;
 public class Node {
     public Tile tile;
     public Node parent;
-    public boolean walkable;
     public int row, col;
 
     /*
@@ -13,7 +12,9 @@ public class Node {
     h cost is the lowest cost path from node to end
     f cost is the sum of g and h costs
      */
-    public int gCost = Integer.MAX_VALUE, hCost, fCost;
+    public int gCost, hCost, fCost;
+
+    public boolean walkable, open, checked;
 
     public Node(Tile tile) {
         this.tile = tile;
