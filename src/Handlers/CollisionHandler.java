@@ -30,13 +30,9 @@ public class CollisionHandler {
 
     public boolean playerWithTileCollision(Player player, Tile[][] tiles) {
         int topRow = (int)(player.entityTop/Tile.tileSize);
-        System.out.println("TOP: "+ topRow);
         int bottomRow = (int)(player.entityBottom/Tile.tileSize);
-        System.out.println("BOTTOm: "+ bottomRow);
         int leftCol = (int)(player.entityLeft/Tile.tileSize);
-        System.out.println("LEFT: "+ leftCol);
         int rightCol = (int)(player.entityRight/Tile.tileSize);
-        System.out.println("RIGHT: "+ rightCol);
 
         if (player.direction == 'u') {
             return isCollidableTileInRow(topRow - 1, leftCol, rightCol, tiles);

@@ -41,6 +41,13 @@ public abstract class Entity {
         entityBottom = entityTop + (double) hitbox.getHeight();
     }
 
+    public void updateEntityPosition() {
+        entityLeft = hitbox.getWorldXPos();
+        entityRight = entityLeft + (double) hitbox.getWidth();
+        entityTop = hitbox.getWorldYPos();
+        entityBottom = entityTop + (double) hitbox.getHeight();
+    }
+
     public int getHealth() {
         return health;
     }
