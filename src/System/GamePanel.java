@@ -24,9 +24,6 @@ public class GamePanel extends JPanel implements Runnable{
     public static final double screenHeight = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
     public static final double FPS = 60;
 
-    //Variables for animation
-    int playerUpdateFrames = 12;
-
     //Create objects for GAME RUNNING
     Thread gameThread;
 
@@ -116,16 +113,6 @@ public class GamePanel extends JPanel implements Runnable{
         attackHandler.update(player);
 
         //PLEASE MOVE THIS CODE! (ideally into player class)
-        if (playerUpdateFrames == 0) {
-            if (player.animationState < 3) {
-                player.animationState++;
-            } else {
-                player.animationState = 0;
-            }
-            playerUpdateFrames = 12;
-        } else {
-            playerUpdateFrames--;
-        }
 
         enemy.move();
     }
