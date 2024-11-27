@@ -70,10 +70,13 @@ public class CollisionHandler {
         } else if(player.direction == 'r') {
             if (rightCol + 1 >= tiles[0].length) return true;
             if (isNotWalkableTileInCol(rightCol + 1, topRow, bottomRow, tiles)) {
-                double tileLeft = tiles[topRow][rightCol + 1].getWorldXPos();
-                if (player.entityRight + player.getSpeed() > tileLeft) {
+                double tileLeft = tiles[bottomRow][rightCol + 1].getWorldXPos();
+                System.out.println("Tile left x: " + tileLeft);
+                System.out.println("Player's right: " + player.entityRight);
+
+                if (player.entityRight + player.getSpeed() >= tileLeft) {
                     System.out.println("Collision RIGHT is going to happen!");
-                    player.worldX = tileLeft - player.hitbox.getWidth();
+                    player.worldX = tileLeft - player.getWidth();
                     return true;
                 }
             }
