@@ -22,7 +22,7 @@ public abstract class Entity {
 
     abstract void update();
 
-    public Entity (int health, double speed, int width, int height, String name, double worldX, double worldY, int xOffset, int yOffset) {
+    public Entity (int health, double speed, int width, int height, String name, double worldX, double worldY, int xOffset, int yOffset, int hitBoxWidth, int hitBoxHeight) {
         this.health = health;
         this.speed = speed;
         this.width = width;
@@ -33,8 +33,7 @@ public abstract class Entity {
 
         this.worldX = worldX;
         this.worldY = worldY;
-        hitbox = new Hitbox((int)worldX, (int)worldY, xOffset, yOffset, width, height);
-        hitbox.setHitbox();
+        hitbox = new Hitbox((int)worldX, (int)worldY, xOffset, yOffset, hitBoxWidth, hitBoxHeight);
 
         entityLeft = hitbox.getWorldXPos();
         entityRight = entityLeft + (double) hitbox.getWidth();

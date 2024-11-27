@@ -15,13 +15,6 @@ public class Hitbox {
         this.height = height;
     }
 
-    public void setHitbox() {
-        worldXPos += xOffset;
-        worldYPos += yOffset;
-        width -= 2*xOffset;
-        height -= 2*yOffset;
-    }
-
     public int getWidth() {
         return width;
     }
