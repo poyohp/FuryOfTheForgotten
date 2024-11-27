@@ -31,6 +31,7 @@ public class Tile {
         getImageRowCol();
 
         this.walkable = walkable;
+        System.out.print(tileSize);
 
         System.out.println(tileSize);
     }

@@ -56,7 +56,7 @@ public class GamePanel extends JPanel implements Runnable{
 
         //Handling ALL LOADING
         keyHandler = new KeyHandler();
-        player = new Player(100, 5, Tile.tileSize, Tile.tileSize, "Player", 128, 128, 4*Tile.tileSize/Tile.normalTileSize, 3*Tile.tileSize/Tile.normalTileSize, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
+        player = new Player(100, 2, Tile.tileSize, Tile.tileSize, "Player", 128, 128, 4*Tile.tileSize/Tile.normalTileSize, 3*Tile.tileSize/Tile.normalTileSize, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
         player.loadImages();
         levelHandler = new LevelHandler(1);
         attackHandler = new AttackHandler(keyHandler);
@@ -114,7 +114,7 @@ public class GamePanel extends JPanel implements Runnable{
 
         //PLEASE MOVE THIS CODE! (ideally into player class)
 
-        enemy.move();
+//        enemy.move();
     }
 
 
