@@ -1,5 +1,6 @@
 package Handlers;
 
+import Entities.Enemy;
 import Entities.Player;
 import World.Level;
 
@@ -34,6 +35,19 @@ public class LevelHandler {
             currentLevelIndex--;
         }
     }
+
+    public void update(CollisionHandler collisionHandler, Player player) {
+
+        for (Enemy enemy : currentLevel.enemies) {
+            enemy.update();
+        }
+
+        //this is broken!
+        //player.isColliding = collisionHandler.playerWithTileCollision(player, currentLevel.getMap().baseLayerTiles);
+
+
+    }
+
 
     public Level getCurrentLevel() {
         return currentLevel;

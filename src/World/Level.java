@@ -4,7 +4,6 @@ import Attacks.Attack;
 import Entities.Enemy;
 import org.json.simple.parser.ParseException;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -30,7 +29,5 @@ public class Level {
     public Map getMap() {
         return map;
     }
-
-
 
 }

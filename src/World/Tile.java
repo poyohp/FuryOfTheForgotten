@@ -1,27 +1,42 @@
 package World;
 
-import System.GamePanel;
+import System.*;
+
+import java.awt.image.BufferedImage;
+import java.awt.image.RasterFormatException;
 
 public class Tile {
     public static final int startingTileSize = 16;
     private static final int numToMultiply = 3;
     public static final int tileMultipler = (int) (GamePanel.screenWidth/GamePanel.screenHeight * numToMultiply);
     public static final int tileSize = startingTileSize*tileMultipler;
+    public static final int normalTileSize = 16;
 
     private int value;
     private int row, col;
-    private int worldXPos, worldYPos;
-    private int screenXPos, screenYPos;
+    private int imageRow, imageCol;
+    private double worldXPos, worldYPos;
+    private double screenXPos, screenYPos;
 
     public boolean walkable;
 
-    Tile(int row, int col, int value) {
+    Tile(int row, int col, int value, boolean walkable) {
         this.row = row;
         this.col = col;
-        this.value = value;
+        this.value = value - 1;
 
         setWorldXPos();
         setWorldYPos();
+
+        getImageRowCol();
+
+        this.walkable = walkable;
+
+    }
+
+    public void getImageRowCol() {
+        imageRow = (value / 28);
+        imageCol = (value % 28);
     }
 
     private void setWorldXPos() {
@@ -32,17 +47,9 @@ public class Tile {
         worldYPos = row * tileSize;
     }
 
-    // CURRENT IMAGE
-    // IMAGE LIST
+    public double getScreenXPos() {return screenXPos;}
 
-    //ANIMATION METHOD
-    //
-
-    public int getScreenXPos() {
-        return screenXPos;
-    }
-
-    public int getScreenYPos() {
+    public double getScreenYPos() {
         return screenYPos;
     }
 
@@ -50,11 +57,11 @@ public class Tile {
         return value;
     }
 
-    public int getWorldXPos() {
+    public double getWorldXPos() {
         return worldXPos;
     }
 
-    public int getWorldYPos() {
+    public double getWorldYPos() {
         return worldYPos;
     }
 
@@ -71,4 +78,7 @@ public class Tile {
     public int getRow() { return this.col; }
 
 
+    public int getImageRow() { return imageRow; }
+
+    public int getImageCol() { return imageCol; }
 }

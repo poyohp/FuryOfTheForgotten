@@ -1,5 +1,6 @@
 package World;
 
+import System.Main;
 import Entities.Player;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -7,23 +8,29 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Map {
 
+    private final BufferedImage tileSetImage = Main.loadImage("src/Assets/Tilesets/universalTileset.png");
+
     private String mapDirectory;
-    JSONParser parser;
-    FileReader reader;
+    private JSONParser parser;
+    private FileReader reader;
 
     private int mapWidth, mapHeight;
     public Tile[][] baseLayerTiles;
     public Tile[][] spawnLayerTiles;
 
+    ArrayList<Integer> nonWalkableValues = new ArrayList<Integer>();
 
     Map(String mapDirectory) {
         this.mapDirectory = mapDirectory;
+        addAllNonWalkableValues();
     }
 
     void getMap() throws IOException, ParseException {
@@ -54,10 +61,16 @@ public class Map {
 
                 int m = j / mapWidth;
                 int n = j % mapWidth;
+                boolean walkable;
 
-                baseLayerTiles[m][n] = new Tile(m, n, Integer.parseInt(dataArray.get(j).toString()));
-                spawnLayerTiles[m][n] = new Tile(m, n, Integer.parseInt(dataArray.get(j).toString()));
+                walkable = !nonWalkableValues.contains(Integer.parseInt(dataArray.get(j).toString()));
 
+                if(i == 0) {
+                    baseLayerTiles[m][n] = new Tile(m, n, Integer.parseInt(dataArray.get(j).toString()), walkable);
+                }
+                if(i == 1) {
+                    spawnLayerTiles[m][n] = new Tile(m, n, Integer.parseInt(dataArray.get(j).toString()), walkable);
+                }
             }
         }
     }
@@ -66,12 +79,12 @@ public class Map {
         for(int i = 0; i < mapHeight; i++) {
             for(int j = 0; j < mapWidth; j++) {
                 setScreenPositions(i, j, player);
-                g2.setColor(Color.BLUE);
-                g2.fillRect(baseLayerTiles[i][j].getScreenXPos(), baseLayerTiles[i][j].getScreenYPos(), Tile.tileSize, Tile.tileSize);
 
+                g2.drawImage(tileSetImage, (int) baseLayerTiles[i][j].getScreenXPos(), (int) baseLayerTiles[i][j].getScreenYPos(), (int) baseLayerTiles[i][j].getScreenXPos() + Tile.tileSize, (int) baseLayerTiles[i][j].getScreenYPos() + Tile.tileSize, baseLayerTiles[i][j].getImageCol()*Tile.normalTileSize, baseLayerTiles[i][j].getImageRow()*Tile.normalTileSize, baseLayerTiles[i][j].getImageCol()*Tile.normalTileSize+Tile.normalTileSize, baseLayerTiles[i][j].getImageRow()*Tile.normalTileSize + Tile.normalTileSize, null);
+                
                 if(spawnLayerTiles[i][j].getValue() > 0) {
                     g2.setColor(Color.ORANGE);
-                    g2.fillRect(spawnLayerTiles[i][j].getScreenXPos(), spawnLayerTiles[i][j].getScreenYPos(), Tile.tileSize, Tile.tileSize);
+                    g2.fillRect((int)spawnLayerTiles[i][j].getScreenXPos(), (int)spawnLayerTiles[i][j].getScreenYPos(), Tile.tileSize, Tile.tileSize);
 
                 }
             }
@@ -87,12 +100,17 @@ public class Map {
 
     }
 
-    public int getMapWidth() {
-        return mapWidth;
-    }
-
-    public int getMapHeight() {
-        return mapHeight;
+    private void addAllNonWalkableValues() {
+        this.nonWalkableValues.add(201);
+        this.nonWalkableValues.add(202);
+        this.nonWalkableValues.add(203);
+        this.nonWalkableValues.add(229);
+        this.nonWalkableValues.add(230);
+        this.nonWalkableValues.add(232);
+        this.nonWalkableValues.add(258);
+        this.nonWalkableValues.add(260);
+        this.nonWalkableValues.add(286);
+        this.nonWalkableValues.add(287);
     }
 
 }

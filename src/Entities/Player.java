@@ -8,7 +8,9 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Player extends Entity {
-    Boolean isColliding, interact, attack;
+    public Boolean isColliding;
+    Boolean interact;
+    Boolean attack;
     public KeyHandler keyHandler;
     BufferedImage sprites;
     public int animationState = 0;
@@ -72,7 +74,6 @@ public class Player extends Entity {
             worldX += getSpeed();
             direction = 'r';
         }
-
     }
 
     @Override

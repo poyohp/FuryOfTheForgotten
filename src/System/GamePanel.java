@@ -4,6 +4,7 @@ package System;
 import Entities.Enemy;
 import Entities.Player;
 import Handlers.AttackHandler;
+import Handlers.CollisionHandler;
 import Handlers.KeyHandler;
 import Handlers.LevelHandler;
 import Pathfinding.APathfinding;
@@ -38,6 +39,7 @@ public class GamePanel extends JPanel implements Runnable{
     LevelHandler levelHandler;
     KeyHandler keyHandler;
     AttackHandler attackHandler;
+    CollisionHandler collisionHandler;
 
 
     public GamePanel() {
@@ -55,10 +57,11 @@ public class GamePanel extends JPanel implements Runnable{
 
         //Handling ALL LOADING
         keyHandler = new KeyHandler();
-        player = new Player(100, 5, Tile.tileSize, Tile.tileSize, "Player", 0, 0, 4*Tile.tileSize/Tile.normalTileSize, 3*Tile.tileSize/Tile.normalTileSize, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
+        player = new Player(100, 5, Tile.tileSize, Tile.tileSize, "Player", 128, 128, 4*Tile.tileSize/Tile.normalTileSize, 3*Tile.tileSize/Tile.normalTileSize, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
         player.loadImages();
         levelHandler = new LevelHandler(1);
         attackHandler = new AttackHandler(keyHandler);
+        collisionHandler = new CollisionHandler();
         Tile[][] currentTileset = levelHandler.getCurrentLevel().getMap().baseLayerTiles;
         pathfinding = new APathfinding(currentTileset);
         //enemy = new Enemy(100, 4, Tile.tileSize, Tile.tileSize, "Enemy", 2*Tile.tileSize, 2*Tile.tileSize, 0, 0, player, currentTileset);
@@ -107,6 +110,8 @@ public class GamePanel extends JPanel implements Runnable{
 
     void update() {
         player.update();
+        levelHandler.update(collisionHandler, player);
+
         if (playerUpdateFrames == 0) {
             if (player.animationState < 3) {
                 player.animationState++;
