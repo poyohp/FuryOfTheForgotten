@@ -49,14 +49,9 @@ public class Player extends Entity {
         }
     }
 
-    void loadSkeleton() {
-
-    }
-
-    // ResourceBar healthBar;
-
     public void update() {
         if (!isColliding && !attacking) move();
+        hitbox.update(this);
     }
 
     private void move() {

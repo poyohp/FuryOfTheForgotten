@@ -29,10 +29,14 @@ public class CollisionHandler {
     }
 
     public boolean playerWithTileCollision(Player player, Tile[][] tiles) {
-        int topRow = (int)player.entityTop/Tile.tileSize;
-        int bottomRow = (int)player.entityBottom/Tile.tileSize;
-        int leftCol = (int)player.entityLeft/Tile.tileSize;
-        int rightCol = (int)player.entityRight/Tile.tileSize;
+        int topRow = (int)(player.entityTop/Tile.tileSize);
+        System.out.println("TOP: "+ topRow);
+        int bottomRow = (int)(player.entityBottom/Tile.tileSize);
+        System.out.println("BOTTOm: "+ bottomRow);
+        int leftCol = (int)(player.entityLeft/Tile.tileSize);
+        System.out.println("LEFT: "+ leftCol);
+        int rightCol = (int)(player.entityRight/Tile.tileSize);
+        System.out.println("RIGHT: "+ rightCol);
 
         if (player.direction == 'u') {
             return isCollidableTileInRow(topRow - 1, leftCol, rightCol, tiles);
@@ -40,14 +44,16 @@ public class CollisionHandler {
             return isCollidableTileInRow(bottomRow + 1, leftCol, rightCol, tiles);
         } else if (player.direction == 'l') {
             return isCollidableTileInColumn(leftCol - 1, topRow, bottomRow, tiles);
-        } else {
+        } else if(player.direction == 'r') {
             return isCollidableTileInColumn(rightCol + 1, topRow, bottomRow, tiles);
         }
+        else return false;
     }
 
     private boolean isCollidableTileInRow(int row, int leftCol, int rightCol, Tile[][] tiles) {
         for (int col = leftCol; col <= rightCol; col++) {
             if (!(tiles[row][col].walkable)) {
+                System.out.println("TILE UP /DOWN NOT WALKABLE!");
                 return true;
             }
         }
@@ -57,6 +63,7 @@ public class CollisionHandler {
     private boolean isCollidableTileInColumn(int col, int topRow, int bottomRow, Tile[][] tiles) {
         for (int row = topRow; row <= bottomRow; row++) {
             if (!(tiles[row][col].walkable)) {
+                System.out.println("TILE RIGHT/LEFT NOT WALKABLE!");
                 return true;
             }
         }

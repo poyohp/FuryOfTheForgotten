@@ -113,7 +113,9 @@ public class GamePanel extends JPanel implements Runnable{
     void update() {
         player.update();
         levelHandler.update(collisionHandler, player);
+        attackHandler.update(player);
 
+        //PLEASE MOVE THIS CODE! (ideally into player class)
         if (playerUpdateFrames == 0) {
             if (player.animationState < 3) {
                 player.animationState++;
@@ -124,7 +126,6 @@ public class GamePanel extends JPanel implements Runnable{
         } else {
             playerUpdateFrames--;
         }
-        attackHandler.update(player);
 
         enemy.move();
     }
@@ -146,6 +147,7 @@ public class GamePanel extends JPanel implements Runnable{
 
         levelHandler.getCurrentLevel().getMap().drawMap(g2, player);
         player.draw(g2);
+        player.hitbox.drawHitbox(g2, player);
         enemy.draw(g2);
         attackHandler.draw(g2);
 
@@ -164,7 +166,7 @@ public class GamePanel extends JPanel implements Runnable{
                 } else {
                     g2.setColor(Color.RED);
                 }
-                g2.drawRect(col * Tile.tileSize, row * Tile.tileSize, Tile.tileSize, Tile.tileSize);
+                g2.drawRect((int)((col * Tile.tileSize) - player.worldX + player.screenX), (int)((row * Tile.tileSize) - player.worldY + player.screenY), Tile.tileSize, Tile.tileSize);
             }
         }
     }

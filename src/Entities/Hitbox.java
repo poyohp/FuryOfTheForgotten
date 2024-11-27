@@ -1,5 +1,9 @@
 package Entities;
 
+import Attacks.Attack;
+
+import java.awt.*;
+
 public class Hitbox {
 
     private int xOffset, yOffset;
@@ -14,6 +18,22 @@ public class Hitbox {
         this.width = width;
         this.height = height;
     }
+
+    public void drawHitbox(Graphics2D g2, Player player) {
+        g2.setColor(Color.BLACK);
+        g2.fillRect((int)(this.worldXPos - player.worldX + player.screenX), (int)(this.worldYPos - player.worldY + player.screenY), width, height);
+    }
+
+    public void update(Entity entity) {
+        worldXPos = entity.worldX+xOffset;
+        worldYPos = entity.worldY+yOffset;
+    }
+
+    public void update(Attack attack) {
+        worldXPos = attack.getX()+xOffset;
+        worldYPos = attack.getY()+yOffset;
+    }
+
 
     public int getWidth() {
         return width;
