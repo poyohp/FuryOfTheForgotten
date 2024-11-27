@@ -10,16 +10,13 @@ import java.util.ArrayList;
 
 public class Level {
 
-    private String mapDirectory;
     private Map map;
 
     public ArrayList<Enemy> enemies = new ArrayList<>();
-
     public ArrayList<Attack> playerAttacks = new ArrayList<>();
     public ArrayList<Attack> enemyAttacks = new ArrayList<>();
 
     public Level(String mapDirectory) {
-        this.mapDirectory = mapDirectory;
 
         map = new Map(mapDirectory);
 
