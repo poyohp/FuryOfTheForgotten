@@ -34,6 +34,7 @@ public abstract class Entity {
         this.worldX = worldX;
         this.worldY = worldY;
         hitbox = new Hitbox((int)worldX, (int)worldY, xOffset, yOffset, hitBoxWidth, hitBoxHeight);
+        hitbox.update(this);
 
         entityLeft = hitbox.getWorldXPos();
         entityRight = entityLeft + (double) hitbox.getWidth();
@@ -42,6 +43,7 @@ public abstract class Entity {
     }
 
     public void updateEntityPosition() {
+        hitbox.update(this);
         entityLeft = hitbox.getWorldXPos();
         entityRight = entityLeft + (double) hitbox.getWidth();
         entityTop = hitbox.getWorldYPos();
