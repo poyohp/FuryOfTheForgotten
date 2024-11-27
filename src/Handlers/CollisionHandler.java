@@ -40,7 +40,7 @@ public class CollisionHandler {
             if (topRow - 1 < 0) return true;
             if (isNotWalkableTileInRow(topRow - 1, leftCol, rightCol, tiles)) {
                 double tileBottom = tiles[topRow - 1][leftCol].getWorldYPos() + Tile.tileSize;
-                if (player.entityTop - player.getSpeed() <= tileBottom) {
+                if (player.entityTop - player.getSpeed() < tileBottom) {
                     player.worldY = tileBottom;
                     System.out.println("Collision UP is going to happen!");
                     return true;
@@ -50,7 +50,7 @@ public class CollisionHandler {
             if ((bottomRow + 1 >= tiles.length)) return true;
             if (isNotWalkableTileInRow(bottomRow + 1, leftCol, rightCol, tiles)) {
                 double tileTop = tiles[bottomRow + 1][leftCol].getWorldYPos();
-                if (player.entityBottom + player.getSpeed() >= tileTop){
+                if (player.entityBottom + player.getSpeed() > tileTop){
                     player.worldY = tileTop - player.getHeight();
                     System.out.println("Collision DOWN is going to happen!");
                     return true;
@@ -68,7 +68,7 @@ public class CollisionHandler {
                 }
             }
         } else if(player.direction == 'r') {
-            if (rightCol + 1 >= tiles[0].length) return true;
+            if (rightCol + 1 > tiles[0].length) return true;
             if (isNotWalkableTileInCol(rightCol + 1, topRow, bottomRow, tiles)) {
                 double tileLeft = tiles[bottomRow][rightCol + 1].getWorldXPos();
                 System.out.println("Tile left x: " + tileLeft);
