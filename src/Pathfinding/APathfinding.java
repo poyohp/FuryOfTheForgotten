@@ -106,7 +106,6 @@ public class APathfinding {
             checkedList.add(currentNode);
             openList.remove(currentNode);
 
-
             // open neighbours of the current node (only when they are part of the map!)
             if ((row - 1) >= 0) openNode(nodes[row - 1][col]); // up
             if ((row + 1) < maxRows) openNode(nodes[row + 1][col]); // down
@@ -124,12 +123,11 @@ public class APathfinding {
             }
             steps++;
         }
-
         return goalReached;
     }
 
     void openNode (Node node) {
-        if (!node.open && !node.checked && !node.walkable) {
+        if (!node.open && !node.checked && node.walkable) {
             //If node is walkable, not checked yet, and not opened yet, open it for evaluation
             node.open = true;
             node.parent = currentNode;

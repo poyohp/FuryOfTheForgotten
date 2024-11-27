@@ -23,19 +23,21 @@ public class Enemy extends Entity {
         pathFinder = new APathfinding(tileset);
 
         setScreenPosition();
+        this.onPath = true;
     }
 
     @Override
     public void update() {
+        setScreenPosition();
         move();
     }
 
     public void move() {
 
         if (onPath) {
-            int goalRow = (int)player.entityTop/ Tile.tileSize; //top row of the player
+            int goalRow = (int) (player.entityTop/ Tile.tileSize); //top row of the player
             int bottomRow = (int)player.entityBottom/Tile.tileSize;
-            int goalCol = (int)player.entityLeft/Tile.tileSize; //left row of the player
+            int goalCol = (int) (player.entityLeft/Tile.tileSize); //left row of the player
             int rightCol = (int)player.entityRight/Tile.tileSize;
 
             searchPath(goalRow, goalCol);
@@ -57,8 +59,8 @@ public class Enemy extends Entity {
     }
 
     void setScreenPosition() {
-        this.screenX = (int) (GamePanel.screenWidth / 2) - (double) this.getWidth() / 2 + 100;
-        this.screenY = (int) (GamePanel.screenHeight / 2) - (double) this.getHeight() / 2;
+        screenX = worldX - player.worldX + player.screenX;
+        screenY = worldY - player.worldY + player.screenY;
     }
 
     public void searchPath(int goalRow, int goalCol) {
@@ -68,6 +70,8 @@ public class Enemy extends Entity {
         pathFinder.setNodes(tileset[startRow][startCol], tileset[goalRow][goalCol]);
 
         if (pathFinder.search()) {
+            System.out.print("found path!");
+
             ArrayList<Node> path = pathFinder.shortestPath;
 
             double nextCol = path.get(0).col;

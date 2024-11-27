@@ -32,6 +32,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     //Pathfinding object
     APathfinding pathfinding;
+    Tile[][] currentTileset;
 
     //Create objects for GAME LOGIC
     public Player player;
@@ -40,6 +41,7 @@ public class GamePanel extends JPanel implements Runnable{
     KeyHandler keyHandler;
     AttackHandler attackHandler;
     CollisionHandler collisionHandler;
+
 
 
     public GamePanel() {
@@ -62,9 +64,9 @@ public class GamePanel extends JPanel implements Runnable{
         levelHandler = new LevelHandler(1);
         attackHandler = new AttackHandler(keyHandler);
         collisionHandler = new CollisionHandler();
-        Tile[][] currentTileset = levelHandler.getCurrentLevel().getMap().baseLayerTiles;
+        currentTileset = levelHandler.getCurrentLevel().getMap().baseLayerTiles;
         pathfinding = new APathfinding(currentTileset);
-        //enemy = new Enemy(100, 4, Tile.tileSize, Tile.tileSize, "Enemy", 2*Tile.tileSize, 2*Tile.tileSize, 0, 0, player, currentTileset);
+        enemy = new Enemy(100, 4, Tile.tileSize, Tile.tileSize, "Enemy", 5*Tile.tileSize, 3*Tile.tileSize, 0, 0, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, player, currentTileset);
 
         this.addKeyListener(keyHandler);
 
@@ -123,6 +125,8 @@ public class GamePanel extends JPanel implements Runnable{
             playerUpdateFrames--;
         }
         attackHandler.update(player);
+
+        enemy.move();
     }
 
 
@@ -136,19 +140,32 @@ public class GamePanel extends JPanel implements Runnable{
 
         super.paintComponent(g);
 
-
         Graphics2D g2 = (Graphics2D)g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
 
         levelHandler.getCurrentLevel().getMap().drawMap(g2, player);
         player.draw(g2);
-        //enemy.draw(g2);
+        enemy.draw(g2);
         attackHandler.draw(g2);
 
+        debugWalkableTiles(g2);
 
         g2.dispose();
 
 
+    }
+    public void debugWalkableTiles(Graphics2D g2) {
+        for (int row = 0; row < currentTileset.length; row++) {
+            for (int col = 0; col < currentTileset[0].length; col++) {
+                Tile tile = currentTileset[row][col];
+                if (tile.walkable) {
+                    g2.setColor(Color.GREEN);
+                } else {
+                    g2.setColor(Color.RED);
+                }
+                g2.drawRect(col * Tile.tileSize, row * Tile.tileSize, Tile.tileSize, Tile.tileSize);
+            }
+        }
     }
 }
