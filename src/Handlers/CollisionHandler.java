@@ -30,7 +30,9 @@ public class CollisionHandler {
 
     public boolean playerWithTileCollision(Player player, Tile[][] tiles) {
         int topRow = (int)(player.entityTop/Tile.tileSize);
+        System.out.println("TOP: " + topRow);
         int bottomRow = (int)(player.entityBottom/Tile.tileSize);
+        System.out.println("BOTTOM: " + bottomRow);
         int leftCol = (int)(player.entityLeft/Tile.tileSize);
         int rightCol = (int)(player.entityRight/Tile.tileSize);
 

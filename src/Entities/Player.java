@@ -52,7 +52,12 @@ public class Player extends Entity {
 
     public void update() {
         if (!isColliding && !attacking) move();
+        updateEntityPosition();
         hitbox.update(this);
+        updateFrames();
+    }
+
+    private void updateFrames() {
         if (updateFrames == 0) {
             if (animationState < 3) {
                 animationState++;
@@ -63,7 +68,6 @@ public class Player extends Entity {
         } else {
             updateFrames--;
         }
-
     }
 
     private void move() {
