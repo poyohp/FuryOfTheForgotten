@@ -2,9 +2,15 @@ package Attacks;
 import Entities.Entity;
 import Entities.Hitbox;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+
+import Handlers.ImageHandler;
 import System.GamePanel;
+import System.Main;
 
 public class Ranged extends Attack{
+    static BufferedImage arrow = ImageHandler.loadImage("src/Assets/Projectiles/Arrow.png");;
+
     public Ranged(int damage, int range, int width, char direction, Entity entity, int xOffset, int yOffset, int duration, int speed) {
         super(damage, range, width, direction, entity, xOffset, yOffset, duration);
         setInitialHitbox(getDirection());
@@ -140,17 +146,29 @@ public class Ranged extends Attack{
     public void draw(Graphics2D g2) {
         setScreenPosition();
         g2.setColor(Color.BLACK);
-        if (getDirection()[0] == 'u' || getDirection()[0] == 'd') {
+        if (getDirection()[0] == 'u') {
             if (getDirection()[1] == 'u' || getDirection()[1] == 'd') {
-                g2.fillRect((int) getScreenX(), (int) getScreenY(), getWidth(), getRange());
+                g2.drawImage(arrow, (int) getScreenX(), (int) getScreenY(), (int) getScreenX() + getWidth(), (int) getScreenY() + getRange(), 0, 48, 16, 64, null);
+            } else {
+                g2.fillRect((int) getScreenX(), (int) getScreenY(), (int)(getRange() * Math.cos(Math.PI/4)), (int)(getRange() * Math.cos(Math.PI/4)));
+            }
+        } else if (getDirection()[0] == 'r') {
+            if (getDirection()[1] == 'r' || getDirection()[1] == 'l') {
+                g2.drawImage(arrow, (int) getScreenX(), (int) getScreenY(), (int) getScreenX() + getWidth(), (int) getScreenY() + getRange(), 0, 32, 16, 48, null);
+            } else {
+                g2.fillRect((int) getScreenX(), (int) getScreenY(), (int)(getRange() * Math.cos(Math.PI/4)), (int)(getRange() * Math.cos(Math.PI/4)));
+            }
+        } else if (getDirection()[0] == 'l') {
+            if (getDirection()[1] == 'r' || getDirection()[1] == 'l') {
+                g2.drawImage(arrow, (int) getScreenX(), (int) getScreenY(), (int) getScreenX() + getWidth(), (int) getScreenY() + getRange(), 0, 16, 16, 32, null);
             } else {
                 g2.fillRect((int) getScreenX(), (int) getScreenY(), (int)(getRange() * Math.cos(Math.PI/4)), (int)(getRange() * Math.cos(Math.PI/4)));
             }
         } else {
             if (getDirection()[1] == 'u' || getDirection()[1] == 'd') {
-                g2.fillRect((int) getScreenX(), (int) getScreenY(), (int)(getRange() * Math.cos(Math.PI/4)), (int)(getRange() * Math.cos(Math.PI/4)));
+                g2.drawImage(arrow, (int) getScreenX(), (int) getScreenY(), (int) getScreenX() + getWidth(), (int) getScreenY() + getRange(), 0, 0, 16, 16, null);
             } else {
-                g2.fillRect((int) getScreenX(), (int) getScreenY(), getRange(), getWidth());
+                g2.fillRect((int) getScreenX(), (int) getScreenY(), (int)(getRange() * Math.cos(Math.PI/4)), (int)(getRange() * Math.cos(Math.PI/4)));
             }
         }
     }

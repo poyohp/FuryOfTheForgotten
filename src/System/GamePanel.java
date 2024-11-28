@@ -1,6 +1,7 @@
 package System;
 
 
+import Attacks.Ranged;
 import Entities.Enemy;
 import Entities.Player;
 import Handlers.AttackHandler;
@@ -57,7 +58,6 @@ public class GamePanel extends JPanel implements Runnable{
         //Handling ALL LOADING
         keyHandler = new KeyHandler();
         player = new Player(100, 4, Tile.tileSize, Tile.tileSize, "Player", 128, 128, 4*Tile.tileSize/Tile.normalTileSize, 3*Tile.tileSize/Tile.normalTileSize, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
-        player.loadImages();
         levelHandler = new LevelHandler(1);
         attackHandler = new AttackHandler(keyHandler);
         collisionHandler = new CollisionHandler();

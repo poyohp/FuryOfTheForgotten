@@ -1,5 +1,6 @@
 package World;
 
+import Handlers.ImageHandler;
 import System.Main;
 import Entities.Player;
 import org.json.simple.JSONArray;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 
 public class Map {
 
-    private final BufferedImage tileSetImage = Main.loadImage("src/Assets/Tilesets/universalTileset.png");
+    private final BufferedImage tileSetImage = ImageHandler.loadImage("src/Assets/Tilesets/universalTileset.png");
 
     private String mapDirectory;
     private JSONParser parser;
