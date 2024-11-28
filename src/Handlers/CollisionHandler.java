@@ -41,8 +41,10 @@ public class CollisionHandler {
             if (isNotWalkableTileInRow(topRow - 1, leftCol, rightCol, tiles)) {
                 double tileBottom = tiles[topRow - 1][leftCol].getWorldYPos() + Tile.tileSize;
                 if (player.entityTop - player.getSpeed() < tileBottom) {
-                    player.worldY = tileBottom;
-                    System.out.println("Collision UP is going to happen!");
+//                    player.worldY = tileBottom;
+//                    System.out.println("Player world Y: " + player.worldY);
+//                    System.out.println("TOP: " + player.entityTop);
+//                    System.out.println("Collision UP is going to happen!");
                     return true;
                 }
             }
@@ -50,9 +52,10 @@ public class CollisionHandler {
             if ((bottomRow + 1 >= tiles.length)) return true;
             if (isNotWalkableTileInRow(bottomRow + 1, leftCol, rightCol, tiles)) {
                 double tileTop = tiles[bottomRow + 1][leftCol].getWorldYPos();
-                if (player.entityBottom + player.getSpeed() >= tileTop){
-                    player.worldY = tileTop - player.getHeight();
-                    System.out.println("Collision DOWN is going to happen!");
+
+                if (player.entityBottom + player.getSpeed() > tileTop){
+//                    player.worldY = tileTop - player.getHeight();
+//                    System.out.println("Collision DOWN is going to happen!");
                     return true;
                 }
             }
@@ -62,8 +65,8 @@ public class CollisionHandler {
                  double tileRight = tiles[topRow][leftCol-1].getWorldXPos() + Tile.tileSize;
 
                 if (player.entityLeft - player.getSpeed() < tileRight) {
-                    System.out.println("Collision LEFT is going to happen!");
-                    player.worldX = tileRight;
+//                    System.out.println("Collision LEFT is going to happen!");
+//                    player.worldX = tileRight;
                     return true;
                 }
             }
@@ -75,8 +78,8 @@ public class CollisionHandler {
                 System.out.println("Player's right: " + player.entityRight);
 
                 if (player.entityRight + player.getSpeed() >= tileLeft) {
-                    System.out.println("Collision RIGHT is going to happen!");
-                    player.worldX = tileLeft - player.getWidth();
+//                    System.out.println("Collision RIGHT is going to happen!");
+//                    player.worldX = tileLeft - player.getWidth();
                     return true;
                 }
             }

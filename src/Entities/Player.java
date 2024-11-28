@@ -1,4 +1,5 @@
 package Entities;
+import Handlers.CollisionHandler;
 import Handlers.KeyHandler;
 import System.Main;
 import System.GamePanel;
@@ -8,7 +9,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Player extends Entity {
-    public Boolean isColliding;
     Boolean interact;
     Boolean attack;
     public KeyHandler keyHandler;
@@ -18,6 +18,8 @@ public class Player extends Entity {
     int updateFrames = 12;
     Color transparent = new Color(0,0,0,0);
     public boolean attacking = false;
+    CollisionHandler collisionHandler = new CollisionHandler();
+    Tile[][] tiles;
 
     /**
      * Load all player images
@@ -31,10 +33,12 @@ public class Player extends Entity {
 
         setScreenPosition();
 
-        isColliding = false;
-
         this.keyHandler = keyHandler;
 
+    }
+
+    public void setTileSet(Tile[][] tiles) {
+        this.tiles = tiles;
     }
 
     void setScreenPosition() {
@@ -51,8 +55,8 @@ public class Player extends Entity {
     }
 
     public void update() {
-        if (!isColliding && !attacking) move();
         updateEntityPosition();
+        if (!attacking) move();
         hitbox.update(this);
         updateFrames();
     }
@@ -72,18 +76,20 @@ public class Player extends Entity {
 
     private void move() {
         if (keyHandler.upPress) {
-            this.worldY -= getSpeed();
             direction = 'u';
+            if (!collisionHandler.playerWithTileCollision(this, tiles)) this.worldY -= getSpeed();
+
         } else if (keyHandler.downPress) {
-            worldY += getSpeed();
             direction = 'd';
+            if (!collisionHandler.playerWithTileCollision(this, tiles)) worldY += getSpeed();
         }
         if (keyHandler.leftPress) {
-            worldX -= getSpeed();
             direction = 'l';
+            if (!collisionHandler.playerWithTileCollision(this, tiles)) worldX -= getSpeed();
+
         } else if (keyHandler.rightPress) {
-            worldX += getSpeed();
             direction = 'r';
+            if (!collisionHandler.playerWithTileCollision(this, tiles)) worldX += getSpeed();
         }
     }
 

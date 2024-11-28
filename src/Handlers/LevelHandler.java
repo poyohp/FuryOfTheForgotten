@@ -42,9 +42,6 @@ public class LevelHandler {
             enemy.update();
         }
 
-        player.isColliding = collisionHandler.playerWithTileCollision(player, currentLevel.getMap().baseLayerTiles);
-
-
     }
 
 

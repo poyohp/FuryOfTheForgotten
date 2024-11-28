@@ -34,7 +34,6 @@ public class Hitbox {
         worldYPos = attack.getY()+yOffset;
     }
 
-
     public int getWidth() {
         return width;
     }

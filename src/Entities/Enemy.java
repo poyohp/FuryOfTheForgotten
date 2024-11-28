@@ -41,7 +41,7 @@ public class Enemy extends Entity {
             int goalCol = (int) (player.entityLeft/Tile.tileSize); //left row of the player
             int rightCol = (int)player.entityRight/Tile.tileSize;
 
-            searchPath(goalRow, goalCol);
+//            searchPath(goalRow, goalCol);
 
         } //else: different random actions if the player is not in enemy vision
 
@@ -60,13 +60,14 @@ public class Enemy extends Entity {
     }
 
     void setScreenPosition() {
+        // gets player coordinates and offsets by the player's place on the screen
         screenX = worldX - player.worldX + player.screenX;
         screenY = worldY - player.worldY + player.screenY;
     }
 
     public void searchPath(int goalRow, int goalCol) {
         int startRow = (int) (this.entityTop/Tile.tileSize); //top row of the enemy
-        int startCol = (int) (player.entityLeft/Tile.tileSize); //left row of the enemy
+        int startCol = (int) (this.entityLeft/Tile.tileSize); //left row of the enemy
 
         pathFinder.setNodes(tileset[startRow][startCol], tileset[goalRow][goalCol]);
 
@@ -85,7 +86,6 @@ public class Enemy extends Entity {
             else if (worldX < nextWorldX) worldX += getSpeed();
             else if (worldY > nextWorldY) worldY -= getSpeed();
             else if (worldY < nextWorldY) worldY += getSpeed();
-
 
             if (nextRow == goalRow && nextCol == goalCol) onPath = false;
         }

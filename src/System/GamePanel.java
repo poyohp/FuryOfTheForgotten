@@ -62,8 +62,10 @@ public class GamePanel extends JPanel implements Runnable{
         attackHandler = new AttackHandler(keyHandler);
         collisionHandler = new CollisionHandler();
         currentTileset = levelHandler.getCurrentLevel().getMap().baseLayerTiles;
+        player.setTileSet(currentTileset);
         pathfinding = new APathfinding(currentTileset);
         enemy = new Enemy(100, 4, Tile.tileSize, Tile.tileSize, "Enemy", 5*Tile.tileSize, 3*Tile.tileSize, 0, 0, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, player, currentTileset);
+        levelHandler.getCurrentLevel().enemies.add(enemy);
 
         this.addKeyListener(keyHandler);
 
@@ -114,7 +116,7 @@ public class GamePanel extends JPanel implements Runnable{
 
         //PLEASE MOVE THIS CODE! (ideally into player class)
 
-//        enemy.move();
+        enemy.update();
     }
 
 
