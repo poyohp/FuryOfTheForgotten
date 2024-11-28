@@ -50,7 +50,7 @@ public class CollisionHandler {
             if ((bottomRow + 1 >= tiles.length)) return true;
             if (isNotWalkableTileInRow(bottomRow + 1, leftCol, rightCol, tiles)) {
                 double tileTop = tiles[bottomRow + 1][leftCol].getWorldYPos();
-                if (player.entityBottom + player.getSpeed() > tileTop){
+                if (player.entityBottom + player.getSpeed() >= tileTop){
                     player.worldY = tileTop - player.getHeight();
                     System.out.println("Collision DOWN is going to happen!");
                     return true;
