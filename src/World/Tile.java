@@ -74,7 +74,7 @@ public class Tile {
 
     public int getCol() { return this.col; }
 
-    public int getRow() { return this.col; }
+    public int getRow() { return this.row; }
 
 
     public int getImageRow() { return imageRow; }

@@ -20,7 +20,6 @@ public abstract class Entity {
 
     abstract void draw(Graphics2D g2);
 
-    abstract void update();
 
     public Entity (int health, double speed, int width, int height, String name, double worldX, double worldY, int xOffset, int yOffset, int hitBoxWidth, int hitBoxHeight) {
         this.health = health;

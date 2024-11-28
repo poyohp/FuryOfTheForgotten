@@ -26,7 +26,6 @@ public class Enemy extends Entity {
         this.onPath = true;
     }
 
-    @Override
     public void update() {
         setScreenPosition();
         hitbox.update(this);
