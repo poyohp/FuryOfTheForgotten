@@ -76,33 +76,33 @@ public class AttackHandler {
                 if (a.getDirection()[1] == 'u' || a.getDirection()[1] == 'd') {
                     a.move((int) a.determineXVelocity(Math.PI / 2, a.getSpeed()), (int) a.determineYVelocity(Math.PI / 2, a.getSpeed()));
                 } else if (a.getDirection()[1] == 'r') {
-                    a.move((int) a.determineXVelocity(Math.PI / 4, a.getSpeed()), (int) a.determineYVelocity(Math.PI / 4, a.getSpeed()));
+                    a.move((int) a.determineXVelocity(3*Math.PI / 8, a.getSpeed()), (int) a.determineYVelocity(3*Math.PI / 8, a.getSpeed()));
                 } else {
-                    a.move((int) a.determineXVelocity(3*Math.PI / 4, a.getSpeed()), (int) a.determineYVelocity(3*Math.PI / 4, a.getSpeed()));
+                    a.move((int) a.determineXVelocity(5*Math.PI / 8, a.getSpeed()), (int) a.determineYVelocity(5*Math.PI / 8, a.getSpeed()));
                 }
             } else if (a.getDirection()[0] == 'r') {
                 if (a.getDirection()[1] == 'r' || a.getDirection()[1] == 'l') {
                     a.move((int) a.determineXVelocity(0, a.getSpeed()), (int) a.determineYVelocity(0, a.getSpeed()));
                 } else if (a.getDirection()[1] == 'u') {
-                    a.move((int) a.determineXVelocity(Math.PI / 4, a.getSpeed()), (int) a.determineYVelocity(Math.PI / 4, a.getSpeed()));
+                    a.move((int) a.determineXVelocity(Math.PI / 8, a.getSpeed()), (int) a.determineYVelocity(Math.PI / 8, a.getSpeed()));
                 } else {
-                    a.move((int) a.determineXVelocity(7*Math.PI / 4, a.getSpeed()), (int) a.determineYVelocity(7*Math.PI / 4, a.getSpeed()));
+                    a.move((int) a.determineXVelocity(15*Math.PI / 8, a.getSpeed()), (int) a.determineYVelocity(15*Math.PI / 8, a.getSpeed()));
                 }
             } else if (a.getDirection()[0] == 'd') {
                 if (a.getDirection()[1] == 'd' || a.getDirection()[1] == 'u') {
                     a.move((int) a.determineXVelocity(3*Math.PI/2, a.getSpeed()), (int) a.determineYVelocity(3*Math.PI/2, a.getSpeed()));
                 } else if (a.getDirection()[1] == 'l') {
-                    a.move((int) a.determineXVelocity(5*Math.PI / 4, a.getSpeed()), (int) a.determineYVelocity(5*Math.PI / 4, a.getSpeed()));
+                    a.move((int) a.determineXVelocity(11*Math.PI / 8, a.getSpeed()), (int) a.determineYVelocity(11*Math.PI / 8, a.getSpeed()));
                 } else {
-                    a.move((int) a.determineXVelocity(7*Math.PI / 4, a.getSpeed()), (int) a.determineYVelocity(7*Math.PI / 4, a.getSpeed()));
+                    a.move((int) a.determineXVelocity(13*Math.PI / 8, a.getSpeed()), (int) a.determineYVelocity(13*Math.PI / 8, a.getSpeed()));
                 }
             } else {
                 if (a.getDirection()[1] == 'l' || a.getDirection()[1] == 'r') {
                     a.move((int) a.determineXVelocity(Math.PI, a.getSpeed()), (int) a.determineYVelocity(Math.PI, a.getSpeed()));
                 } else if (a.getDirection()[1] == 'd') {
-                    a.move((int) a.determineXVelocity(5*Math.PI / 4, a.getSpeed()), (int) a.determineYVelocity(5*Math.PI / 4, a.getSpeed()));
+                    a.move((int) a.determineXVelocity(9*Math.PI / 8, a.getSpeed()), (int) a.determineYVelocity(9*Math.PI / 8, a.getSpeed()));
                 } else {
-                    a.move((int) a.determineXVelocity(3*Math.PI / 4, a.getSpeed()), (int) a.determineYVelocity(3*Math.PI / 4, a.getSpeed()));
+                    a.move((int) a.determineXVelocity(7*Math.PI / 8, a.getSpeed()), (int) a.determineYVelocity(7*Math.PI / 8, a.getSpeed()));
                 }
             }
         }
