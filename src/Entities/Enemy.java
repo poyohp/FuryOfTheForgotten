@@ -41,7 +41,7 @@ public class Enemy extends Entity {
             int goalCol = (int) (player.entityLeft/Tile.tileSize); //left row of the player
             int rightCol = (int)player.entityRight/Tile.tileSize;
 
-//            searchPath(goalRow, goalCol);
+            searchPath(goalRow, goalCol);
 
         } //else: different random actions if the player is not in enemy vision
 

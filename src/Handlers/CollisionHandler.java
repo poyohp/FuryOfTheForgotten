@@ -30,9 +30,7 @@ public class CollisionHandler {
 
     public boolean playerWithTileCollision(Player player, Tile[][] tiles) {
         int topRow = (int)(player.entityTop/Tile.tileSize);
-        System.out.println("TOP: " + topRow);
         int bottomRow = (int)(player.entityBottom/Tile.tileSize);
-        System.out.println("BOTTOM: " + bottomRow);
         int leftCol = (int)(player.entityLeft/Tile.tileSize);
         int rightCol = (int)(player.entityRight/Tile.tileSize);
 
@@ -40,48 +38,28 @@ public class CollisionHandler {
             if (topRow - 1 < 0) return true;
             if (isNotWalkableTileInRow(topRow - 1, leftCol, rightCol, tiles)) {
                 double tileBottom = tiles[topRow - 1][leftCol].getWorldYPos() + Tile.tileSize;
-                if (player.entityTop - player.getSpeed() < tileBottom) {
-//                    player.worldY = tileBottom;
-//                    System.out.println("Player world Y: " + player.worldY);
-//                    System.out.println("TOP: " + player.entityTop);
-//                    System.out.println("Collision UP is going to happen!");
-                    return true;
-                }
+                if (player.entityTop - player.getSpeed() < tileBottom) return true;
             }
         } else if (player.direction == 'd') {
             if ((bottomRow + 1 >= tiles.length)) return true;
             if (isNotWalkableTileInRow(bottomRow + 1, leftCol, rightCol, tiles)) {
                 double tileTop = tiles[bottomRow + 1][leftCol].getWorldYPos();
+                if (player.entityBottom + player.getSpeed() > tileTop) return true;
 
-                if (player.entityBottom + player.getSpeed() > tileTop){
-//                    player.worldY = tileTop - player.getHeight();
-//                    System.out.println("Collision DOWN is going to happen!");
-                    return true;
-                }
             }
         } else if (player.direction == 'l') {
             if (leftCol - 1 < 0) return true;
             if (isNotWalkableTileInCol(leftCol - 1, topRow, bottomRow, tiles)) {
                  double tileRight = tiles[topRow][leftCol-1].getWorldXPos() + Tile.tileSize;
+                if (player.entityLeft - player.getSpeed() < tileRight) return true;
 
-                if (player.entityLeft - player.getSpeed() < tileRight) {
-//                    System.out.println("Collision LEFT is going to happen!");
-//                    player.worldX = tileRight;
-                    return true;
-                }
             }
         } else if(player.direction == 'r') {
             if (rightCol + 1 > tiles[0].length) return true;
             if (isNotWalkableTileInCol(rightCol + 1, topRow, bottomRow, tiles)) {
                 double tileLeft = tiles[bottomRow][rightCol + 1].getWorldXPos();
-                System.out.println("Tile left x: " + tileLeft);
-                System.out.println("Player's right: " + player.entityRight);
+                if (player.entityRight + player.getSpeed() >= tileLeft) return true;
 
-                if (player.entityRight + player.getSpeed() >= tileLeft) {
-//                    System.out.println("Collision RIGHT is going to happen!");
-//                    player.worldX = tileLeft - player.getWidth();
-                    return true;
-                }
             }
         }
         return false;
@@ -98,10 +76,7 @@ public class CollisionHandler {
 
     private boolean isNotWalkableTileInCol(int col, int topRow, int bottomRow, Tile[][] tiles) {
         for (int row = topRow; row <= bottomRow; row++) {
-            if (!(tiles[row][col].walkable)) {
-                System.out.println("TILE RIGHT/LEFT NOT WALKABLE!");
-                return true;
-            }
+            if (!(tiles[row][col].walkable)) return true;
         }
         return false;
     }

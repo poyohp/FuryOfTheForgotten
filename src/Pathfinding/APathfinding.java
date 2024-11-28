@@ -106,6 +106,9 @@ public class APathfinding {
             checkedList.add(currentNode);
             openList.remove(currentNode);
 
+            System.out.println("Current row: " + row + ", col: " + col);
+            System.out.println("Step: " + steps + ", Open List: " + openList.size() + ", Checked List: " + checkedList.size());
+
             // open neighbours of the current node (only when they are part of the map!)
             if ((row - 1) >= 0) openNode(nodes[row - 1][col]); // up
             if ((row + 1) < maxRows) openNode(nodes[row + 1][col]); // down
@@ -113,25 +116,34 @@ public class APathfinding {
             if ((col + 1) < maxCols) openNode(nodes[row][col + 1]); // right
 
             // If there are no more nodes in the open list, end the loop!
-            if (openList.isEmpty()) break;
+            if (openList.isEmpty()) {
+                System.out.println("LIST IS EMPTY");
+                return false;
+            }
 
             currentNode = getLowestFCost(); //Current node is the next most promising node
+            System.out.println("Lowest fCost: " + currentNode.row + ", " + currentNode.col);
 
             if (currentNode == endNode) {
                 goalReached = true;
                 getShortestPath();
             }
+
             steps++;
         }
         return goalReached;
     }
 
     void openNode (Node node) {
-        if (!node.open && !node.checked && node.walkable) {
+        if (node.checked) return;
+        if (!node.open && node.walkable) {
             //If node is walkable, not checked yet, and not opened yet, open it for evaluation
             node.open = true;
             node.parent = currentNode;
             openList.add(node);
+
+            System.out.println("Opened: " + node.row + ", col: " + node.col);
+
         }
     }
 
