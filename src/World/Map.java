@@ -62,9 +62,8 @@ public class Map {
 
                 int m = j / mapWidth;
                 int n = j % mapWidth;
-                boolean walkable;
 
-                walkable = !nonWalkableValues.contains(Integer.parseInt(dataArray.get(j).toString()));
+                boolean walkable = !nonWalkableValues.contains(Integer.parseInt(dataArray.get(j).toString()));
 
                 if(i == 0) {
                     baseLayerTiles[m][n] = new Tile(m, n, Integer.parseInt(dataArray.get(j).toString()), walkable);

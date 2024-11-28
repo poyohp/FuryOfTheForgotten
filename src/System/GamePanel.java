@@ -62,7 +62,6 @@ public class GamePanel extends JPanel implements Runnable{
         attackHandler = new AttackHandler(keyHandler);
         collisionHandler = new CollisionHandler();
         currentTileset = levelHandler.getCurrentLevel().getMap().baseLayerTiles;
-        player.setTileSet(currentTileset);
         pathfinding = new APathfinding(currentTileset);
         enemy = new Enemy(100, 4, Tile.tileSize, Tile.tileSize, "Enemy", 5*Tile.tileSize, 3*Tile.tileSize, 0, 0, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, player, currentTileset);
         levelHandler.getCurrentLevel().enemies.add(enemy);
@@ -110,7 +109,7 @@ public class GamePanel extends JPanel implements Runnable{
 
 
     void update() {
-        player.update();
+        player.update(levelHandler.getCurrentLevel().getMap().baseLayerTiles);
         levelHandler.update(collisionHandler, player);
         attackHandler.update(player);
 
@@ -126,13 +125,10 @@ public class GamePanel extends JPanel implements Runnable{
      */
     @Override
     public void paintComponent(Graphics g) {
-
-
         super.paintComponent(g);
 
         Graphics2D g2 = (Graphics2D)g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
 
         levelHandler.getCurrentLevel().getMap().drawMap(g2, player);
         player.draw(g2);

@@ -31,7 +31,7 @@ public class Player extends Entity {
 
     }
 
-    public void setTileSet(Tile[][] tiles) {
+    private void setTileSet(Tile[][] tiles) {
         this.tiles = tiles;
     }
 
@@ -49,6 +49,14 @@ public class Player extends Entity {
     }
 
     public void update() {
+        updateEntityPosition();
+        if (!attacking) move();
+        hitbox.update(this);
+        updateFrames();
+    }
+
+    public void update(Tile[][] baseLayerTiles) {
+        this.tiles = baseLayerTiles;
         updateEntityPosition();
         if (!attacking) move();
         hitbox.update(this);
