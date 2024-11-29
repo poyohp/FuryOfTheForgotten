@@ -27,6 +27,7 @@ public class Enemy extends Entity {
     }
 
     public void update() {
+        updateEntityPosition();
         setScreenPosition();
         hitbox.update(this);
         move();
@@ -36,18 +37,11 @@ public class Enemy extends Entity {
 
         if (onPath) {
             int goalRow = (int) (player.entityTop/ Tile.tileSize); //top row of the player
-            int bottomRow = (int)player.entityBottom/Tile.tileSize;
             int goalCol = (int) (player.entityLeft/Tile.tileSize); //left row of the player
-            int rightCol = (int)player.entityRight/Tile.tileSize;
 
             searchPath(goalRow, goalCol);
 
         } //else: different random actions if the player is not in enemy vision
-
-        /*
-		IF player is within enemy vision:
-			Use A* Algorithm to follow player
-         */
     }
 
     void attack() {
@@ -71,9 +65,12 @@ public class Enemy extends Entity {
         pathFinder.setNodes(tileset[startRow][startCol], tileset[goalRow][goalCol]);
 
         if (pathFinder.search()) {
-            System.out.print("found path!");
-
             ArrayList<Node> path = pathFinder.shortestPath;
+            for (Node node : path) {
+                System.out.println("Row: " + node.row + ", Col: " + node.col);
+            }
+
+            System.out.println("Path: DONE");
 
             double nextCol = path.get(0).col;
             double nextRow = path.get(0).row;
@@ -86,7 +83,7 @@ public class Enemy extends Entity {
             else if (worldY > nextWorldY) worldY -= getSpeed();
             else if (worldY < nextWorldY) worldY += getSpeed();
 
-            if (nextRow == goalRow && nextCol == goalCol) onPath = false;
+//            if (nextRow == goalRow && nextCol == goalCol) onPath = false;
         }
 
 
