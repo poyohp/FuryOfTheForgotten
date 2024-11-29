@@ -2,15 +2,11 @@ package World;
 
 import System.*;
 
-import java.awt.image.BufferedImage;
-import java.awt.image.RasterFormatException;
-
 public class Tile {
-    public static final int startingTileSize = 16;
+    public static final int normalTileSize = 16;
     private static final int numToMultiply = 5;
     public static final int tileMultipler = (int) (GamePanel.screenWidth/GamePanel.screenHeight) * numToMultiply;
-    public static final int tileSize = startingTileSize*tileMultipler;
-    public static final int normalTileSize = 16;
+    public static final int tileSize = normalTileSize*tileMultipler;
 
     private int value, orgValue;
     private int row, col;
