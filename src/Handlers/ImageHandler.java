@@ -39,9 +39,11 @@ public class ImageHandler {
         AffineTransform rotate = new AffineTransform();
         rotate.rotate(Math.PI*2-angle, centerX, centerY);
 
+        /*
         AffineTransform translate = new AffineTransform();
         translate.translate(dx1 - centerX, dy1 - centerY);
         rotate.concatenate(translate);
+          */
 
         g2.setTransform(rotate);
         g2.drawImage(image, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, null);

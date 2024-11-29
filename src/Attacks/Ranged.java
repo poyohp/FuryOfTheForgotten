@@ -151,27 +151,27 @@ public class Ranged extends Attack{
 
         if (getDirection()[0] == 'u') {
             if (getDirection()[1] == 'u' || getDirection()[1] == 'd') {
-                ImageHandler.drawRotatedImage(arrow, (int) getScreenX() + 20, (int) getScreenY(), (int) getScreenX() + getWidth() + 20, (int) getScreenY() + getRange(), 0, 32, 16, 48, angle, g2);
+                ImageHandler.drawRotatedImage(arrow, (int) getScreenX(), (int) getScreenY(), (int) getScreenX() + getWidth(), (int) getScreenY() + getRange(), 0, 32, 16, 48, angle, g2);
             } else {
-                ImageHandler.drawRotatedImage(arrow, (int) getScreenX() + 15, (int) getScreenY() - 20, (int) getScreenX() + getWidth() + 15, (int) getScreenY() + getRange() - 20, 0, 32, 16, 48, angle, g2);
+                ImageHandler.drawRotatedImage(arrow, (int) getScreenX(), (int) getScreenY(), (int) getScreenX() + getWidth() , (int) getScreenY() + getRange() , 0, 32, 16, 48, angle, g2);
             }
         } else if (getDirection()[0] == 'r') {
             if (getDirection()[1] == 'r' || getDirection()[1] == 'l') {
-                ImageHandler.drawRotatedImage(arrow, (int) getScreenX(), (int) getScreenY() + 26, (int) getScreenX() + getWidth(), (int) getScreenY() + getRange() + 26, 0, 32, 16, 48, angle, g2);
+                ImageHandler.drawRotatedImage(arrow, (int) getScreenX(), (int) getScreenY(), (int) getScreenX() + getWidth(), (int) getScreenY() + getRange() , 0, 32, 16, 48, angle, g2);
             } else {
-                ImageHandler.drawRotatedImage(arrow, (int) getScreenX(), (int) getScreenY() + 22, (int) getScreenX() + getWidth(), (int) getScreenY() + getRange() + 22, 0, 32, 16, 48, angle, g2);
+                ImageHandler.drawRotatedImage(arrow, (int) getScreenX(), (int) getScreenY() , (int) getScreenX() + getWidth(), (int) getScreenY() + getRange() , 0, 32, 16, 48, angle, g2);
             }
         } else if (getDirection()[0] == 'l') {
             if (getDirection()[1] == 'r' || getDirection()[1] == 'l') {
-                ImageHandler.drawRotatedImage(arrow, (int) getScreenX() - 20, (int) getScreenY() - 20, (int) getScreenX() + getWidth() - 20, (int) getScreenY() + getRange() - 20, 0, 32, 16, 48, angle, g2);
+                ImageHandler.drawRotatedImage(arrow, (int) getScreenX(), (int) getScreenY() , (int) getScreenX() + getWidth(), (int) getScreenY() + getRange(), 0, 32, 16, 48, angle, g2);
             } else {
-                ImageHandler.drawRotatedImage(arrow, (int) getScreenX() - 20, (int) getScreenY() - 25, (int) getScreenX() + getWidth() - 20, (int) getScreenY() + getRange() - 25, 0, 32, 16, 48, angle, g2);
+                ImageHandler.drawRotatedImage(arrow, (int) getScreenX(), (int) getScreenY() , (int) getScreenX() + getWidth(), (int) getScreenY() + getRange(), 0, 32, 16, 48, angle, g2);
             }
         } else {
             if (getDirection()[1] == 'u' || getDirection()[1] == 'd') {
-                ImageHandler.drawRotatedImage(arrow, (int) getScreenX() - 25, (int) getScreenY() + 10, (int) getScreenX() + getWidth() - 25, (int) getScreenY() + getRange() + 10, 0, 32, 16, 48, angle, g2);
+                ImageHandler.drawRotatedImage(arrow, (int) getScreenX(), (int) getScreenY(), (int) getScreenX() + getWidth(), (int) getScreenY() + getRange() , 0, 32, 16, 48, angle, g2);
             } else {
-                ImageHandler.drawRotatedImage(arrow, (int) getScreenX() - 25, (int) getScreenY() + 10, (int) getScreenX() + getWidth() - 25, (int) getScreenY() + getRange() + 10, 0, 32, 16, 48, angle, g2);
+                ImageHandler.drawRotatedImage(arrow, (int) getScreenX(), (int) getScreenY(), (int) getScreenX() + getWidth(), (int) getScreenY() + getRange() , 0, 32, 16, 48, angle, g2);
             }
         }
 
