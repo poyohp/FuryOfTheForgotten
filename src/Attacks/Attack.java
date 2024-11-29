@@ -14,6 +14,7 @@ public abstract class Attack {
 
     private int damage, range, width, xOffset, yOffset, duration, speed;
     private double worldX, worldY, screenX, screenY;
+    public double angle;
     private char[] direction = new char[2];
     public Hitbox hitbox;
     Entity entity;

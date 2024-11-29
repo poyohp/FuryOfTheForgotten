@@ -96,14 +96,16 @@ public class Ranged extends Attack{
 
 
         if (entityX > attackX && entityY > attackY) {
-            return (2*Math.PI) - Math.atan(((entityY - attackY) / (entityX - attackX)));
+            angle = (2*Math.PI) - Math.atan(((entityY - attackY) / (entityX - attackX)));
         } else if (entityX > attackX && entityY < attackY) {
-            return Math.atan((attackY - entityY) / (entityX - attackX));
+            angle = Math.atan((attackY - entityY) / (entityX - attackX));
         } else if (entityX < attackX && entityY > attackY) {
-            return Math.PI + Math.atan(((entityY - attackY) / (attackX - entityX)));
+            angle = Math.PI + Math.atan(((entityY - attackY) / (attackX - entityX)));
         } else {
-            return Math.PI - Math.atan(((attackY - entityY) / (attackX - entityX)));
+            angle = Math.PI - Math.atan(((attackY - entityY) / (attackX - entityX)));
         }
+
+        return angle;
     }
 
     @Override
@@ -146,31 +148,34 @@ public class Ranged extends Attack{
     public void draw(Graphics2D g2) {
         setScreenPosition();
         g2.setColor(Color.BLACK);
+
         if (getDirection()[0] == 'u') {
             if (getDirection()[1] == 'u' || getDirection()[1] == 'd') {
-                g2.drawImage(arrow, (int) getScreenX(), (int) getScreenY(), (int) getScreenX() + getWidth(), (int) getScreenY() + getRange(), 0, 48, 16, 64, null);
+                ImageHandler.drawRotatedImage(arrow, (int) getScreenX() + 20, (int) getScreenY(), (int) getScreenX() + getWidth() + 20, (int) getScreenY() + getRange(), 0, 32, 16, 48, angle, g2);
             } else {
-                g2.fillRect((int) getScreenX(), (int) getScreenY(), (int)(getRange() * Math.cos(Math.PI/4)), (int)(getRange() * Math.cos(Math.PI/4)));
+                ImageHandler.drawRotatedImage(arrow, (int) getScreenX() + 15, (int) getScreenY() - 20, (int) getScreenX() + getWidth() + 15, (int) getScreenY() + getRange() - 20, 0, 32, 16, 48, angle, g2);
             }
         } else if (getDirection()[0] == 'r') {
             if (getDirection()[1] == 'r' || getDirection()[1] == 'l') {
-                g2.drawImage(arrow, (int) getScreenX(), (int) getScreenY(), (int) getScreenX() + getWidth(), (int) getScreenY() + getRange(), 0, 32, 16, 48, null);
+                ImageHandler.drawRotatedImage(arrow, (int) getScreenX(), (int) getScreenY() + 26, (int) getScreenX() + getWidth(), (int) getScreenY() + getRange() + 26, 0, 32, 16, 48, angle, g2);
             } else {
-                g2.fillRect((int) getScreenX(), (int) getScreenY(), (int)(getRange() * Math.cos(Math.PI/4)), (int)(getRange() * Math.cos(Math.PI/4)));
+                ImageHandler.drawRotatedImage(arrow, (int) getScreenX(), (int) getScreenY() + 22, (int) getScreenX() + getWidth(), (int) getScreenY() + getRange() + 22, 0, 32, 16, 48, angle, g2);
             }
         } else if (getDirection()[0] == 'l') {
             if (getDirection()[1] == 'r' || getDirection()[1] == 'l') {
-                g2.drawImage(arrow, (int) getScreenX(), (int) getScreenY(), (int) getScreenX() + getWidth(), (int) getScreenY() + getRange(), 0, 16, 16, 32, null);
+                ImageHandler.drawRotatedImage(arrow, (int) getScreenX() - 20, (int) getScreenY() - 20, (int) getScreenX() + getWidth() - 20, (int) getScreenY() + getRange() - 20, 0, 32, 16, 48, angle, g2);
             } else {
-                g2.fillRect((int) getScreenX(), (int) getScreenY(), (int)(getRange() * Math.cos(Math.PI/4)), (int)(getRange() * Math.cos(Math.PI/4)));
+                ImageHandler.drawRotatedImage(arrow, (int) getScreenX() - 20, (int) getScreenY() - 25, (int) getScreenX() + getWidth() - 20, (int) getScreenY() + getRange() - 25, 0, 32, 16, 48, angle, g2);
             }
         } else {
             if (getDirection()[1] == 'u' || getDirection()[1] == 'd') {
+                ImageHandler.drawRotatedImage(arrow, (int) getScreenX() - 25, (int) getScreenY() + 10, (int) getScreenX() + getWidth() - 25, (int) getScreenY() + getRange() + 10, 0, 32, 16, 48, angle, g2);
                 g2.drawImage(arrow, (int) getScreenX(), (int) getScreenY(), (int) getScreenX() + getWidth(), (int) getScreenY() + getRange(), 0, 0, 16, 16, null);
             } else {
-                g2.fillRect((int) getScreenX(), (int) getScreenY(), (int)(getRange() * Math.cos(Math.PI/4)), (int)(getRange() * Math.cos(Math.PI/4)));
+                ImageHandler.drawRotatedImage(arrow, (int) getScreenX() - 25, (int) getScreenY() + 10, (int) getScreenX() + getWidth() - 25, (int) getScreenY() + getRange() + 10, 0, 32, 16, 48, angle, g2);
             }
         }
+
     }
 
 }

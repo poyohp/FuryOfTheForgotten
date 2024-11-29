@@ -74,37 +74,50 @@ public class AttackHandler {
         for (Attack a : attacks) {
             if (a.getDirection()[0] == 'u') {
                 if (a.getDirection()[1] == 'u' || a.getDirection()[1] == 'd') {
+                    a.angle = Math.PI/2;
                     a.move((int) a.determineXVelocity(Math.PI / 2, a.getSpeed()), (int) a.determineYVelocity(Math.PI / 2, a.getSpeed()));
                 } else if (a.getDirection()[1] == 'r') {
+                    a.angle = 3*Math.PI/8;
                     a.move((int) a.determineXVelocity(3*Math.PI / 8, a.getSpeed()), (int) a.determineYVelocity(3*Math.PI / 8, a.getSpeed()));
                 } else {
+                    a.angle = 5*Math.PI/8;
                     a.move((int) a.determineXVelocity(5*Math.PI / 8, a.getSpeed()), (int) a.determineYVelocity(5*Math.PI / 8, a.getSpeed()));
                 }
             } else if (a.getDirection()[0] == 'r') {
                 if (a.getDirection()[1] == 'r' || a.getDirection()[1] == 'l') {
+                    a.angle = 0;
                     a.move((int) a.determineXVelocity(0, a.getSpeed()), (int) a.determineYVelocity(0, a.getSpeed()));
                 } else if (a.getDirection()[1] == 'u') {
+                    a.angle = Math.PI/8;
                     a.move((int) a.determineXVelocity(Math.PI / 8, a.getSpeed()), (int) a.determineYVelocity(Math.PI / 8, a.getSpeed()));
                 } else {
+                    a.angle = 15*Math.PI/8;
                     a.move((int) a.determineXVelocity(15*Math.PI / 8, a.getSpeed()), (int) a.determineYVelocity(15*Math.PI / 8, a.getSpeed()));
                 }
             } else if (a.getDirection()[0] == 'd') {
                 if (a.getDirection()[1] == 'd' || a.getDirection()[1] == 'u') {
+                    a.angle = 3*Math.PI/2;
                     a.move((int) a.determineXVelocity(3*Math.PI/2, a.getSpeed()), (int) a.determineYVelocity(3*Math.PI/2, a.getSpeed()));
                 } else if (a.getDirection()[1] == 'l') {
+                    a.angle = 11*Math.PI/8;
                     a.move((int) a.determineXVelocity(11*Math.PI / 8, a.getSpeed()), (int) a.determineYVelocity(11*Math.PI / 8, a.getSpeed()));
                 } else {
+                    a.angle = 13*Math.PI/8;
                     a.move((int) a.determineXVelocity(13*Math.PI / 8, a.getSpeed()), (int) a.determineYVelocity(13*Math.PI / 8, a.getSpeed()));
                 }
             } else {
                 if (a.getDirection()[1] == 'l' || a.getDirection()[1] == 'r') {
+                    a.angle = Math.PI;
                     a.move((int) a.determineXVelocity(Math.PI, a.getSpeed()), (int) a.determineYVelocity(Math.PI, a.getSpeed()));
                 } else if (a.getDirection()[1] == 'd') {
+                    a.angle = 9*Math.PI/8;
                     a.move((int) a.determineXVelocity(9*Math.PI / 8, a.getSpeed()), (int) a.determineYVelocity(9*Math.PI / 8, a.getSpeed()));
                 } else {
+                    a.angle = 7*Math.PI/8;
                     a.move((int) a.determineXVelocity(7*Math.PI / 8, a.getSpeed()), (int) a.determineYVelocity(7*Math.PI / 8, a.getSpeed()));
                 }
             }
+            System.out.println("Attack angle: " + a.angle);
         }
     }
 
