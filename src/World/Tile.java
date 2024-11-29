@@ -12,7 +12,7 @@ public class Tile {
     public static final int tileSize = startingTileSize*tileMultipler;
     public static final int normalTileSize = 16;
 
-    private int value;
+    private int value, orgValue;
     private int row, col;
     private int imageRow, imageCol;
     private double worldXPos, worldYPos;
@@ -23,6 +23,7 @@ public class Tile {
     Tile(int row, int col, int value, boolean walkable) {
         this.row = row;
         this.col = col;
+        this.orgValue = value;
         this.value = value - 1;
 
         setWorldXPos();
@@ -80,4 +81,8 @@ public class Tile {
     public int getImageRow() { return imageRow; }
 
     public int getImageCol() { return imageCol; }
+
+    public int getOrgValue() {
+        return orgValue;
+    }
 }
