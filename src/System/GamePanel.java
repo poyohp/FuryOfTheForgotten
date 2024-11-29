@@ -63,7 +63,7 @@ public class GamePanel extends JPanel implements Runnable{
         collisionHandler = new CollisionHandler();
         currentTileset = levelHandler.getCurrentLevel().getMap().baseLayerTiles;
         pathfinding = new APathfinding(currentTileset);
-        enemy = new Enemy(100, 4, Tile.tileSize, Tile.tileSize, "Enemy", 5*Tile.tileSize, 3*Tile.tileSize, 0, 0, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, player, currentTileset);
+        enemy = new Enemy(100, 4, Tile.tileSize, Tile.tileSize, "Enemy", 4*Tile.tileSize, 3*Tile.tileSize, 0, 0, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, player, currentTileset);
         levelHandler.getCurrentLevel().enemies.add(enemy);
 
         this.addKeyListener(keyHandler);
