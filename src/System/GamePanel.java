@@ -57,13 +57,13 @@ public class GamePanel extends JPanel implements Runnable{
 
         //Handling ALL LOADING
         keyHandler = new KeyHandler();
-        player = new Player(100, 4, Tile.tileSize, Tile.tileSize, "Player", 128, 128, 4*Tile.tileSize/Tile.normalTileSize, 3*Tile.tileSize/Tile.normalTileSize, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
+        player = new Player(100, 4, Tile.tileSize, Tile.tileSize, "Player", 128, 128, 4*Tile.tileSize/Tile.normalTileSize, 4*Tile.tileSize/Tile.normalTileSize, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
         levelHandler = new LevelHandler(1);
         attackHandler = new AttackHandler(keyHandler);
         collisionHandler = new CollisionHandler();
         currentTileset = levelHandler.getCurrentLevel().getMap().baseLayerTiles;
         pathfinding = new APathfinding(currentTileset);
-        enemy = new Enemy(100, 4, Tile.tileSize, Tile.tileSize, "Enemy", 4*Tile.tileSize, 3*Tile.tileSize, 0, 0, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, player, currentTileset);
+        enemy = new Enemy(100, 1, Tile.tileSize, Tile.tileSize, "Enemy", 14*Tile.tileSize, 3*Tile.tileSize, 0, 0, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, player, currentTileset);
         levelHandler.getCurrentLevel().enemies.add(enemy);
 
         this.addKeyListener(keyHandler);

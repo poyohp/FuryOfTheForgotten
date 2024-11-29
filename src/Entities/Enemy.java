@@ -9,7 +9,8 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Enemy extends Entity {
-    private int vision;
+    private int vision = 300;
+    public boolean isFollowing = false;
     public boolean onPath;
     Player player;
     APathfinding pathFinder;
@@ -30,7 +31,16 @@ public class Enemy extends Entity {
         updateEntityPosition();
         setScreenPosition();
         hitbox.update(this);
-        move();
+        if (playerInVision() || isFollowing) move();
+
+    }
+
+    public boolean playerInVision() {
+        if (Math.abs(player.entityLeft - this.entityLeft) < vision && Math.abs(player.entityTop - this.entityTop) < vision) {
+            isFollowing = true;
+            return true;
+        }
+        else return false;
     }
 
     public void move() {
@@ -66,11 +76,6 @@ public class Enemy extends Entity {
 
         if (pathFinder.search()) {
             ArrayList<Node> path = pathFinder.shortestPath;
-            for (Node node : path) {
-                System.out.println("Row: " + node.row + ", Col: " + node.col);
-            }
-
-            System.out.println("Path: DONE");
 
             double nextCol = path.get(0).col;
             double nextRow = path.get(0).row;
@@ -82,8 +87,6 @@ public class Enemy extends Entity {
             else if (worldX < nextWorldX) worldX += getSpeed();
             else if (worldY > nextWorldY) worldY -= getSpeed();
             else if (worldY < nextWorldY) worldY += getSpeed();
-
-//            if (nextRow == goalRow && nextCol == goalCol) onPath = false;
         }
 
 
