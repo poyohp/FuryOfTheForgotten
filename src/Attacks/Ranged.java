@@ -9,7 +9,7 @@ import System.GamePanel;
 import System.Main;
 
 public class Ranged extends Attack{
-    static BufferedImage arrow = ImageHandler.loadImage("src/Assets/Projectiles/Arrow.png");;
+    static BufferedImage arrow = ImageHandler.loadImage("src/Assets/Projectiles/Arrow.png");
 
     public Ranged(int damage, int range, int width, char direction, Entity entity, int xOffset, int yOffset, int duration, int speed) {
         super(damage, range, width, direction, entity, xOffset, yOffset, duration);
@@ -151,27 +151,27 @@ public class Ranged extends Attack{
 
         if (getDirection()[0] == 'u') {
             if (getDirection()[1] == 'u' || getDirection()[1] == 'd') {
-                ImageHandler.drawRotatedImage(arrow, (int) getScreenX(), (int) getScreenY(), (int) getScreenX() + getWidth(), (int) getScreenY() + getRange(), 0, 32, 16, 48, angle, g2);
+                g2.drawImage(arrow, (int) getScreenX() + 20, (int) getScreenY(), (int) getScreenX() + getWidth() + 20, (int) getScreenY() + getRange(), 0, 32, 16, 48, null);
             } else {
-                ImageHandler.drawRotatedImage(arrow, (int) getScreenX(), (int) getScreenY(), (int) getScreenX() + getWidth() , (int) getScreenY() + getRange() , 0, 32, 16, 48, angle, g2);
+                g2.drawImage(arrow, (int) getScreenX() + 15, (int) getScreenY() - 20, (int) getScreenX() + getWidth() + 15, (int) getScreenY() + getRange() - 20, 0, 32, 16, 48, null);
             }
         } else if (getDirection()[0] == 'r') {
             if (getDirection()[1] == 'r' || getDirection()[1] == 'l') {
-                ImageHandler.drawRotatedImage(arrow, (int) getScreenX(), (int) getScreenY(), (int) getScreenX() + getWidth(), (int) getScreenY() + getRange() , 0, 32, 16, 48, angle, g2);
+                g2.drawImage(arrow, (int) getScreenX(), (int) getScreenY() + 26, (int) getScreenX() + getWidth(), (int) getScreenY() + getRange() + 26, 0, 32, 16, 48, null);
             } else {
-                ImageHandler.drawRotatedImage(arrow, (int) getScreenX(), (int) getScreenY() , (int) getScreenX() + getWidth(), (int) getScreenY() + getRange() , 0, 32, 16, 48, angle, g2);
+                g2.drawImage(arrow, (int) getScreenX(), (int) getScreenY() + 22, (int) getScreenX() + getWidth(), (int) getScreenY() + getRange() + 22, 0, 32, 16, 48, null);
             }
         } else if (getDirection()[0] == 'l') {
             if (getDirection()[1] == 'r' || getDirection()[1] == 'l') {
-                ImageHandler.drawRotatedImage(arrow, (int) getScreenX(), (int) getScreenY() , (int) getScreenX() + getWidth(), (int) getScreenY() + getRange(), 0, 32, 16, 48, angle, g2);
+                g2.drawImage(arrow, (int) getScreenX() - 20, (int) getScreenY() - 20, (int) getScreenX() + getWidth() - 20, (int) getScreenY() + getRange() - 20, 0, 32, 16, 48, null);
             } else {
-                ImageHandler.drawRotatedImage(arrow, (int) getScreenX(), (int) getScreenY() , (int) getScreenX() + getWidth(), (int) getScreenY() + getRange(), 0, 32, 16, 48, angle, g2);
+                g2.drawImage(arrow, (int) getScreenX() - 20, (int) getScreenY() - 25, (int) getScreenX() + getWidth() - 20, (int) getScreenY() + getRange() - 25, 0, 32, 16, 48, null);
             }
         } else {
             if (getDirection()[1] == 'u' || getDirection()[1] == 'd') {
-                ImageHandler.drawRotatedImage(arrow, (int) getScreenX(), (int) getScreenY(), (int) getScreenX() + getWidth(), (int) getScreenY() + getRange() , 0, 32, 16, 48, angle, g2);
+                g2.drawImage(arrow, (int) getScreenX() - 25, (int) getScreenY() + 10, (int) getScreenX() + getWidth() - 25, (int) getScreenY() + getRange() + 10, 0, 32, 16, 48, null);
             } else {
-                ImageHandler.drawRotatedImage(arrow, (int) getScreenX(), (int) getScreenY(), (int) getScreenX() + getWidth(), (int) getScreenY() + getRange() , 0, 32, 16, 48, angle, g2);
+                g2.drawImage(arrow, (int) getScreenX() - 25, (int) getScreenY() + 10, (int) getScreenX() + getWidth() - 25, (int) getScreenY() + getRange() + 10, 0, 32, 16, 48, null);
             }
         }
 
