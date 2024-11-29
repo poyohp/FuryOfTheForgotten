@@ -8,6 +8,7 @@ import Handlers.AttackHandler;
 import Handlers.CollisionHandler;
 import Handlers.KeyHandler;
 import Handlers.LevelHandler;
+import Handlers.Spawners.SpawnHandler;
 import Pathfinding.APathfinding;
 import World.Tile;
 
@@ -30,15 +31,14 @@ public class GamePanel extends JPanel implements Runnable{
 
     //Pathfinding object
     APathfinding pathfinding;
-    Tile[][] currentTileset;
 
     //Create objects for GAME LOGIC
     public Player player;
-    public Enemy enemy;
     LevelHandler levelHandler;
     KeyHandler keyHandler;
     AttackHandler attackHandler;
     CollisionHandler collisionHandler;
+    SpawnHandler spawnHandler;
 
 
 
@@ -46,29 +46,26 @@ public class GamePanel extends JPanel implements Runnable{
         this.setDoubleBuffered(true);
         this.setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
         setFocusable(true);
-
-
         hideCursor();
-
-
-        //Starting game
-        gameThread = new Thread(this);
-
 
         //Handling ALL LOADING
         keyHandler = new KeyHandler();
-        player = new Player(100, 4, Tile.tileSize, Tile.tileSize, "Player", 128, 128, 4*Tile.tileSize/Tile.normalTileSize, 4*Tile.tileSize/Tile.normalTileSize, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
-        levelHandler = new LevelHandler(1);
+        spawnHandler = new SpawnHandler();
+
+        player = new Player(100, 4, Tile.tileSize, Tile.tileSize, "Player", 0, 0, 4*Tile.tileSize/Tile.normalTileSize, 3*Tile.tileSize/Tile.normalTileSize, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
+
+        levelHandler = new LevelHandler(1, spawnHandler, player);
         attackHandler = new AttackHandler(keyHandler);
         collisionHandler = new CollisionHandler();
-        currentTileset = levelHandler.getCurrentLevel().getMap().baseLayerTiles;
-        pathfinding = new APathfinding(currentTileset);
-        enemy = new Enemy(100, 1, Tile.tileSize, Tile.tileSize, "Enemy", 14*Tile.tileSize, 3*Tile.tileSize, 0, 0, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, player, currentTileset);
-        levelHandler.getCurrentLevel().enemies.add(enemy);
+
+        pathfinding = new APathfinding(levelHandler.getCurrentLevel().getMap().baseLayerTiles);
 
         this.addKeyListener(keyHandler);
 
+        player.updateWorldValues(spawnHandler.playerSpawnX, spawnHandler.playerSpawnY);
 
+        //Start game after loading all objects
+        gameThread = new Thread(this);
     }
 
 
@@ -110,9 +107,11 @@ public class GamePanel extends JPanel implements Runnable{
 
     void update() {
         player.update(levelHandler.getCurrentLevel().getMap().baseLayerTiles);
-        levelHandler.update(collisionHandler, player);
+        levelHandler.update(player, spawnHandler);
         attackHandler.update(player);
-        enemy.update();
+
+        System.out.println(player.worldX);
+
     }
 
 
@@ -128,28 +127,13 @@ public class GamePanel extends JPanel implements Runnable{
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         levelHandler.getCurrentLevel().getMap().drawMap(g2, player);
+        levelHandler.drawEnemies(g2);
         player.draw(g2);
         player.hitbox.drawHitbox(g2, player);
-        enemy.draw(g2);
         attackHandler.draw(g2);
-
-        debugWalkableTiles(g2);
 
         g2.dispose();
 
 
-    }
-    public void debugWalkableTiles(Graphics2D g2) {
-        for (int row = 0; row < currentTileset.length; row++) {
-            for (int col = 0; col < currentTileset[0].length; col++) {
-                Tile tile = currentTileset[row][col];
-                if (tile.walkable) {
-                    g2.setColor(Color.GREEN);
-                } else {
-                    g2.setColor(Color.RED);
-                }
-                g2.drawRect((int)((col * Tile.tileSize) - player.worldX + player.screenX), (int)((row * Tile.tileSize) - player.worldY + player.screenY), Tile.tileSize, Tile.tileSize);
-            }
-        }
     }
 }

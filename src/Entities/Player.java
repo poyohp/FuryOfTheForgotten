@@ -48,11 +48,9 @@ public class Player extends Entity {
         }
     }
 
-    public void update() {
-        updateEntityPosition();
-        if (!attacking) move();
-        hitbox.update(this);
-        updateFrames();
+    public void updateWorldValues(int worldX, int worldY) {
+        this.worldX = worldX;
+        this.worldY = worldY;
     }
 
     public void update(Tile[][] baseLayerTiles) {

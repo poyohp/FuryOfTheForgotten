@@ -2,7 +2,10 @@ package Handlers;
 
 import Entities.Enemy;
 import Entities.Player;
+import Handlers.Spawners.SpawnHandler;
 import World.Level;
+
+import java.awt.*;
 
 public class LevelHandler {
 
@@ -12,7 +15,7 @@ public class LevelHandler {
 
     int numLevels;
 
-    public LevelHandler(int numLevels) {
+    public LevelHandler(int numLevels, SpawnHandler spawnHandler, Player player) {
         this.numLevels = numLevels;
         levels = new Level[numLevels];
 
@@ -21,13 +24,15 @@ public class LevelHandler {
         currentLevelIndex = 0;
         currentLevel = levels[currentLevelIndex];
 
+        spawnHandler.levelChanged(player, currentLevel);
+
     }
 
-    public void goToNextLevel() {
+    public void goToNextLevel(SpawnHandler spawnHandler, Player player) {
         if(currentLevelIndex < numLevels - 1 ) {
+            spawnHandler.levelChanged(player, currentLevel);
             currentLevelIndex++;
         }
-
     }
 
     public void goToPreviousLevel() {
@@ -36,7 +41,9 @@ public class LevelHandler {
         }
     }
 
-    public void update(CollisionHandler collisionHandler, Player player) {
+    public void update(Player player, SpawnHandler spawnHandler) {
+
+        spawnHandler.update(player, currentLevel);
 
         for (Enemy enemy : currentLevel.enemies) {
             enemy.update();
@@ -44,6 +51,11 @@ public class LevelHandler {
 
     }
 
+    public void drawEnemies(Graphics2D g2) {
+        for (Enemy enemy : currentLevel.enemies) {
+            enemy.draw(g2);
+        }
+    }
 
     public Level getCurrentLevel() {
         return currentLevel;

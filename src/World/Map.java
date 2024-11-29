@@ -107,10 +107,13 @@ public class Map {
         this.nonWalkableValues.add(229);
         this.nonWalkableValues.add(230);
         this.nonWalkableValues.add(232);
+        this.nonWalkableValues.add(257);
         this.nonWalkableValues.add(258);
         this.nonWalkableValues.add(260);
+        this.nonWalkableValues.add(285);
         this.nonWalkableValues.add(286);
         this.nonWalkableValues.add(287);
+        this.nonWalkableValues.add(288);
     }
 
 }
