@@ -58,9 +58,9 @@ public class AttackHandler {
         if (player.attacking) {
             System.out.println(player.animationState);
             if (attackFrames == 0) {
-                createRanged(5, Tile.tileSize, Tile.tileSize, player.direction, player, 0, 0, 150, 10);
-                createRanged(5, Tile.tileSize, Tile.tileSize, dir1, player, 0, 0, 150, 10);
-                createRanged(5, Tile.tileSize, Tile.tileSize, dir2, player, 0, 0, 150, 10);
+                createRanged(5, Tile.tileSize, Tile.tileSize, player.direction, (Entity) player, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625));
+                createRanged(5, Tile.tileSize, Tile.tileSize, dir1, player, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625));
+                createRanged(5, Tile.tileSize, Tile.tileSize, dir2, player, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625));
                 attackFrames = 36;
                 player.attacking = false;
             } else {
