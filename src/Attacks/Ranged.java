@@ -170,7 +170,6 @@ public class Ranged extends Attack{
         } else {
             if (getDirection()[1] == 'u' || getDirection()[1] == 'd') {
                 ImageHandler.drawRotatedImage(arrow, (int) getScreenX() - 25, (int) getScreenY() + 10, (int) getScreenX() + getWidth() - 25, (int) getScreenY() + getRange() + 10, 0, 32, 16, 48, angle, g2);
-                g2.drawImage(arrow, (int) getScreenX(), (int) getScreenY(), (int) getScreenX() + getWidth(), (int) getScreenY() + getRange(), 0, 0, 16, 16, null);
             } else {
                 ImageHandler.drawRotatedImage(arrow, (int) getScreenX() - 25, (int) getScreenY() + 10, (int) getScreenX() + getWidth() - 25, (int) getScreenY() + getRange() + 10, 0, 32, 16, 48, angle, g2);
             }
