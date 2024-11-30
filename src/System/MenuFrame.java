@@ -19,6 +19,7 @@ public class MenuFrame extends JFrame {
     KeyHandler keyHandler;
 
     Timer timer;
+    final int TIMERSPEED = 10;
 
     int cooldownCounter = 0;
     int cooldownTime = 200;
@@ -64,7 +65,7 @@ public class MenuFrame extends JFrame {
         this.pack();
         this.setVisible(true);
 
-        timer = new Timer(10, new ActionListener() {
+        timer = new Timer(TIMERSPEED, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 handleSelection();
@@ -115,7 +116,7 @@ public class MenuFrame extends JFrame {
 
     public void handleSelection() {
         if (cooldownCounter > 0) {
-            cooldownCounter -= 10; // Keep counting down cooldown time
+            cooldownCounter -= TIMERSPEED; // Keep counting down cooldown time
             return; // No key processing while cooling down!
         }
 
