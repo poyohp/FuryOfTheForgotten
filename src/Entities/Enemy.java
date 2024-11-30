@@ -32,12 +32,12 @@ public class Enemy extends Entity {
         updateEntityPosition();
         setScreenPosition();
         hitbox.update(this);
-        if (playerInVision() || isFollowing) move();
+        if (playerInVision()) move();
+        System.out.println(playerInVision());
     }
 
     private boolean playerInVision() {
         if (Math.abs(player.entityLeft - this.entityLeft) < vision && Math.abs(player.entityTop - this.entityTop) < vision) {
-            isFollowing = true;
             return true;
         }
         else return false;
@@ -79,7 +79,7 @@ public class Enemy extends Entity {
 
         pathFinder.setNodes(tileset[startRow][startCol], tileset[goalRow][goalCol]);
 
-        if (pathFinder.search()) {
+        if (pathFinder.findPath()) {
             ArrayList<Node> path = pathFinder.shortestPath;
 
             double nextCol = path.get(0).col;
