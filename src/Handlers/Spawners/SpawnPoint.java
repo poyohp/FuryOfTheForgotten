@@ -19,7 +19,7 @@ public class SpawnPoint {
     private final int framesBetweenSpawn = secondsBetweenSpawn * (int) GamePanel.FPS;
 
     final int enemyHealth = 100;
-    final int enemySpeed = 3;
+    final int enemySpeed = Tile.tileSize/20;
     final int enemySize = Tile.tileSize;
 
     public int numEnemies;
