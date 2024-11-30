@@ -24,22 +24,17 @@ public class ImageHandler {
         return img;
     }
 
-    public static void drawRotatedImage(BufferedImage image, int dx1, int dy1, int dx2, int dy2, int sx1, int sy1, int sx2, int sy2, double angle, Graphics2D g2) {
-        double centerX = dx1 + (dx2 - dx1) / 2.0;
-        double centerY = dy1 + (dy2 - dy1) / 2.0;
+    public static void drawRotatedImage(Graphics2D g2, int centerX, int centerY, double angle, BufferedImage image, int dx1, int dy1, int dx2, int dy2, int sx1, int sy1, int sx2, int sy2) {
 
-        AffineTransform rotate = new AffineTransform();
-        rotate.rotate(Math.PI*2-angle, centerX, centerY);
+        // GETTING ORIGINAL ROTATION
+        AffineTransform originalTransform = g2.getTransform();
 
-        /*
-        AffineTransform translate = new AffineTransform();
-        translate.translate(dx1 - centerX, dy1 - centerY);
-        rotate.concatenate(translate);
-          */
-
-        g2.setTransform(rotate);
+        // ROTATING IMAGE
+        g2.rotate(angle, centerX, centerY);
         g2.drawImage(image, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, null);
-        g2.setTransform(new AffineTransform());
+
+        // RESETTING ORIGINAL ROTATION
+        g2.setTransform(originalTransform);
     }
 
 }

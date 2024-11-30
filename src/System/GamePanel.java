@@ -109,9 +109,6 @@ public class GamePanel extends JPanel implements Runnable{
         player.update(levelHandler.getCurrentLevel().getMap().baseLayerTiles);
         levelHandler.update(player, spawnHandler);
         attackHandler.update(player);
-
-        System.out.println(player.worldX);
-
     }
 
 
@@ -126,10 +123,8 @@ public class GamePanel extends JPanel implements Runnable{
         Graphics2D g2 = (Graphics2D)g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        levelHandler.getCurrentLevel().getMap().drawMap(g2, player);
-        levelHandler.drawEnemies(g2);
+        levelHandler.draw(g2, player);
         player.draw(g2);
-        player.hitbox.drawHitbox(g2, player);
         attackHandler.draw(g2);
 
         g2.dispose();

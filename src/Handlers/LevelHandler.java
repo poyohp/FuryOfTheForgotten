@@ -51,10 +51,12 @@ public class LevelHandler {
 
     }
 
-    public void drawEnemies(Graphics2D g2) {
+    public void draw(Graphics2D g2, Player player) {
         for (Enemy enemy : currentLevel.enemies) {
             enemy.draw(g2);
         }
+        this.getCurrentLevel().getMap().drawMap(g2, player);
+
     }
 
     public Level getCurrentLevel() {

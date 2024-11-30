@@ -126,6 +126,11 @@ public class AttackHandler {
     public void update(Player player) {
         checkForPlayerAttack(keyHandler, player);
         determinePlayerRangedAttackVelocity();
+        setCooldown();
+        removeAttackAfterCooldown();
+    }
+
+    private void setCooldown() {
         if (!canAttack) {
             if (cooldown == 0) {
                 canAttack = true;
@@ -134,6 +139,9 @@ public class AttackHandler {
                 cooldown -= 1;
             }
         }
+    }
+
+    private void removeAttackAfterCooldown() {
         if (!attacks.isEmpty()) {
             for (int i = 0; i < attacks.size(); i++) {
                 if (attacks.get(i).getDuration() <= 0) {
