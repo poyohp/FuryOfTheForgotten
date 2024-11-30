@@ -89,15 +89,19 @@ public class Enemy extends Entity {
             double nextWorldY = nextRow * Tile.tileSize;
 
             if (worldX > nextWorldX) {
+                direction = 'l';
                 worldX -= getSpeed();
             }
             else if (worldX < nextWorldX) {
+                direction = 'r';
                 worldX += getSpeed();
             }
             else if (worldY > nextWorldY) {
+                direction = 'u';
                 worldY -= getSpeed();
             }
             else if (worldY < nextWorldY) {
+                direction = 'd';
                 worldY += getSpeed();
             }
         }
