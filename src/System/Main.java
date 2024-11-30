@@ -9,8 +9,17 @@ import java.io.IOException;
 public class Main {
 
     public static final GamePanel panel = new GamePanel();
+//    public static final MenuPanel menu = new MenuPanel();
 
     public static void main(String[] args) {
+//        JFrame menuWindow = new JFrame();
+//        menuWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        menuWindow.setResizable(false);
+//        menuWindow.setUndecorated(true);
+//        menuWindow.add(menu);
+//        menuWindow.pack();
+//        menuWindow.setVisible(true);
+
         JFrame window = new JFrame();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setUndecorated(true);

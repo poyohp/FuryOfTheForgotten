@@ -3,13 +3,13 @@ package Entities;
 import Pathfinding.APathfinding;
 import Pathfinding.Node;
 import World.Tile;
-import System.GamePanel;
 
 import java.awt.*;
 import java.util.ArrayList;
 
 public class Enemy extends Entity {
     private int vision = 300;
+    public int rangedVision = 0;
     public boolean isFollowing = false;
     public boolean onPath;
     Player player;
@@ -33,14 +33,18 @@ public class Enemy extends Entity {
         setScreenPosition();
         hitbox.update(this);
         if (playerInVision() || isFollowing) move();
-
     }
 
-    public boolean playerInVision() {
+    private boolean playerInVision() {
         if (Math.abs(player.entityLeft - this.entityLeft) < vision && Math.abs(player.entityTop - this.entityTop) < vision) {
             isFollowing = true;
             return true;
         }
+        else return false;
+    }
+
+    private boolean notInRangedArea() {
+        if (Math.abs(player.entityLeft - this.entityLeft) < rangedVision && Math.abs(player.entityTop - this.entityTop) < rangedVision) return true;
         else return false;
     }
 
@@ -84,12 +88,19 @@ public class Enemy extends Entity {
             double nextWorldX = nextCol * Tile.tileSize;
             double nextWorldY = nextRow * Tile.tileSize;
 
-            if (worldX > nextWorldX) worldX -= getSpeed();
-            else if (worldX < nextWorldX) worldX += getSpeed();
-            else if (worldY > nextWorldY) worldY -= getSpeed();
-            else if (worldY < nextWorldY) worldY += getSpeed();
+            if (worldX > nextWorldX) {
+                worldX -= getSpeed();
+            }
+            else if (worldX < nextWorldX) {
+                worldX += getSpeed();
+            }
+            else if (worldY > nextWorldY) {
+                worldY -= getSpeed();
+            }
+            else if (worldY < nextWorldY) {
+                worldY += getSpeed();
+            }
         }
-
 
     }
 
