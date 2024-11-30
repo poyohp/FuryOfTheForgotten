@@ -52,10 +52,11 @@ public class LevelHandler {
     }
 
     public void draw(Graphics2D g2, Player player) {
+        this.getCurrentLevel().getMap().drawMap(g2, player);
+
         for (Enemy enemy : currentLevel.enemies) {
             enemy.draw(g2);
         }
-        this.getCurrentLevel().getMap().drawMap(g2, player);
 
     }
 

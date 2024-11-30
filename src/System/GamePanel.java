@@ -66,6 +66,7 @@ public class GamePanel extends JPanel implements Runnable{
 
         //Start game after loading all objects
         gameThread = new Thread(this);
+        spawnHandler.startSpawning();
     }
 
 

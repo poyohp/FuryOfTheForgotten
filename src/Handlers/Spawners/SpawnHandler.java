@@ -3,12 +3,19 @@ package Handlers.Spawners;
 import Entities.Player;
 import World.Level;
 import World.Tile;
+import System.GamePanel;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import javax.swing.Timer;
 
-public class SpawnHandler {
+public class SpawnHandler implements ActionListener {
+
+    Timer spawnTimer = new Timer((int) (1000/GamePanel.FPS), this);
 
     public int playerSpawnX, playerSpawnY;
+
     ArrayList<SpawnPoint> enemySpawnPoints = new ArrayList<SpawnPoint>();
 
     public void setPlayerSpawn(Player player, Level level) {
@@ -23,6 +30,10 @@ public class SpawnHandler {
                 }
             }
         }
+    }
+
+    public void startSpawning() {
+        spawnTimer.start();
     }
 
     public void setEnemySpawnerPoints(Level level) {
@@ -43,24 +54,37 @@ public class SpawnHandler {
     }
 
     private void spawnEnemies(SpawnPoint spawnPoint, Player player, Level level) {
-        level.enemies.add(spawnPoint.spawnEnemy(player, level));
+        if(spawnPoint.spawnEnemy) {
+            level.enemies.add(spawnPoint.spawnEnemy(player, level));
+        }
     }
 
     private void checkWithinRange(Player player) {
         for (SpawnPoint spawnPoint : enemySpawnPoints) {
-            if (Math.abs(spawnPoint.worldX - player.worldX) < spawnPoint.range && Math.abs(spawnPoint.worldY - player.worldY) < 100) {
-                spawnPoint.playerWithinRange = true;
+            if(spawnPoint.activeSpawn) {
+                if (Math.abs(spawnPoint.worldX - player.worldX) < spawnPoint.range && Math.abs(spawnPoint.worldY - player.worldY) < spawnPoint.range) {
+                    spawnPoint.playerWithinRange = true;
+                }
             }
         }
     }
 
     public void update(Player player, Level level) {
         for (SpawnPoint spawnPoint : enemySpawnPoints) {
-            checkWithinRange(player);
-            if(spawnPoint.playerWithinRange) {
-                //spawnEnemies(spawnPoint, player, level);
+            if(spawnPoint.activeSpawn) {
+                spawnPoint.checkIfSpawn();
+                checkWithinRange(player);
+                if(spawnPoint.playerWithinRange) {
+                    spawnEnemies(spawnPoint, player, level);
+                }
             }
         }
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        for(SpawnPoint spawnPoint : enemySpawnPoints) {
+            spawnPoint.framesSinceLastSpawn++;
+        }
+    }
 }

@@ -16,10 +16,11 @@ public class Enemy extends Entity {
     APathfinding pathFinder;
     Tile[][] tileset;
 
-    public Enemy(int health, int speed, int width, int height, String name, int worldX, int worldY, int xOffset, int yOffset, int hitBoxWidth, int hitBoxHeight, Player player, Tile[][] tileset) {
+    public Enemy(int health, int speed, int width, int height, String name, int worldX, int worldY, int xOffset, int yOffset, int hitBoxWidth, int hitBoxHeight, Player player, Tile[][] tileset, boolean isFollowing) {
         super(health, speed, width, height, name, worldX, worldY, xOffset, yOffset, hitBoxWidth, hitBoxHeight);
         this.player = player;
         this.tileset = tileset;
+        this.isFollowing = isFollowing;
 
         pathFinder = new APathfinding(tileset);
 
