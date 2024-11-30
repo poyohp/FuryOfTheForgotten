@@ -14,9 +14,10 @@ public class Node {
      */
     public int gCost, hCost, fCost;
 
-    public boolean walkable, open, checked;
+    public boolean walkable, open, closed;
 
     public Node(Tile tile) {
+        // Sync tile row and col to node row and col
         this.tile = tile;
         row = tile.getRow();
         col = tile.getCol();
