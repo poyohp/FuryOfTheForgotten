@@ -128,8 +128,25 @@ public class GamePanel extends JPanel implements Runnable{
         player.draw(g2);
         attackHandler.draw(g2);
 
+//        debugWalkableTiles(g2);;
+
         g2.dispose();
 
 
     }
+
+//    public void debugWalkableTiles(Graphics2D g2) {
+//        Tile[][] currentTileset = levelHandler.getCurrentLevel().getMap().baseLayerTiles;
+//        for (int row = 0; row < currentTileset.length; row++) {
+//            for (int col = 0; col < currentTileset[0].length; col++) {
+//                Tile tile = currentTileset[row][col];
+//                if (tile.walkable) {
+//                    g2.setColor(Color.GREEN);
+//                } else {
+//                    g2.setColor(Color.RED);
+//                }
+//                g2.drawRect((int)((col * Tile.tileSize) - player.worldX + player.screenX), (int)((row * Tile.tileSize) - player.worldY + player.screenY), Tile.tileSize, Tile.tileSize);
+//            }
+//        }
+//    }
 }
