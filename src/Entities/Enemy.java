@@ -8,10 +8,11 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Enemy extends Entity {
-    private int vision = 300;
+    private int vision = 600;
     public int rangedVision = 0;
     public boolean isFollowing = false;
     public boolean onPath;
+    public boolean attacking = true;
     Player player;
     APathfinding pathFinder;
     Tile[][] tileset;
