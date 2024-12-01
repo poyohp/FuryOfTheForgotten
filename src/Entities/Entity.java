@@ -52,7 +52,17 @@ public abstract class Entity {
     }
 
     public void drawHealth(Graphics2D g2) {
-        g2.drawString(String.format("%.2f", this.health), (int)this.screenX + this.getWidth()/4, (int)(this.screenY - 20));
+        double fillPercentage = health/100.0; // Health percentage remaining
+        int barLength = (int)(fillPercentage * width); // Draw bar based on percentage remaining
+
+        // Bar fill
+        g2.setColor(Color.GREEN);
+        g2.fillRect((int) screenX, (int) screenY - 40, barLength, 20);
+
+        // Bar outline
+        g2.setColor(Color.BLACK);
+        g2.drawRect((int) screenX, (int) screenY - 40, width, 20);
+
     }
 
     public double getHealth() {
