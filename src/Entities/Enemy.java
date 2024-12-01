@@ -24,7 +24,7 @@ public class Enemy extends Entity {
         this.tileset = tileset;
         this.isFollowing = isFollowing;
 
-        damage = 0.4;
+        damage = 0.5;
 
         pathFinder = new APathfinding(tileset);
 
@@ -116,5 +116,6 @@ public class Enemy extends Entity {
         drawHealth(g2);
         g2.setPaint(Color.PINK);
         g2.fillRect((int) screenX, (int) screenY, this.getWidth(), this.getHeight());
+        g2.setPaint(Color.YELLOW);
     }
 }
