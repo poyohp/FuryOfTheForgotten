@@ -25,7 +25,7 @@ public class SpawnPoint {
     public int numEnemies;
     public int framesSinceLastSpawn;
 
-    boolean activeSpawn;
+    public boolean activeSpawn;
     boolean spawnEnemy;
 
     public double worldX, worldY;

@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class MenuPanel extends JPanel {
+
     // Loads menu image
     BufferedImage menu = loadImage();
 
@@ -41,6 +42,9 @@ public class MenuPanel extends JPanel {
     MenuButton selectedButton;
 
     MenuPanel() {
+        this.setDoubleBuffered(true);
+        this.setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
+
         keyHandler = new KeyHandler();
 
         DrawingPanel panel = new DrawingPanel();

@@ -52,7 +52,7 @@ public abstract class Entity {
     }
 
     public void drawHealth(Graphics2D g2) {
-        g2.drawString(String.valueOf(this.health), (int)this.screenX, (int)(this.screenY - 20));
+        g2.drawString(String.format("%.2f", this.health), (int)this.screenX, (int)(this.screenY - 20));
     }
 
     public double getHealth() {

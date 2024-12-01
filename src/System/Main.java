@@ -21,8 +21,16 @@ public class Main {
         updateGameState(1);
     }
 
+    /**
+     * Adds panel to frame based on game state
+     * 1: Menu
+     * 2: Game
+     * 3: Game over
+     * 4: Game won
+     * @param gameState num representing state of the game
+     */
     static public void updateGameState(int gameState) {
-        window.getContentPane().removeAll();
+        window.getContentPane().removeAll(); // Remove current panel from JFrame
 
         switch (gameState) {
             case 1:
@@ -38,6 +46,7 @@ public class Main {
             case 4:
                 window.add(winPanel);
         }
+
         window.pack();
         window.setVisible(true);
     }

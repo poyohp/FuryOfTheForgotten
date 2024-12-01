@@ -14,6 +14,9 @@ public class GameOverPanel extends JPanel {
     public static final int screenHeight = (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 
     GameOverPanel() {
+        this.setDoubleBuffered(true);
+        this.setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
+
         DrawingPanel panel = new DrawingPanel();
 
         panel.setDoubleBuffered(true);

@@ -3,6 +3,7 @@ package Handlers;
 import Entities.Enemy;
 import Entities.Player;
 import Handlers.Spawners.SpawnHandler;
+import Handlers.Spawners.SpawnPoint;
 import World.Level;
 import Attacks.DamageDealer;
 import System.Main;
@@ -59,6 +60,18 @@ public class LevelHandler {
             if (player.getHealth() == 0) Main.updateGameState(3);
         }
 
+        if (spawnHandler.started) { // Timer has started
+            boolean spawnPointsActive = false; // Checks if there are any active spawn points
+            for (SpawnPoint spawnPoint: spawnHandler.enemySpawnPoints) {
+                if (spawnPoint.activeSpawn) {
+                    spawnPointsActive = true;
+                    System.out.println("Spawn point activated");
+                } else System.out.println("Spawn point not activated");
+            }
+
+            // If there are no more active spawn points, player has defeated all enemies!
+            if (!spawnPointsActive) Main.updateGameState(4);
+        }
     }
 
     public void draw(Graphics2D g2, Player player) {

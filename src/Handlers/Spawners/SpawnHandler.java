@@ -16,7 +16,9 @@ public class SpawnHandler implements ActionListener {
 
     public int playerSpawnX, playerSpawnY;
 
-    ArrayList<SpawnPoint> enemySpawnPoints = new ArrayList<SpawnPoint>();
+    public ArrayList<SpawnPoint> enemySpawnPoints = new ArrayList<SpawnPoint>();
+
+    public boolean started = false;
 
     public void setPlayerSpawn(Player player, Level level) {
         for (int i = 0; i < level.getMap().spawnLayerTiles.length; i++) {
@@ -34,6 +36,7 @@ public class SpawnHandler implements ActionListener {
 
     public void startSpawning() {
         spawnTimer.start();
+        started = true;
     }
 
     public void setEnemySpawnerPoints(Level level) {
