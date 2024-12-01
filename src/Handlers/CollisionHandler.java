@@ -3,6 +3,8 @@ import Attacks.Attack;
 import Entities.*;
 import World.Tile;
 
+import java.awt.*;
+
 public class CollisionHandler {
     boolean checkEntityWithAttackCollision(Entity entity, Attack attack) {
         double attackTop = attack.hitbox.getWorldYPos();
@@ -90,13 +92,11 @@ public class CollisionHandler {
     }
 
     static public boolean enemyPlayerCollision(Enemy enemy, Player player) {
-        boolean collidingHorizontally = false;
-        boolean collidingVertically = false;
-        if (enemy.entityRight > player.entityLeft && enemy.entityLeft < player.entityRight) collidingHorizontally = true;
-        if (enemy.entityBottom > player.entityTop && enemy.entityTop < player.entityBottom) collidingVertically = true;
+        Rectangle enemyBox = new Rectangle((int)enemy.worldX, (int)enemy.worldY, enemy.getWidth(), enemy.getHeight());
+        Rectangle playerBox = new Rectangle((int)player.worldX, (int)player.worldY, player.getWidth(), player.getHeight());
 
-        if (collidingHorizontally && collidingVertically) return true;
-        return false;
+        if (enemyBox.intersects(playerBox)) return true;
+        else return false;
     }
 
 }

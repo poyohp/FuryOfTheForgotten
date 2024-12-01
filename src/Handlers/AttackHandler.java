@@ -42,7 +42,7 @@ public class AttackHandler {
 
     void createEnemyRanged(int damage, int range, int width, char direction, Enemy enemy, int xOffset, int yOffset, int duration, int speed, Player player) {
         Ranged enemyAttack = new Ranged(damage, range, width, direction, enemy, xOffset, yOffset, duration, speed);
-        enemyAttack.angle = enemyAttack.calculateAttackAngle(enemyAttack.hitbox, player.hitbox);
+//        enemyAttack.angle = enemyAttack.calculateAttackAngle(enemyAttack.hitbox, player.hitbox);
         enemyAttacks.add(enemyAttack);
     }
 
@@ -160,14 +160,14 @@ public class AttackHandler {
     // Must be updated when other entities are included to take an arraylist of all entities as a parameter, not just a player)
     public void update(Player player, ArrayList<Enemy> enemy) {
         checkForPlayerAttack(keyHandler, player);
-        for (Enemy e : enemy) {
-            checkForEnemyAttacks(e, player);
-        }
+//        for (Enemy e : enemy) {
+//            checkForEnemyAttacks(e, player);
+//        }
         determinePlayerRangedAttackVelocity();
-        moveEnemyAttacks();
+//        moveEnemyAttacks();
         setCooldown();
         removeAttackAfterCooldown();
-        removeEnemyAttacks();
+//        removeEnemyAttacks();
     }
 
     private void setCooldown() {
@@ -198,9 +198,10 @@ public class AttackHandler {
         for (Attack attack : playerAttacks) {
             attack.draw(g2);
         }
-        for (Attack attack : enemyAttacks) {
-            attack.draw(g2);
-        }
+//        for (Attack attack : enemyAttacks) {
+//            System.out.println("Drawing enemy attack at: (" + attack.getX() + ", " + attack.getY() + ")");
+//            attack.draw(g2);
+//        }
     }
 
 
