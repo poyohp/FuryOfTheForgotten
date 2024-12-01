@@ -3,7 +3,7 @@ package Entities;
 import java.awt.*;
 
 public abstract class Entity {
-    private int health;
+    private double health;
     private double speed;
     private int width, height;
     private int defenseReduction;
@@ -51,7 +51,11 @@ public abstract class Entity {
         entityBottom = entityTop + (double) hitbox.getHeight();
     }
 
-    public int getHealth() {
+    public void drawHealth(Graphics2D g2) {
+        g2.drawString(String.valueOf(this.health), (int)this.screenX, (int)(this.screenY - 20));
+    }
+
+    public double getHealth() {
         return health;
     }
 
@@ -67,7 +71,7 @@ public abstract class Entity {
         return height;
     }
 
-    public void setHealth(int newHealth) {
+    public void setHealth(double newHealth) {
         health = Math.max(0, newHealth); // Makes sure that health does not go below zero!
     }
 

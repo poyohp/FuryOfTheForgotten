@@ -16,12 +16,15 @@ public class Enemy extends Entity {
     Player player;
     APathfinding pathFinder;
     Tile[][] tileset;
+    public double damage;
 
     public Enemy(int health, int speed, int width, int height, String name, int worldX, int worldY, int xOffset, int yOffset, int hitBoxWidth, int hitBoxHeight, Player player, Tile[][] tileset, boolean isFollowing) {
         super(health, speed, width, height, name, worldX, worldY, xOffset, yOffset, hitBoxWidth, hitBoxHeight);
         this.player = player;
         this.tileset = tileset;
         this.isFollowing = isFollowing;
+
+        damage = 0.5;
 
         pathFinder = new APathfinding(tileset);
 
@@ -33,8 +36,7 @@ public class Enemy extends Entity {
         updateEntityPosition();
         setScreenPosition();
         hitbox.update(this);
-        if (playerInVision()) move();
-        System.out.println(playerInVision());
+        move();
     }
 
     private boolean playerInVision() {
@@ -111,6 +113,7 @@ public class Enemy extends Entity {
 
     @Override
     public void draw(Graphics2D g2) {
+        drawHealth(g2);
         g2.setColor(Color.PINK);
         g2.fillRect((int) screenX, (int) screenY, this.getWidth(), this.getHeight());
         g2.setColor(Color.RED);

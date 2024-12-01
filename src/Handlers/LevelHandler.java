@@ -4,6 +4,7 @@ import Entities.Enemy;
 import Entities.Player;
 import Handlers.Spawners.SpawnHandler;
 import World.Level;
+import Attacks.DamageDealer;
 
 import java.awt.*;
 
@@ -12,6 +13,8 @@ public class LevelHandler {
     private Level[] levels;
     private Level currentLevel;
     int currentLevelIndex;
+
+    DamageDealer damageDealer = new DamageDealer();
 
     int numLevels;
 
@@ -47,6 +50,8 @@ public class LevelHandler {
 
         for (Enemy enemy : currentLevel.enemies) {
             enemy.update();
+            damageDealer.dealDamageToPlayer(enemy, player);
+            System.out.println(CollisionHandler.enemyPlayerCollision(enemy, player));
         }
 
     }

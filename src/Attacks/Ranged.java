@@ -149,8 +149,6 @@ public class Ranged extends Attack{
     @Override
     public void draw(Graphics2D g2) {
         setScreenPosition();
-        System.out.println("Screen position set. ScreenX = " + getScreenX() + ", ScreenY = " + getScreenY());
-
 
         AffineTransform originalTransform = g2.getTransform();
 

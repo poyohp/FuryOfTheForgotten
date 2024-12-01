@@ -94,6 +94,7 @@ public class Player extends Entity {
 
     @Override
     public void draw(Graphics2D g2) {
+        drawHealth(g2);
 
         if (!attacking) {
             if (direction == 'd') {

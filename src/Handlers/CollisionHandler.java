@@ -89,4 +89,14 @@ public class CollisionHandler {
         return checkEntityWithAttackCollision(player, attack);
     }
 
+    static public boolean enemyPlayerCollision(Enemy enemy, Player player) {
+        boolean collidingHorizontally = false;
+        boolean collidingVertically = false;
+        if (enemy.entityRight > player.entityLeft && enemy.entityLeft < player.entityRight) collidingHorizontally = true;
+        if (enemy.entityBottom > player.entityTop && enemy.entityTop < player.entityBottom) collidingVertically = true;
+
+        if (collidingHorizontally && collidingVertically) return true;
+        return false;
+    }
+
 }
