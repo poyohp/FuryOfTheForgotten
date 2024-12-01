@@ -40,10 +40,10 @@ public class AttackHandler {
         playerAttacks.add(new Ranged(damage, range, width, direction, entity, xOffset, yOffset, duration, speed));
     }
 
-    void createEnemyRanged(int damage, int range, int width, char direction, Entity entity, int xOffset, int yOffset, int duration, int speed, Player player) {
-        Ranged enemyAttack = new Ranged(damage, range, width, direction, entity, xOffset, yOffset, duration, speed);
+    void createEnemyRanged(int damage, int range, int width, char direction, Enemy enemy, int xOffset, int yOffset, int duration, int speed, Player player) {
+        Ranged enemyAttack = new Ranged(damage, range, width, direction, enemy, xOffset, yOffset, duration, speed);
         enemyAttack.angle = enemyAttack.calculateAttackAngle(enemyAttack.hitbox, player.hitbox);
-        enemyAttacks.add(new Ranged(damage, range, width, direction, entity, xOffset, yOffset, duration, speed));
+        enemyAttacks.add(enemyAttack);
     }
 
 
@@ -64,7 +64,7 @@ public class AttackHandler {
         }
         if (player.attacking) {
             if (attackFrames == 0) {
-                createPlayerRanged(5, Tile.tileSize, Tile.tileSize, player.direction, (Entity) player, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625));
+                createPlayerRanged(5, Tile.tileSize, Tile.tileSize, player.direction, player, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625));
                 createPlayerRanged(5, Tile.tileSize, Tile.tileSize, dir1, player, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625));
                 createPlayerRanged(5, Tile.tileSize, Tile.tileSize, dir2, player, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625));
                 attackFrames = 36;

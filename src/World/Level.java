@@ -12,8 +12,6 @@ public class Level {
     private Map map;
 
     public ArrayList<Enemy> enemies = new ArrayList<>();
-    public ArrayList<Attack> playerAttacks = new ArrayList<>();
-    public ArrayList<Attack> enemyAttacks = new ArrayList<>();
 
     public Level(String mapDirectory) {
 
