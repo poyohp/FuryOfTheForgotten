@@ -13,12 +13,17 @@ public class GameOverPanel extends JPanel {
     public static final int screenWidth = (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth();
     public static final int screenHeight = (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 
+    /**
+     * Panel for when the game is over
+     */
     GameOverPanel() {
+        // Ensures full screen and reduces rendering time!
         this.setDoubleBuffered(true);
         this.setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
 
         DrawingPanel panel = new DrawingPanel();
 
+        // Sets the same variables for the drawing panel
         panel.setDoubleBuffered(true);
         panel.setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
         this.add(panel);

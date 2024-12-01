@@ -56,8 +56,8 @@ public class LevelHandler {
 
         for (Enemy enemy : enemies) {
             enemy.update();
-            damageDealer.dealDamageToPlayer(enemy, player);
-            if (player.getHealth() <= 0) Main.updateGameState(3);
+            damageDealer.dealDamageToPlayer(enemy, player); // Deals damage to player from the enemy
+            if (player.getHealth() <= 0) Main.updateGameState(3); // If player dies, update to game lost state
         }
 
         if (spawnHandler.started) { // Timer has started
@@ -65,12 +65,12 @@ public class LevelHandler {
             spawnHandler.numActiveSpawns = 0;
             for (SpawnPoint spawnPoint: spawnHandler.enemySpawnPoints) {
                 if (spawnPoint.activeSpawn) {
-                    spawnPointsActive = true;
-                    spawnHandler.numActiveSpawns++;
+                    spawnPointsActive = true; // True if there are any actives spawn points
+                    spawnHandler.numActiveSpawns++; // Updates for number of active spawns
                 }
             }
 
-            // If there are no more active spawn points, player has defeated all enemies!
+            // If there are no more active spawn points, player has defeated all enemies! Update to game won state.
             if (!spawnPointsActive) Main.updateGameState(4);
         }
     }

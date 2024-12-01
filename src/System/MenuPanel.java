@@ -26,8 +26,6 @@ public class MenuPanel extends JPanel {
     int cooldownTime = 200;
     boolean keyProcessed = false;
 
-    boolean proceed;
-
     // Get screen width and height
     public static final int screenWidth = (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth();
     public static final int screenHeight = (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight();
@@ -52,6 +50,7 @@ public class MenuPanel extends JPanel {
         panel.setDoubleBuffered(true);
         panel.setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
 
+        // Makes sure that panel can listen for key events
         panel.addKeyListener(keyHandler);
         panel.setFocusable(true);
         panel.requestFocusInWindow();
@@ -75,18 +74,24 @@ public class MenuPanel extends JPanel {
         timer.start();
     }
 
+    /**
+     * Gets the user's choice from the buttons
+     */
     public void handleChoice() {
         if (keyHandler.choicePress) {
             if (selectedButton == start) {
                 timer.stop();
-                Main.updateGameState(2);
-            } else { // Update for quit and help later
+                Main.updateGameState(2); // Start the game!
+            } else { // Update for help later
                 timer.stop();
-                Main.updateGameState(3);
+                Main.updateGameState(3); // Show ending screen!
             }
         }
     }
 
+    /**
+     * Adds all the buttons to an array list
+     */
     public void addButtonsToArrayList() {
         buttons.add(start);
         buttons.add(quit);
@@ -110,6 +115,9 @@ public class MenuPanel extends JPanel {
         }
     }
 
+    /**
+     * Changes user's button selection if cooldown is not in effect and if the key has not been processed
+     */
     public void handleSelection() {
         if (cooldownCounter > 0) {
             cooldownCounter -= TIMERSPEED; // Keep counting down cooldown time
@@ -129,6 +137,9 @@ public class MenuPanel extends JPanel {
         }
     }
 
+    /**
+     * Sets the selected button to a new one
+     */
     public void setSelected() {
         // Get index of selected button
         int oldIndex = buttons.indexOf(selectedButton);
@@ -152,6 +163,10 @@ public class MenuPanel extends JPanel {
         buttons.get(newIndex).isSelected = true;
     }
 
+    /**
+     * Loads menu image
+     * @return buffered image for menu
+     */
     BufferedImage loadImage() {
         BufferedImage image = null;
         java.net.URL url = this.getClass().getResource("/MenuImages/menu.png");

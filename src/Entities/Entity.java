@@ -3,15 +3,19 @@ package Entities;
 import java.awt.*;
 
 public abstract class Entity {
+    
+    // Various entity attributes
     private double health;
     private double speed;
     private int width, height;
     private int defenseReduction;
-
     String name;
 
+    // entity position
     public double worldX, worldY;
     public double screenX, screenY;
+    
+    
     public char direction;
     public boolean attacking = false;
     public int attackCooldown = 120;
@@ -20,9 +24,26 @@ public abstract class Entity {
 
     public Hitbox hitbox;
 
+    /**
+     * Draws the entity
+     * @param g2 Graphics2D object to draw on
+     */
     abstract void draw(Graphics2D g2);
-
-
+    
+    /**
+     * Entity that is a part of the game
+     * @param health entity health
+     * @param speed entity speed
+     * @param width entity width
+     * @param height entity height
+     * @param name entity name
+     * @param worldX world x position
+     * @param worldY world y position
+     * @param xOffset x offset for hitbox
+     * @param yOffset y offset for hitbox
+     * @param hitBoxWidth hitbox width
+     * @param hitBoxHeight hitbox height
+     */
     public Entity (int health, double speed, int width, int height, String name, double worldX, double worldY, int xOffset, int yOffset, int hitBoxWidth, int hitBoxHeight) {
         this.health = health;
         this.speed = speed;
@@ -34,15 +55,19 @@ public abstract class Entity {
 
         this.worldX = worldX;
         this.worldY = worldY;
-        hitbox = new Hitbox((int)worldX, (int)worldY, xOffset, yOffset, hitBoxWidth, hitBoxHeight);
+        hitbox = new Hitbox((int)worldX, (int)worldY, xOffset, yOffset, hitBoxWidth, hitBoxHeight); // Create hitbox that corresponds to given values
         hitbox.update(this);
 
+        // Variables that refer to the different sides of the entities
         entityLeft = hitbox.getWorldXPos();
         entityRight = entityLeft + (double) hitbox.getWidth();
         entityTop = hitbox.getWorldYPos();
         entityBottom = entityTop + (double) hitbox.getHeight();
     }
 
+    /**
+     * Updates the hitbox values and corresponding entity values
+     */
     public void updateEntityPosition() {
         hitbox.update(this);
         entityLeft = hitbox.getWorldXPos();
@@ -51,6 +76,10 @@ public abstract class Entity {
         entityBottom = entityTop + (double) hitbox.getHeight();
     }
 
+    /**
+     * Draws the health of an entity
+     * @param g2 Graphics2D object to draw health bar on
+     */
     public void drawHealth(Graphics2D g2) {
         double fillPercentage = health/100.0; // Health percentage remaining
         int barLength = (int)(fillPercentage * width); // Draw bar based on percentage remaining
@@ -65,22 +94,42 @@ public abstract class Entity {
 
     }
 
+    /**
+     * Gets health
+     * @return health
+     */
     public double getHealth() {
         return health;
     }
 
+    /**
+     * Gets speed
+     * @return speed
+     */
     public double getSpeed() {
         return speed;
     }
 
+    /**
+     * Gets width
+     * @return width
+     */
     public int getWidth() {
         return width;
     }
 
+    /**
+     * Gets height
+     * @return height
+     */
     public int getHeight() {
         return height;
     }
 
+    /**
+     * Sets health, making sure it does not go below zero
+     * @param newHealth sets health to newHealth
+     */
     public void setHealth(double newHealth) {
         health = newHealth;
         if (newHealth < 0) health = 0;

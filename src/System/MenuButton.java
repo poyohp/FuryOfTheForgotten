@@ -20,16 +20,29 @@ public class MenuButton {
         this.buttonFilename = buttonFilename;
     }
 
+    /**
+     * Draws a button based on its file name
+     * @param g2
+     */
     public void drawButton(Graphics2D g2) {
         g2.drawImage(loadImage(buttonFilename), x, y, width, height, null);
     }
 
+    /**
+     * Draws a red rectangle around choice
+     * @param g2 Graphics2D object to draw on
+     */
     public void renderCurrentChoice(Graphics2D g2) {
         g2.setColor(Color.RED);
         g2.setStroke(new BasicStroke(9));
         g2.drawRect(this.x, this.y, this.width, this.height);
     }
 
+    /**
+     * Loads an image
+     * @param filename file name of image
+     * @return buffered image
+     */
     BufferedImage loadImage(String filename) {
         BufferedImage image = null;
         java.net.URL url = this.getClass().getResource("/MenuImages/" + filename);

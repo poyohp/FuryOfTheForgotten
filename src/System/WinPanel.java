@@ -35,6 +35,10 @@ public class WinPanel extends JPanel {
         }
     }
 
+    /**
+     * Loads game won image
+     * @return buffered game won image
+     */
     BufferedImage loadImage() {
         BufferedImage image = null;
         java.net.URL url = this.getClass().getResource("/MenuImages/gameWon.png");

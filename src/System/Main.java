@@ -4,6 +4,7 @@ import javax.swing.*;
 
 public class Main {
 
+    // Different panels
     public static final GamePanel gamePanel = new GamePanel();
     public static MenuPanel menuPanel = new MenuPanel();
     public static GameOverPanel gameOverPanel = new GameOverPanel();
@@ -18,7 +19,7 @@ public class Main {
         window.setResizable(false);
 
         window.setTitle("Fury Of The Forgotten");
-        updateGameState(1);
+        updateGameState(1); // Sets initial panel to be the menu panel
     }
 
     /**

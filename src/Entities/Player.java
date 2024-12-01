@@ -21,6 +21,21 @@ public class Player extends Entity {
     CollisionHandler collisionHandler = new CollisionHandler();
     Tile[][] tiles;
 
+    /**
+     * Enemy that follows player
+     * @param health enemy health
+     * @param speed enemy speed
+     * @param width enemy width
+     * @param height enemy height
+     * @param name enemy name
+     * @param worldX world x position
+     * @param worldY world y position
+     * @param xOffset x offset for hitbox
+     * @param yOffset y offset for hitbox
+     * @param hitBoxWidth hitbox width
+     * @param hitBoxHeight hitbox height
+     * @param keyHandler keyhandler to handle key presses
+     */
     public Player(int health, double speed, int width, int height, String name, double worldX, double worldY, int xOffset, int yOffset, int hitBoxWidth, int hitBoxHeight, KeyHandler keyHandler) {
         super(health, speed, width, height, name, worldX, worldY, xOffset, yOffset, hitBoxWidth, hitBoxHeight);
 
@@ -30,15 +45,26 @@ public class Player extends Entity {
 
     }
 
+    /**
+     * Gives player a tileset
+     * @param tiles tiles of the map
+     */
     private void setTileSet(Tile[][] tiles) {
         this.tiles = tiles;
     }
 
+    /**
+     * Sets player in the middle of the screen
+     */
     void setScreenPosition() {
         this.screenX = (int) (GamePanel.screenWidth / 2) - (double) this.getWidth() / 2;
         this.screenY = (int) (GamePanel.screenHeight / 2) - (double) this.getHeight() / 2;
     }
 
+    /**
+     * Check for player movement
+     * @return true if movement key is pressed, false if not
+     */
     boolean checkMoving() {
         if (keyHandler.leftPress || keyHandler.downPress || keyHandler.upPress || keyHandler.rightPress) {
             return true;
@@ -47,19 +73,31 @@ public class Player extends Entity {
         }
     }
 
+    /**
+     * Updates world values
+     * @param worldX new world x
+     * @param worldY new world y
+     */
     public void updateWorldValues(int worldX, int worldY) {
         this.worldX = worldX;
         this.worldY = worldY;
     }
 
+    /**
+     * Updates the position of the player
+     * @param baseLayerTiles
+     */
     public void update(Tile[][] baseLayerTiles) {
         this.tiles = baseLayerTiles;
         updateEntityPosition();
-        if (!attacking) move();
-        hitbox.update(this);
+        if (!attacking) move(); // If player is not attacking, they can move
+        hitbox.update(this); // Update hitbox
         updateFrames();
     }
 
+    /**
+     * Used for updating animation
+     */
     private void updateFrames() {
         if (updateFrames == 0) {
             if (animationState < 3) {
@@ -73,6 +111,9 @@ public class Player extends Entity {
         }
     }
 
+    /**
+     * Moves player (unless collision with tiles is detected)
+     */
     private void move() {
         if (keyHandler.upPress) {
             direction = 'u';
@@ -92,6 +133,10 @@ public class Player extends Entity {
         }
     }
 
+    /**
+     * Draws player
+     * @param g2 Graphics2D object to draw on
+     */
     @Override
     public void draw(Graphics2D g2) {
         drawHealth(g2);
