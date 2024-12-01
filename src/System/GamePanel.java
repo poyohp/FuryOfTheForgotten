@@ -11,6 +11,7 @@ import Handlers.CollisionHandler;
 import Handlers.KeyHandler;
 import Handlers.LevelHandler;
 import Handlers.Spawners.SpawnHandler;
+import Handlers.Spawners.SpawnPoint;
 import Pathfinding.APathfinding;
 import World.Tile;
 
@@ -43,10 +44,11 @@ public class GamePanel extends JPanel implements Runnable{
     SpawnHandler spawnHandler;
     DamageDealer damageDealer;
 
-    ArrayList<Enemy> enemiesToRemove = new ArrayList<>();
-
     Font spawnsRemaining = new Font("Arial", Font.PLAIN, 20);
 
+    /**
+     * Constructor for the GamePanel - initializes all objects and starts the game
+     */
     public GamePanel() {
         this.setDoubleBuffered(true);
         this.setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
@@ -75,14 +77,18 @@ public class GamePanel extends JPanel implements Runnable{
         spawnHandler.startSpawning();
     }
 
-
+    /**
+     * Initiates the game panel and starts the game thread
+     */
     public void initiateGamePanel() {
         this.setFocusable(true);
         this.requestFocusInWindow();
         gameThread.start();
     }
 
-
+    /**
+     * Hides the cursor (since it's not used in the game)
+     */
     private void hideCursor() {
         this.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(
                 new BufferedImage(3, 3, BufferedImage.TYPE_INT_ARGB), new Point(0, 0),
@@ -90,22 +96,23 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
 
+    /**
+     * Run method for the game - handles the game loop
+     */
     @Override
     public void run() {
-
-
         //FPS Handling
         double drawInterval = 1000000000/FPS;
         double delta = 0;
         long lastTime = System.nanoTime();
         long currentTime;
 
-
         while(gameThread.isAlive()) {
             currentTime = System.nanoTime();
             delta += (currentTime - lastTime) / drawInterval;
             lastTime = currentTime;
             if(delta > 1) {
+                //Updates, then draws
                 update();
                 repaint();
                 delta--;
@@ -113,24 +120,19 @@ public class GamePanel extends JPanel implements Runnable{
         }
     }
 
-
+    /**
+     * Updates all the objects in the game
+     */
     void update() {
         player.update(levelHandler.getCurrentLevel().getMap().baseLayerTiles);
-        levelHandler.update(player, spawnHandler);
-        attackHandler.update(player, levelHandler.enemies);
-
+        levelHandler.update(player, spawnHandler, attackHandler, damageDealer);
+        attackHandler.update(player, levelHandler.getCurrentLevel().enemies);
         damageDealer.dealDamageToEnemies(attackHandler, levelHandler.getCurrentLevel());
-
-        // Removes enemies if they die
-        for (Enemy enemy: levelHandler.enemies) {
-            if (enemy.getHealth() == 0) enemiesToRemove.add(enemy);
-        }
-        levelHandler.enemies.removeAll(enemiesToRemove);
     }
 
 
     /**
-     * Draws the graphics
+     * Draws all the graphics
      * @param g the <code>Graphics</code> object to protect
      */
     @Override
@@ -144,13 +146,12 @@ public class GamePanel extends JPanel implements Runnable{
         player.draw(g2);
         attackHandler.draw(g2);
 
+        for(SpawnPoint spawnPoint : spawnHandler.enemySpawnPoints) {
+            spawnPoint.draw(g2, player);
+        }
+
         g2.setFont(spawnsRemaining);
         g2.drawString("Active Spawns Remaining: " + String.valueOf(spawnHandler.numActiveSpawns), (int)(screenWidth - 300), (int)(100));
-//        debugWalkableTiles(g2);
-
-        g2.dispose();
-
-
     }
 
 //    public void debugWalkableTiles(Graphics2D g2) {

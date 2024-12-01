@@ -29,12 +29,22 @@ public class Map {
 
     ArrayList<Integer> nonWalkableValues = new ArrayList<Integer>();
 
+    /**
+     * Constructor for Map - sets map directory and sets all the non-walkable values
+     * @param mapDirectory the directory of the map file
+     */
     Map(String mapDirectory) {
         this.mapDirectory = mapDirectory;
         addAllNonWalkableValues();
     }
 
+    /**
+     * Get the map from the JSON file using JSON parser and JSON array
+     * @throws IOException
+     * @throws ParseException
+     */
     void getMap() throws IOException, ParseException {
+        // Create a JSON parser and reader - catch exception if file not found
         try {
             parser = new JSONParser();
             reader = new FileReader(mapDirectory);
@@ -51,9 +61,8 @@ public class Map {
         baseLayerTiles = new Tile[mapWidth][mapHeight];
         spawnLayerTiles = new Tile[mapWidth][mapHeight];
 
+        //Get layers and read data
         JSONArray layers = (JSONArray) jsonMapObject.get("layers");
-
-
         for(int i = 0; i < layers.size(); i++) {
             JSONObject currentLayer = (JSONObject) layers.get(i);
             JSONArray dataArray = (JSONArray) currentLayer.get("data");
@@ -65,9 +74,11 @@ public class Map {
 
                 boolean walkable = !nonWalkableValues.contains(Integer.parseInt(dataArray.get(j).toString()));
 
+                // Create a new tile object and add it to the baseLayerTiles array
                 if(i == 0) {
                     baseLayerTiles[m][n] = new Tile(m, n, Integer.parseInt(dataArray.get(j).toString()), walkable);
                 }
+                // Create a new tile object and add it to the spawnLayerTiles array
                 if(i == 1) {
                     spawnLayerTiles[m][n] = new Tile(m, n, Integer.parseInt(dataArray.get(j).toString()), walkable);
                 }
@@ -75,6 +86,11 @@ public class Map {
         }
     }
 
+    /**
+     * Draws the current level map on the screen
+     * @param g2 The 2D graphics object to draw the map with
+     * @param player The player  to base the position off of
+     */
     public void drawMap(Graphics2D g2, Player player) {
         for(int i = 0; i < mapHeight; i++) {
             for(int j = 0; j < mapWidth; j++) {
@@ -91,6 +107,12 @@ public class Map {
         }
     }
 
+    /**
+     * Set the screen positions of the tiles based on player position
+     * @param x The x value of the tile
+     * @param y The y value of the tile
+     * @param player The player to base the screen positions off of
+     */
     private void setScreenPositions(int x, int y, Player player) {
         baseLayerTiles[x][y].setScreenXPos((int)(baseLayerTiles[x][y].getWorldXPos() - player.worldX + player.screenX));
         spawnLayerTiles[x][y].setScreenXPos((int)(spawnLayerTiles[x][y].getWorldXPos() - player.worldX + player.screenX));
@@ -100,6 +122,9 @@ public class Map {
 
     }
 
+    /**
+     * Add all non-walkable tile values to the nonWalkableValues ArrayList
+     */
     private void addAllNonWalkableValues() {
         this.nonWalkableValues.add(201);
         this.nonWalkableValues.add(202);

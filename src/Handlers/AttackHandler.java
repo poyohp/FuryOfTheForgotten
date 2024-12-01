@@ -16,7 +16,6 @@ import java.util.ArrayList;
 
 public class AttackHandler {
 
-
     public ArrayList<Attack> playerAttacks = new ArrayList<Attack>();
     ArrayList<Attack> playerToRemove = new ArrayList<Attack>();
     public ArrayList<Ranged> enemyAttacks = new ArrayList<Ranged>();

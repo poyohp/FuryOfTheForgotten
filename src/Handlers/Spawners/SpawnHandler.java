@@ -22,6 +22,11 @@ public class SpawnHandler implements ActionListener {
 
     public int numActiveSpawns = 0;
 
+    /**
+     * Constructor for SpawnHandler - initializes the player spawn point (only 1)
+     * @param player the game player
+     * @param level the current level to spawn player in
+     */
     public void setPlayerSpawn(Player player, Level level) {
         for (int i = 0; i < level.getMap().spawnLayerTiles.length; i++) {
             for (int j = 0; j < level.getMap().spawnLayerTiles.length; j++) {
@@ -36,11 +41,18 @@ public class SpawnHandler implements ActionListener {
         }
     }
 
+    /**
+     * Begins spawning the player
+     */
     public void startSpawning() {
         spawnTimer.start();
         started = true;
     }
 
+    /**
+     * Sets the enemy spawn points based on the level
+     * @param level the current level to set enemy spawn points
+     */
     public void setEnemySpawnerPoints(Level level) {
         for (int i = 0; i < level.getMap().spawnLayerTiles.length; i++) {
             for (int j = 0; j < level.getMap().spawnLayerTiles.length; j++) {
@@ -52,18 +64,33 @@ public class SpawnHandler implements ActionListener {
         }
     }
 
+    /**
+     * Changes the level and updates the player spawn point and enemy spawn points
+     * @param player the game player
+     * @param level the new level to update
+     */
     public void levelChanged(Player player, Level level) {
         enemySpawnPoints.clear();
         setPlayerSpawn(player, level);
         setEnemySpawnerPoints(level);
     }
 
+    /**
+     * Spawns enemies at the spawn point at constant rates
+     * @param spawnPoint the spawn point to spawn enemies at
+     * @param player the game player
+     * @param level the current level
+     */
     private void spawnEnemies(SpawnPoint spawnPoint, Player player, Level level) {
         if(spawnPoint.spawnEnemy) {
             level.enemies.add(spawnPoint.spawnEnemy(player, level));
         }
     }
 
+    /**
+     * Checks if the player is within range of the spawn point
+     * @param player the game player
+     */
     private void checkWithinRange(Player player) {
         for (SpawnPoint spawnPoint : enemySpawnPoints) {
             if(spawnPoint.activeSpawn) {
@@ -74,6 +101,11 @@ public class SpawnHandler implements ActionListener {
         }
     }
 
+    /**
+     * Updates the spawn points and spawns enemies if the player is within range
+     * @param player the game player
+     * @param level the current level
+     */
     public void update(Player player, Level level) {
         for (SpawnPoint spawnPoint : enemySpawnPoints) {
             if(spawnPoint.activeSpawn) {
@@ -87,6 +119,11 @@ public class SpawnHandler implements ActionListener {
         }
     }
 
+    /**
+     * Each timer tick - increments the frames since last spawn for each spawn point
+     * Overall, used to spawn enemies at constant rates
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         for(SpawnPoint spawnPoint : enemySpawnPoints) {

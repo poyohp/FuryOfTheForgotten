@@ -6,6 +6,8 @@ public class Tile {
     public static final int normalTileSize = 16;
     private static final int numToMultiply = 5;
     public static final int tileMultipler = (int) (GamePanel.screenWidth/GamePanel.screenHeight) * numToMultiply;
+
+    //Tile size is determined based on screen ratio
     public static final int tileSize = normalTileSize*tileMultipler;
 
     private int value, orgValue;
@@ -16,6 +18,13 @@ public class Tile {
 
     public boolean walkable;
 
+    /**
+     * Constructor for the Tile class - sets positions and values
+     * @param row Tile row
+     * @param col Tile column
+     * @param value Tile value (used for image)
+     * @param walkable Whether the tile is walkable or not
+     */
     Tile(int row, int col, int value, boolean walkable) {
         this.row = row;
         this.col = col;
@@ -30,6 +39,9 @@ public class Tile {
         this.walkable = walkable;
     }
 
+    /**
+     * Get the row and column of the IMAGE (on the tileset) that corresponds to the value
+     */
     public void getImageRowCol() {
         imageRow = (value / 28);
         imageCol = (value % 28);

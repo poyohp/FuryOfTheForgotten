@@ -10,6 +10,10 @@ public class KeyHandler implements KeyListener {
     @Override
     public void keyTyped(KeyEvent e) {}
 
+    /**
+     * Determines which key is pressed, and sets all other key values to released
+     * @param e the event to be processed
+     */
     @Override
     public void keyPressed(KeyEvent e) {
         if(e.getKeyCode() == KeyEvent.VK_W) {
@@ -45,6 +49,10 @@ public class KeyHandler implements KeyListener {
 
     }
 
+    /**
+     * Determines which key is released, and sets the corresponding key value to false
+     * @param e the event to be processed
+     */
     @Override
     public void keyReleased(KeyEvent e) {
         if(e.getKeyCode() == KeyEvent.VK_W) {

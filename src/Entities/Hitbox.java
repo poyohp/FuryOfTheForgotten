@@ -9,6 +9,15 @@ public class Hitbox extends Rectangle {
     private int xOffset, yOffset; // Offset from positions
     private double worldXPos, worldYPos;
 
+    /**
+     * Hitbox constructor
+     * @param worldXPos world x position
+     * @param worldYPos world y position
+     * @param xOffset x offset
+     * @param yOffset y offset
+     * @param width width
+     * @param height height
+     */
     public Hitbox(int worldXPos, int worldYPos, int xOffset, int yOffset, int width, int height) {
         super(worldXPos, worldYPos, width, height);
         this.worldXPos = worldXPos;

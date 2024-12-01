@@ -4,13 +4,16 @@ import javax.swing.*;
 
 public class Main {
 
-    // Different panels
+    /**
+     * All the game panel (for game states)
+     */
     public static final GamePanel gamePanel = new GamePanel();
     public static MenuPanel menuPanel = new MenuPanel();
     public static GameOverPanel gameOverPanel = new GameOverPanel();
     public static WinPanel winPanel = new WinPanel();
 
     public static JFrame window = new JFrame();
+
 
     public static void main(String[] args) {
 
@@ -19,7 +22,7 @@ public class Main {
         window.setResizable(false);
 
         window.setTitle("Fury Of The Forgotten");
-        updateGameState(1); // Sets initial panel to be the menu panel
+        updateGameState(1);
     }
 
     /**
@@ -33,18 +36,22 @@ public class Main {
     static public void updateGameState(int gameState) {
         window.getContentPane().removeAll(); // Remove current panel from JFrame
 
+        // Add panel based on game state
         switch (gameState) {
             case 1:
                 window.add(menuPanel);
                 break;
             case 2:
+                window.remove(menuPanel);
                 window.add(gamePanel);
                 gamePanel.initiateGamePanel();
                 break;
             case 3:
+                window.remove(gamePanel);
                 window.add(gameOverPanel);
                 break;
             case 4:
+                window.remove(gamePanel);
                 window.add(winPanel);
         }
 

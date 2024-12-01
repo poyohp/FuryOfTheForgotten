@@ -6,14 +6,15 @@ import World.Tile;
 import java.awt.*;
 
 public class CollisionHandler {
+
     /**
-     * Checks for collision between entity and attack
-     * @param entity
-     * @param attack
-     * @return true if collision detected, false if not
+     * Checks entity collision with attacks
+     * Used for player-attack and enemy-attack collision
+     * @param entity entity to check collision with
+     * @param attack attack to check collision with
+     * @return true if entity collides with attack, false otherwise
      */
     boolean checkEntityWithAttackCollision(Entity entity, Attack attack) {
-        // Positions of the hitbox
         double attackTop = attack.hitbox.getWorldYPos();
         double attackBottom = attackTop + attack.hitbox.getHeight();
         double attackLeft = attack.hitbox.getWorldXPos();
@@ -22,7 +23,6 @@ public class CollisionHandler {
         char attackDirection1 = attack.getDirection()[0];
         char attackDirection2 = attack.getDirection()[1];
 
-        // Makes sure that a collision has happened
         if (attackDirection1 == 'u' || attackDirection2 == 'u') {
             if (attackTop <= entity.entityBottom && attackLeft <= entity.entityRight && attackRight >= entity.entityLeft) return true;
         }
@@ -39,45 +39,42 @@ public class CollisionHandler {
     }
 
     /**
-     * Checks for collision of player against tiles
-     * @param player Player to check for collision
-     * @param tiles Tileset with tiles
-     * @return true if collision detected, false if not
+     * Checks player collision with all tiles in all directions
+     * @param player player to check collision with
+     * @param tiles List of tiles from the current level to check collision with
+     * @return true if player collides with a tile, false otherwise
      */
     public boolean playerWithTileCollision(Player player, Tile[][] tiles) {
-        // Gets all the rows and columns that the player is currently in
+
+        // Setting the row and column of the player
         int topRow = (int)(player.entityTop/Tile.tileSize);
         int bottomRow = (int)(player.entityBottom/Tile.tileSize);
         int leftCol = (int)(player.entityLeft/Tile.tileSize);
         int rightCol = (int)(player.entityRight/Tile.tileSize);
 
-        /*
-         * Checks first for player direction, then if player is on an edge of the tileset.
-         * Then, checks IF the player moves, whether it will collide with a tile or not
-         * If yes, returns true. If not, then returns false
-         */
+        // Checking if the player is colliding with a tile in the direction they are moving
         if (player.direction == 'u') {
-            if (topRow - 1 < 0) return true; // Makes sure that collision checking is not out of bounds
+            if (topRow - 1 < 0) return true;
             if (isNotWalkableTileInRow(topRow - 1, leftCol, rightCol, tiles)) {
                 double tileBottom = tiles[topRow - 1][leftCol].getWorldYPos() + Tile.tileSize;
                 if (player.entityTop - player.getSpeed() < tileBottom) return true;
             }
         } else if (player.direction == 'd') {
-            if ((bottomRow + 1 >= tiles.length)) return true; // Makes sure that collision checking is not out of bounds
+            if ((bottomRow + 1 >= tiles.length)) return true;
             if (isNotWalkableTileInRow(bottomRow + 1, leftCol, rightCol, tiles)) {
                 double tileTop = tiles[bottomRow + 1][leftCol].getWorldYPos();
                 if (player.entityBottom + player.getSpeed() > tileTop) return true;
 
             }
         } else if (player.direction == 'l') {
-            if (leftCol - 1 < 0) return true; // Makes sure that collision checking is not out of bounds
+            if (leftCol - 1 < 0) return true;
             if (isNotWalkableTileInCol(leftCol - 1, topRow, bottomRow, tiles)) {
                  double tileRight = tiles[topRow][leftCol-1].getWorldXPos() + Tile.tileSize;
                 if (player.entityLeft - player.getSpeed() < tileRight) return true;
 
             }
         } else if(player.direction == 'r') {
-            if (rightCol + 1 > tiles[0].length) return true; // Makes sure that collision checking is not out of bounds
+            if (rightCol + 1 > tiles[0].length) return true;
             if (isNotWalkableTileInCol(rightCol + 1, topRow, bottomRow, tiles)) {
                 double tileLeft = tiles[bottomRow][rightCol + 1].getWorldXPos();
                 if (player.entityRight + player.getSpeed() >= tileLeft) return true;
@@ -88,12 +85,12 @@ public class CollisionHandler {
     }
 
     /**
-     * Checks to see if ANY of the tiles in the rows above or below a player's position are not walkable.
-     * @param row row to check in
-     * @param leftCol left column in row to check
-     * @param rightCol right column in row to check
-     * @param tiles tileset to check in
-     * @return true if there are any non-walkable tiles, false if there are only walkable tiles
+     * Checks if there is a non-walkable tile in the row of the player
+     * @param row row of the player
+     * @param leftCol left column of the player
+     * @param rightCol right column of the player
+     * @param tiles List of tiles from the current level
+     * @return true if there is a non-walkable tile in the row of the player, false otherwise
      */
     private boolean isNotWalkableTileInRow(int row, int leftCol, int rightCol, Tile[][] tiles) {
         for (int col = leftCol; col <= rightCol; col++) {
@@ -105,12 +102,12 @@ public class CollisionHandler {
     }
 
     /**
-     * Checks to see if ANY of the tiles in the columns to the right or left of a player's position are not walkable.
-     * @param col column to check in
-     * @param topRow top row in column to check
-     * @param bottomRow bottom row in column to check
-     * @param tiles tileset to check in
-     * @return true if there are any non-walkable tiles, false if there are only walkable tiles
+     * Checks if there is a non-walkable tile in the column of the player
+     * @param col column of the player
+     * @param topRow top row of the player
+     * @param bottomRow bottom row of the player
+     * @param tiles List of tiles from the current level
+     * @return
      */
     private boolean isNotWalkableTileInCol(int col, int topRow, int bottomRow, Tile[][] tiles) {
         for (int row = topRow; row <= bottomRow; row++) {
@@ -119,18 +116,12 @@ public class CollisionHandler {
         return false;
     }
 
-//    public boolean enemyWithAttackCollision(Enemy enemy, Attack attack) {
-//        return checkEntityWithAttackCollision(enemy, attack);
-//    }
-
-    public boolean playerWithAttackCollision(Player player, Attack attack) {
-        return checkEntityWithAttackCollision(player, attack);
-    }
+    // THE FOLLOWING 2 METHODS USE RECTANGLES - WE WILL USE OUR "checkEntityWithAttackCollision" METHOD AFTER PROTOTYPE
 
     /**
      * Checks enemy collision with attack (temporary, will be updated after prototype is completed)
-     * @param enemy Enemy to check
-     * @param attack Attack to check
+     * @param enemy the enemy to check collision with
+     * @param attack the attack to check collision with
      * @return
      */
     static public boolean enemyWithAttackCollision (Enemy enemy, Attack attack) {
@@ -138,10 +129,12 @@ public class CollisionHandler {
         else return false;
     }
 
-    /** Checks if player is colliding with enemy
-     * @param enemy to check
-     * @param player to check
-     * @return true if collision happened, false if not
+    /**
+     * Checks enemy collision with player (temporary, will be updated after prototype is completed)
+     * Used to deal damage - since enemies deal damage through collision for now
+     * @param enemy the enemy to check collision with
+     * @param player the player to check collision with
+     * @return
      */
     static public boolean enemyPlayerCollision(Enemy enemy, Player player) {
         Rectangle enemyBox = new Rectangle((int)enemy.worldX, (int)enemy.worldY, enemy.getWidth(), enemy.getHeight());

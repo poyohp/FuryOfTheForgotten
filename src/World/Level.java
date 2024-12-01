@@ -11,8 +11,14 @@ public class Level {
 
     private Map map;
 
+    // Holds all enemy data in the current level
     public ArrayList<Enemy> enemies = new ArrayList<>();
+    public ArrayList<Enemy> enemiesToRemove = new ArrayList<>();
 
+    /**
+     * Constructor for Level (generates map)
+     * @param mapDirectory directory of map file
+     */
     public Level(String mapDirectory) {
 
         map = new Map(mapDirectory);
@@ -24,6 +30,10 @@ public class Level {
         }
     }
 
+    /**
+     * Get map
+     * @return the map
+     */
     public Map getMap() {
         return map;
     }
