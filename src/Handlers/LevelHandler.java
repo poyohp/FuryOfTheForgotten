@@ -62,8 +62,12 @@ public class LevelHandler {
 
         if (spawnHandler.started) { // Timer has started
             boolean spawnPointsActive = false; // Checks if there are any active spawn points
+            spawnHandler.numActiveSpawns = 0;
             for (SpawnPoint spawnPoint: spawnHandler.enemySpawnPoints) {
-                if (spawnPoint.activeSpawn) spawnPointsActive = true;
+                if (spawnPoint.activeSpawn) {
+                    spawnPointsActive = true;
+                    spawnHandler.numActiveSpawns++;
+                }
             }
 
             // If there are no more active spawn points, player has defeated all enemies!

@@ -23,7 +23,6 @@ import java.util.ArrayList;
 
 public class GamePanel extends JPanel implements Runnable{
 
-
     //FINAL variables
     public static final double screenWidth = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
     public static final double screenHeight = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
@@ -45,6 +44,8 @@ public class GamePanel extends JPanel implements Runnable{
     DamageDealer damageDealer;
 
     ArrayList<Enemy> enemiesToRemove = new ArrayList<>();
+
+    Font spawnsRemaining = new Font("Arial", Font.PLAIN, 20);
 
     public GamePanel() {
         this.setDoubleBuffered(true);
@@ -143,6 +144,8 @@ public class GamePanel extends JPanel implements Runnable{
         player.draw(g2);
         attackHandler.draw(g2);
 
+        g2.setFont(spawnsRemaining);
+        g2.drawString("Active Spawns Remaining: " + String.valueOf(spawnHandler.numActiveSpawns), (int)(screenWidth - 300), (int)(100));
 //        debugWalkableTiles(g2);
 
         g2.dispose();

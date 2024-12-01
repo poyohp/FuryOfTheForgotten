@@ -20,6 +20,8 @@ public class SpawnHandler implements ActionListener {
 
     public boolean started = false;
 
+    public int numActiveSpawns = 0;
+
     public void setPlayerSpawn(Player player, Level level) {
         for (int i = 0; i < level.getMap().spawnLayerTiles.length; i++) {
             for (int j = 0; j < level.getMap().spawnLayerTiles.length; j++) {
@@ -75,6 +77,7 @@ public class SpawnHandler implements ActionListener {
     public void update(Player player, Level level) {
         for (SpawnPoint spawnPoint : enemySpawnPoints) {
             if(spawnPoint.activeSpawn) {
+                numActiveSpawns++;
                 spawnPoint.checkIfSpawn();
                 checkWithinRange(player);
                 if(spawnPoint.playerWithinRange) {

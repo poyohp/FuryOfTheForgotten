@@ -108,7 +108,6 @@ public class Enemy extends Entity {
                 worldY += getSpeed();
             }
         }
-
     }
 
     @Override
