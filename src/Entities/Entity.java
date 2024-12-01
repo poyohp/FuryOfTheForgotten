@@ -72,7 +72,8 @@ public abstract class Entity {
     }
 
     public void setHealth(double newHealth) {
-        health = Math.max(0, newHealth); // Makes sure that health does not go below zero!
+        health = newHealth;
+        if (newHealth < 0) health = 0;
     }
 
 }

@@ -114,8 +114,8 @@ public class Enemy extends Entity {
     @Override
     public void draw(Graphics2D g2) {
         drawHealth(g2);
-        g2.setPaint(Color.PINK);
+        g2.setColor(Color.PINK);
         g2.fillRect((int) screenX, (int) screenY, this.getWidth(), this.getHeight());
-        g2.setPaint(Color.YELLOW);
+        g2.setColor(Color.ORANGE);
     }
 }

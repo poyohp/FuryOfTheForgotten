@@ -57,7 +57,7 @@ public class LevelHandler {
         for (Enemy enemy : enemies) {
             enemy.update();
             damageDealer.dealDamageToPlayer(enemy, player);
-            if (player.getHealth() == 0) Main.updateGameState(3);
+            if (player.getHealth() <= 0) Main.updateGameState(3);
         }
 
         if (spawnHandler.started) { // Timer has started
