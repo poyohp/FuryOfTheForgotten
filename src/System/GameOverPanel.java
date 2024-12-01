@@ -6,14 +6,14 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-public class FinishPanel extends JPanel {
+public class GameOverPanel extends JPanel {
     BufferedImage gameOverLose = loadImage();
 
     // Get screen width and height
     public static final int screenWidth = (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth();
     public static final int screenHeight = (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 
-    FinishPanel() {
+    GameOverPanel() {
         DrawingPanel panel = new DrawingPanel();
 
         panel.setDoubleBuffered(true);
@@ -34,7 +34,7 @@ public class FinishPanel extends JPanel {
 
     BufferedImage loadImage() {
         BufferedImage image = null;
-        java.net.URL url = this.getClass().getResource("/MenuImages/gameOverLose.png");
+        java.net.URL url = this.getClass().getResource("/MenuImages/gameOver.png");
         try {
             image = ImageIO.read(url);
         } catch (IOException e) {

@@ -6,7 +6,8 @@ public class Main {
 
     public static final GamePanel gamePanel = new GamePanel();
     public static MenuPanel menuPanel = new MenuPanel();
-    public static FinishPanel finishPanel = new FinishPanel();
+    public static GameOverPanel gameOverPanel = new GameOverPanel();
+    public static WinPanel winPanel = new WinPanel();
 
     public static JFrame window = new JFrame();
 
@@ -32,7 +33,10 @@ public class Main {
                 gamePanel.initiateGamePanel();
                 break;
             case 3:
-                window.add(finishPanel);
+                window.add(gameOverPanel);
+                break;
+            case 4:
+                window.add(winPanel);
         }
         window.pack();
         window.setVisible(true);
