@@ -15,7 +15,6 @@ public class Main {
         window.setUndecorated(true);
         window.setResizable(false);
         window.setTitle("Fury Of The Forgotten");
-
         window.add(panel);
         window.pack();
 

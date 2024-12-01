@@ -18,7 +18,6 @@ public class Player extends Entity {
     int column1 = 7, column2 = 39, column3 = 71, column4 = 103, row1 = 7, row2 = 39, row3 = 71, row4 = 103, row5 = 135, row6 = 167, row7 = 199, row8 = 231, row9 = 263, row10 = 295, row11 = 327, row12 = 359, row13 = 391, row14 = 423, row15 = 455;
     int updateFrames = 12;
     Color transparent = new Color(0,0,0,0);
-    public boolean attacking = false;
     CollisionHandler collisionHandler = new CollisionHandler();
     Tile[][] tiles;
 

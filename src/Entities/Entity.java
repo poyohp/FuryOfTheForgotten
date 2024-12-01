@@ -3,7 +3,7 @@ package Entities;
 import java.awt.*;
 
 public abstract class Entity {
-    private int health, attackCooldown;
+    private int health;
     private double speed;
     private int width, height;
     private int defenseReduction;
@@ -13,6 +13,8 @@ public abstract class Entity {
     public double worldX, worldY;
     public double screenX, screenY;
     public char direction;
+    public boolean attacking = false;
+    public int attackCooldown = 120;
 
     public double entityLeft, entityRight, entityTop, entityBottom;
 

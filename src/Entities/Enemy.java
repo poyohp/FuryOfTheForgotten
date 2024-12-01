@@ -8,8 +8,8 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Enemy extends Entity {
-    private int vision = 300;
-    public int rangedVision = 0;
+    private int vision = 800;
+    public int rangedVision = 300;
     public boolean isFollowing = false;
     public boolean onPath;
     Player player;
@@ -32,8 +32,16 @@ public class Enemy extends Entity {
         updateEntityPosition();
         setScreenPosition();
         hitbox.update(this);
-        if (playerInVision()) move();
-        System.out.println(playerInVision());
+        //if (playerInVision()) move();
+
+        if (playerInVision() && !inRangedArea()) {
+            attacking = false;
+            move();
+        } else if (playerInVision() && inRangedArea()){
+            attacking = true;
+        }
+
+        //System.out.println(playerInVision());
     }
 
     private boolean playerInVision() {
@@ -43,7 +51,7 @@ public class Enemy extends Entity {
         else return false;
     }
 
-    private boolean notInRangedArea() {
+    private boolean inRangedArea() {
         if (Math.abs(player.entityLeft - this.entityLeft) < rangedVision && Math.abs(player.entityTop - this.entityTop) < rangedVision) return true;
         else return false;
     }

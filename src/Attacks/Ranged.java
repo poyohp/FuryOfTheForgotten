@@ -89,7 +89,7 @@ public class Ranged extends Attack{
      * @param entity hitbox of entity
      * @return integer value angle of attack angle in relation to right horizontal
      */
-    double calculateAttackAngle(Hitbox attack, Hitbox entity) {
+    public double calculateAttackAngle(Hitbox attack, Hitbox entity) {
         double attackX = attack.getWorldXPos() + (double) attack.getWidth()/2;
         double attackY = attack.getWorldYPos() + (double) attack.getHeight()/2;
         double entityX = entity.getWorldXPos() + (double) entity.getWidth()/2;
@@ -124,6 +124,7 @@ public class Ranged extends Attack{
     public void move(int xSpeed, int ySpeed) {
         setX(getX() + xSpeed);
         setY(getY() + ySpeed);
+        hitbox.update(this);
     }
 
 
