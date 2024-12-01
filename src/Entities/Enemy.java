@@ -8,10 +8,11 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Enemy extends Entity {
-    private int vision = 800;
-    public int rangedVision = 300;
+    private int vision = 600;
+    public int rangedVision = 0;
     public boolean isFollowing = false;
     public boolean onPath;
+    public boolean attacking = true;
     Player player;
     APathfinding pathFinder;
     Tile[][] tileset;
@@ -32,16 +33,8 @@ public class Enemy extends Entity {
         updateEntityPosition();
         setScreenPosition();
         hitbox.update(this);
-        //if (playerInVision()) move();
-
-        if (playerInVision() && !inRangedArea()) {
-            attacking = false;
-            move();
-        } else if (playerInVision() && inRangedArea()){
-            attacking = true;
-        }
-
-        //System.out.println(playerInVision());
+        if (playerInVision()) move();
+        System.out.println(playerInVision());
     }
 
     private boolean playerInVision() {
@@ -51,7 +44,7 @@ public class Enemy extends Entity {
         else return false;
     }
 
-    private boolean inRangedArea() {
+    private boolean notInRangedArea() {
         if (Math.abs(player.entityLeft - this.entityLeft) < rangedVision && Math.abs(player.entityTop - this.entityTop) < rangedVision) return true;
         else return false;
     }
