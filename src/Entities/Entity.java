@@ -67,4 +67,8 @@ public abstract class Entity {
         return height;
     }
 
+    public void setHealth(int newHealth) {
+        health = Math.max(0, newHealth); // Makes sure that health does not go below zero!
+    }
+
 }

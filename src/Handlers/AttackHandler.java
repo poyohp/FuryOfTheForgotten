@@ -17,9 +17,9 @@ import java.util.ArrayList;
 public class AttackHandler {
 
 
-    ArrayList<Attack> playerAttacks = new ArrayList<Attack>();
+    public ArrayList<Attack> playerAttacks = new ArrayList<Attack>();
     ArrayList<Attack> playerToRemove = new ArrayList<Attack>();
-    ArrayList<Ranged> enemyAttacks = new ArrayList<Ranged>();
+    public ArrayList<Ranged> enemyAttacks = new ArrayList<Ranged>();
     ArrayList<Ranged> enemyToRemove = new ArrayList<Ranged>();
     KeyHandler keyHandler;
     public boolean playerCanAttack = true;

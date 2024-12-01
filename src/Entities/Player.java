@@ -94,12 +94,7 @@ public class Player extends Entity {
 
     @Override
     public void draw(Graphics2D g2) {
-        /**
-        g2.setColor(transparentGREEN);
-        g2.fillRect((int) screenX, (int) screenY, this.getWidth(), this.getHeight());
-        g2.setColor(transparentRED);
-        g2.drawRect((int) screenX, (int) screenY, this.getWidth(), this.getHeight());
-        **/
+
         if (!attacking) {
             if (direction == 'd') {
                 if (!checkMoving()) {
