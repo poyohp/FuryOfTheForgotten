@@ -12,7 +12,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class MenuFrame extends JFrame {
+public class MenuPanel extends JPanel {
     // Loads menu image
     BufferedImage menu = loadImage();
 
@@ -40,12 +40,8 @@ public class MenuFrame extends JFrame {
     // Keyhandler to handle user options
     MenuButton selectedButton;
 
-    MenuFrame(JFrame window, GamePanel gamePanel) {
+    MenuPanel() {
         keyHandler = new KeyHandler();
-
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setResizable(false);
-        this.setUndecorated(true);
 
         DrawingPanel panel = new DrawingPanel();
 
@@ -62,31 +58,27 @@ public class MenuFrame extends JFrame {
         addButtonsToArrayList();
 
         this.add(panel);
-        this.pack();
-        this.setVisible(true);
 
         timer = new Timer(TIMERSPEED, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 handleSelection();
                 panel.repaint();
-                handleChoice(window, gamePanel);
+                handleChoice();
             }
         });
 
         timer.start();
     }
 
-    public void handleChoice(JFrame window, GamePanel panel) {
+    public void handleChoice() {
         if (keyHandler.choicePress) {
             if (selectedButton == start) {
-                window.setVisible(true);
-                panel.initiateGamePanel();
                 timer.stop();
-                MenuFrame.this.dispose();
+                Main.updateGameState(2);
             } else { // Update for quit and help later
                 timer.stop();
-                MenuFrame.this.dispose();
+                Main.updateGameState(3);
             }
         }
     }

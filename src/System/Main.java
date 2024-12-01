@@ -1,23 +1,40 @@
 package System;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class Main {
 
-    public static final GamePanel panel = new GamePanel();
-    public static MenuFrame menuWindow;
+    public static final GamePanel gamePanel = new GamePanel();
+    public static MenuPanel menuPanel = new MenuPanel();
+    public static FinishPanel finishPanel = new FinishPanel();
+
+    public static JFrame window = new JFrame();
 
     public static void main(String[] args) {
 
-        JFrame window = new JFrame();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setUndecorated(true);
         window.setResizable(false);
-        window.setTitle("Fury Of The Forgotten");
-        window.add(panel);
-        window.pack();
 
-        menuWindow = new MenuFrame(window, panel);
+        window.setTitle("Fury Of The Forgotten");
+        updateGameState(1);
+    }
+
+    static public void updateGameState(int gameState) {
+        window.getContentPane().removeAll();
+
+        switch (gameState) {
+            case 1:
+                window.add(menuPanel);
+                break;
+            case 2:
+                window.add(gamePanel);
+                gamePanel.initiateGamePanel();
+                break;
+            case 3:
+                window.add(finishPanel);
+        }
+        window.pack();
+        window.setVisible(true);
     }
 }

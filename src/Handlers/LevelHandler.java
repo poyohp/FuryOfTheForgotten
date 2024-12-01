@@ -5,6 +5,7 @@ import Entities.Player;
 import Handlers.Spawners.SpawnHandler;
 import World.Level;
 import Attacks.DamageDealer;
+import System.Main;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -55,6 +56,7 @@ public class LevelHandler {
         for (Enemy enemy : enemies) {
             enemy.update();
             damageDealer.dealDamageToPlayer(enemy, player);
+            if (player.getHealth() == 0) Main.updateGameState(3);
         }
 
     }
