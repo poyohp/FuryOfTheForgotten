@@ -83,12 +83,23 @@ public class CollisionHandler {
         return false;
     }
 
-    public boolean enemyWithAttackCollision(Enemy enemy, Attack attack) {
-        return checkEntityWithAttackCollision(enemy, attack);
-    }
+//    public boolean enemyWithAttackCollision(Enemy enemy, Attack attack) {
+//        return checkEntityWithAttackCollision(enemy, attack);
+//    }
 
     public boolean playerWithAttackCollision(Player player, Attack attack) {
         return checkEntityWithAttackCollision(player, attack);
+    }
+
+    /**
+     * Checks enemy collision with attack (temporary, will be updated after prototype is completed)
+     * @param enemy
+     * @param attack
+     * @return
+     */
+    static public boolean enemyWithAttackCollision (Enemy enemy, Attack attack) {
+        if (enemy.hitbox.intersects(attack.hitbox)) return true;
+        else return false;
     }
 
     static public boolean enemyPlayerCollision(Enemy enemy, Player player) {

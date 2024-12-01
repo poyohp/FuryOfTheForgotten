@@ -1,6 +1,8 @@
 package System;
 
 
+import Attacks.Attack;
+import Attacks.DamageDealer;
 import Attacks.Ranged;
 import Entities.Enemy;
 import Entities.Player;
@@ -16,6 +18,7 @@ import World.Tile;
 import javax.swing.JPanel;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 
 public class GamePanel extends JPanel implements Runnable{
@@ -39,8 +42,9 @@ public class GamePanel extends JPanel implements Runnable{
     AttackHandler attackHandler;
     CollisionHandler collisionHandler;
     SpawnHandler spawnHandler;
+    DamageDealer damageDealer;
 
-
+    ArrayList<Enemy> enemiesToRemove = new ArrayList<>();
 
     public GamePanel() {
         this.setDoubleBuffered(true);
@@ -51,6 +55,7 @@ public class GamePanel extends JPanel implements Runnable{
         //Handling ALL LOADING
         keyHandler = new KeyHandler();
         spawnHandler = new SpawnHandler();
+        damageDealer = new DamageDealer();
 
         player = new Player(100, 4, Tile.tileSize, Tile.tileSize, "Player", 0, 0, 4*Tile.tileSize/Tile.normalTileSize, 3*Tile.tileSize/Tile.normalTileSize, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
 
@@ -109,12 +114,20 @@ public class GamePanel extends JPanel implements Runnable{
     void update() {
         player.update(levelHandler.getCurrentLevel().getMap().baseLayerTiles);
         levelHandler.update(player, spawnHandler);
-        attackHandler.update(player, levelHandler.getCurrentLevel().enemies);
+        attackHandler.update(player, levelHandler.enemies);
+
+        damageDealer.dealDamageToEnemies(attackHandler, levelHandler.getCurrentLevel());
+
+        // Removes enemies if they die
+        for (Enemy enemy: levelHandler.enemies) {
+            if (enemy.getHealth() == 0) enemiesToRemove.add(enemy);
+        }
+        levelHandler.enemies.removeAll(enemiesToRemove);
     }
 
 
     /**
-     * Draws the skibidi
+     * Draws the graphics
      * @param g the <code>Graphics</code> object to protect
      */
     @Override

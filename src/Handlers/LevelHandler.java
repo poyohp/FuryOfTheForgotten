@@ -7,6 +7,7 @@ import World.Level;
 import Attacks.DamageDealer;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class LevelHandler {
 
@@ -17,6 +18,8 @@ public class LevelHandler {
     DamageDealer damageDealer = new DamageDealer();
 
     int numLevels;
+
+    public ArrayList<Enemy> enemies;
 
     public LevelHandler(int numLevels, SpawnHandler spawnHandler, Player player) {
         this.numLevels = numLevels;
@@ -29,6 +32,7 @@ public class LevelHandler {
 
         spawnHandler.levelChanged(player, currentLevel);
 
+        enemies = currentLevel.enemies;
     }
 
     public void goToNextLevel(SpawnHandler spawnHandler, Player player) {
@@ -48,10 +52,9 @@ public class LevelHandler {
 
         spawnHandler.update(player, currentLevel);
 
-        for (Enemy enemy : currentLevel.enemies) {
+        for (Enemy enemy : enemies) {
             enemy.update();
             damageDealer.dealDamageToPlayer(enemy, player);
-            System.out.println(CollisionHandler.enemyPlayerCollision(enemy, player));
         }
 
     }
@@ -59,7 +62,7 @@ public class LevelHandler {
     public void draw(Graphics2D g2, Player player) {
         this.getCurrentLevel().getMap().drawMap(g2, player);
 
-        for (Enemy enemy : currentLevel.enemies) {
+        for (Enemy enemy : enemies) {
             enemy.draw(g2);
         }
 
