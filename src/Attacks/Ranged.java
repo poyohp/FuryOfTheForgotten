@@ -22,7 +22,7 @@ public class Ranged extends Attack{
     public void setInitialHitbox(char[] direction) {
         if (direction[0] == 'u') {
             if (direction[1] == 'r') {
-                setX(entity.worldX + entity.getWidth());
+                setX(entity.entityRight);
                 setY((int)(entity.worldY - getRange()*Math.sin(Math.PI/4)));
             } else if (direction[1] == 'l') {
                 setX((int)(entity.worldX - getRange()*Math.cos(Math.PI/4)));
@@ -33,25 +33,25 @@ public class Ranged extends Attack{
             }
         } else if (direction[0] == 'r') {
             if (direction[1] == 'u') {
-                setX(entity.worldX + entity.getWidth());
+                setX(entity.entityRight);
                 setY((int)(entity.worldY - getRange()*Math.sin(Math.PI/4)));
             } else if (direction[1] == 'd') {
-                setX(entity.worldX + entity.getWidth());
-                setY(entity.worldY + entity.getHeight());
+                setX(entity.entityRight);
+                setY(entity.entityBottom);
             } else {
-                setX(entity.worldX + entity.getWidth());
+                setX(entity.entityRight);
                 setY(entity.worldY + (double) entity.getHeight() / 2 - (double) getWidth() / 2);
             }
         } else if (direction[0] == 'd') {
             if (direction[1] == 'r') {
-                setX(entity.worldX + entity.getWidth());
-                setY(entity.worldY + entity.getHeight());
+                setX(entity.entityRight);
+                setY(entity.entityBottom);
             } else if (direction[1] == 'l') {
                 setX((int)(entity.worldX - getRange()*Math.cos(Math.PI/4)));
                 setY((int)(entity.worldY + entity.getHeight()));
             } else {
                 setX(entity.worldX + (double) entity.getWidth() / 2 - (double) getWidth() / 2);
-                setY(entity.worldY + entity.getHeight());
+                setY(entity.entityBottom);
             }
         } else {
             if (direction[1] == 'd') {
@@ -149,6 +149,8 @@ public class Ranged extends Attack{
     @Override
     public void draw(Graphics2D g2) {
         setScreenPosition();
+        System.out.println("Screen position set. ScreenX = " + getScreenX() + ", ScreenY = " + getScreenY());
+
 
         AffineTransform originalTransform = g2.getTransform();
 
