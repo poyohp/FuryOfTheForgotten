@@ -8,6 +8,7 @@ import World.Level;
 
 public class DamageDealer {
     CollisionHandler collisionHandler = new CollisionHandler();
+
     public void dealDamageToPlayer(AttackHandler attackHandler, Player player) {
         for (Attack enemyAttack: attackHandler.enemyAttacks) {
             int finalDamage = enemyAttack.getDamage(); // Will be updated to add defense later
@@ -20,7 +21,8 @@ public class DamageDealer {
     public void dealDamageToEnemies(AttackHandler attackHandler, Level level) {
         for (Attack playerAttack: attackHandler.playerAttacks) {
             for (Enemy enemy: level.enemies) {
-                enemy.setHealth(enemy.getHealth() - playerAttack.getDamage()); // Lowers enemy health by damage
+                // Lowers enemy health by damage
+                if (collisionHandler.enemyWithAttackCollision(enemy, playerAttack)) enemy.setHealth(enemy.getHealth() - playerAttack.getDamage());
             }
         }
     }
