@@ -1,5 +1,7 @@
 package System;
 
+import Handlers.ImageHandler;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -7,7 +9,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public class GameOverPanel extends JPanel {
-    BufferedImage gameOverLose = loadImage();
+    BufferedImage gameOverLose = ImageHandler.loadImage("src/Assets/MenuImages/gameOver.png");
 
     // Get screen width and height
     public static final int screenWidth = (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth();
@@ -30,16 +32,5 @@ public class GameOverPanel extends JPanel {
         // Draws the fullscreen menu image
         Graphics2D g2 = (Graphics2D) g;
         g2.drawImage(gameOverLose, 0, 0, screenWidth, screenHeight, null);
-    }
-
-    BufferedImage loadImage() {
-        BufferedImage image = null;
-        java.net.URL url = this.getClass().getResource("/MenuImages/gameOver.png");
-        try {
-            image = ImageIO.read(url);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        return image;
     }
 }

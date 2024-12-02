@@ -1,5 +1,6 @@
 package System;
 
+import Handlers.ImageHandler;
 import Handlers.KeyHandler;
 
 import javax.imageio.ImageIO;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 public class MenuPanel extends JPanel {
 
     // Loads menu image
-    BufferedImage menu = loadImage();
+    BufferedImage menu = ImageHandler.loadImage("src/Assets/MenuImages/menu.png");
 
     KeyHandler keyHandler;
 
@@ -154,18 +155,4 @@ public class MenuPanel extends JPanel {
         buttons.get(newIndex).isSelected = true;
     }
 
-    /**
-     * Loads menu image
-     * @return buffered image for menu
-     */
-    BufferedImage loadImage() {
-        BufferedImage image = null;
-        java.net.URL url = this.getClass().getResource("/MenuImages/menu.png");
-        try {
-            image = ImageIO.read(url);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        return image;
-    }
 }

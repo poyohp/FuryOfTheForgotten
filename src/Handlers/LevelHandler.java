@@ -2,14 +2,14 @@ package Handlers;
 
 import Entities.Enemy;
 import Entities.Player;
+import Handlers.Attacks.AttackHandler;
 import Handlers.Spawners.SpawnHandler;
 import Handlers.Spawners.SpawnPoint;
 import World.Level;
-import Attacks.DamageDealer;
+import Handlers.Attacks.DamageDealer;
 import System.Main;
 
 import java.awt.*;
-import java.util.ArrayList;
 
 public class LevelHandler {
 

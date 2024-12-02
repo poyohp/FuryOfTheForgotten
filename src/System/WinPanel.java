@@ -28,19 +28,4 @@ public class WinPanel extends JPanel {
         Graphics2D g2 = (Graphics2D) g;
         g2.drawImage(gameWon, 0, 0, screenWidth, screenHeight, null);
     }
-
-    /**
-     * Loads game won image
-     * @return buffered game won image
-     */
-    BufferedImage loadImage() {
-        BufferedImage image = null;
-        java.net.URL url = this.getClass().getResource("/MenuImages/gameWon.png");
-        try {
-            image = ImageIO.read(url);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        return image;
-    }
 }
