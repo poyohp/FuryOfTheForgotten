@@ -1,10 +1,12 @@
 package Entities;
 
+import Handlers.ImageHandler;
 import Pathfinding.APathfinding;
 import Pathfinding.Node;
 import World.Tile;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class Enemy extends Entity {
@@ -21,6 +23,11 @@ public class Enemy extends Entity {
     public boolean onPath;
     APathfinding pathFinder;
     Tile[][] tileset;
+
+    // Variables for drawing
+    private int animationState = 1, updateFrames = 7;
+    private int columnWidth = 14, columnHeight = 19, column1 = 1, column2 = 16, column3 = 31, column4 = 46, column5 = 61, column6 = 76, column7 = 91, column8 = 106, column9 = 121, column10 = 136, column11 = 151, column12 = 166;
+    private BufferedImage slimes;
 
     /**
      * Enemy that follows player
@@ -51,6 +58,11 @@ public class Enemy extends Entity {
 
         setScreenPosition();
         this.onPath = true;
+        loadSlime();
+    }
+
+    void loadSlime() {
+        slimes = ImageHandler.loadImage("src/Assets/Entities/Enemies/Slime/Slime.png");
     }
 
     /**
@@ -150,6 +162,19 @@ public class Enemy extends Entity {
         }
     }
 
+    public void updateFrames() {
+        if (updateFrames <= 0) {
+            if (animationState >= 12) {
+                animationState = 1;
+            } else {
+                animationState++;
+            }
+            updateFrames = 7;
+        } else {
+            updateFrames--;
+        }
+    }
+
     /**
      * Draws the enemy and its health bar
      * @param g2 Graphics2D object to draw on
@@ -157,8 +182,89 @@ public class Enemy extends Entity {
     @Override
     public void draw(Graphics2D g2) {
         drawHealth(g2);
-        g2.setColor(Color.PINK);
-        g2.fillRect((int) screenX, (int) screenY, this.getWidth(), this.getHeight());
-        g2.setColor(Color.ORANGE);
+
+        if (worldX > player.worldX) {
+            switch (animationState) {
+                case 1:
+                    g2.drawImage(slimes, (int) screenX, (int) screenY, (int) (screenX + getWidth()), (int) (screenY + getHeight()), column1, 0, column1 + columnWidth, columnHeight, null);
+                    break;
+                case 2:
+                    g2.drawImage(slimes, (int) screenX, (int) screenY, (int) (screenX + getWidth()), (int) (screenY + getHeight()), column2, 0, column2 + columnWidth, columnHeight, null);
+                    break;
+                case 3:
+                    g2.drawImage(slimes, (int) screenX, (int) screenY, (int) (screenX + getWidth()), (int) (screenY + getHeight()), column3, 0, column3 + columnWidth, columnHeight, null);
+                    break;
+                case 4:
+                    g2.drawImage(slimes, (int) screenX, (int) screenY, (int) (screenX + getWidth()), (int) (screenY + getHeight()), column4, 0, column4 + columnWidth, columnHeight, null);
+                    break;
+                case 5:
+                    g2.drawImage(slimes, (int) screenX, (int) screenY, (int) (screenX + getWidth()), (int) (screenY + getHeight()), column5, 0, column5 + columnWidth, columnHeight, null);
+                    break;
+                case 6:
+                    g2.drawImage(slimes, (int) screenX, (int) screenY, (int) (screenX + getWidth()), (int) (screenY + getHeight()), column6, 0, column6 + columnWidth, columnHeight, null);
+                    break;
+                case 7:
+                    g2.drawImage(slimes, (int) screenX, (int) screenY, (int) (screenX + getWidth()), (int) (screenY + getHeight()), column7, 0, column7 + columnWidth, columnHeight, null);
+                    break;
+                case 8:
+                    g2.drawImage(slimes, (int) screenX, (int) screenY, (int) (screenX + getWidth()), (int) (screenY + getHeight()), column8, 0, column8 + columnWidth, columnHeight, null);
+                    break;
+                case 9:
+                    g2.drawImage(slimes, (int) screenX, (int) screenY, (int) (screenX + getWidth()), (int) (screenY + getHeight()), column9, 0, column9 + columnWidth, columnHeight, null);
+                    break;
+                case 10:
+                    g2.drawImage(slimes, (int) screenX, (int) screenY, (int) (screenX + getWidth()), (int) (screenY + getHeight()), column10, 0, column10 + columnWidth, columnHeight, null);
+                    break;
+                case 11:
+                    g2.drawImage(slimes, (int) screenX, (int) screenY, (int) (screenX + getWidth()), (int) (screenY + getHeight()), column11, 0, column11 + columnWidth, columnHeight, null);
+                    break;
+                case 12:
+                    g2.drawImage(slimes, (int) screenX, (int) screenY, (int) (screenX + getWidth()), (int) (screenY + getHeight()), column12, 0, column12 + columnWidth, columnHeight, null);
+                    break;
+
+            }
+        } else {
+            switch (animationState) {
+                case 1:
+                    g2.drawImage(slimes, (int) (screenX + getWidth()), (int) screenY, (int) screenX, (int) (screenY + getHeight()), column1, 0, column1 + columnWidth, columnHeight, null);
+                    break;
+                case 2:
+                    g2.drawImage(slimes, (int) (screenX + getWidth()), (int) screenY, (int) screenX, (int) (screenY + getHeight()), column2, 0, column2 + columnWidth, columnHeight, null);
+                    break;
+                case 3:
+                    g2.drawImage(slimes, (int) (screenX + getWidth()), (int) screenY, (int) screenX, (int) (screenY + getHeight()), column3, 0, column3 + columnWidth, columnHeight, null);
+                    break;
+                case 4:
+                    g2.drawImage(slimes, (int) (screenX + getWidth()), (int) screenY, (int) screenX, (int) (screenY + getHeight()), column4, 0, column4 + columnWidth, columnHeight, null);
+                    break;
+                case 5:
+                    g2.drawImage(slimes, (int) (screenX + getWidth()), (int) screenY, (int) screenX, (int) (screenY + getHeight()), column5, 0, column5 + columnWidth, columnHeight, null);
+                    break;
+                case 6:
+                    g2.drawImage(slimes, (int) (screenX + getWidth()), (int) screenY, (int) screenX, (int) (screenY + getHeight()), column6, 0, column6 + columnWidth, columnHeight, null);
+                    break;
+                case 7:
+                    g2.drawImage(slimes, (int) (screenX + getWidth()), (int) screenY, (int) screenX, (int) (screenY + getHeight()), column7, 0, column7 + columnWidth, columnHeight, null);
+                    break;
+                case 8:
+                    g2.drawImage(slimes, (int) (screenX + getWidth()), (int) screenY, (int) screenX, (int) (screenY + getHeight()), column8, 0, column8 + columnWidth, columnHeight, null);
+                    break;
+                case 9:
+                    g2.drawImage(slimes, (int) (screenX + getWidth()), (int) screenY, (int) screenX, (int) (screenY + getHeight()), column9, 0, column9 + columnWidth, columnHeight, null);
+                    break;
+                case 10:
+                    g2.drawImage(slimes, (int) (screenX + getWidth()), (int) screenY, (int) screenX, (int) (screenY + getHeight()), column10, 0, column10 + columnWidth, columnHeight, null);
+                    break;
+                case 11:
+                    g2.drawImage(slimes, (int) (screenX + getWidth()), (int) screenY, (int) screenX, (int) (screenY + getHeight()), column11, 0, column11 + columnWidth, columnHeight, null);
+                    break;
+                case 12:
+                    g2.drawImage(slimes, (int) (screenX + getWidth()), (int) screenY, (int) screenX, (int) (screenY + getHeight()), column12, 0, column12 + columnWidth, columnHeight, null);
+                    break;
+
+            }
+        }
+
+        updateFrames();
     }
 }
