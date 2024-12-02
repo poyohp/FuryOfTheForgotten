@@ -115,7 +115,7 @@ public class LevelHandler {
             }
 
             // If there are no more active spawn points, player has defeated all enemies!
-            if (!spawnPointsActive) Main.updateGameState(4);
+            if (!spawnPointsActive && currentLevel.enemies.isEmpty()) Main.updateGameState(4);
         }
     }
 
