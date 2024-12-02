@@ -21,23 +21,15 @@ public class GameOverPanel extends JPanel {
         this.setDoubleBuffered(true);
         this.setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
 
-        DrawingPanel panel = new DrawingPanel();
-
-        // Sets the same variables for the drawing panel
-        panel.setDoubleBuffered(true);
-        panel.setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
-        this.add(panel);
     }
 
-    private class DrawingPanel extends JPanel {
-        @Override
-        public void paintComponent(Graphics g) {
-            super.paintComponent(g);
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
 
-            // Draws the fullscreen menu image
-            Graphics2D g2 = (Graphics2D) g;
-            g2.drawImage(gameOverLose, 0, 0, screenWidth, screenHeight, null);
-        }
+        // Draws the fullscreen menu image
+        Graphics2D g2 = (Graphics2D) g;
+        g2.drawImage(gameOverLose, 0, 0, screenWidth, screenHeight, null);
     }
 
     BufferedImage loadImage() {
