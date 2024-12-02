@@ -74,15 +74,10 @@ public class SpawnPoint {
      * Check if the spawn point should spawn an enemy
      */
     public void checkIfSpawn() {
-        if(numEnemies > 1) {
-            if(framesSinceLastSpawn > framesBetweenSpawn) {
+        if (numEnemies > 0) {
+            if (framesSinceLastSpawn > framesBetweenSpawn) {
                 spawnEnemy = true;
                 framesSinceLastSpawn = 0;
-            } else {
-                if(activeSpawn) {
-                    spawnEnemy = false;
-                    framesSinceLastSpawn++;
-                }
             }
         } else {
             activeSpawn = false;
@@ -90,7 +85,7 @@ public class SpawnPoint {
     }
 
     /**
-     *
+     * Draw
      */
     public void draw(Graphics2D g2, Player player) {
         g2.setColor(Color.GREEN);

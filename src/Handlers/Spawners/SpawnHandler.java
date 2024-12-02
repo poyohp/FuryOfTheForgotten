@@ -82,10 +82,12 @@ public class SpawnHandler implements ActionListener {
      * @param level the current level
      */
     private void spawnEnemies(SpawnPoint spawnPoint, Player player, Level level) {
-        if(spawnPoint.spawnEnemy) {
+        if (spawnPoint.spawnEnemy) {
             level.enemies.add(spawnPoint.spawnEnemy(player, level));
+            spawnPoint.spawnEnemy = false;
         }
     }
+
 
     /**
      * Checks if the player is within range of the spawn point
@@ -108,16 +110,17 @@ public class SpawnHandler implements ActionListener {
      */
     public void update(Player player, Level level) {
         for (SpawnPoint spawnPoint : enemySpawnPoints) {
-            if(spawnPoint.activeSpawn) {
+            if (spawnPoint.activeSpawn) {
                 numActiveSpawns++;
                 spawnPoint.checkIfSpawn();
                 checkWithinRange(player);
-                if(spawnPoint.playerWithinRange) {
+                if (spawnPoint.playerWithinRange) {
                     spawnEnemies(spawnPoint, player, level);
                 }
             }
         }
     }
+
 
     /**
      * Each timer tick - increments the frames since last spawn for each spawn point
@@ -126,8 +129,10 @@ public class SpawnHandler implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        for(SpawnPoint spawnPoint : enemySpawnPoints) {
-            spawnPoint.framesSinceLastSpawn++;
+        for (SpawnPoint spawnPoint : enemySpawnPoints) {
+            if (spawnPoint.activeSpawn && !spawnPoint.spawnEnemy) {
+                spawnPoint.framesSinceLastSpawn++;
+            }
         }
     }
 }
