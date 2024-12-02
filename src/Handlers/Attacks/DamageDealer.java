@@ -1,8 +1,8 @@
-package Attacks;
+package Handlers.Attacks;
 
+import Attacks.Attack;
 import Entities.Enemy;
 import Entities.Player;
-import Handlers.AttackHandler;
 import Handlers.CollisionHandler;
 import World.Level;
 

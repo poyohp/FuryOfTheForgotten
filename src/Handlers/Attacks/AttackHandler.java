@@ -1,4 +1,4 @@
-package Handlers;
+package Handlers.Attacks;
 
 
 import Attacks.Attack;
@@ -7,6 +7,7 @@ import Attacks.Ranged;
 import Entities.Enemy;
 import Entities.Entity;
 import Entities.Player;
+import Handlers.KeyHandler;
 import World.Tile;
 
 
