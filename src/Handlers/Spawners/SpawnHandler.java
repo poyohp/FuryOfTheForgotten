@@ -83,6 +83,7 @@ public class SpawnHandler implements ActionListener {
      */
     private void spawnEnemies(SpawnPoint spawnPoint, Player player, Level level) {
         if(spawnPoint.spawnEnemy) {
+            spawnPoint.spawnEnemy = false;
             level.enemies.add(spawnPoint.spawnEnemy(player, level));
         }
     }

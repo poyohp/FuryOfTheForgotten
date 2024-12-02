@@ -74,15 +74,13 @@ public class SpawnPoint {
      * Check if the spawn point should spawn an enemy
      */
     public void checkIfSpawn() {
-        if(numEnemies >= 0) {
+        if(numEnemies > 0) {
             if(framesSinceLastSpawn > framesBetweenSpawn) {
-                spawnEnemy = true;
                 framesSinceLastSpawn = 0;
+                spawnEnemy = true;
             } else {
-                if(activeSpawn) {
-                    spawnEnemy = false;
-                    framesSinceLastSpawn++;
-                }
+                spawnEnemy = false;
+                framesSinceLastSpawn++;
             }
         } else {
             activeSpawn = false;
