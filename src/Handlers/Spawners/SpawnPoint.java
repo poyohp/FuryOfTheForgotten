@@ -16,7 +16,7 @@ public class SpawnPoint {
     // HANDLING ALL FINAL SPAWN POINT VALUES
     public final int MIN_ENEMIES = 3;
     public final int MAX_ENEMIES = 5;
-    private final int secondsBetweenSpawn = random.nextInt(15, 21);
+    private final int secondsBetweenSpawn = random.nextInt(1, 2);
     private final int framesBetweenSpawn = secondsBetweenSpawn * (int) GamePanel.FPS;
 
     final int enemyHealth = 100;
@@ -74,7 +74,7 @@ public class SpawnPoint {
      * Check if the spawn point should spawn an enemy
      */
     public void checkIfSpawn() {
-        if(numEnemies >= 0) {
+        if(numEnemies > 1) {
             if(framesSinceLastSpawn > framesBetweenSpawn) {
                 spawnEnemy = true;
                 framesSinceLastSpawn = 0;
@@ -90,7 +90,7 @@ public class SpawnPoint {
     }
 
     /**
-     * draw
+     *
      */
     public void draw(Graphics2D g2, Player player) {
         g2.setColor(Color.GREEN);
