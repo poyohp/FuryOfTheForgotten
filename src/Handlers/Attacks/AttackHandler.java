@@ -4,7 +4,7 @@ package Handlers.Attacks;
 import Attacks.Attack;
 import Attacks.Melee;
 import Attacks.Ranged;
-import Entities.Enemy;
+import Entities.Enemies.Enemy;
 import Entities.Entity;
 import Entities.Player;
 import Handlers.CollisionHandler;

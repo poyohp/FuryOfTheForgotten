@@ -1,6 +1,6 @@
 package Handlers;
 
-import Entities.Enemy;
+import Entities.Enemies.Enemy;
 import Entities.Player;
 import Handlers.Attacks.AttackHandler;
 import Handlers.Spawners.SpawnHandler;

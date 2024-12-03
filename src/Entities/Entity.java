@@ -25,12 +25,6 @@ public abstract class Entity {
     public Hitbox hitbox;
 
     /**
-     * Draws the entity
-     * @param g2 Graphics2D object to draw on
-     */
-    abstract void draw(Graphics2D g2);
-    
-    /**
      * Entity that is a part of the game
      * @param health entity health
      * @param speed entity speed

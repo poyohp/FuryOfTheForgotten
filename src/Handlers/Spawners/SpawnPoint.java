@@ -1,7 +1,8 @@
 package Handlers.Spawners;
 
+import Entities.Enemies.Slime;
 import System.GamePanel;
-import Entities.Enemy;
+import Entities.Enemies.Enemy;
 import Entities.Player;
 import World.Level;
 import World.Tile;
@@ -67,7 +68,7 @@ public class SpawnPoint {
      */
     public Enemy spawnEnemy(Player player, Level level) {
         numEnemies--;
-        return new Enemy(enemyHealth, enemySpeed, enemySize, enemySize, "Enemy", (int)worldX, (int)worldY, 4*Tile.tileSize/Tile.normalTileSize, 3*Tile.tileSize/Tile.normalTileSize, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, player, level.getMap().baseLayerTiles, true);
+        return new Slime(enemyHealth, enemySpeed, enemySize, enemySize, "Enemy", (int)worldX, (int)worldY, 4*Tile.tileSize/Tile.normalTileSize, 3*Tile.tileSize/Tile.normalTileSize, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, player, level.getMap().baseLayerTiles, true);
     }
 
     /**

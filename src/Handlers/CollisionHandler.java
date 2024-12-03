@@ -1,6 +1,7 @@
 package Handlers;
 import Attacks.Attack;
 import Entities.*;
+import Entities.Enemies.Enemy;
 import World.Tile;
 
 import java.awt.*;

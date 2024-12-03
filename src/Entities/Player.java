@@ -2,7 +2,6 @@ package Entities;
 import Handlers.CollisionHandler;
 import Handlers.ImageHandler;
 import Handlers.KeyHandler;
-import System.Main;
 import System.GamePanel;
 import World.Tile;
 
@@ -137,7 +136,6 @@ public class Player extends Entity {
      * Draws player
      * @param g2 Graphics2D object to draw on
      */
-    @Override
     public void draw(Graphics2D g2) {
         drawHealth(g2);
 

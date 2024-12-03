@@ -1,5 +1,6 @@
-package Entities;
+package Entities.Enemies;
 
+import Entities.Player;
 import Handlers.ImageHandler;
 import Pathfinding.APathfinding;
 import Pathfinding.Node;
@@ -9,82 +10,47 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-public class Enemy extends Entity {
-
-    // Used for attacking
-    private int vision = 600;
-    public double damage;
-    public boolean isFollowing = false;
-    public boolean attacking = true;
-
-    Player player; // Player to reference
+public class Slime extends Enemy{
 
     // Variables used for pathfinding
     public boolean onPath;
     APathfinding pathFinder;
     Tile[][] tileset;
 
+
     // Variables for drawing
     private int animationState = 1, updateFrames = 7;
     private int columnWidth = 14, columnHeight = 19, column1 = 1, column2 = 16, column3 = 31, column4 = 46, column5 = 61, column6 = 76, column7 = 91, column8 = 106, column9 = 121, column10 = 136, column11 = 151, column12 = 166;
-    private BufferedImage slimes;
+    BufferedImage slimes;
 
     /**
      * Enemy that follows player
-     * @param health enemy health
-     * @param speed enemy speed
-     * @param width enemy width
-     * @param height enemy height
-     * @param name enemy name
-     * @param worldX world x position
-     * @param worldY world y position
-     * @param xOffset x offset for hitbox
-     * @param yOffset y offset for hitbox
-     * @param hitBoxWidth hitbox width
+     *
+     * @param health       enemy health
+     * @param speed        enemy speed
+     * @param width        enemy width
+     * @param height       enemy height
+     * @param name         enemy name
+     * @param worldX       world x position
+     * @param worldY       world y position
+     * @param xOffset      x offset for hitbox
+     * @param yOffset      y offset for hitbox
+     * @param hitBoxWidth  hitbox width
      * @param hitBoxHeight hitbox height
-     * @param player player to follow
-     * @param tileset tileset to use for pathfinding
-     * @param isFollowing whether enemy is following player or not
+     * @param player       player to follow
+     * @param tileset      tileset to use for pathfinding
+     * @param isFollowing  whether enemy is following player or not
      */
-    public Enemy(int health, int speed, int width, int height, String name, int worldX, int worldY, int xOffset, int yOffset, int hitBoxWidth, int hitBoxHeight, Player player, Tile[][] tileset, boolean isFollowing) {
-        super(health, speed, width, height, name, worldX, worldY, xOffset, yOffset, hitBoxWidth, hitBoxHeight);
-        this.player = player;
-        this.tileset = tileset;
-        this.isFollowing = isFollowing;
-
-        damage = 0.5; // Damage for all enemies
-
-        pathFinder = new APathfinding(tileset);
-
-        setScreenPosition();
-        this.onPath = true;
+    public Slime(int health, int speed, int width, int height, String name, int worldX, int worldY, int xOffset, int yOffset, int hitBoxWidth, int hitBoxHeight, Player player, Tile[][] tileset, boolean isFollowing) {
+        super(health, speed, width, height, name, worldX, worldY, xOffset, yOffset, hitBoxWidth, hitBoxHeight, player, isFollowing);
         loadSlime();
+        this.tileset = tileset;
+        pathFinder = new APathfinding(tileset);
+        this.onPath = true;
     }
 
     void loadSlime() {
         slimes = ImageHandler.loadImage("src/Assets/Entities/Enemies/Slime/Slime.png");
-    }
-
-    /**
-     * Updates enemy position and position on screen, and updates hitbox as well.
-     * Then, moves the enemy
-     */
-    public void update() {
-        updateEntityPosition();
-        setScreenPosition();
-        hitbox.update(this);
-        move();
-    }
-
-    /**
-     * This method will be used later, to check whether player is in vision of the enemy
-     * @return True if player is in vision, false if not
-     */
-    private boolean playerInVision() {
-        if (Math.abs(player.entityLeft - this.entityLeft) < vision && Math.abs(player.entityTop - this.entityTop) < vision) {
-            return true;
-        }
-        else return false;
     }
 
     /**
@@ -100,23 +66,6 @@ public class Enemy extends Entity {
             searchPath(goalRow, goalCol);
 
         } //else: different random actions if the player is not in enemy vision
-    }
-
-    void attack() {
-        /*
-        IF player is within enemy vision:
-			DISPLAY attack image
-            Create NEW enemyAttack(worldX, worldY)
-         */
-    }
-
-    /**
-     * Sets enemy's position on the screen
-     */
-    void setScreenPosition() {
-        // gets player coordinates and offsets by the player's place on the screen
-        screenX = worldX - player.worldX + player.screenX;
-        screenY = worldY - player.worldY + player.screenY;
     }
 
     /**
@@ -175,10 +124,6 @@ public class Enemy extends Entity {
         }
     }
 
-    /**
-     * Draws the enemy and its health bar
-     * @param g2 Graphics2D object to draw on
-     */
     @Override
     public void draw(Graphics2D g2) {
         drawHealth(g2);
