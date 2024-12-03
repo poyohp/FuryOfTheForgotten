@@ -10,15 +10,16 @@ import java.awt.image.BufferedImage;
 
 public class Player extends Entity {
     Boolean interact;
-    Boolean attack;
+    Boolean attack, canAttack = true;
     public KeyHandler keyHandler;
     BufferedImage sprites = ImageHandler.loadImage("src/Assets/Entities/Players/Skeleton/Sprites.png");
     public int animationState = 0;
     int column1 = 7, column2 = 39, column3 = 71, column4 = 103, row1 = 7, row2 = 39, row3 = 71, row4 = 103, row5 = 135, row6 = 167, row7 = 199, row8 = 231, row9 = 263, row10 = 295, row11 = 327, row12 = 359, row13 = 391, row14 = 423, row15 = 455;
-    int updateFrames = 12;
+    int updateFrames = 12, attackFrames = 36, attackCooldown = 30;
     Color transparent = new Color(0,0,0,0);
     CollisionHandler collisionHandler = new CollisionHandler();
     Tile[][] tiles;
+    public char dir1, dir2;
 
     /**
      * Enemy that follows player
@@ -82,12 +83,71 @@ public class Player extends Entity {
         this.worldY = worldY;
     }
 
+    public void setPerpendicularDirections() {
+        if (direction == 'u' || direction == 'd') {
+            dir1 = 'r';
+            dir2 = 'l';
+        } else {
+            dir1 = 'u';
+            dir2 = 'd';
+        }
+    }
+
+    /**
+     * Set cooldown of player attacks
+     */
+    public void setAttackCooldown() {
+        if (!canAttack) {
+            if (attackCooldown == 0) {
+                canAttack = true;
+                attackCooldown = 30;
+            } else {
+                attackCooldown -= 1;
+            }
+        }
+    }
+
+    /**
+     * Check for player attack
+     */
+    public void checkAttack() {
+
+        // Checking for keypress
+        if (keyHandler.attackPress && canAttack) {
+            attacking = true;
+            animationState = 0;
+        }
+
+        // Setting attack to true
+        if (attacking) {
+            if (attackFrames == 0) {
+                attackFrames = 36;
+                attacking = false;
+            } else {
+                attackFrames--;
+            }
+        }
+    }
+
+    public boolean toCreateAttack() {
+        if (attackFrames == 0){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void attack() {
+
+    }
+
     /**
      * Updates the position of the player
      * @param baseLayerTiles
      */
     public void update(Tile[][] baseLayerTiles) {
         this.tiles = baseLayerTiles;
+        setPerpendicularDirections();
         updateEntityPosition();
         if (!attacking) move(); // If player is not attacking, they can move
         hitbox.update(this); // Update hitbox

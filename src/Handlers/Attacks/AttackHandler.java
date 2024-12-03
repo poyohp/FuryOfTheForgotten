@@ -20,8 +20,8 @@ public class AttackHandler {
     // Variables for handling attacks
     public ArrayList<Attack> playerAttacks = new ArrayList<Attack>();
     ArrayList<Attack> playerToRemove = new ArrayList<Attack>();
-    public ArrayList<Ranged> enemyAttacks = new ArrayList<Ranged>();
-    ArrayList<Ranged> enemyToRemove = new ArrayList<Ranged>();
+    public ArrayList<Attack> enemyAttacks = new ArrayList<Attack>();
+    ArrayList<Attack> enemyToRemove = new ArrayList<Attack>();
     KeyHandler keyHandler;
     public boolean playerCanAttack = true;
     public int playerCooldown = 30, attackFrames = 36;
@@ -85,47 +85,6 @@ public class AttackHandler {
         Ranged enemyAttack = new Ranged(damage, range, width, direction, enemy, xOffset, yOffset, duration, speed);
 //        enemyAttack.angle = enemyAttack.calculateAttackAngle(enemyAttack.hitbox, player.hitbox);
         enemyAttacks.add(enemyAttack);
-    }
-
-    /**
-     * Check for player attack
-     * @param keyHandler keyHandler object to detect key input
-     * @param player player that attacks
-     */
-    void checkForPlayerAttack(KeyHandler keyHandler, Player player) {
-        char dir1;
-        char dir2;
-
-        //Setting player perpendicular directions
-        if (player.direction == 'u' || player.direction == 'd') {
-            dir1 = 'r';
-            dir2 = 'l';
-        } else {
-            dir1 = 'u';
-            dir2 = 'd';
-        }
-
-        // Checking for keypress
-        if (keyHandler.attackPress && playerCanAttack) {
-            player.attacking = true;
-            player.animationState = 0;
-            playerCanAttack = false;
-        }
-
-        // Creating attack
-        if (player.attacking) {
-            if (attackFrames == 0) {
-                createPlayerRanged(5, Tile.tileSize, Tile.tileSize, player.direction, player, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625));
-                createPlayerRanged(5, Tile.tileSize, Tile.tileSize, dir1, player, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625));
-                createPlayerRanged(5, Tile.tileSize, Tile.tileSize, dir2, player, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625));
-                attackFrames = 36;
-                player.attacking = false;
-            } else {
-                attackFrames--;
-            }
-        }
-
-
     }
 
     /**
@@ -198,82 +157,28 @@ public class AttackHandler {
         }
     }
 
-    /**
-     * Check for enemy attacks
-     * @param enemy enemy that's attacking
-     * @param player player target
-     */
-    void checkForEnemyAttacks(Enemy enemy, Player player) {
-        if (enemy.attacking) {
-            if (enemy.attackCooldown == 0) {
-                createEnemyRanged(5, Tile.tileSize, Tile.tileSize, enemy.direction, enemy, 0, 0, 150, (int) ((Tile.tileSize / Tile.tileMultipler) * 0.625), player);
-                enemy.attackCooldown = 30;
-            } else {
-                enemy.attackCooldown--;
-            }
-        }
-    }
-
-    /**
-     * Move enemy attacks
-     */
-    void moveEnemyAttacks() {
-        for (Ranged attack : enemyAttacks) {
-            attack.move((int)attack.determineXVelocity(attack.angle, attack.getSpeed()), (int)attack.determineYVelocity(attack.angle, attack.getSpeed()));
-        }
-    }
-
-    /**
-     * Remove enemy attacks
-     */
-    void removeEnemyAttacks() {
-        if (!enemyAttacks.isEmpty()) {
-            for (Ranged attack : enemyAttacks) {
-                if (attack.getDuration() <= 0) {
-                    enemyToRemove.add(attack);
-                }
-                attack.setDuration(attack.getDuration() - 1);
-            }
-            enemyAttacks.removeAll(enemyToRemove);
-        }
-    }
-
     // Must be updated when other entities are included to take an arraylist of all entities as a parameter, not just a player)
     public void update(Player player, ArrayList<Enemy> enemy) {
-        checkForPlayerAttack(keyHandler, player);
-//        for (Enemy e : enemy) {
-//            checkForEnemyAttacks(e, player);
-//        }
+        player.checkAttack();
         determinePlayerRangedAttackVelocity();
-//        moveEnemyAttacks();
-        setCooldown();
-        removeAttackAfterDuration();
-//        removeEnemyAttacks();
-    }
-
-    /**
-     * Set cooldown of player attacks
-     */
-    private void setCooldown() {
-        if (!playerCanAttack) {
-            if (playerCooldown == 0) {
-                playerCanAttack = true;
-                playerCooldown = 30;
-            } else {
-                playerCooldown -= 1;
-            }
+        player.setAttackCooldown();
+        if(player.toCreateAttack()) {
+            createPlayerRanged(5, Tile.tileSize, Tile.tileSize, player.direction, player, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625));
+            createPlayerRanged(5, Tile.tileSize, Tile.tileSize, player.dir1, player, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625));
+            createPlayerRanged(5, Tile.tileSize, Tile.tileSize, player.dir2, player, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625));
         }
+        removeAttacks();
     }
 
     /**
-     * Remove player attacks after duration ends
+     * Remove player attacks after duration ends and after collisions
      */
-    private void removeAttackAfterDuration() {
+    private void removeAttacks() {
         if (!playerAttacks.isEmpty()) {
             for (int i = 0; i < playerAttacks.size(); i++) {
                 if (collisionHandler.attackWithTileCollision(playerAttacks.get(i), tileset)) {
                     playerToRemove.add(playerAttacks.get(i));
-                    System.out.println("One down!");
+                    //System.out.println("One down!");
                 }
                 if (playerAttacks.get(i).getDuration() <= 0) {
                     playerToRemove.add(playerAttacks.get(i));
@@ -282,6 +187,20 @@ public class AttackHandler {
             }
             playerAttacks.removeAll(playerToRemove);
         }
+
+        if (!enemyAttacks.isEmpty()) {
+            for (int i = 0; i < enemyAttacks.size(); i++) {
+                if (collisionHandler.attackWithTileCollision(enemyAttacks.get(i), tileset)) {
+                    enemyToRemove.add(enemyAttacks.get(i));
+                    //System.out.println("One down!");
+                }
+                if (enemyAttacks.get(i).getDuration() <= 0) {
+                    enemyToRemove.add(enemyAttacks.get(i));
+                }
+                enemyAttacks.get(i).setDuration((enemyAttacks.get(i).getDuration() - 1));
+            }
+            enemyAttacks.removeAll(enemyToRemove);
+        }
     }
 
     /**
@@ -289,8 +208,8 @@ public class AttackHandler {
      * @param g2 Graphics 2D object for drawing
      */
     public void draw(Graphics2D g2) {
-        for (Attack attack : playerAttacks) {
-            attack.draw(g2);
+        for (int i = 0; i < playerAttacks.size(); i++) {
+            playerAttacks.get(i).draw(g2);
         }
 //        for (Attack attack : enemyAttacks) {
 //            System.out.println("Drawing enemy attack at: (" + attack.getX() + ", " + attack.getY() + ")");
