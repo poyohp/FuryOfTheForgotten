@@ -57,28 +57,22 @@ public class CollisionHandler {
         int leftCol = (int)(arrowLeft/Tile.tileSize);
         int rightCol = (int)(arrowRight/Tile.tileSize);
 
-        // Checking if the attack is colliding with a tile in the direction they are moving
+        // Checking if the attack is colliding with any tiles in all directions
             if (topRow - 1 < 0) return true;
-            if (isNotWalkableTileInRow(topRow - 1, leftCol, rightCol, tiles)) {
-                double tileBottom = tiles[topRow - 1][leftCol].getWorldYPos() + Tile.tileSize;
-                if (topRow <= tileBottom) return true;
+            if (isNotWalkableTileInRow(topRow, leftCol, rightCol, tiles)) {
+                return true;
             }
             if ((bottomRow + 1 >= tiles.length)) return true;
-            if (isNotWalkableTileInRow(bottomRow + 1, leftCol, rightCol, tiles)) {
-                double tileTop = tiles[bottomRow + 1][leftCol].getWorldYPos();
-                if (arrowBottom >= tileTop) return true;
-
+            if (isNotWalkableTileInRow(bottomRow, leftCol, rightCol, tiles)) {
+                return true;
             }
             if (leftCol - 1 < 0) return true;
-            if (isNotWalkableTileInCol(leftCol - 1, topRow, bottomRow, tiles)) {
-                double tileRight = tiles[topRow][leftCol-1].getWorldXPos() + Tile.tileSize;
-                if (arrowLeft <= tileRight) return true;
-
+            if (isNotWalkableTileInCol(leftCol, topRow, bottomRow, tiles)) {
+                return true;
             }
             if (rightCol + 1 > tiles[0].length) return true;
-            if (isNotWalkableTileInCol(rightCol + 1, topRow, bottomRow, tiles)) {
-                double tileLeft = tiles[bottomRow][rightCol + 1].getWorldXPos();
-                if (arrowRight >= tileLeft) return true;
+            if (isNotWalkableTileInCol(rightCol, topRow, bottomRow, tiles)) {
+                return true;
             }
 
         return false;

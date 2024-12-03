@@ -246,9 +246,6 @@ public class Ranged extends Attack{
         }
 
         g2.setTransform(originalTransform);
-
-
-
     }
 
 }
