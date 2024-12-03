@@ -1,5 +1,6 @@
 package System;
 
+import Handlers.ImageHandler;
 import Handlers.KeyHandler;
 
 import javax.imageio.ImageIO;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 public class MenuPanel extends JPanel {
 
     // Loads menu image
-    BufferedImage menu = loadImage();
+    BufferedImage menu = ImageHandler.loadImage("src/Assets/MenuImages/menu.png");
 
     KeyHandler keyHandler;
 
@@ -45,28 +46,21 @@ public class MenuPanel extends JPanel {
 
         keyHandler = new KeyHandler();
 
-        DrawingPanel panel = new DrawingPanel();
-
-        panel.setDoubleBuffered(true);
-        panel.setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
-
         // Makes sure that panel can listen for key events
-        panel.addKeyListener(keyHandler);
-        panel.setFocusable(true);
-        panel.requestFocusInWindow();
+        addKeyListener(keyHandler);
+        setFocusable(true);
+        requestFocusInWindow();
 
         start.isSelected = true; // Begins with one button pre-selected
         selectedButton = start;
 
         addButtonsToArrayList();
 
-        this.add(panel);
-
         timer = new Timer(TIMERSPEED, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 handleSelection();
-                panel.repaint();
+                repaint();
                 handleChoice();
             }
         });
@@ -98,20 +92,18 @@ public class MenuPanel extends JPanel {
         buttons.add(help);
     }
 
-    private class DrawingPanel extends JPanel {
-        @Override
-        public void paintComponent(Graphics g) {
-            super.paintComponent(g);
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
 
-            // Draws the fullscreen menu image
-            Graphics2D g2 = (Graphics2D) g;
-            g2.drawImage(menu, 0, 0, screenWidth, screenHeight, null);
+        // Draws the fullscreen menu image
+        Graphics2D g2 = (Graphics2D) g;
+        g2.drawImage(menu, 0, 0, screenWidth, screenHeight, null);
 
-            // Draw buttons. If one is selected, then draw it as selected.
-            for (MenuButton button : buttons) {
-                button.drawButton(g2);
-                if (button.isSelected) button.renderCurrentChoice(g2);
-            }
+        // Draw buttons. If one is selected, then draw it as selected.
+        for (MenuButton button : buttons) {
+            button.drawButton(g2);
+            if (button.isSelected) button.renderCurrentChoice(g2);
         }
     }
 
@@ -163,18 +155,4 @@ public class MenuPanel extends JPanel {
         buttons.get(newIndex).isSelected = true;
     }
 
-    /**
-     * Loads menu image
-     * @return buffered image for menu
-     */
-    BufferedImage loadImage() {
-        BufferedImage image = null;
-        java.net.URL url = this.getClass().getResource("/MenuImages/menu.png");
-        try {
-            image = ImageIO.read(url);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        return image;
-    }
 }

@@ -1,7 +1,6 @@
 package World;
 
-import Attacks.Attack;
-import Entities.Enemy;
+import Entities.Enemies.Enemy;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;

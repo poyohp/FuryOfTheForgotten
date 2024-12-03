@@ -1,15 +1,15 @@
 package Handlers;
 
-import Entities.Enemy;
+import Entities.Enemies.Enemy;
 import Entities.Player;
+import Handlers.Attacks.AttackHandler;
 import Handlers.Spawners.SpawnHandler;
 import Handlers.Spawners.SpawnPoint;
 import World.Level;
-import Attacks.DamageDealer;
+import Handlers.Attacks.DamageDealer;
 import System.Main;
 
 import java.awt.*;
-import java.util.ArrayList;
 
 public class LevelHandler {
 
@@ -115,7 +115,7 @@ public class LevelHandler {
             }
 
             // If there are no more active spawn points, player has defeated all enemies!
-            if (!spawnPointsActive) Main.updateGameState(4);
+            if (!spawnPointsActive && currentLevel.enemies.isEmpty()) Main.updateGameState(4);
         }
     }
 

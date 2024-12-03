@@ -1,12 +1,9 @@
 package System;
 
 
-import Attacks.Attack;
-import Attacks.DamageDealer;
-import Attacks.Ranged;
-import Entities.Enemy;
+import Handlers.Attacks.DamageDealer;
 import Entities.Player;
-import Handlers.AttackHandler;
+import Handlers.Attacks.AttackHandler;
 import Handlers.CollisionHandler;
 import Handlers.KeyHandler;
 import Handlers.LevelHandler;
@@ -19,7 +16,6 @@ import World.Tile;
 import javax.swing.JPanel;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 
 
 public class GamePanel extends JPanel implements Runnable{
@@ -63,8 +59,8 @@ public class GamePanel extends JPanel implements Runnable{
         player = new Player(100, 4, Tile.tileSize, Tile.tileSize, "Player", 0, 0, 4*Tile.tileSize/Tile.normalTileSize, 3*Tile.tileSize/Tile.normalTileSize, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
 
         levelHandler = new LevelHandler(1, spawnHandler, player);
-        attackHandler = new AttackHandler(keyHandler);
         collisionHandler = new CollisionHandler();
+        attackHandler = new AttackHandler(keyHandler, levelHandler.getCurrentLevel().getMap().baseLayerTiles);
 
         pathfinding = new APathfinding(levelHandler.getCurrentLevel().getMap().baseLayerTiles);
 

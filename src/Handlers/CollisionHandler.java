@@ -1,6 +1,7 @@
 package Handlers;
 import Attacks.Attack;
 import Entities.*;
+import Entities.Enemies.Enemy;
 import World.Tile;
 
 import java.awt.*;
@@ -35,6 +36,45 @@ public class CollisionHandler {
         if(attackDirection1 == 'd' || attackDirection2 == 'd') {
             if (attackRight > entity.entityLeft && attackTop > entity.entityBottom && attackBottom < entity.entityTop) return true;
         }
+        return false;
+    }
+
+    /**
+     * Checks attack collision with tiles all directions
+     * @param attack to check collision with
+     * @param tiles List of tiles from the current level to check collision with
+     * @return true if attack collides with a tile, false otherwise
+     */
+    public boolean attackWithTileCollision(Attack attack, Tile[][] tiles) {
+
+        double arrowTop = attack.getWorldY();
+        double arrowBottom = attack.getWorldY() + attack.getRange();
+        double arrowLeft = attack.getWorldX();
+        double arrowRight = attack.getWorldX() + attack.getWidth();
+
+        int topRow = (int)(arrowTop/Tile.tileSize);
+        int bottomRow = (int)(arrowBottom/Tile.tileSize);
+        int leftCol = (int)(arrowLeft/Tile.tileSize);
+        int rightCol = (int)(arrowRight/Tile.tileSize);
+
+        // Checking if the attack is colliding with any tiles in all directions
+            if (topRow - 1 < 0) return true;
+            if (isNotWalkableTileInRow(topRow, leftCol, rightCol, tiles)) {
+                return true;
+            }
+            if ((bottomRow + 1 >= tiles.length)) return true;
+            if (isNotWalkableTileInRow(bottomRow, leftCol, rightCol, tiles)) {
+                return true;
+            }
+            if (leftCol - 1 < 0) return true;
+            if (isNotWalkableTileInCol(leftCol, topRow, bottomRow, tiles)) {
+                return true;
+            }
+            if (rightCol + 1 > tiles[0].length) return true;
+            if (isNotWalkableTileInCol(rightCol, topRow, bottomRow, tiles)) {
+                return true;
+            }
+
         return false;
     }
 

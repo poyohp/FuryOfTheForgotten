@@ -1,7 +1,8 @@
 package Handlers.Spawners;
 
+import Entities.Enemies.Slime;
 import System.GamePanel;
-import Entities.Enemy;
+import Entities.Enemies.Enemy;
 import Entities.Player;
 import World.Level;
 import World.Tile;
@@ -16,7 +17,7 @@ public class SpawnPoint {
     // HANDLING ALL FINAL SPAWN POINT VALUES
     public final int MIN_ENEMIES = 3;
     public final int MAX_ENEMIES = 5;
-    private final int secondsBetweenSpawn = random.nextInt(15, 21);
+    private final int secondsBetweenSpawn = random.nextInt(10, 16);
     private final int framesBetweenSpawn = secondsBetweenSpawn * (int) GamePanel.FPS;
 
     final int enemyHealth = 100;
@@ -67,20 +68,17 @@ public class SpawnPoint {
      */
     public Enemy spawnEnemy(Player player, Level level) {
         numEnemies--;
-        return new Enemy(enemyHealth, enemySpeed, enemySize, enemySize, "Enemy", (int)worldX, (int)worldY, 4*Tile.tileSize/Tile.normalTileSize, 3*Tile.tileSize/Tile.normalTileSize, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, player, level.getMap().baseLayerTiles, true);
+        return new Slime(enemyHealth, enemySpeed, enemySize, enemySize, "Enemy", (int)worldX, (int)worldY, 4*Tile.tileSize/Tile.normalTileSize, 3*Tile.tileSize/Tile.normalTileSize, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, player, level.getMap().baseLayerTiles, true);
     }
 
     /**
      * Check if the spawn point should spawn an enemy
      */
     public void checkIfSpawn() {
-        if(numEnemies > 0) {
-            if(framesSinceLastSpawn > framesBetweenSpawn) {
-                framesSinceLastSpawn = 0;
+        if (numEnemies > 0) {
+            if (framesSinceLastSpawn > framesBetweenSpawn) {
                 spawnEnemy = true;
-            } else {
-                spawnEnemy = false;
-                framesSinceLastSpawn++;
+                framesSinceLastSpawn = 0;
             }
         } else {
             activeSpawn = false;
@@ -88,7 +86,7 @@ public class SpawnPoint {
     }
 
     /**
-     * draw
+     * Draw
      */
     public void draw(Graphics2D g2, Player player) {
         g2.setColor(Color.GREEN);
