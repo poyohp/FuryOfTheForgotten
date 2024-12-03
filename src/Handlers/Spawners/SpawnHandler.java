@@ -1,26 +1,35 @@
 package Handlers.Spawners;
 
+
 import Entities.Player;
 import World.Level;
 import World.Tile;
 import System.GamePanel;
+
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.Timer;
 
+
 public class SpawnHandler implements ActionListener {
+
 
     Timer spawnTimer = new Timer((int) (1000/GamePanel.FPS), this);
 
+
     public int playerSpawnX, playerSpawnY;
+
 
     public ArrayList<SpawnPoint> enemySpawnPoints = new ArrayList<SpawnPoint>();
 
+
     public boolean started = false;
 
+
     public int numActiveSpawns = 0;
+
 
     /**
      * Constructor for SpawnHandler - initializes the player spawn point (only 1)
@@ -41,6 +50,7 @@ public class SpawnHandler implements ActionListener {
         }
     }
 
+
     /**
      * Begins spawning the player
      */
@@ -48,6 +58,7 @@ public class SpawnHandler implements ActionListener {
         spawnTimer.start();
         started = true;
     }
+
 
     /**
      * Sets the enemy spawn points based on the level
@@ -64,6 +75,7 @@ public class SpawnHandler implements ActionListener {
         }
     }
 
+
     /**
      * Changes the level and updates the player spawn point and enemy spawn points
      * @param player the game player
@@ -74,6 +86,7 @@ public class SpawnHandler implements ActionListener {
         setPlayerSpawn(player, level);
         setEnemySpawnerPoints(level);
     }
+
 
     /**
      * Spawns enemies at the spawn point at constant rates
@@ -89,6 +102,8 @@ public class SpawnHandler implements ActionListener {
     }
 
 
+
+
     /**
      * Checks if the player is within range of the spawn point
      * @param player the game player
@@ -102,6 +117,7 @@ public class SpawnHandler implements ActionListener {
             }
         }
     }
+
 
     /**
      * Updates the spawn points and spawns enemies if the player is within range
@@ -122,6 +138,8 @@ public class SpawnHandler implements ActionListener {
     }
 
 
+
+
     /**
      * Each timer tick - increments the frames since last spawn for each spawn point
      * Overall, used to spawn enemies at constant rates
@@ -136,3 +154,4 @@ public class SpawnHandler implements ActionListener {
         }
     }
 }
+
