@@ -7,6 +7,7 @@ import Attacks.Ranged;
 import Entities.Enemy;
 import Entities.Entity;
 import Entities.Player;
+import Handlers.CollisionHandler;
 import Handlers.KeyHandler;
 import World.Tile;
 
@@ -24,13 +25,16 @@ public class AttackHandler {
     KeyHandler keyHandler;
     public boolean playerCanAttack = true;
     public int playerCooldown = 30, attackFrames = 36;
+    CollisionHandler collisionHandler = new CollisionHandler();
+    Tile[][] tileset;
 
     /**
      * Create attackHandler object
      * @param keyHandler keyHandler to detect key inputs
      */
-    public AttackHandler(KeyHandler keyHandler) {
+    public AttackHandler(KeyHandler keyHandler, Tile[][] tileset) {
         this.keyHandler = keyHandler;
+        this.tileset = tileset;
     }
 
     /**
@@ -267,6 +271,10 @@ public class AttackHandler {
     private void removeAttackAfterDuration() {
         if (!playerAttacks.isEmpty()) {
             for (int i = 0; i < playerAttacks.size(); i++) {
+                if (collisionHandler.attackWithTileCollision(playerAttacks.get(i), tileset)) {
+                    playerToRemove.add(playerAttacks.get(i));
+                    System.out.println("One down!");
+                }
                 if (playerAttacks.get(i).getDuration() <= 0) {
                     playerToRemove.add(playerAttacks.get(i));
                 }

@@ -203,4 +203,16 @@ public abstract class Attack {
      */
     public void setSpeed(int speed) { this.speed = speed; }
 
+    /**
+     * Gets world x
+     * @return world x
+     */
+    public double getWorldX() { return worldX; }
+
+    /**
+     * Gets world y
+     * @return world y
+     */
+    public double getWorldY() { return worldY; }
+
 }
