@@ -39,6 +39,51 @@ public class CollisionHandler {
     }
 
     /**
+     * Checks attack collision with tiles all directions
+     * @param attack to check collision with
+     * @param tiles List of tiles from the current level to check collision with
+     * @return true if attack collides with a tile, false otherwise
+     */
+    public boolean attackWithTileCollision(Attack attack, Tile[][] tiles) {
+
+        double arrowTop = attack.getWorldY();
+        double arrowBottom = attack.getWorldY() + attack.getRange();
+        double arrowLeft = attack.getWorldX();
+        double arrowRight = attack.getWorldX() + attack.getWidth();
+
+        int topRow = (int)(arrowTop/Tile.tileSize);
+        int bottomRow = (int)(arrowBottom/Tile.tileSize);
+        int leftCol = (int)(arrowLeft/Tile.tileSize);
+        int rightCol = (int)(arrowRight/Tile.tileSize);
+
+        // Checking if the attack is colliding with a tile in the direction they are moving
+            if (topRow - 1 < 0) return true;
+            if (isNotWalkableTileInRow(topRow - 1, leftCol, rightCol, tiles)) {
+                double tileBottom = tiles[topRow - 1][leftCol].getWorldYPos() + Tile.tileSize;
+                if (topRow <= tileBottom) return true;
+            }
+            if ((bottomRow + 1 >= tiles.length)) return true;
+            if (isNotWalkableTileInRow(bottomRow + 1, leftCol, rightCol, tiles)) {
+                double tileTop = tiles[bottomRow + 1][leftCol].getWorldYPos();
+                if (arrowBottom >= tileTop) return true;
+
+            }
+            if (leftCol - 1 < 0) return true;
+            if (isNotWalkableTileInCol(leftCol - 1, topRow, bottomRow, tiles)) {
+                double tileRight = tiles[topRow][leftCol-1].getWorldXPos() + Tile.tileSize;
+                if (arrowLeft <= tileRight) return true;
+
+            }
+            if (rightCol + 1 > tiles[0].length) return true;
+            if (isNotWalkableTileInCol(rightCol + 1, topRow, bottomRow, tiles)) {
+                double tileLeft = tiles[bottomRow][rightCol + 1].getWorldXPos();
+                if (arrowRight >= tileLeft) return true;
+            }
+
+        return false;
+    }
+
+    /**
      * Checks player collision with all tiles in all directions
      * @param player player to check collision with
      * @param tiles List of tiles from the current level to check collision with
