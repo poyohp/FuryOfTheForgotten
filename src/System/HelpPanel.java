@@ -40,7 +40,7 @@ public class HelpPanel extends JPanel implements KeyListener {
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_SPACE) {
             System.out.println("Pressed");
-            Main.updateGameState(2); // Start the game immediately
+            Main.updateGameState(1); // Start the game immediately
         }
     }
 

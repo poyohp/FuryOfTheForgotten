@@ -8,7 +8,7 @@ public class Main {
      * All the game panel (for game states)
      */
     public static final GamePanel gamePanel = new GamePanel();
-    public static MenuPanel menuPanel = new MenuPanel();
+    public static MenuPanel menuPanel;
     public static GameOverPanel gameOverPanel = new GameOverPanel();
     public static WinPanel winPanel = new WinPanel();
     public static HelpPanel helpPanel;
@@ -41,7 +41,9 @@ public class Main {
         // Add panel based on game state
         switch (gameState) {
             case 1:
+                menuPanel = new MenuPanel();
                 window.add(menuPanel);
+                menuPanel.requestFocusInWindow();
                 break;
             case 2:
                 window.add(gamePanel);
