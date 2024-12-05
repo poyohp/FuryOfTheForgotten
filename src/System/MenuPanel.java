@@ -73,12 +73,13 @@ public class MenuPanel extends JPanel {
      */
     public void handleChoice() {
         if (keyHandler.choicePress) {
+            timer.stop();
             if (selectedButton == start) {
-                timer.stop();
                 Main.updateGameState(2); // Start the game!
-            } else { // Update for help later
-                timer.stop();
-                Main.updateGameState(3); // Show ending screen!
+            } else if (selectedButton == help) { // Update for help later
+                Main.updateGameState(5); // Show ending screen!
+            } else if (selectedButton == quit) {
+                System.exit(0);
             }
         }
     }

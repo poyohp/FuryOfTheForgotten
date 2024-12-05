@@ -11,6 +11,8 @@ public class Main {
     public static MenuPanel menuPanel = new MenuPanel();
     public static GameOverPanel gameOverPanel = new GameOverPanel();
     public static WinPanel winPanel = new WinPanel();
+    public static HelpPanel helpPanel = new HelpPanel();
+
 
     public static JFrame window = new JFrame();
 
@@ -42,17 +44,18 @@ public class Main {
                 window.add(menuPanel);
                 break;
             case 2:
-                window.remove(menuPanel);
                 window.add(gamePanel);
                 gamePanel.initiateGamePanel();
                 break;
             case 3:
-                window.remove(gamePanel);
                 window.add(gameOverPanel);
                 break;
             case 4:
-                window.remove(gamePanel);
                 window.add(winPanel);
+                break;
+            case 5:
+                window.add(helpPanel);
+                break;
         }
 
         window.pack();
