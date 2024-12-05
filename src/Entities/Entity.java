@@ -3,7 +3,7 @@ package Entities;
 import java.awt.*;
 
 public abstract class Entity {
-    
+
     // Various entity attributes
     private double health;
     private double speed;
@@ -14,8 +14,8 @@ public abstract class Entity {
     // entity position
     public double worldX, worldY;
     public double screenX, screenY;
-    
-    
+
+
     public char direction;
     public boolean attacking = false;
     public int attackCooldown = 120;
@@ -26,19 +26,20 @@ public abstract class Entity {
 
     /**
      * Entity that is a part of the game
-     * @param health entity health
-     * @param speed entity speed
-     * @param width entity width
-     * @param height entity height
-     * @param name entity name
-     * @param worldX world x position
-     * @param worldY world y position
-     * @param xOffset x offset for hitbox
-     * @param yOffset y offset for hitbox
-     * @param hitBoxWidth hitbox width
+     *
+     * @param health       entity health
+     * @param speed        entity speed
+     * @param width        entity width
+     * @param height       entity height
+     * @param name         entity name
+     * @param worldX       world x position
+     * @param worldY       world y position
+     * @param xOffset      x offset for hitbox
+     * @param yOffset      y offset for hitbox
+     * @param hitBoxWidth  hitbox width
      * @param hitBoxHeight hitbox height
      */
-    public Entity (int health, double speed, int width, int height, String name, double worldX, double worldY, int xOffset, int yOffset, int hitBoxWidth, int hitBoxHeight) {
+    public Entity(int health, double speed, int width, int height, String name, double worldX, double worldY, int xOffset, int yOffset, int hitBoxWidth, int hitBoxHeight) {
         this.health = health;
         this.speed = speed;
         this.width = width;
@@ -49,7 +50,8 @@ public abstract class Entity {
 
         this.worldX = worldX;
         this.worldY = worldY;
-        hitbox = new Hitbox((int)worldX, (int)worldY, xOffset, yOffset, hitBoxWidth, hitBoxHeight); // Create hitbox that corresponds to given values
+
+        hitbox = new Hitbox((int) worldX, (int) worldY, (int) screenX, (int) screenY, hitBoxWidth, hitBoxHeight); // Create hitbox that corresponds to given values
         hitbox.update(this);
 
         // Variables that refer to the different sides of the entities
@@ -58,6 +60,8 @@ public abstract class Entity {
         entityTop = hitbox.getWorldYPos();
         entityBottom = entityTop + (double) hitbox.getHeight();
     }
+
+    public abstract void setScreenPosition();
 
     /**
      * Updates the hitbox values and corresponding entity values
@@ -70,13 +74,15 @@ public abstract class Entity {
         entityBottom = entityTop + (double) hitbox.getHeight();
     }
 
+
     /**
      * Draws the health of an entity
+     *
      * @param g2 Graphics2D object to draw health bar on
      */
     public void drawHealth(Graphics2D g2) {
-        double fillPercentage = health/100.0; // Health percentage remaining
-        int barLength = (int)(fillPercentage * width); // Draw bar based on percentage remaining
+        double fillPercentage = health / 100.0; // Health percentage remaining
+        int barLength = (int) (fillPercentage * width); // Draw bar based on percentage remaining
 
         // Bar fill
         g2.setColor(Color.GREEN);
@@ -90,6 +96,7 @@ public abstract class Entity {
 
     /**
      * Gets health
+     *
      * @return health
      */
     public double getHealth() {
@@ -98,6 +105,7 @@ public abstract class Entity {
 
     /**
      * Gets speed
+     *
      * @return speed
      */
     public double getSpeed() {
@@ -106,6 +114,7 @@ public abstract class Entity {
 
     /**
      * Gets width
+     *
      * @return width
      */
     public int getWidth() {
@@ -114,6 +123,7 @@ public abstract class Entity {
 
     /**
      * Gets height
+     *
      * @return height
      */
     public int getHeight() {
@@ -122,11 +132,11 @@ public abstract class Entity {
 
     /**
      * Sets health, making sure it does not go below zero
+     *
      * @param newHealth sets health to newHealth
      */
     public void setHealth(double newHealth) {
         health = newHealth;
         if (newHealth < 0) health = 0;
     }
-
 }

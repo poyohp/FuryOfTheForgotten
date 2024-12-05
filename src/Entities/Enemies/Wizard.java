@@ -12,14 +12,13 @@ import java.util.ArrayList;
 
 public class Wizard extends Enemy{
 
-    public boolean onPath;
+    public boolean onPath, inRange;
     APathfinding pathFinder;
     Tile[][] tileset;
 
-
     // Variables for drawing
     private int animationState = 1, updateFrames = 7;
-    private int columnWidth, columnHeight;
+    private int columnWidth = 15, rowHeight = 21, column1 = 0, column2 = 16, column3 = 32, column4 = 48, row1 = 2, row2 = 26, row3 = 50, row4 = 74;
     BufferedImage wizard, wizardMove, wizardAttackFire, wizardAttack;
 
     public boolean attacking;
@@ -53,27 +52,45 @@ public class Wizard extends Enemy{
         this.tileset = tileset;
         pathFinder = new APathfinding(tileset);
         this.onPath = true;
+        this.inRange = false;
+        this.vision = 700;
+    }
+
+    public void updateFrames() {
+        if (updateFrames <= 0) {
+            if (animationState >= 12) {
+                animationState = 1;
+            } else {
+                animationState++;
+            }
+            updateFrames = 7;
+        } else {
+            updateFrames--;
+        }
     }
 
     @Override
     public void draw(Graphics2D g2) {
-
+        if (!attacking) {
+            if (direction == 'd') {
+                switch (animationState) {
+                    case 1:
+                        g2.drawImage(wizardMove, (int)this.screenX, (int)this.screenY, (int)(this.screenX + this.getWidth()), (int)(this.screenY + this.getHeight()), column1, row1, column1 + columnWidth, row1 + rowHeight, null);
+                }
+            }
+        }
     }
 
     @Override
     public void move() {
         // If enemy is going to follow player
-        if (onPath) {
+        if (onPath && !attacking) {
             int goalRow = (int) (player.entityTop/ Tile.tileSize); //top row of the player
             int goalCol = (int) (player.entityLeft/Tile.tileSize); //left row of the player
 
             searchPath(goalRow, goalCol);
 
         } //else: different random actions if the player is not in enemy vision
-    }
-
-    void checkAttack() {
-
     }
 
     /**
@@ -117,5 +134,16 @@ public class Wizard extends Enemy{
                 worldY += getSpeed();
             }
         }
+    }
+
+    @Override
+    public void update() {
+        super.update();
+        if (playerInVision()) {
+            attacking = true;
+        } else {
+            attacking = false;
+        }
+        updateFrames();
     }
 }

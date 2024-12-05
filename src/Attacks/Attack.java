@@ -77,9 +77,8 @@ public abstract class Attack {
 
     /**
      * Set the initial hitbox of the attack
-     * @param direction directions of entity
      */
-    public abstract void setInitialHitbox(char[] direction);
+    public abstract void setInitialHitbox();
 
     /**
      * Get attack damage

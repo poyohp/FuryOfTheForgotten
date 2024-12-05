@@ -11,6 +11,7 @@ import System.Main;
 
 public class Ranged extends Attack{
     static BufferedImage arrow = ImageHandler.loadImage("src/Assets/Projectiles/Arrow.png");
+    int spawnDistance;
 
     /**
      * Create ranged attack
@@ -26,16 +27,16 @@ public class Ranged extends Attack{
      */
     public Ranged(int damage, int range, int width, char direction, Entity entity, int xOffset, int yOffset, int duration, int speed) {
         super(damage, range, width, direction, entity, xOffset, yOffset, duration);
-        setInitialHitbox(getDirection());
+        setInitialHitbox();
         setSpeed(speed);
     }
 
     /**
      * Sets initial hitbox of ranged attack either on axis or 45 degrees away
-     * @param direction directions of entity
      */
     @Override
-    public void setInitialHitbox(char[] direction) {
+    public void setInitialHitbox() {
+        /*
         // Set position of hitbox
         // Entity looks up
         if (direction[0] == 'u') {
@@ -113,6 +114,7 @@ public class Ranged extends Attack{
                 hitbox = new Hitbox((int) getX(), (int) getY(), getXOffset(), getYOffset(), getRange(), getWidth());
             }
         }
+         */
     }
 
 
@@ -246,6 +248,7 @@ public class Ranged extends Attack{
         }
 
         g2.setTransform(originalTransform);
+        hitbox.draw(g2);
     }
 
 }

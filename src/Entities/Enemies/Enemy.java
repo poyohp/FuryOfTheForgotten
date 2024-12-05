@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public abstract class Enemy extends Entity {
 
     // Used for attacking
-    private int vision = 600;
+    int vision = 600;
     public double damage;
     public boolean isFollowing = false;
     public boolean attacking = true;
@@ -72,7 +72,8 @@ public abstract class Enemy extends Entity {
     /**
      * Sets enemy's position on the screen
      */
-    void setScreenPosition() {
+    @Override
+    public void setScreenPosition() {
         // gets player coordinates and offsets by the player's place on the screen
         screenX = worldX - player.worldX + player.screenX;
         screenY = worldY - player.worldY + player.screenY;

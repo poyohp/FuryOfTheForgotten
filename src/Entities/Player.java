@@ -56,7 +56,8 @@ public class Player extends Entity {
     /**
      * Sets player in the middle of the screen
      */
-    void setScreenPosition() {
+    @Override
+    public void setScreenPosition() {
         this.screenX = (int) (GamePanel.screenWidth / 2) - (double) this.getWidth() / 2;
         this.screenY = (int) (GamePanel.screenHeight / 2) - (double) this.getHeight() / 2;
     }

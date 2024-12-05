@@ -21,7 +21,7 @@ public class Melee extends Attack{
     public Melee(int damage, int range, int width, char direction, Entity entity, int xOffset, int yOffset, int duration) {
         super(damage, range, width, direction, entity, xOffset, yOffset, duration);
         setSpeed(0);
-        setInitialHitbox(this.getDirection());
+        setInitialHitbox();
     }
 
     /**
@@ -82,10 +82,10 @@ public class Melee extends Attack{
 
     /**
      * Set initial hitbox based on associated entity
-     * @param direction directions of entity
      */
     @Override
-    public void setInitialHitbox(char[] direction) {
+    public void setInitialHitbox() {
+        /*
         // Entity looks up
         if (direction[0] == 'u') {
             setX(entity.worldX + (double) entity.getWidth() / 2 - (double) getWidth() / 2);
@@ -110,6 +110,8 @@ public class Melee extends Attack{
         } else {
             hitbox = new Hitbox((int) getX(), (int) getY(), getXOffset(), getYOffset(), getRange(), getWidth());
         }
+
+         */
     }
 
     /**
