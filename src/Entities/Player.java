@@ -117,6 +117,7 @@ public class Player extends Entity {
         if (keyHandler.attackPress && canAttack) {
             attacking = true;
             animationState = 0;
+            canAttack = false;
         }
 
         // Setting attack to true
@@ -381,5 +382,6 @@ public class Player extends Entity {
                     }
             }
         }
+        hitbox.draw(g2);
     }
 }

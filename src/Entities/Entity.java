@@ -51,13 +51,13 @@ public abstract class Entity {
         this.worldX = worldX;
         this.worldY = worldY;
 
-        hitbox = new Hitbox((int) worldX, (int) worldY, (int) screenX, (int) screenY, hitBoxWidth, hitBoxHeight); // Create hitbox that corresponds to given values
+        hitbox = new Hitbox((int) worldX, (int) worldY, (int) screenX, (int) screenY, hitBoxWidth, hitBoxHeight, xOffset, yOffset); // Create hitbox that corresponds to given values
         hitbox.update(this);
 
         // Variables that refer to the different sides of the entities
-        entityLeft = hitbox.getWorldXPos();
+        entityLeft = hitbox.getWorldX();
         entityRight = entityLeft + (double) hitbox.getWidth();
-        entityTop = hitbox.getWorldYPos();
+        entityTop = hitbox.getWorldY();
         entityBottom = entityTop + (double) hitbox.getHeight();
     }
 
@@ -68,9 +68,9 @@ public abstract class Entity {
      */
     public void updateEntityPosition() {
         hitbox.update(this);
-        entityLeft = hitbox.getWorldXPos();
+        entityLeft = hitbox.getWorldX();
         entityRight = entityLeft + (double) hitbox.getWidth();
-        entityTop = hitbox.getWorldYPos();
+        entityTop = hitbox.getWorldY();
         entityBottom = entityTop + (double) hitbox.getHeight();
     }
 

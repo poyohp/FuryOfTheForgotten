@@ -1,6 +1,7 @@
 package Handlers.Attacks;
 
 
+import Attacks.Arrow;
 import Attacks.Attack;
 import Attacks.Melee;
 import Attacks.Ranged;
@@ -64,8 +65,8 @@ public class AttackHandler {
      * @param duration attack duration
      * @param speed attack speed
      */
-    void createPlayerRanged(int damage, int range, int width, char direction, Entity entity, int xOffset, int yOffset, int duration, int speed) {
-        playerAttacks.add(new Ranged(damage, range, width, direction, entity, xOffset, yOffset, duration, speed));
+    void createPlayerRanged(int damage, int range, int width, char direction, Entity entity, int xOffset, int yOffset, int duration, int speed, double angle) {
+        playerAttacks.add(new Arrow(damage, range, width, direction, entity, xOffset, yOffset, duration, speed, angle));
     }
 
     /**
@@ -90,82 +91,58 @@ public class AttackHandler {
     /**
      * Determine the player's ranged attack's velocities
      */
-    void determinePlayerRangedAttackVelocity() {
+    void updateAttacks() {
+
         for (Attack a : playerAttacks) {
-            // Player looks up
-            if (a.getDirection()[0] == 'u') {
-                // Player second direction input is on the same axis as it faces
-                if (a.getDirection()[1] == 'u' || a.getDirection()[1] == 'd') {
-                    a.angle = Math.PI/2;
-                    a.move((int) a.determineXVelocity(Math.PI / 2, a.getSpeed()), (int) a.determineYVelocity(Math.PI / 2, a.getSpeed()));
-                // Player second direction input is right
-                } else if (a.getDirection()[1] == 'r') {
-                    a.angle = 3*Math.PI/8;
-                    a.move((int) a.determineXVelocity(3*Math.PI / 8, a.getSpeed()), (int) a.determineYVelocity(3*Math.PI / 8, a.getSpeed()));
-                // Player second direction input is left
-                } else {
-                    a.angle = 5*Math.PI/8;
-                    a.move((int) a.determineXVelocity(5*Math.PI / 8, a.getSpeed()), (int) a.determineYVelocity(5*Math.PI / 8, a.getSpeed()));
-                }
-            // Player looks right
-            } else if (a.getDirection()[0] == 'r') {
-                // Player second direction input is on the same axis as it faces
-                if (a.getDirection()[1] == 'r' || a.getDirection()[1] == 'l') {
-                    a.angle = 0;
-                    a.move((int) a.determineXVelocity(0, a.getSpeed()), (int) a.determineYVelocity(0, a.getSpeed()));
-                // Player second direction input is up
-                } else if (a.getDirection()[1] == 'u') {
-                    a.angle = Math.PI/8;
-                    a.move((int) a.determineXVelocity(Math.PI / 8, a.getSpeed()), (int) a.determineYVelocity(Math.PI / 8, a.getSpeed()));
-                // Player second direction input is down
-                } else {
-                    a.angle = 15*Math.PI/8;
-                    a.move((int) a.determineXVelocity(15*Math.PI / 8, a.getSpeed()), (int) a.determineYVelocity(15*Math.PI / 8, a.getSpeed()));
-                }
-            // Player looks down
-            } else if (a.getDirection()[0] == 'd') {
-                // Player second direction input is on the same axis as it faces
-                if (a.getDirection()[1] == 'd' || a.getDirection()[1] == 'u') {
-                    a.angle = 3*Math.PI/2;
-                    a.move((int) a.determineXVelocity(3*Math.PI/2, a.getSpeed()), (int) a.determineYVelocity(3*Math.PI/2, a.getSpeed()));
-                // Player second direction input is left
-                } else if (a.getDirection()[1] == 'l') {
-                    a.angle = 11*Math.PI/8;
-                    a.move((int) a.determineXVelocity(11*Math.PI / 8, a.getSpeed()), (int) a.determineYVelocity(11*Math.PI / 8, a.getSpeed()));
-                // Player second direction input is right
-                } else {
-                    a.angle = 13*Math.PI/8;
-                    a.move((int) a.determineXVelocity(13*Math.PI / 8, a.getSpeed()), (int) a.determineYVelocity(13*Math.PI / 8, a.getSpeed()));
-                }
-            // Player looks left
-            } else {
-                // Player second direction input is on the same axis as it faces
-                if (a.getDirection()[1] == 'l' || a.getDirection()[1] == 'r') {
-                    a.angle = Math.PI;
-                    a.move((int) a.determineXVelocity(Math.PI, a.getSpeed()), (int) a.determineYVelocity(Math.PI, a.getSpeed()));
-                // Player second direction input is down
-                } else if (a.getDirection()[1] == 'd') {
-                    a.angle = 9*Math.PI/8;
-                    a.move((int) a.determineXVelocity(9*Math.PI / 8, a.getSpeed()), (int) a.determineYVelocity(9*Math.PI / 8, a.getSpeed()));
-                // Player second direction input is up
-                } else {
-                    a.angle = 7*Math.PI/8;
-                    a.move((int) a.determineXVelocity(7*Math.PI / 8, a.getSpeed()), (int) a.determineYVelocity(7*Math.PI / 8, a.getSpeed()));
-                }
-            }
-           // System.out.println("Attack angle: " + a.angle);
+            a.update();
+            //System.out.println("updated");
+        }
+    }
+
+    void createPlayerAttacks(Player p) {
+       // System.out.println("skibidi");
+        if (p.direction == 'r') {
+            //System.out.println("right");
+            createPlayerRanged(5, Tile.tileSize, Tile.tileSize, p.direction, p, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625), 0);
+            createPlayerRanged(5, Tile.tileSize, Tile.tileSize, p.direction, p, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625), 15*Math.PI/8);
+            createPlayerRanged(5, Tile.tileSize, Tile.tileSize, p.direction, p, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625), Math.PI/8);
+        } else if (p.direction == 'u') {
+           // System.out.println("up");
+            createPlayerRanged(5, Tile.tileSize, Tile.tileSize, p.direction, p, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625), Math.PI/2);
+            createPlayerRanged(5, Tile.tileSize, Tile.tileSize, p.direction, p, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625), 3*Math.PI/8);
+            createPlayerRanged(5, Tile.tileSize, Tile.tileSize, p.direction, p, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625), 5*Math.PI/8);
+        } else if (p.direction == 'l') {
+            //System.out.println("left");
+            createPlayerRanged(5, Tile.tileSize, Tile.tileSize, p.direction, p, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625), Math.PI);
+            createPlayerRanged(5, Tile.tileSize, Tile.tileSize, p.direction, p, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625), 7*Math.PI/8);
+            createPlayerRanged(5, Tile.tileSize, Tile.tileSize, p.direction, p, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625), 9*Math.PI/8);
+        } else {
+            //System.out.println("right");
+            createPlayerRanged(5, Tile.tileSize, Tile.tileSize, p.direction, p, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625), 3*Math.PI/2);
+            createPlayerRanged(5, Tile.tileSize, Tile.tileSize, p.direction, p, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625), 11*Math.PI/8);
+            createPlayerRanged(5, Tile.tileSize, Tile.tileSize, p.direction, p, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625), 13*Math.PI/8);
         }
     }
 
     // Must be updated when other entities are included to take an arraylist of all entities as a parameter, not just a player)
     public void update(Player player, ArrayList<Enemy> enemy) {
         player.checkAttack();
-        determinePlayerRangedAttackVelocity();
         player.setAttackCooldown();
         if(player.toCreateAttack()) {
-            createPlayerRanged(5, Tile.tileSize, Tile.tileSize, player.direction, player, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625));
-            createPlayerRanged(5, Tile.tileSize, Tile.tileSize, player.dir1, player, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625));
-            createPlayerRanged(5, Tile.tileSize, Tile.tileSize, player.dir2, player, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625));
+            createPlayerAttacks(player);
+        }
+
+
+
+        // Issue here
+        if (!playerAttacks.isEmpty()) {
+            updateAttacks();
+        }
+
+        for (Attack a : playerAttacks) {
+
+            System.out.println(a.angle);
+
         }
         removeAttacks();
     }
@@ -177,15 +154,22 @@ public class AttackHandler {
         if (!playerAttacks.isEmpty()) {
             for (int i = 0; i < playerAttacks.size(); i++) {
                 if (collisionHandler.attackWithTileCollision(playerAttacks.get(i), tileset)) {
+                    //System.out.println("2");
                     playerToRemove.add(playerAttacks.get(i));
                     //System.out.println("One down!");
                 }
                 if (playerAttacks.get(i).getDuration() <= 0) {
                     playerToRemove.add(playerAttacks.get(i));
+                } else {
+                    playerAttacks.get(i).setDuration((playerAttacks.get(i).getDuration() - 1));
                 }
-                playerAttacks.get(i).setDuration((playerAttacks.get(i).getDuration() - 1));
+
+            }
+            for (Attack a : playerToRemove) {
+                //System.out.println("1");
             }
             playerAttacks.removeAll(playerToRemove);
+            playerToRemove.clear();
         }
 
         if (!enemyAttacks.isEmpty()) {

@@ -7,7 +7,8 @@ import java.awt.*;
 public class Hitbox extends Rectangle {
 
     private int xOffset, yOffset; // Offset from positions
-    public double worldXPos, worldYPos;
+    public double worldX, worldY;
+    public double screenX, screenY;
 
     /**
      * Hitbox constructor
@@ -16,10 +17,19 @@ public class Hitbox extends Rectangle {
      * @param width width
      * @param height height
      */
-    public Hitbox(int worldXPos, int worldYPos, int screenX, int screenY, int width, int height) {
-        super(screenX, screenY, width, height);
-        this.worldXPos = worldXPos;
-        this.worldYPos = worldYPos;
+    public Hitbox(int worldXPos, int worldYPos, int screenX, int screenY, int width, int height, int xOffset, int yOffset) {
+        super(worldXPos, worldYPos, width, height);
+        this.worldX = worldXPos;
+        this.worldY = worldYPos;
+
+        this.x = worldXPos;
+        this.y = worldYPos;
+
+        this.xOffset = xOffset;
+        this.yOffset = yOffset;
+
+        this.screenX = screenX;
+        this.screenY = screenY;
 
     }
 
@@ -28,10 +38,12 @@ public class Hitbox extends Rectangle {
      * @param entity to update
      */
     public void update(Entity entity) {
-        worldXPos = entity.worldX+xOffset;
-        worldYPos = entity.worldY+yOffset;
-        x = (int)(entity.screenX+xOffset);
-        y = (int)(entity.screenY+yOffset);
+        worldX = entity.worldX+xOffset;
+        worldY = entity.worldY+yOffset;
+        x = (int)(entity.worldX+xOffset);
+        y = (int)(entity.worldY+yOffset);
+        screenX = entity.screenX+xOffset;
+        screenY = entity.screenY+yOffset;
     }
 
     /**
@@ -39,20 +51,22 @@ public class Hitbox extends Rectangle {
      * @param attack attack to update
      */
     public void update(Attack attack) {
-        worldXPos = attack.getX()+xOffset;
-        worldYPos = attack.getY()+yOffset;
-        x = (int)(attack.getScreenX()+xOffset);
-        y = (int)(attack.getScreenY() +yOffset);
+        worldX = attack.getX()+xOffset;
+        worldY = attack.getY()+yOffset;
+        x = (int)(attack.getX()+xOffset);
+        y = (int)(attack.getY() +yOffset);
+        screenX = attack.getScreenX()+xOffset;
+        screenY = attack.getScreenY()+yOffset;
     }
 
     public void draw(Graphics2D g2) {
         g2.setColor(Color.BLACK);
-        g2.drawRect(x, y, width, height);
+        g2.drawRect((int)screenX, (int)screenY, width, height);
     }
 
     public void draw2(Graphics2D g2) {
         g2.setColor(Color.BLACK);
-        g2.fillRect(x, y, width, height);
+        g2.fillRect((int)screenX, (int)screenY, width, height);
     }
 
     /**
@@ -75,16 +89,16 @@ public class Hitbox extends Rectangle {
      * Gets world x position
      * @return world x position
      */
-    public double getWorldXPos() {
-        return worldXPos;
+    public double getWorldX() {
+        return worldX;
     }
 
     /**
      * Gets world y position
      * @return world y position
      */
-    public double getWorldYPos() {
-        return this.worldYPos;
+    public double getWorldY() {
+        return this.worldY;
     }
 
 }

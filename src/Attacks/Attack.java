@@ -64,6 +64,8 @@ public abstract class Attack {
      */
     public abstract void move(int xSpeed, int ySpeed);
 
+    public abstract void update();
+
     /**
      * Determine screen position based on world position
      */

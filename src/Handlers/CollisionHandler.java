@@ -16,9 +16,9 @@ public class CollisionHandler {
      * @return true if entity collides with attack, false otherwise
      */
     boolean checkEntityWithAttackCollision(Entity entity, Attack attack) {
-        double attackTop = attack.hitbox.getWorldYPos();
+        double attackTop = attack.hitbox.getWorldY();
         double attackBottom = attackTop + attack.hitbox.getHeight();
-        double attackLeft = attack.hitbox.getWorldXPos();
+        double attackLeft = attack.hitbox.getWorldX();
         double attackRight = attackLeft + attack.hitbox.getWidth();
 
         char attackDirection1 = attack.getDirection()[0];
@@ -47,10 +47,10 @@ public class CollisionHandler {
      */
     public boolean attackWithTileCollision(Attack attack, Tile[][] tiles) {
 
-        double arrowTop = attack.getWorldY();
-        double arrowBottom = attack.getWorldY() + attack.getRange();
-        double arrowLeft = attack.getWorldX();
-        double arrowRight = attack.getWorldX() + attack.getWidth();
+        double arrowTop = attack.hitbox.worldY;
+        double arrowBottom = attack.hitbox.worldY + attack.hitbox.height;
+        double arrowLeft = attack.hitbox.worldX;
+        double arrowRight = attack.hitbox.worldX + attack.hitbox.width;
 
         int topRow = (int)(arrowTop/Tile.tileSize);
         int bottomRow = (int)(arrowBottom/Tile.tileSize);
@@ -58,19 +58,31 @@ public class CollisionHandler {
         int rightCol = (int)(arrowRight/Tile.tileSize);
 
         // Checking if the attack is colliding with any tiles in all directions
-            if (topRow - 1 < 0) return true;
+            if (topRow - 1 < 0) {
+               // System.out.println(arrowTop);
+                return true;
+            }
             if (isNotWalkableTileInRow(topRow, leftCol, rightCol, tiles)) {
                 return true;
             }
-            if ((bottomRow + 1 >= tiles.length)) return true;
+            if ((bottomRow + 1 >= tiles.length)) {
+                System.out.println("Bottom");
+                return true;
+            }
             if (isNotWalkableTileInRow(bottomRow, leftCol, rightCol, tiles)) {
                 return true;
             }
-            if (leftCol - 1 < 0) return true;
+            if (leftCol - 1 < 0) {
+                System.out.println("Left");
+                return true;
+            }
             if (isNotWalkableTileInCol(leftCol, topRow, bottomRow, tiles)) {
                 return true;
             }
-            if (rightCol + 1 > tiles[0].length) return true;
+            if (rightCol + 1 > tiles[0].length) {
+                System.out.println("Right");
+                return true;
+            }
             if (isNotWalkableTileInCol(rightCol, topRow, bottomRow, tiles)) {
                 return true;
             }

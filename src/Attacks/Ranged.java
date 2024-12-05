@@ -7,10 +7,9 @@ import java.awt.image.BufferedImage;
 
 import Handlers.ImageHandler;
 import System.GamePanel;
-import System.Main;
 
 public class Ranged extends Attack{
-    static BufferedImage arrow = ImageHandler.loadImage("src/Assets/Projectiles/Arrow.png");
+
     int spawnDistance;
 
     /**
@@ -27,7 +26,6 @@ public class Ranged extends Attack{
      */
     public Ranged(int damage, int range, int width, char direction, Entity entity, int xOffset, int yOffset, int duration, int speed) {
         super(damage, range, width, direction, entity, xOffset, yOffset, duration);
-        setInitialHitbox();
         setSpeed(speed);
     }
 
@@ -125,10 +123,10 @@ public class Ranged extends Attack{
      * @return integer value angle of attack angle in relation to right horizontal
      */
     public double calculateAttackAngle(Hitbox attack, Hitbox entity) {
-        double attackX = attack.getWorldXPos() + (double) attack.getWidth()/2;
-        double attackY = attack.getWorldYPos() + (double) attack.getHeight()/2;
-        double entityX = entity.getWorldXPos() + (double) entity.getWidth()/2;
-        double entityY = entity.getWorldYPos() + (double) entity.getHeight()/2;
+        double attackX = attack.getWorldX() + (double) attack.getWidth()/2;
+        double attackY = attack.getWorldY() + (double) attack.getHeight()/2;
+        double entityX = entity.getWorldX() + (double) entity.getWidth()/2;
+        double entityY = entity.getWorldY() + (double) entity.getHeight()/2;
 
 
         if (entityX > attackX && entityY > attackY) {
@@ -174,9 +172,17 @@ public class Ranged extends Attack{
      */
     @Override
     public void move(int xSpeed, int ySpeed) {
+        //System.out.println(getX());
         setX(getX() + xSpeed);
+        //System.out.println(getX());
+        //System.out.println(getY());
         setY(getY() + ySpeed);
-        hitbox.update(this);
+        //System.out.println(getY());
+    }
+
+    @Override
+    public void update() {
+        move((int)determineXVelocity(angle, getSpeed()), (int)determineYVelocity(angle, getSpeed()));
     }
 
 
@@ -207,6 +213,7 @@ public class Ranged extends Attack{
      */
     @Override
     public void draw(Graphics2D g2) {
+        /*
         setScreenPosition();
 
         AffineTransform originalTransform = g2.getTransform();
@@ -249,6 +256,8 @@ public class Ranged extends Attack{
 
         g2.setTransform(originalTransform);
         hitbox.draw(g2);
+
+         */
     }
 
 }

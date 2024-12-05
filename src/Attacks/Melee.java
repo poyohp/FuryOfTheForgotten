@@ -56,6 +56,12 @@ public class Melee extends Attack{
 
     }
 
+    @Override
+    public void update() {
+
+    }
+
+
     /**
      * Set intial screen postition of melee attack
      */
