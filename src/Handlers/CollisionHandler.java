@@ -112,7 +112,7 @@ public class CollisionHandler {
                 if (player.entityTop - player.getSpeed() < tileBottom) return true;
             }
         } else if (player.direction == 'd') {
-            if ((bottomRow + 1 >= tiles.length)) return true;
+            if ((bottomRow + 1 > tiles.length)) return true;
             if (isNotWalkableTileInRow(bottomRow + 1, leftCol, rightCol, tiles)) {
                 double tileTop = tiles[bottomRow + 1][leftCol].getWorldYPos();
                 if (player.entityBottom + player.getSpeed() > tileTop) return true;

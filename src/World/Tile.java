@@ -9,6 +9,7 @@ public class Tile {
 
     //Tile size is determined based on screen ratio
     public static final int tileSize = normalTileSize*tileMultipler;
+    public static final int tileRatio = tileSize/normalTileSize;
 
     private int value, orgValue;
     private int row, col;

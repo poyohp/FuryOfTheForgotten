@@ -44,15 +44,10 @@ public class ImageHandler {
      */
     public static void drawRotatedImage(Graphics2D g2, int centerX, int centerY, double angle, BufferedImage image, int dx1, int dy1, int dx2, int dy2, int sx1, int sy1, int sx2, int sy2) {
 
-        // GETTING ORIGINAL ROTATION
-        AffineTransform originalTransform = g2.getTransform();
-
-        // ROTATING IMAGE
         g2.rotate(angle, centerX, centerY);
         g2.drawImage(image, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, null);
+        g2.rotate(-angle, centerX, centerY);
 
-        // RESETTING ORIGINAL ROTATION
-        g2.setTransform(originalTransform);
     }
 
 }

@@ -61,11 +61,6 @@ public class Hitbox extends Rectangle {
 
     public void draw(Graphics2D g2) {
         g2.setColor(Color.BLACK);
-        g2.drawRect((int)screenX, (int)screenY, width, height);
-    }
-
-    public void draw2(Graphics2D g2) {
-        g2.setColor(Color.BLACK);
         g2.fillRect((int)screenX, (int)screenY, width, height);
     }
 

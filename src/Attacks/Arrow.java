@@ -28,7 +28,7 @@ public class Arrow extends Ranged{
     public Arrow(int damage, int range, int width, char direction, Entity entity, int xOffset, int yOffset, int duration, int speed, double angle) {
         super(damage, range, width, direction, entity, xOffset, yOffset, duration, speed);
         this.angle = angle;
-        spawnDistance = 100;
+        spawnDistance = 80;
         setInitialHitbox();
 
     }
@@ -72,45 +72,11 @@ public class Arrow extends Ranged{
     public void draw(Graphics2D g2) {
         setScreenPosition();
 
-        AffineTransform originalTransform = g2.getTransform();
+        int centerX = (int) getScreenX() + (getRange() / 2);
+        int centerY = (int) getScreenY() + (getWidth() / 2);
 
-        int centerX = (int) getScreenX() + getWidth() / 2;
-        int centerY = (int) getScreenY() + getRange() / 2;
+        ImageHandler.drawRotatedImage(g2, centerX, centerY, -angle, arrow, (int) getScreenX(), (int) getScreenY(), (int) getScreenX() + getRange(), (int) getScreenY() + getWidth(), 3, 38, 12, 42);
 
-        if (getDirection()[0] == 'u') {
-            // ROTATING IMAGE 270 DEGREES (UP)
-            this.drawAngle = -Math.PI/2;
-            if (getDirection()[1] == 'u' || getDirection()[1] == 'd') {
-                ImageHandler.drawRotatedImage(g2, centerX, centerY, -angle, arrow, (int) getScreenX() + 20, (int) getScreenY(), (int) getScreenX() + getWidth() + 20, (int) getScreenY() + getRange(), 0, 32, 16, 48);
-            } else {;
-                ImageHandler.drawRotatedImage(g2, centerX, centerY, -angle, arrow, (int) getScreenX() + 15, (int) getScreenY() - 20, (int) getScreenX() + getWidth() + 15, (int) getScreenY() + getRange() - 20, 0, 32, 16, 48);
-            }
-        } else if (getDirection()[0] == 'r') {
-            // NO NEED TO ROTATE IMAGE HERE!
-            if (getDirection()[1] == 'r' || getDirection()[1] == 'l') {
-                ImageHandler.drawRotatedImage(g2, centerX, centerY, -angle, arrow, (int) getScreenX(), (int) getScreenY() + 26, (int) getScreenX() + getWidth(), (int) getScreenY() + getRange() + 26, 0, 32, 16, 48);
-            } else {
-                ImageHandler.drawRotatedImage(g2, centerX, centerY, -angle, arrow, (int) getScreenX(), (int) getScreenY() + 22, (int) getScreenX() + getWidth(), (int) getScreenY() + getRange() + 22, 0, 32, 16, 48);
-            }
-        } else if (getDirection()[0] == 'l') {
-            // ROTATING IMAGE 180 DEGREES (LEFT)
-            this.drawAngle = Math.PI;
-            if (getDirection()[1] == 'r' || getDirection()[1] == 'l') {
-                ImageHandler.drawRotatedImage(g2, centerX, centerY, -angle, arrow, (int) getScreenX() - 20, (int) getScreenY() - 20, (int) getScreenX() + getWidth() - 20, (int) getScreenY() + getRange() - 20, 0, 32, 16, 48);
-            } else {
-                ImageHandler.drawRotatedImage(g2, centerX, centerY, -angle, arrow, (int) getScreenX() - 20, (int) getScreenY() - 25, (int) getScreenX() + getWidth() - 20, (int) getScreenY() + getRange() - 25, 0, 32, 16, 48);
-            }
-        } else {
-            // ROTATING IMAGE 90 DEGREES (DOWN)
-            this.drawAngle = Math.PI/2;
-            if (getDirection()[1] == 'u' || getDirection()[1] == 'd') {
-                ImageHandler.drawRotatedImage(g2, centerX, centerY, -angle, arrow, (int) getScreenX() - 25, (int) getScreenY() + 10, (int) getScreenX() + getWidth() - 25, (int) getScreenY() + getRange() + 10, 0, 32, 16, 48);
-            } else {
-                ImageHandler.drawRotatedImage(g2, centerX, centerY, -angle, arrow, (int) getScreenX() - 25, (int) getScreenY() + 10, (int) getScreenX() + getWidth() - 25, (int) getScreenY() + getRange() + 10, 0, 32, 16, 48);
-            }
-        }
-
-        g2.setTransform(originalTransform);
         hitbox.draw(g2);
     }
 

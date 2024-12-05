@@ -103,24 +103,24 @@ public class AttackHandler {
        // System.out.println("skibidi");
         if (p.direction == 'r') {
             //System.out.println("right");
-            createPlayerRanged(5, Tile.tileSize, Tile.tileSize, p.direction, p, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625), 0);
-            createPlayerRanged(5, Tile.tileSize, Tile.tileSize, p.direction, p, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625), 15*Math.PI/8);
-            createPlayerRanged(5, Tile.tileSize, Tile.tileSize, p.direction, p, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625), Math.PI/8);
+            createPlayerRanged(5, 8*Tile.tileRatio, 3*Tile.tileRatio, p.direction, p, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625), 0);
+            createPlayerRanged(5, 8*Tile.tileRatio, 3*Tile.tileRatio, p.direction, p, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625), 15*Math.PI/8);
+            createPlayerRanged(5, 8*Tile.tileRatio, 3*Tile.tileRatio, p.direction, p, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625), Math.PI/8);
         } else if (p.direction == 'u') {
            // System.out.println("up");
-            createPlayerRanged(5, Tile.tileSize, Tile.tileSize, p.direction, p, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625), Math.PI/2);
-            createPlayerRanged(5, Tile.tileSize, Tile.tileSize, p.direction, p, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625), 3*Math.PI/8);
-            createPlayerRanged(5, Tile.tileSize, Tile.tileSize, p.direction, p, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625), 5*Math.PI/8);
+            createPlayerRanged(5, 8*Tile.tileRatio, 3*Tile.tileRatio, p.direction, p, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625), Math.PI/2);
+            createPlayerRanged(5, 8*Tile.tileRatio, 3*Tile.tileRatio, p.direction, p, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625), 3*Math.PI/8);
+            createPlayerRanged(5, 8*Tile.tileRatio, 3*Tile.tileRatio, p.direction, p, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625), 5*Math.PI/8);
         } else if (p.direction == 'l') {
             //System.out.println("left");
-            createPlayerRanged(5, Tile.tileSize, Tile.tileSize, p.direction, p, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625), Math.PI);
-            createPlayerRanged(5, Tile.tileSize, Tile.tileSize, p.direction, p, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625), 7*Math.PI/8);
-            createPlayerRanged(5, Tile.tileSize, Tile.tileSize, p.direction, p, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625), 9*Math.PI/8);
+            createPlayerRanged(5, 8*Tile.tileRatio, 3*Tile.tileRatio, p.direction, p, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625), Math.PI);
+            createPlayerRanged(5, 8*Tile.tileRatio, 3*Tile.tileRatio, p.direction, p, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625), 7*Math.PI/8);
+            createPlayerRanged(5, 8*Tile.tileRatio, 3*Tile.tileRatio, p.direction, p, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625), 9*Math.PI/8);
         } else {
             //System.out.println("right");
-            createPlayerRanged(5, Tile.tileSize, Tile.tileSize, p.direction, p, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625), 3*Math.PI/2);
-            createPlayerRanged(5, Tile.tileSize, Tile.tileSize, p.direction, p, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625), 11*Math.PI/8);
-            createPlayerRanged(5, Tile.tileSize, Tile.tileSize, p.direction, p, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625), 13*Math.PI/8);
+            createPlayerRanged(5, 8*Tile.tileRatio, 3*Tile.tileRatio, p.direction, p, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625), 3*Math.PI/2);
+            createPlayerRanged(5, 8*Tile.tileRatio, 3*Tile.tileRatio, p.direction, p, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625), 11*Math.PI/8);
+            createPlayerRanged(5, 8*Tile.tileRatio, 3*Tile.tileRatio, p.direction, p, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625), 13*Math.PI/8);
         }
     }
 
