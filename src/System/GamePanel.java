@@ -1,6 +1,6 @@
 package System;
 
-
+import Entities.Enemies.InstantKill;
 import Handlers.Attacks.DamageDealer;
 import Entities.Player;
 import Handlers.Attacks.AttackHandler;
@@ -39,6 +39,7 @@ public class GamePanel extends JPanel implements Runnable{
     CollisionHandler collisionHandler;
     SpawnHandler spawnHandler;
     DamageDealer damageDealer;
+    InstantKill ghost;
 
     Font spawnsRemaining = new Font("Arial", Font.PLAIN, 20);
 
@@ -67,6 +68,9 @@ public class GamePanel extends JPanel implements Runnable{
         this.addKeyListener(keyHandler);
 
         player.updateWorldValues(spawnHandler.playerSpawnX, spawnHandler.playerSpawnY);
+
+        ghost = new InstantKill(100, 6, Tile.tileSize, Tile.tileSize, "Invincible!", Tile.tileSize * 2, Tile.tileSize * 4, 0,0, 20, 20, player, false);
+        ghost.setBounds(1, 23, 1, 23);
 
         //Start game after loading all objects
         gameThread = new Thread(this);
@@ -124,6 +128,12 @@ public class GamePanel extends JPanel implements Runnable{
         levelHandler.update(player, spawnHandler, attackHandler, damageDealer);
         attackHandler.update(player, levelHandler.getCurrentLevel().enemies);
         damageDealer.dealDamageToEnemies(attackHandler, levelHandler.getCurrentLevel());
+
+        ghost.update();
+
+        if (ghost.hitbox.intersects(player.hitbox) || player.getHealth() <= 0) {
+            Main.updateGameState(3);
+        }
     }
 
 
@@ -141,6 +151,7 @@ public class GamePanel extends JPanel implements Runnable{
         levelHandler.draw(g2, player);
         player.draw(g2);
         attackHandler.draw(g2);
+        ghost.draw(g2);
 
         for(SpawnPoint spawnPoint : spawnHandler.enemySpawnPoints) {
             spawnPoint.draw(g2, player);

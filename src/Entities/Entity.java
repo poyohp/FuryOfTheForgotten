@@ -112,6 +112,9 @@ public abstract class Entity {
         return speed;
     }
 
+    public void setSpeed (double speed) {this.speed = speed;}
+
+
     /**
      * Gets width
      *

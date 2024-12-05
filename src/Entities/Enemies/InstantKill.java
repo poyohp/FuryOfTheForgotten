@@ -1,6 +1,7 @@
 package Entities.Enemies;
 
 import Entities.Player;
+import Handlers.ImageHandler;
 import World.Tile;
 
 import java.util.Random;
@@ -12,6 +13,7 @@ public class InstantKill extends Enemy {
     Random rand = new Random();
     double upBound, downBound, leftBound, rightBound;
 
+    int movesPerTile;
     int direction;
     boolean setOnDirection;
     int timesMovedInDirection;
@@ -22,11 +24,14 @@ public class InstantKill extends Enemy {
         setOnDirection = false;
         timesMovedInDirection = 0;
         direction = 0;
+
+        movesPerTile = speed;
+        setSpeed((double) Tile.tileSize / movesPerTile);
     }
 
     @Override
     public void draw(Graphics2D g2) {
-        g2.fillRect((int)this.screenX, (int)this.screenY, this.getWidth(), this.getHeight());
+        g2.drawImage(ImageHandler.loadImage("src/Assets/Entities/Enemies/Bunnies/ghostBunny.png"), (int)this.screenX, (int)this.screenY, this.getWidth(), this.getHeight(), null);
     }
 
     @Override
@@ -36,7 +41,7 @@ public class InstantKill extends Enemy {
 
         if (rand.nextInt(50) > 10) return; // Don't move all the time
 
-        if (timesMovedInDirection < 4) timesMovedInDirection++; // Continue moving in the same direction
+        if (timesMovedInDirection < movesPerTile) timesMovedInDirection++; // Continue moving in the same direction
         else {
             timesMovedInDirection = 0;
             direction = rand.nextInt(4); // Get a new direction
@@ -54,7 +59,7 @@ public class InstantKill extends Enemy {
             }
         } else if (direction == 2) {
             double newUp = (this.worldY - this.getSpeed());
-            if (newUp < upBound) {
+            if (newUp > upBound) {
                 this.worldY -= this.getSpeed(); // Up
             }
         } else if (direction == 3) {
