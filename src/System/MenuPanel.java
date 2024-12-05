@@ -49,7 +49,6 @@ public class MenuPanel extends JPanel {
         // Makes sure that panel can listen for key events
         addKeyListener(keyHandler);
         setFocusable(true);
-        requestFocusInWindow();
 
         start.isSelected = true; // Begins with one button pre-selected
         selectedButton = start;

@@ -1,12 +1,9 @@
 package System;
 
 import Handlers.ImageHandler;
-import Handlers.KeyHandler;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
@@ -33,20 +30,22 @@ public class HelpPanel extends JPanel implements KeyListener {
         this.setFocusable(true);
     }
 
-    @Override
-    public void keyTyped(KeyEvent e) {}
 
+    /**
+     * Continually check for key presses. If a key is pressed, return to menu panel.
+     * @param e the event to be processed
+     */
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-            System.out.println("Pressed");
-            Main.updateGameState(1); // Start the game immediately
+            Main.updateGameState(1); // Return to menu panel
         }
     }
 
-    @Override
-    public void keyReleased(KeyEvent e) {}
-
+    /**
+     * Paints the screen and the button
+     * @param g the Graphics object
+     */
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -55,7 +54,14 @@ public class HelpPanel extends JPanel implements KeyListener {
         Graphics2D g2 = (Graphics2D) g;
         g2.drawImage(helpScreen, 0, 0, screenWidth, screenHeight, null);
 
+        // Draws continue button
         continueButton.drawButton(g2);
         continueButton.renderCurrentChoice(g2);
     }
+
+    // Unused methods for key listener
+    @Override
+    public void keyReleased(KeyEvent e) {}
+    @Override
+    public void keyTyped(KeyEvent e) {}
 }
