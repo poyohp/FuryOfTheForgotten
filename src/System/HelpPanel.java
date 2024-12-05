@@ -7,15 +7,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 
-public class HelpPanel extends JPanel {
+public class HelpPanel extends JPanel implements KeyListener {
     BufferedImage helpScreen = ImageHandler.loadImage("src/Assets/MenuImages/helpOptions.png");
-
-    KeyHandler keyHandler;
-
-    Timer timer;
-    final int TIMERSPEED = 5;
 
     MenuButton continueButton = new MenuButton("continue.png", screenWidth/3 + screenHeight/5, screenHeight/2 + screenHeight/4, screenWidth/2, screenHeight/6);
 
@@ -31,27 +28,24 @@ public class HelpPanel extends JPanel {
         this.setDoubleBuffered(true);
         this.setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
 
-        keyHandler = new KeyHandler();
-
         // Makes sure that panel can listen for key events
-        addKeyListener(keyHandler);
-        setFocusable(true);
-        requestFocusInWindow();
-
-        timer = new Timer(TIMERSPEED, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                repaint();
-
-                if (keyHandler.choicePress) {
-                    Main.updateGameState(2); // Start the game!
-                    timer.stop();
-                }
-            }
-        });
-
-        timer.start();
+        this.addKeyListener(this);
+        this.setFocusable(true);
     }
+
+    @Override
+    public void keyTyped(KeyEvent e) {}
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+            System.out.println("Pressed");
+            Main.updateGameState(2); // Start the game immediately
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {}
 
     @Override
     public void paintComponent(Graphics g) {

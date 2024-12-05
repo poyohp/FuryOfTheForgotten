@@ -11,7 +11,7 @@ public class Main {
     public static MenuPanel menuPanel = new MenuPanel();
     public static GameOverPanel gameOverPanel = new GameOverPanel();
     public static WinPanel winPanel = new WinPanel();
-    public static HelpPanel helpPanel = new HelpPanel();
+    public static HelpPanel helpPanel;
 
 
     public static JFrame window = new JFrame();
@@ -54,7 +54,9 @@ public class Main {
                 window.add(winPanel);
                 break;
             case 5:
+                helpPanel = new HelpPanel();
                 window.add(helpPanel);
+                helpPanel.requestFocusInWindow();
                 break;
         }
 
