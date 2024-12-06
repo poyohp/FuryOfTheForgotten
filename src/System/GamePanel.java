@@ -69,7 +69,7 @@ public class GamePanel extends JPanel implements Runnable{
 
         player.updateWorldValues(spawnHandler.playerSpawnX, spawnHandler.playerSpawnY);
 
-        ghost = new InstantKill(100, 6, Tile.tileSize, Tile.tileSize, "Invincible!", Tile.tileSize * 2, Tile.tileSize * 4, 0,0, 20, 20, player, false);
+        ghost = new InstantKill(100, 6, Tile.tileSize, Tile.tileSize, "Invincible!", Tile.tileSize * 2, Tile.tileSize * 4, Tile.tileRatio,5*Tile.tileRatio, 70, 50, player, false);
         ghost.setBounds(1, 23, 1, 23);
 
         //Start game after loading all objects

@@ -32,6 +32,7 @@ public class InstantKill extends Enemy {
     @Override
     public void draw(Graphics2D g2) {
         g2.drawImage(ImageHandler.loadImage("src/Assets/Entities/Enemies/Bunnies/ghostBunny.png"), (int)this.screenX, (int)this.screenY, this.getWidth(), this.getHeight(), null);
+        hitbox.draw(g2);
     }
 
     @Override
