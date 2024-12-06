@@ -382,6 +382,5 @@ public class Player extends Entity {
                     }
             }
         }
-        hitbox.draw(g2);
     }
 }
