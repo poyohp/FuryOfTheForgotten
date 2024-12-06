@@ -36,11 +36,11 @@ public class Arrow extends Ranged{
 
     @Override
     public void setInitialHitbox() {
-        int centerWorldX = (int)(entity.worldX + (double) entity.getWidth() /2);
-        int centerWorldY = (int)(entity.worldY + (double) entity.getHeight() /2);
-        int centerScreenX = (int)(entity.screenX + (double) entity.getWidth() /2);
-        int centerScreenY = (int)(entity.screenY + (double) entity.getHeight() /2);
-        int hitBoxWidth, hitBoxHeight, hitBoxX, hitBoxY, hitBoxWorldX, hitBoxWorldY;
+        int centerWorldX = (int)(entity.worldX + ((double) entity.getWidth() /2));
+        int centerWorldY = (int)(entity.worldY + ((double) entity.getHeight() /2));
+        int centerScreenX = (int)(entity.screenX + ((double) entity.getWidth() /2));
+        int centerScreenY = (int)(entity.screenY + ((double) entity.getHeight() /2));
+        int hitBoxWidth, hitBoxHeight, hitBoxScreenX, hitBoxScreenY, hitBoxWorldX, hitBoxWorldY;
 
         if (angle == 0 || angle == Math.PI) {
             hitBoxWidth = getRange();
@@ -53,13 +53,14 @@ public class Arrow extends Ranged{
             hitBoxHeight = (int)(getRange() * Math.abs(Math.sin(angle)));
         }
 
-        hitBoxX = (int)(centerScreenX + spawnDistance*Math.cos(angle) - hitBoxWidth/2);
-        hitBoxY = (int)(centerScreenY + -1 * spawnDistance*Math.sin(angle) - hitBoxHeight/2);
-        hitBoxWorldX = (int)(centerWorldX + spawnDistance*Math.cos(angle) - hitBoxWidth/2);
-        hitBoxWorldY = (int)(centerWorldY + -1 * spawnDistance*Math.sin(angle) - hitBoxHeight/2);
+        // LIKELY PROBLEM HERE
+        hitBoxScreenX = (int)(centerScreenX + spawnDistance*Math.cos(angle) - (double) hitBoxWidth / 2);
+        hitBoxScreenY = (int)(centerScreenY +  (spawnDistance*Math.sin(angle))*-1 - (double) hitBoxHeight / 2);
+        hitBoxWorldX = (int)(centerWorldX + spawnDistance*Math.cos(angle) - (double) hitBoxWidth / 2);
+        hitBoxWorldY = (int)(centerWorldY +  (spawnDistance*Math.sin(angle))*-1 - (double) hitBoxHeight / 2);
 
 
-        hitbox = new Hitbox(hitBoxWorldX, hitBoxWorldY, hitBoxX, hitBoxY, hitBoxWidth, hitBoxHeight, 0, 0);
+        hitbox = new Hitbox(hitBoxWorldX, hitBoxWorldY, hitBoxScreenX, hitBoxScreenY, hitBoxWidth, hitBoxHeight, 0, 0);
         setWorldX(hitBoxWorldX);
         setWorldY(hitBoxWorldY);
     }
