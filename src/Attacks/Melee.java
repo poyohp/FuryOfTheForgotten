@@ -2,6 +2,7 @@ package Attacks;
 
 import Entities.Entity;
 import Entities.Hitbox;
+import Entities.Player;
 
 import java.awt.*;
 
@@ -57,8 +58,8 @@ public class Melee extends Attack{
     }
 
     @Override
-    public void update() {
-
+    public void update(Player player) {
+        setScreenPosition(player);
     }
 
 
@@ -66,7 +67,7 @@ public class Melee extends Attack{
      * Set intial screen postition of melee attack
      */
     @Override
-    public void setScreenPosition() {
+    public void setScreenPosition(Player player ) {
         // If direction is up
         if (getDirection()[0] == 'u') {
             setScreenX(entity.screenX + (double) entity.getWidth() / 2 - (double) getWidth() / 2);
@@ -126,7 +127,6 @@ public class Melee extends Attack{
      */
     @Override
     public void draw(Graphics2D g2) {
-        setScreenPosition();
         g2.setColor(Color.BLACK);
         if (getDirection()[0] == 'u' || getDirection()[0] == 'd') {
             g2.fillRect((int) getScreenX(), (int) getScreenY(), getWidth(), getRange());

@@ -30,7 +30,6 @@ public class Hitbox extends Rectangle {
 
         this.screenX = screenX;
         this.screenY = screenY;
-
     }
 
     /**
@@ -40,8 +39,8 @@ public class Hitbox extends Rectangle {
     public void update(Entity entity) {
         worldX = entity.worldX+xOffset;
         worldY = entity.worldY+yOffset;
-        x = (int)(entity.worldX+xOffset);
-        y = (int)(entity.worldY+yOffset);
+        x = (int)worldX;
+        y = (int)worldY;
         screenX = entity.screenX+xOffset;
         screenY = entity.screenY+yOffset;
     }
@@ -51,10 +50,10 @@ public class Hitbox extends Rectangle {
      * @param attack attack to update
      */
     public void update(Attack attack) {
-        worldX = attack.getX()+xOffset;
-        worldY = attack.getY()+yOffset;
-        x = (int)(attack.getX()+xOffset);
-        y = (int)(attack.getY() +yOffset);
+        worldX = attack.getWorldX()+xOffset;
+        worldY = attack.getWorldY()+yOffset;
+        x = (int)worldX;
+        y = (int)worldY;
         screenX = attack.getScreenX()+xOffset;
         screenY = attack.getScreenY()+yOffset;
     }

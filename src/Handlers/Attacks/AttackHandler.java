@@ -24,10 +24,10 @@ public class AttackHandler {
     public ArrayList<Attack> enemyAttacks = new ArrayList<Attack>();
     ArrayList<Attack> enemyToRemove = new ArrayList<Attack>();
     KeyHandler keyHandler;
-    public boolean playerCanAttack = true;
-    public int playerCooldown = 30, attackFrames = 36;
     CollisionHandler collisionHandler = new CollisionHandler();
     Tile[][] tileset;
+    
+    final int playerRangedSpeed = (int) (Tile.tileRatio * 2.2);
 
     /**
      * Create attackHandler object
@@ -91,36 +91,30 @@ public class AttackHandler {
     /**
      * Determine the player's ranged attack's velocities
      */
-    void updateAttacks() {
+    void updateAttacks(Player player) {
 
         for (Attack a : playerAttacks) {
-            a.update();
-            //System.out.println("updated");
+            a.update(player);
         }
     }
 
     void createPlayerAttacks(Player p) {
-       // System.out.println("skibidi");
         if (p.direction == 'r') {
-            //System.out.println("right");
-            createPlayerRanged(5, 8*Tile.tileRatio, 3*Tile.tileRatio, p.direction, p, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625), 0);
-            createPlayerRanged(5, 8*Tile.tileRatio, 3*Tile.tileRatio, p.direction, p, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625), 15*Math.PI/8);
-            createPlayerRanged(5, 8*Tile.tileRatio, 3*Tile.tileRatio, p.direction, p, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625), Math.PI/8);
+            createPlayerRanged(5, 8*Tile.tileRatio, 3*Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 0);
+            createPlayerRanged(5, 8*Tile.tileRatio, 3*Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 15*Math.PI/8);
+            createPlayerRanged(5, 8*Tile.tileRatio, 3*Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, Math.PI/8);
         } else if (p.direction == 'u') {
-           // System.out.println("up");
-            createPlayerRanged(5, 8*Tile.tileRatio, 3*Tile.tileRatio, p.direction, p, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625), Math.PI/2);
-            createPlayerRanged(5, 8*Tile.tileRatio, 3*Tile.tileRatio, p.direction, p, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625), 3*Math.PI/8);
-            createPlayerRanged(5, 8*Tile.tileRatio, 3*Tile.tileRatio, p.direction, p, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625), 5*Math.PI/8);
+            createPlayerRanged(5, 8*Tile.tileRatio, 3*Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, Math.PI/2);
+            createPlayerRanged(5, 8*Tile.tileRatio, 3*Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 3*Math.PI/8);
+            createPlayerRanged(5, 8*Tile.tileRatio, 3*Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 5*Math.PI/8);
         } else if (p.direction == 'l') {
-            //System.out.println("left");
-            createPlayerRanged(5, 8*Tile.tileRatio, 3*Tile.tileRatio, p.direction, p, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625), Math.PI);
-            createPlayerRanged(5, 8*Tile.tileRatio, 3*Tile.tileRatio, p.direction, p, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625), 7*Math.PI/8);
-            createPlayerRanged(5, 8*Tile.tileRatio, 3*Tile.tileRatio, p.direction, p, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625), 9*Math.PI/8);
+            createPlayerRanged(5, 8*Tile.tileRatio, 3*Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, Math.PI);
+            createPlayerRanged(5, 8*Tile.tileRatio, 3*Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 7*Math.PI/8);
+            createPlayerRanged(5, 8*Tile.tileRatio, 3*Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 9*Math.PI/8);
         } else {
-            //System.out.println("right");
-            createPlayerRanged(5, 8*Tile.tileRatio, 3*Tile.tileRatio, p.direction, p, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625), 3*Math.PI/2);
-            createPlayerRanged(5, 8*Tile.tileRatio, 3*Tile.tileRatio, p.direction, p, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625), 11*Math.PI/8);
-            createPlayerRanged(5, 8*Tile.tileRatio, 3*Tile.tileRatio, p.direction, p, 0, 0, 150, (int)((Tile.tileSize/Tile.tileMultipler) * 0.625), 13*Math.PI/8);
+            createPlayerRanged(5, 8*Tile.tileRatio, 3*Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 3*Math.PI/2);
+            createPlayerRanged(5, 8*Tile.tileRatio, 3*Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 11*Math.PI/8);
+            createPlayerRanged(5, 8*Tile.tileRatio, 3*Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 13*Math.PI/8);
         }
     }
 
@@ -136,7 +130,7 @@ public class AttackHandler {
 
         // Issue here
         if (!playerAttacks.isEmpty()) {
-            updateAttacks();
+            updateAttacks(player);
         }
 
         for (Attack a : playerAttacks) {
@@ -154,9 +148,7 @@ public class AttackHandler {
         if (!playerAttacks.isEmpty()) {
             for (int i = 0; i < playerAttacks.size(); i++) {
                 if (collisionHandler.attackWithTileCollision(playerAttacks.get(i), tileset)) {
-                    //System.out.println("2");
                     playerToRemove.add(playerAttacks.get(i));
-                    //System.out.println("One down!");
                 }
                 if (playerAttacks.get(i).getDuration() <= 0) {
                     playerToRemove.add(playerAttacks.get(i));
@@ -166,7 +158,6 @@ public class AttackHandler {
 
             }
             for (Attack a : playerToRemove) {
-                //System.out.println("1");
             }
             playerAttacks.removeAll(playerToRemove);
             playerToRemove.clear();
@@ -176,7 +167,6 @@ public class AttackHandler {
             for (int i = 0; i < enemyAttacks.size(); i++) {
                 if (collisionHandler.attackWithTileCollision(enemyAttacks.get(i), tileset)) {
                     enemyToRemove.add(enemyAttacks.get(i));
-                    //System.out.println("One down!");
                 }
                 if (enemyAttacks.get(i).getDuration() <= 0) {
                     enemyToRemove.add(enemyAttacks.get(i));
@@ -191,14 +181,10 @@ public class AttackHandler {
      * Draw all attacks
      * @param g2 Graphics 2D object for drawing
      */
-    public void draw(Graphics2D g2) {
+    public void draw(Graphics2D g2, Player player) {
         for (int i = 0; i < playerAttacks.size(); i++) {
             playerAttacks.get(i).draw(g2);
         }
-//        for (Attack attack : enemyAttacks) {
-//            System.out.println("Drawing enemy attack at: (" + attack.getX() + ", " + attack.getY() + ")");
-//            attack.draw(g2);
-//        }
     }
 
 

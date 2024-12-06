@@ -8,7 +8,6 @@ public abstract class Entity {
     private double health;
     private double speed;
     private int width, height;
-    private int defenseReduction;
     String name;
 
     // entity position
@@ -18,7 +17,6 @@ public abstract class Entity {
 
     public char direction;
     public boolean attacking = false;
-    public int attackCooldown = 120;
 
     public double entityLeft, entityRight, entityTop, entityBottom;
 
@@ -51,7 +49,7 @@ public abstract class Entity {
         this.worldX = worldX;
         this.worldY = worldY;
 
-        hitbox = new Hitbox((int) worldX, (int) worldY, (int) screenX, (int) screenY, hitBoxWidth, hitBoxHeight, xOffset, yOffset); // Create hitbox that corresponds to given values
+        hitbox = new Hitbox((int) worldX, (int) worldY, 0, 0, hitBoxWidth, hitBoxHeight, xOffset, yOffset); // Create hitbox that corresponds to given values
         hitbox.update(this);
 
         // Variables that refer to the different sides of the entities

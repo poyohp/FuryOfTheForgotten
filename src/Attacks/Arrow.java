@@ -2,6 +2,7 @@ package Attacks;
 
 import Entities.Entity;
 import Entities.Hitbox;
+import Entities.Player;
 import Handlers.ImageHandler;
 
 import java.awt.*;
@@ -57,20 +58,14 @@ public class Arrow extends Ranged{
         hitBoxWorldX = (int)(centerWorldX + spawnDistance*Math.cos(angle) - hitBoxWidth/2);
         hitBoxWorldY = (int)(centerWorldY + -1 * spawnDistance*Math.sin(angle) - hitBoxHeight/2);
 
-        /*
-        System.out.println(hitBoxX + " " + hitBoxY);
-        System.out.println(hitBoxWidth + " " + hitBoxHeight);
-        */
-        //System.out.println(hitBoxWorldX + " " + hitBoxWorldY);
 
         hitbox = new Hitbox(hitBoxWorldX, hitBoxWorldY, hitBoxX, hitBoxY, hitBoxWidth, hitBoxHeight, 0, 0);
-        setX(hitBoxWorldX);
-        setY(hitBoxWorldY);
+        setWorldX(hitBoxWorldX);
+        setWorldY(hitBoxWorldY);
     }
 
     @Override
     public void draw(Graphics2D g2) {
-        setScreenPosition();
 
         int centerX = (int) getScreenX() + (getRange() / 2);
         int centerY = (int) getScreenY() + (getWidth() / 2);
@@ -81,9 +76,10 @@ public class Arrow extends Ranged{
     }
 
     @Override
-    public void update() {
+    public void update(Player player) {
         //System.out.println((int)determineXVelocity(angle, getSpeed()) + " " + (int)determineYVelocity(angle, getSpeed()));
         move((int)determineXVelocity(angle, getSpeed()), (int)determineYVelocity(angle, getSpeed()));
+        setScreenPosition(player);
         hitbox.update(this);
     }
 

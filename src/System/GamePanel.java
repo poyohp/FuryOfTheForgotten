@@ -150,7 +150,7 @@ public class GamePanel extends JPanel implements Runnable{
 
         levelHandler.draw(g2, player);
         player.draw(g2);
-        attackHandler.draw(g2);
+        attackHandler.draw(g2, player);
         ghost.draw(g2);
 
         for(SpawnPoint spawnPoint : spawnHandler.enemySpawnPoints) {

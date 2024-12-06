@@ -3,7 +3,9 @@ package Attacks;
 
 import Entities.Entity;
 import Entities.Hitbox;
+import Entities.Player;
 import System.GamePanel;
+import World.Tile;
 
 
 import java.awt.*;
@@ -12,7 +14,7 @@ import java.awt.*;
 public abstract class Attack {
 
     // Attack attributes
-    private int damage, range, width, xOffset, yOffset, duration, speed;
+    private int damage, range, width, duration, speed;
     private double worldX, worldY, screenX, screenY;
     public double angle;
     private char[] direction = new char[2];
@@ -64,12 +66,12 @@ public abstract class Attack {
      */
     public abstract void move(int xSpeed, int ySpeed);
 
-    public abstract void update();
+    public abstract void update(Player player);
 
     /**
      * Determine screen position based on world position
      */
-    public abstract void setScreenPosition();
+    public abstract void setScreenPosition(Player player);
 
     /**
      * Draw attack
@@ -111,42 +113,6 @@ public abstract class Attack {
     public char[] getDirection() {
         return direction;
     }
-
-    /**
-     * Get attack horizontal position
-     * @return attack horizontal position
-     */
-    public double getX() { return worldX; }
-
-    /**
-     * Set attack horizontal position
-     * @param x new attack horizontal position
-     */
-    public void setX(double x) { this.worldX = x; }
-
-    /**
-     * Get attack vertical position
-     * @return attack vertical position
-     */
-    public double getY() { return worldY; }
-
-    /**
-     * Set attack vertical position
-     * @param y attack vertical position
-     */
-    public void setY(double y) { this.worldY = y; }
-
-    /**
-     * Get attack x offset
-     * @return attack x offset
-     */
-    public int getXOffset() { return xOffset; }
-
-    /**
-     * Get attack y offset
-     * @return attack y offset
-     */
-    public int getYOffset() { return yOffset; }
 
     /**
      * Get attack duration
@@ -203,6 +169,9 @@ public abstract class Attack {
      * @param speed new attack speed
      */
     public void setSpeed(int speed) { this.speed = speed; }
+
+    public void setWorldX(double worldX) { this.worldX = worldX; }
+    public void setWorldY(double worldY) { this.worldY = worldY; }
 
     /**
      * Gets world x
