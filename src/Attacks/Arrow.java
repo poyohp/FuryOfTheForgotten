@@ -79,7 +79,6 @@ public class Arrow extends Ranged{
             ImageHandler.drawRotatedImage(g2, centerX, centerY, -(angle - Math.PI/2) + Math.PI, arrow, (int) getScreenX(), (int) getScreenY(), (int) getScreenX() + getWidth(), (int) getScreenY() + getRange(), 5, 3, 9, 12);
         }
 
-        hitbox.draw(g2);
     }
 
     @Override
