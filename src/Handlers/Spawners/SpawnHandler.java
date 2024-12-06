@@ -4,7 +4,7 @@ package Handlers.Spawners;
 import Entities.Player;
 import World.Level;
 import World.Tile;
-import System.GamePanel;
+import System.Panels.GamePanel;
 
 
 import java.awt.event.ActionEvent;

@@ -1,5 +1,7 @@
 package System;
 
+import System.Panels.*;
+
 import javax.swing.*;
 
 public class Main {

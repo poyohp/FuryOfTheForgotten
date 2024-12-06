@@ -1,16 +1,17 @@
-package System;
+package System.Panels;
+
+import System.Main;
 
 import Handlers.ImageHandler;
 import Handlers.KeyHandler;
+import System.Resources.MenuButton;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class MenuPanel extends JPanel {
@@ -40,7 +41,7 @@ public class MenuPanel extends JPanel {
     // Keyhandler to handle user options
     MenuButton selectedButton;
 
-    MenuPanel() {
+    public MenuPanel() {
         this.setDoubleBuffered(true);
         this.setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
 

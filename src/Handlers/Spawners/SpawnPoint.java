@@ -2,7 +2,7 @@ package Handlers.Spawners;
 
 
 import Entities.Enemies.Slime;
-import System.GamePanel;
+import System.Panels.GamePanel;
 import Entities.Enemies.Enemy;
 import Entities.Player;
 import World.Level;

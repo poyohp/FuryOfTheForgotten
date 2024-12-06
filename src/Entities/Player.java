@@ -2,7 +2,7 @@ package Entities;
 import Handlers.CollisionHandler;
 import Handlers.ImageHandler;
 import Handlers.KeyHandler;
-import System.GamePanel;
+import System.Panels.GamePanel;
 import World.Tile;
 
 import java.awt.*;

@@ -1,4 +1,6 @@
-package System;
+package System.Panels;
+
+import System.Main;
 
 import Entities.Enemies.InstantKill;
 import Handlers.Attacks.DamageDealer;

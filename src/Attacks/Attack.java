@@ -4,8 +4,6 @@ package Attacks;
 import Entities.Entity;
 import Entities.Hitbox;
 import Entities.Player;
-import System.GamePanel;
-import World.Tile;
 
 
 import java.awt.*;
