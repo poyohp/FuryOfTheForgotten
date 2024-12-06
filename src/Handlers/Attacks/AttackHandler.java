@@ -133,11 +133,6 @@ public class AttackHandler {
             updateAttacks(player);
         }
 
-        for (Attack a : playerAttacks) {
-
-            System.out.println(a.angle);
-
-        }
         removeAttacks();
     }
 

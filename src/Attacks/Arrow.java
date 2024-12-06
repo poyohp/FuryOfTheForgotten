@@ -70,14 +70,25 @@ public class Arrow extends Ranged{
         int centerX = (int) getScreenX() + (getRange() / 2);
         int centerY = (int) getScreenY() + (getWidth() / 2);
 
-        ImageHandler.drawRotatedImage(g2, centerX, centerY, -angle, arrow, (int) getScreenX(), (int) getScreenY(), (int) getScreenX() + getRange(), (int) getScreenY() + getWidth(), 3, 38, 12, 42);
+        if ((angle <= Math.PI/4 || angle >= 7*Math.PI/4) || (angle >= 3*Math.PI/4 && angle <= 5*Math.PI/4)) {
+            ImageHandler.drawRotatedImage(g2, centerX, centerY, -angle, arrow, (int) getScreenX(), (int) getScreenY(), (int) getScreenX() + getRange(), (int) getScreenY() + getWidth(), 3, 38, 12, 42);
+        } else if ((angle >= Math.PI/4 && angle <= 3*Math.PI/4) || (angle >= 5*Math.PI/4 && angle <= 7*Math.PI/4 )) {
+            ImageHandler.drawRotatedImage(g2, centerX, centerY, -(angle - Math.PI/2) + Math.PI, arrow, (int) getScreenX(), (int) getScreenY(), (int) getScreenX() + getWidth(), (int) getScreenY() + getRange(), 5, 3, 9, 12);
+        }
+
+        //ImageHandler.drawRotatedImage(g2, centerX, centerY, -angle, arrow, (int) getScreenX(), (int) getScreenY(), (int) getScreenX() + getRange(), (int) getScreenY() + getWidth(), 3, 38, 12, 42);
 
         hitbox.draw(g2);
     }
 
     @Override
     public void update(Player player) {
-        //System.out.println((int)determineXVelocity(angle, getSpeed()) + " " + (int)determineYVelocity(angle, getSpeed()));
+        //System.out.println((int)determineXVelocity(angle, getSpeed()) + " " + (int)determineYVelocity(angle, getSpeed()));\
+        if (getDirection()[0] == 'u') {
+            System.out.println(hitbox.worldX + " " + hitbox.worldY);
+            System.out.println(getWorldX() + " " + getWorldY());
+            System.out.println(" ");
+        }
         move((int)determineXVelocity(angle, getSpeed()), (int)determineYVelocity(angle, getSpeed()));
         setScreenPosition(player);
         hitbox.update(this);
