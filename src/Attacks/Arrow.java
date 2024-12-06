@@ -67,16 +67,17 @@ public class Arrow extends Ranged{
     @Override
     public void draw(Graphics2D g2) {
 
-        int centerX = (int) getScreenX() + (getRange() / 2);
-        int centerY = (int) getScreenY() + (getWidth() / 2);
+        int centerX, centerY;
 
         if ((angle <= Math.PI/4 || angle >= 7*Math.PI/4) || (angle >= 3*Math.PI/4 && angle <= 5*Math.PI/4)) {
+            centerX = (int) getScreenX() + (getRange() / 2);
+            centerY = (int) getScreenY() + (getWidth() / 2);
             ImageHandler.drawRotatedImage(g2, centerX, centerY, -angle, arrow, (int) getScreenX(), (int) getScreenY(), (int) getScreenX() + getRange(), (int) getScreenY() + getWidth(), 3, 38, 12, 42);
         } else if ((angle >= Math.PI/4 && angle <= 3*Math.PI/4) || (angle >= 5*Math.PI/4 && angle <= 7*Math.PI/4 )) {
+            centerX = (int) getScreenX() + (getWidth() / 2);
+            centerY = (int) getScreenY() + (getRange() / 2);
             ImageHandler.drawRotatedImage(g2, centerX, centerY, -(angle - Math.PI/2) + Math.PI, arrow, (int) getScreenX(), (int) getScreenY(), (int) getScreenX() + getWidth(), (int) getScreenY() + getRange(), 5, 3, 9, 12);
         }
-
-        //ImageHandler.drawRotatedImage(g2, centerX, centerY, -angle, arrow, (int) getScreenX(), (int) getScreenY(), (int) getScreenX() + getRange(), (int) getScreenY() + getWidth(), 3, 38, 12, 42);
 
         hitbox.draw(g2);
     }
