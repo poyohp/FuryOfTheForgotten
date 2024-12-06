@@ -53,7 +53,6 @@ public class Arrow extends Ranged{
             hitBoxHeight = (int)(getRange() * Math.abs(Math.sin(angle)));
         }
 
-        // LIKELY PROBLEM HERE
         hitBoxScreenX = (int)(centerScreenX + spawnDistance*Math.cos(angle) - (double) hitBoxWidth / 2);
         hitBoxScreenY = (int)(centerScreenY +  (spawnDistance*Math.sin(angle))*-1 - (double) hitBoxHeight / 2);
         hitBoxWorldX = (int)(centerWorldX + spawnDistance*Math.cos(angle) - (double) hitBoxWidth / 2);
