@@ -1,11 +1,15 @@
 package Entities.Players;
 
+import Handlers.ImageHandler;
 import Handlers.KeyHandler;
 import World.Tile;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class Skeleton extends Player{
+
+    BufferedImage sprites = ImageHandler.loadImage("src/Assets/Entities/Players/Skeleton/Sprites.png");
 
     void setCharacterState(){
         characterAttackFrames = 36;
@@ -40,6 +44,7 @@ public class Skeleton extends Player{
      * @param baseLayerTiles
      */
     public void update(Tile[][] baseLayerTiles) {
+        healthHandler.updateHealth(this.getHealth());
         this.tiles = baseLayerTiles;
         updateEntityPosition();
         if (!attacking) move(); // If player is not attacking, they can move
@@ -51,6 +56,7 @@ public class Skeleton extends Player{
      * Draws player
      * @param g2 Graphics2D object to draw on
      */
+    @Override
     public void draw(Graphics2D g2) {
         drawHealth(g2);
 
