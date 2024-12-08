@@ -1,11 +1,11 @@
 package System.Panels;
 
 import Entities.Players.Skeleton;
+import Handlers.HUD.InventoryHandler;
 import System.Main;
 
 import Entities.Enemies.InstantKill;
 import Handlers.Attacks.DamageDealer;
-import Entities.Players.Player;
 import Handlers.Attacks.AttackHandler;
 import Handlers.CollisionHandler;
 import Handlers.KeyHandler;
@@ -42,6 +42,7 @@ public class GamePanel extends JPanel implements Runnable{
     CollisionHandler collisionHandler;
     SpawnHandler spawnHandler;
     DamageDealer damageDealer;
+    InventoryHandler inventory = new InventoryHandler(keyHandler);
     InstantKill ghost;
 
     Font spawnsRemaining = new Font("Arial", Font.PLAIN, 20);
@@ -155,13 +156,15 @@ public class GamePanel extends JPanel implements Runnable{
         skeleton.draw(g2);
         attackHandler.draw(g2, skeleton);
         ghost.draw(g2);
+        inventory.draw(g2);
 
         for(SpawnPoint spawnPoint : spawnHandler.enemySpawnPoints) {
             spawnPoint.draw(g2, skeleton);
         }
 
         g2.setFont(spawnsRemaining);
-        g2.drawString("Active Spawns Remaining: " + String.valueOf(spawnHandler.numActiveSpawns), (int)(screenWidth - 300), (int)(100));
+        g2.drawString("Active Spawns Remaining: " + spawnHandler.numActiveSpawns, (int)(screenWidth - 300), (int)(100));
+
     }
 
 //    public void debugWalkableTiles(Graphics2D g2) {
