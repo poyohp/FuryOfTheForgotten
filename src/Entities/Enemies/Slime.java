@@ -91,22 +91,30 @@ public class Slime extends Enemy{
             double nextWorldX = nextCol * Tile.tileSize;
             double nextWorldY = nextRow * Tile.tileSize;
 
-            // Move towards the right direction
-            if (worldX > nextWorldX) {
-                direction = 'l'; // left
-                worldX -= getSpeed();
+            if (Math.abs(nextWorldX - worldX) > getSpeed()) { // Moving will not put the enemy into the middle of the wrong tile
+                if (worldX > nextWorldX) {
+                    direction = 'l'; // left
+                    worldX -= getSpeed();
+                }
+                else if (worldX < nextWorldX) {
+                    direction = 'r'; // right
+                    worldX += getSpeed();
+                }
+            } else {
+                worldX = nextWorldX; // Snap directly to next tile
             }
-            else if (worldX < nextWorldX) {
-                direction = 'r'; // right
-                worldX += getSpeed();
-            }
-            else if (worldY > nextWorldY) {
-                direction = 'u'; // up
-                worldY -= getSpeed();
-            }
-            else if (worldY < nextWorldY) {
-                direction = 'd'; // down
-                worldY += getSpeed();
+
+            if (Math.abs(nextWorldY - worldY) > getSpeed()) {
+                if (worldY > nextWorldY) {
+                    direction = 'u'; // up
+                    worldY -= getSpeed();
+                }
+                else if (worldY < nextWorldY) {
+                    direction = 'd'; // down
+                    worldY += getSpeed();
+                }
+            } else {
+                worldY = nextWorldY; // Snap to tile
             }
         }
     }
