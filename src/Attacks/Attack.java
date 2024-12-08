@@ -3,7 +3,7 @@ package Attacks;
 
 import Entities.Entity;
 import Entities.Hitbox;
-import Entities.Player;
+import Entities.Players.Player;
 
 
 import java.awt.*;

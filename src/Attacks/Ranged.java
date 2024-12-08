@@ -3,7 +3,7 @@ import Entities.Entity;
 import Entities.Hitbox;
 import java.awt.*;
 
-import Entities.Player;
+import Entities.Players.Player;
 
 public class Ranged extends Attack{
 

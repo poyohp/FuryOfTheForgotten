@@ -2,11 +2,10 @@ package Attacks;
 
 import Entities.Entity;
 import Entities.Hitbox;
-import Entities.Player;
+import Entities.Players.Player;
 import Handlers.ImageHandler;
 
 import java.awt.*;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 public class Arrow extends Ranged{

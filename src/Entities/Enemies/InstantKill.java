@@ -1,6 +1,6 @@
 package Entities.Enemies;
 
-import Entities.Player;
+import Entities.Players.Player;
 import Handlers.ImageHandler;
 import World.Tile;
 
