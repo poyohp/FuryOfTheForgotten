@@ -11,9 +11,9 @@ import java.awt.image.BufferedImage;
 
 public class Melee extends Attack{
 
-    BufferedImage stab1 = ImageHandler.loadImage("src/Assets/Projectiles/Stab1.png");
-    BufferedImage stab2 = ImageHandler.loadImage("src/Assets/Projectiles/Stab2.png");
-    BufferedImage stab3 = ImageHandler.loadImage("src/Assets/Projectiles/Stab3.png");
+    //BufferedImage stab1 = ImageHandler.loadImage("src/Assets/Projectiles/Stab1.png");
+    //BufferedImage stab2 = ImageHandler.loadImage("src/Assets/Projectiles/Stab2.png");
+    //BufferedImage stab3 = ImageHandler.loadImage("src/Assets/Projectiles/Stab3.png");
 
     /**
      * Create melee attack
@@ -136,6 +136,7 @@ public class Melee extends Attack{
     @Override
     public void draw(Graphics2D g2) {
 
+        /*
         if (entity.direction == 'u') {
             switch (entity.animationState) {
                 case 0, 3:
@@ -185,5 +186,7 @@ public class Melee extends Attack{
                     break;
             }
         }
+        
+         */
     }
 }
