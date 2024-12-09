@@ -118,7 +118,7 @@ public class AttackHandler {
                 createPlayerRanged(5, 8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 13 * Math.PI / 8);
             }
         } else if (p.type == 'g') {
-            createMelee(25, 10 * Tile.tileRatio, 5 * Tile.tileRatio, p.direction, p, 0, 0, 30);
+            createMelee(25, 20 * Tile.tileRatio, 10 * Tile.tileRatio, p.direction, p, 0, 0, 30);
         }
     }
 

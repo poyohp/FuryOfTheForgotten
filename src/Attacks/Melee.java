@@ -136,6 +136,14 @@ public class Melee extends Attack{
     @Override
     public void draw(Graphics2D g2) {
 
+        g2.setColor(Color.BLACK);
+
+        if (getDirection()[0] == 'u' || getDirection()[0] == 'd') {
+            g2.fillRect((int)getScreenX(), (int)getScreenY(), getWidth(), getRange());
+        } else {
+            g2.fillRect((int)getScreenX(), (int)getScreenY(), getRange(), getWidth());
+        }
+
         /*
         if (entity.direction == 'u') {
             switch (entity.animationState) {
