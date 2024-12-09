@@ -23,7 +23,7 @@ public abstract class Player extends Entity {
 
     Color transparent = new Color(0,0,0,0);
 
-    HealthHandler healthHandler = new HealthHandler((int)this.getHealth());
+    public HealthHandler healthHandler = new HealthHandler((int)this.getHealth());
     CollisionHandler collisionHandler = new CollisionHandler();
     Tile[][] tiles;
 
