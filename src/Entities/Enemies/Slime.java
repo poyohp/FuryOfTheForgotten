@@ -19,7 +19,7 @@ public class Slime extends Enemy{
 
 
     // Variables for drawing
-    private int animationState = 1, updateFrames = 7;
+    private int updateFrames = 7;
     private int column1 = 0, column2 = 16, column3 = 32, column4 = 48, row1 = 0, row2 = 16, row3 = 32, row4 = 48, width = 15, height = 15;
     BufferedImage slimes;
 
@@ -121,8 +121,8 @@ public class Slime extends Enemy{
 
     public void updateFrames() {
         if (updateFrames <= 0) {
-            if (animationState >= 4) {
-                animationState = 1;
+            if (animationState >= 3) {
+                animationState = 0;
             } else {
                 animationState++;
             }
@@ -139,61 +139,61 @@ public class Slime extends Enemy{
 
         if (direction == 'd') {
             switch (animationState) {
-                case 1:
+                case 0:
                     g2.drawImage(slimes, (int) screenX, (int) screenY, (int) (screenX + getWidth()), (int) (screenY + getHeight()), column1, row1, column1 + width, row1 + height, null);
                     break;
-                case 2:
+                case 1:
                     g2.drawImage(slimes, (int) screenX, (int) screenY, (int) (screenX + getWidth()), (int) (screenY + getHeight()), column2, row1, column2 + width, row1 + height, null);
                     break;
-                case 3:
+                case 2:
                     g2.drawImage(slimes, (int) screenX, (int) screenY, (int) (screenX + getWidth()), (int) (screenY + getHeight()), column3, row1, column3 + width, row1 + height, null);
                     break;
-                case 4:
+                case 3:
                     g2.drawImage(slimes, (int) screenX, (int) screenY, (int) (screenX + getWidth()), (int) (screenY + getHeight()), column4, row1, column4 + width, row1 + height, null);
                     break;
             }
         } else if (direction == 'l') {
             switch (animationState) {
-                case 1:
+                case 0:
                     g2.drawImage(slimes, (int) screenX, (int) screenY, (int) (screenX + getWidth()), (int) (screenY + getHeight()), column1, row2, column1 + width, row2 + height, null);
                     break;
-                case 2:
+                case 1:
                     g2.drawImage(slimes, (int) screenX, (int) screenY, (int) (screenX + getWidth()), (int) (screenY + getHeight()), column2, row2, column2 + width, row2 + height, null);
                     break;
-                case 3:
+                case 2:
                     g2.drawImage(slimes, (int) screenX, (int) screenY, (int) (screenX + getWidth()), (int) (screenY + getHeight()), column3, row2, column3 + width, row2 + height, null);
                     break;
-                case 4:
+                case 3:
                     g2.drawImage(slimes, (int) screenX, (int) screenY, (int) (screenX + getWidth()), (int) (screenY + getHeight()), column4, row2, column4 + width, row2 + height, null);
                     break;
             }
         } else if (direction == 'r') {
             switch (animationState) {
-                case 1:
+                case 0:
                     g2.drawImage(slimes, (int) screenX, (int) screenY, (int) (screenX + getWidth()), (int) (screenY + getHeight()), column1, row3, column1 + width, row3 + height, null);
                     break;
-                case 2:
+                case 1:
                     g2.drawImage(slimes, (int) screenX, (int) screenY, (int) (screenX + getWidth()), (int) (screenY + getHeight()), column2, row3, column2 + width, row3 + height, null);
                     break;
-                case 3:
+                case 2:
                     g2.drawImage(slimes, (int) screenX, (int) screenY, (int) (screenX + getWidth()), (int) (screenY + getHeight()), column3, row3, column3 + width, row3 + height, null);
                     break;
-                case 4:
+                case 3:
                     g2.drawImage(slimes, (int) screenX, (int) screenY, (int) (screenX + getWidth()), (int) (screenY + getHeight()), column4, row3, column4 + width, row3 + height, null);
                     break;
             }
         } else if (direction == 'u') {
             switch (animationState) {
-                case 1:
+                case 0:
                     g2.drawImage(slimes, (int) screenX, (int) screenY, (int) (screenX + getWidth()), (int) (screenY + getHeight()), column1, row4, column1 + width, row4 + height, null);
                     break;
-                case 2:
+                case 1:
                     g2.drawImage(slimes, (int) screenX, (int) screenY, (int) (screenX + getWidth()), (int) (screenY + getHeight()), column2, row4, column2 + width, row4 + height, null);
                     break;
-                case 3:
+                case 2:
                     g2.drawImage(slimes, (int) screenX, (int) screenY, (int) (screenX + getWidth()), (int) (screenY + getHeight()), column3, row4, column3 + width, row4 + height, null);
                     break;
-                case 4:
+                case 3:
                     g2.drawImage(slimes, (int) screenX, (int) screenY, (int) (screenX + getWidth()), (int) (screenY + getHeight()), column4, row4, column4 + width, row4 + height, null);
                     break;
             }

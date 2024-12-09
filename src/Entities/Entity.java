@@ -14,6 +14,7 @@ public abstract class Entity {
     public double worldX, worldY;
     public double screenX, screenY;
 
+    public int animationState = 0;
 
     public char direction;
     public boolean attacking = false;

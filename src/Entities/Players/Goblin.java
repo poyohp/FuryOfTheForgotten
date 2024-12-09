@@ -7,13 +7,14 @@ import World.Tile;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Skeleton extends Player{
+public class Goblin extends Player{
 
-    BufferedImage sprites = ImageHandler.loadImage("src/Assets/Entities/Players/Skeleton/Sprites.png");
+    boolean attack;
+    BufferedImage sprites = ImageHandler.loadImage("src/Assets/Entities/Players/Goblin/Goblin_Rogue.png");
     int column1 = 7, column2 = 39, column3 = 71, column4 = 103, row1 = 7, row2 = 39, row3 = 71, row4 = 103, row5 = 135, row6 = 167, row7 = 199, row8 = 231, row9 = 263, row10 = 295, row11 = 327, row12 = 359, row13 = 391, row14 = 423, row15 = 455;
 
     void setCharacterState(){
-        type = 's';
+        type = 'g';
         characterAttackFrames = 36;
         characterAttackCooldown = 30;
         attackFrames = characterAttackFrames;
@@ -36,7 +37,7 @@ public class Skeleton extends Player{
      * @param hitBoxHeight hitbox height
      * @param keyHandler   keyhandler to handle key presses
      */
-    public Skeleton(int health, double speed, int width, int height, String name, double worldX, double worldY, int xOffset, int yOffset, int hitBoxWidth, int hitBoxHeight, KeyHandler keyHandler) {
+    public Goblin(int health, double speed, int width, int height, String name, double worldX, double worldY, int xOffset, int yOffset, int hitBoxWidth, int hitBoxHeight, KeyHandler keyHandler) {
         super(health, speed, width, height, name, worldX, worldY, xOffset, yOffset, hitBoxWidth, hitBoxHeight, keyHandler);
         setCharacterState();
     }
@@ -54,10 +55,6 @@ public class Skeleton extends Player{
         updateFrames();
     }
 
-    /**
-     * Draws player
-     * @param g2 Graphics2D object to draw on
-     */
     @Override
     public void draw(Graphics2D g2) {
         drawHealth(g2);
@@ -66,17 +63,11 @@ public class Skeleton extends Player{
             if (direction == 'd') {
                 if (!checkMoving()) {
                     switch (animationState) {
-                        case 0:
+                        case 0, 2:
                             g2.drawImage(sprites, (int) screenX, (int) screenY, (int) screenX + getWidth(), (int) screenY + this.getHeight(), column1, row1, column1 + Tile.normalTileSize, row1 + Tile.normalTileSize, transparent, null);
                             break;
-                        case 1:
+                        case 1, 3:
                             g2.drawImage(sprites, (int) screenX, (int) screenY, (int) screenX + getWidth(), (int) screenY + this.getHeight(), column2, row1, column2 + Tile.normalTileSize, row1 + Tile.normalTileSize, transparent, null);
-                            break;
-                        case 2:
-                            g2.drawImage(sprites, (int) screenX, (int) screenY, (int) screenX + getWidth(), (int) screenY + this.getHeight(), column3, row1, column3 + Tile.normalTileSize, row1 + Tile.normalTileSize, transparent, null);
-                            break;
-                        case 3:
-                            g2.drawImage(sprites, (int) screenX, (int) screenY, (int) screenX + getWidth(), (int) screenY + this.getHeight(), column4, row1, column4 + Tile.normalTileSize, row1 + Tile.normalTileSize, transparent, null);
                             break;
                     }
                 } else {
@@ -91,24 +82,18 @@ public class Skeleton extends Player{
                             g2.drawImage(sprites, (int) screenX, (int) screenY, (int) screenX + getWidth(), (int) screenY + this.getHeight(), column3, row4, column3 + Tile.normalTileSize, row4 + Tile.normalTileSize, transparent, null);
                             break;
                         case 3:
-                            g2.drawImage(sprites, (int) screenX, (int) screenY, (int) screenX + getWidth(), (int) screenY + this.getHeight(), column4, row4, column4 + Tile.normalTileSize, row4 + Tile.normalTileSize, transparent, null);
+                            g2.drawImage(sprites, (int) screenX, (int) screenY, (int) screenX + getWidth(), (int) screenY + this.getHeight(), column4, row4, column4 + Tile.normalTileSize, row4 + Tile.normalTileSize + 1, transparent, null);
                             break;
                     }
                 }
             } else if (direction == 'r') {
                 if (!checkMoving()) {
                     switch (animationState) {
-                        case 0:
-                            g2.drawImage(sprites, (int) screenX, (int) screenY, (int) screenX + getWidth(), (int) screenY + this.getHeight(), column1, row2, column1 + Tile.normalTileSize, row2 + Tile.normalTileSize, transparent, null);
+                        case 0, 2:
+                            g2.drawImage(sprites, (int) screenX, (int) screenY, (int) screenX + getWidth() + 2*Tile.tileRatio, (int) screenY + this.getHeight(), column1, row2, column1 + Tile.normalTileSize + 2, row2 + Tile.normalTileSize, transparent, null);
                             break;
-                        case 1:
-                            g2.drawImage(sprites, (int) screenX, (int) screenY, (int) screenX + getWidth(), (int) screenY + this.getHeight(), column2, row2, column2 + Tile.normalTileSize, row2 + Tile.normalTileSize, transparent, null);
-                            break;
-                        case 2:
-                            g2.drawImage(sprites, (int) screenX, (int) screenY, (int) screenX + getWidth(), (int) screenY + this.getHeight(), column3, row2, column3 + Tile.normalTileSize, row2 + Tile.normalTileSize, transparent, null);
-                            break;
-                        case 3:
-                            g2.drawImage(sprites, (int) screenX, (int) screenY, (int) screenX + getWidth(), (int) screenY + this.getHeight(), column4, row2, column4 + Tile.normalTileSize, row2 + Tile.normalTileSize, transparent, null);
+                        case 1, 3:
+                            g2.drawImage(sprites, (int) screenX, (int) screenY, (int) screenX + getWidth() + 2*Tile.tileRatio, (int) screenY + this.getHeight(), column2, row2, column2 + Tile.normalTileSize + 2, row2 + Tile.normalTileSize, transparent, null);
                             break;
                     }
                 } else {
@@ -130,49 +115,37 @@ public class Skeleton extends Player{
             } else if (direction == 'u') {
                 if (!checkMoving()) {
                     switch (animationState) {
-                        case 0:
-                            g2.drawImage(sprites, (int) screenX, (int) screenY, (int) screenX + getWidth(), (int) screenY + this.getHeight(), column1, row3, column1 + Tile.normalTileSize, row3 + Tile.normalTileSize, transparent, null);
+                        case 0, 2:
+                            g2.drawImage(sprites, (int) screenX, (int) screenY, (int) screenX + getWidth() + 2*Tile.tileRatio, (int) screenY + this.getHeight(), column1, row3, column1 + Tile.normalTileSize + 2, row3 + Tile.normalTileSize, transparent, null);
                             break;
-                        case 1:
-                            g2.drawImage(sprites, (int) screenX, (int) screenY, (int) screenX + getWidth(), (int) screenY + this.getHeight(), column2, row3, column2 + Tile.normalTileSize, row3 + Tile.normalTileSize, transparent, null);
-                            break;
-                        case 2:
-                            g2.drawImage(sprites, (int) screenX, (int) screenY, (int) screenX + getWidth(), (int) screenY + this.getHeight(), column3, row3, column3 + Tile.normalTileSize, row3 + Tile.normalTileSize, transparent, null);
-                            break;
-                        case 3:
-                            g2.drawImage(sprites, (int) screenX, (int) screenY, (int) screenX + getWidth(), (int) screenY + this.getHeight(), column4, row3, column4 + Tile.normalTileSize, row3 + Tile.normalTileSize, transparent, null);
+                        case 1, 3:
+                            g2.drawImage(sprites, (int) screenX, (int) screenY, (int) screenX + getWidth() + 2*Tile.tileRatio, (int) screenY + this.getHeight(), column2, row3, column2 + Tile.normalTileSize + 2, row3 + Tile.normalTileSize, transparent, null);
                             break;
                     }
                 } else {
                     switch (animationState) {
                         case 0:
-                            g2.drawImage(sprites, (int) screenX, (int) screenY, (int) screenX + getWidth(), (int) screenY + this.getHeight(), column1, row6, column1 + Tile.normalTileSize, row6 + Tile.normalTileSize, transparent, null);
+                            g2.drawImage(sprites, (int) screenX, (int) screenY, (int) screenX + getWidth() + 2*Tile.tileRatio, (int) screenY + this.getHeight(), column1, row6, column1 + Tile.normalTileSize + 2, row6 + Tile.normalTileSize, transparent, null);
                             break;
                         case 1:
-                            g2.drawImage(sprites, (int) screenX, (int) screenY, (int) screenX + getWidth(), (int) screenY + this.getHeight(), column2, row6, column2 + Tile.normalTileSize, row6 + Tile.normalTileSize, transparent, null);
+                            g2.drawImage(sprites, (int) screenX, (int) screenY, (int) screenX + getWidth() + 2*Tile.tileRatio, (int) screenY + this.getHeight(), column2, row6, column2 + Tile.normalTileSize + 2, row6 + Tile.normalTileSize, transparent, null);
                             break;
                         case 2:
-                            g2.drawImage(sprites, (int) screenX, (int) screenY, (int) screenX + getWidth(), (int) screenY + this.getHeight(), column3, row6, column3 + Tile.normalTileSize, row6 + Tile.normalTileSize, transparent, null);
+                            g2.drawImage(sprites, (int) screenX, (int) screenY, (int) screenX + getWidth() + 2*Tile.tileRatio, (int) screenY + this.getHeight(), column3, row6, column3 + Tile.normalTileSize + 2, row6 + Tile.normalTileSize, transparent, null);
                             break;
                         case 3:
-                            g2.drawImage(sprites, (int) screenX, (int) screenY, (int) screenX + getWidth(), (int) screenY + this.getHeight(), column4, row6, column4 + Tile.normalTileSize, row6 + Tile.normalTileSize, transparent, null);
+                            g2.drawImage(sprites, (int) screenX, (int) screenY, (int) screenX + getWidth() + 2*Tile.tileRatio, (int) screenY + this.getHeight(), column4, row6, column4 + Tile.normalTileSize + 2, row6 + Tile.normalTileSize, transparent, null);
                             break;
                     }
                 }
             } else {
                 if (!checkMoving()) {
                     switch (animationState) {
-                        case 0:
-                            g2.drawImage(sprites, (int) screenX + getWidth(), (int) screenY, (int) screenX, (int) screenY + this.getHeight(), column1, row2, column1 + Tile.normalTileSize, row2 + Tile.normalTileSize, transparent, null);
+                        case 0, 2:
+                            g2.drawImage(sprites, (int) screenX + getWidth() + Tile.tileRatio, (int) screenY, (int) screenX, (int) screenY + this.getHeight(), column1, row2, column1 + Tile.normalTileSize + 1, row2 + Tile.normalTileSize, transparent, null);
                             break;
-                        case 1:
-                            g2.drawImage(sprites, (int) screenX + getWidth(), (int) screenY, (int) screenX, (int) screenY + this.getHeight(), column2, row2, column2 + Tile.normalTileSize, row2 + Tile.normalTileSize, transparent, null);
-                            break;
-                        case 2:
-                            g2.drawImage(sprites, (int) screenX + getWidth(), (int) screenY, (int) screenX, (int) screenY + this.getHeight(), column3, row2, column3 + Tile.normalTileSize, row2 + Tile.normalTileSize, transparent, null);
-                            break;
-                        case 3:
-                            g2.drawImage(sprites, (int) screenX + getWidth(), (int) screenY, (int) screenX, (int) screenY + this.getHeight(), column4, row2, column4 + Tile.normalTileSize, row2 + Tile.normalTileSize, transparent, null);
+                        case 1, 3:
+                            g2.drawImage(sprites, (int) screenX + getWidth() + Tile.tileRatio, (int) screenY, (int) screenX, (int) screenY + this.getHeight(), column2, row2, column2 + Tile.normalTileSize + 1, row2 + Tile.normalTileSize, transparent, null);
                             break;
                     }
                 } else {
@@ -196,25 +169,25 @@ public class Skeleton extends Player{
             if (direction == 'd') {
                 switch (animationState) {
                     case 0:
-                        g2.drawImage(sprites, (int) screenX, (int) screenY, (int) screenX + getWidth(), (int) screenY + this.getHeight(), column1, row13, column1 + Tile.normalTileSize, row13 + Tile.normalTileSize, transparent, null);
+                        g2.drawImage(sprites, (int) screenX, (int) screenY, (int) screenX + getWidth(), (int) screenY + this.getHeight() + 2*Tile.tileRatio, column1, row13, column1 + Tile.normalTileSize, row13 + Tile.normalTileSize + 2, transparent, null);
                         break;
                     case 1, 2:
-                        g2.drawImage(sprites, (int) screenX, (int) screenY, (int) screenX + getWidth(), (int) screenY + this.getHeight(), column2, row13, column2 + Tile.normalTileSize, row13 + Tile.normalTileSize, transparent, null);
+                        g2.drawImage(sprites, (int) screenX, (int) screenY, (int) screenX + getWidth(), (int) screenY + this.getHeight() + 2*Tile.tileRatio, column2, row13, column2 + Tile.normalTileSize, row13 + Tile.normalTileSize + 2, transparent, null);
                         break;
                     case 3:
-                        g2.drawImage(sprites, (int) screenX, (int) screenY, (int) screenX + getWidth(), (int) screenY + this.getHeight(), column3, row13, column3 + Tile.normalTileSize, row13 + Tile.normalTileSize, transparent, null);
+                        g2.drawImage(sprites, (int) screenX, (int) screenY, (int) screenX + getWidth(), (int) screenY + this.getHeight() + 2*Tile.tileRatio, column3, row13, column3 + Tile.normalTileSize, row13 + Tile.normalTileSize + 2, transparent, null);
                         break;
                 }
             } else if (direction == 'r') {
                 switch (animationState) {
                     case 0:
-                        g2.drawImage(sprites, (int) screenX, (int) screenY, (int) screenX + getWidth(), (int) screenY + this.getHeight(), column1, row14, column1 + Tile.normalTileSize, row14 + Tile.normalTileSize, transparent, null);
+                        g2.drawImage(sprites, (int) screenX, (int) screenY, (int) screenX + getWidth() + 2*Tile.tileRatio, (int) screenY + this.getHeight(), column1, row14, column1 + Tile.normalTileSize + 2, row14 + Tile.normalTileSize, transparent, null);
                         break;
                     case 1, 2:
-                        g2.drawImage(sprites, (int) screenX, (int) screenY, (int) screenX + getWidth(), (int) screenY + this.getHeight(), column2, row14, column2 + Tile.normalTileSize, row14 + Tile.normalTileSize, transparent, null);
+                        g2.drawImage(sprites, (int) screenX, (int) screenY, (int) screenX + getWidth() + 2*Tile.tileRatio, (int) screenY + this.getHeight(), column2, row14, column2 + Tile.normalTileSize + 2, row14 + Tile.normalTileSize, transparent, null);
                         break;
                     case 3:
-                        g2.drawImage(sprites, (int) screenX, (int) screenY, (int) screenX + getWidth(), (int) screenY + this.getHeight(), column3, row14, column3 + Tile.normalTileSize, row14 + Tile.normalTileSize, transparent, null);
+                        g2.drawImage(sprites, (int) screenX, (int) screenY, (int) screenX + getWidth() + 2*Tile.tileRatio, (int) screenY + this.getHeight(), column3, row14, column3 + Tile.normalTileSize + 2, row14 + Tile.normalTileSize, transparent, null);
                         break;
                 }
             } else if (direction == 'u') {
@@ -232,17 +205,51 @@ public class Skeleton extends Player{
             } else {
                 switch (animationState) {
                     case 0:
-                        g2.drawImage(sprites, (int) screenX + getWidth(), (int) screenY, (int) screenX, (int) screenY + this.getHeight(), column1, row14, column1 + Tile.normalTileSize, row14 + Tile.normalTileSize, transparent, null);
+                        g2.drawImage(sprites, (int) screenX + getWidth() + 2*Tile.tileRatio, (int) screenY, (int) screenX, (int) screenY + this.getHeight(), column1, row14, column1 + Tile.normalTileSize + 2, row14 + Tile.normalTileSize, transparent, null);
                         break;
                     case 1, 2:
-                        g2.drawImage(sprites, (int) screenX + getWidth(), (int) screenY, (int) screenX, (int) screenY + this.getHeight(), column2, row14, column2 + Tile.normalTileSize, row14 + Tile.normalTileSize, transparent, null);
+                        g2.drawImage(sprites, (int) screenX + getWidth() + 2*Tile.tileRatio, (int) screenY, (int) screenX, (int) screenY + this.getHeight(), column2, row14, column2 + Tile.normalTileSize + 2, row14 + Tile.normalTileSize, transparent, null);
                         break;
                     case 3:
-                        g2.drawImage(sprites, (int) screenX + getWidth(), (int) screenY, (int) screenX, (int) screenY + this.getHeight(), column3, row14, column3 + Tile.normalTileSize, row14 + Tile.normalTileSize, transparent, null);
+                        g2.drawImage(sprites, (int) screenX + getWidth() + 2*Tile.tileRatio, (int) screenY, (int) screenX, (int) screenY + this.getHeight(), column3, row14, column3 + Tile.normalTileSize + 2, row14 + Tile.normalTileSize, transparent, null);
                         break;
                 }
             }
         }
     }
+
+
+    @Override
+    public void checkAttack() {
+
+        // Checking for keypress
+        if (keyHandler.attackPress && canAttack) {
+            attacking = true;
+            animationState = 0;
+            canAttack = false;
+            attack = true;
+        }
+
+        // Setting attack to true
+        if (attacking) {
+            if (attackFrames == 0) {
+                attackFrames = characterAttackFrames;
+                attacking = false;
+            } else {
+                attackFrames--;
+            }
+        }
+    }
+
+    @Override
+    public boolean toCreateAttack() {
+        if (keyHandler.attackPress && attack) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
 
 }

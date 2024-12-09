@@ -1,5 +1,7 @@
 package System.Panels;
 
+import Entities.Players.Goblin;
+import Entities.Players.Player;
 import Entities.Players.Skeleton;
 import Handlers.HUD.InventoryHandler;
 import System.Main;
@@ -35,7 +37,7 @@ public class GamePanel extends JPanel implements Runnable{
     APathfinding pathfinding;
 
     //Create objects for GAME LOGIC
-    public Skeleton skeleton;
+    public Player player;
     LevelHandler levelHandler;
     KeyHandler keyHandler;
     AttackHandler attackHandler;
@@ -61,9 +63,9 @@ public class GamePanel extends JPanel implements Runnable{
         spawnHandler = new SpawnHandler();
         damageDealer = new DamageDealer();
 
-        skeleton = new Skeleton(100, 4, Tile.tileSize, Tile.tileSize, "Player", 0, 0, 4*Tile.tileSize/Tile.normalTileSize, 6*Tile.tileSize/Tile.normalTileSize-1, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
+        player = new Goblin(100, 4, Tile.tileSize, Tile.tileSize, "Player", 0, 0, 4*Tile.tileSize/Tile.normalTileSize, 6*Tile.tileSize/Tile.normalTileSize-1, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
 
-        levelHandler = new LevelHandler(1, spawnHandler, skeleton);
+        levelHandler = new LevelHandler(1, spawnHandler, player);
         collisionHandler = new CollisionHandler();
         attackHandler = new AttackHandler(keyHandler, levelHandler.getCurrentLevel().getMap().baseLayerTiles);
 
@@ -71,9 +73,9 @@ public class GamePanel extends JPanel implements Runnable{
 
         this.addKeyListener(keyHandler);
 
-        skeleton.updateWorldValues(spawnHandler.playerSpawnX, spawnHandler.playerSpawnY);
+        player.updateWorldValues(spawnHandler.playerSpawnX, spawnHandler.playerSpawnY);
 
-        ghost = new InstantKill(100, 6, Tile.tileSize, Tile.tileSize, "Invincible!", Tile.tileSize * 2, Tile.tileSize * 4, Tile.tileRatio,5*Tile.tileRatio, 70, 50, skeleton, false);
+        ghost = new InstantKill(100, 6, Tile.tileSize, Tile.tileSize, "Invincible!", Tile.tileSize * 2, Tile.tileSize * 4, Tile.tileRatio,5*Tile.tileRatio, 70, 50, player, false);
         ghost.setBounds(1, 23, 1, 23);
 
         //Start game after loading all objects
@@ -128,14 +130,14 @@ public class GamePanel extends JPanel implements Runnable{
      * Updates all the objects in the game
      */
     void update() {
-        skeleton.update(levelHandler.getCurrentLevel().getMap().baseLayerTiles);
-        levelHandler.update(skeleton, spawnHandler, attackHandler, damageDealer);
-        attackHandler.update(skeleton, levelHandler.getCurrentLevel().enemies);
+        player.update(levelHandler.getCurrentLevel().getMap().baseLayerTiles);
+        levelHandler.update(player, spawnHandler, attackHandler, damageDealer);
+        attackHandler.update(player, levelHandler.getCurrentLevel().enemies);
         damageDealer.dealDamageToEnemies(attackHandler, levelHandler.getCurrentLevel());
 
         ghost.update();
 
-        if (ghost.hitbox.intersects(skeleton.hitbox) || skeleton.getHealth() <= 0) {
+        if (ghost.hitbox.intersects(player.hitbox) || player.getHealth() <= 0) {
             Main.updateGameState(3);
         }
     }
@@ -152,13 +154,13 @@ public class GamePanel extends JPanel implements Runnable{
         Graphics2D g2 = (Graphics2D)g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        levelHandler.draw(g2, skeleton);
-        skeleton.draw(g2);
-        attackHandler.draw(g2, skeleton);
+        levelHandler.draw(g2, player);
+        player.draw(g2);
+        attackHandler.draw(g2, player);
         ghost.draw(g2);
 
         for(SpawnPoint spawnPoint : spawnHandler.enemySpawnPoints) {
-            spawnPoint.draw(g2, skeleton);
+            spawnPoint.draw(g2, player);
         }
 
         g2.setFont(spawnsRemaining);
@@ -166,7 +168,7 @@ public class GamePanel extends JPanel implements Runnable{
 
         //HUD DRAWING
         inventory.draw(g2);
-        skeleton.healthHandler.drawHearts(g2);
+        player.healthHandler.drawHearts(g2);
 
     }
 }
