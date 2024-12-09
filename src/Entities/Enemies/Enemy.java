@@ -1,15 +1,9 @@
 package Entities.Enemies;
 
 import Entities.Entity;
-import Entities.Player;
-import Handlers.ImageHandler;
-import Pathfinding.APathfinding;
-import Pathfinding.Node;
-import World.Tile;
+import Entities.Players.Player;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 
 public abstract class Enemy extends Entity {
 

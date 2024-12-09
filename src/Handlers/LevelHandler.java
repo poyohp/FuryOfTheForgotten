@@ -1,7 +1,7 @@
 package Handlers;
 
 import Entities.Enemies.Enemy;
-import Entities.Player;
+import Entities.Players.Player;
 import Handlers.Attacks.AttackHandler;
 import Handlers.Spawners.SpawnHandler;
 import Handlers.Spawners.SpawnPoint;

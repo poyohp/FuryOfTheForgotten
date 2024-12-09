@@ -1,28 +1,21 @@
-package System;
+package System.Panels;
 
 import Handlers.ImageHandler;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 
-public class GameOverPanel extends JPanel {
-    BufferedImage gameOverLose = ImageHandler.loadImage("src/Assets/MenuImages/gameOver.png");
+public class WinPanel extends JPanel {
+    BufferedImage gameWon = ImageHandler.loadImage("src/Assets/MenuImages/gameWon.png");
 
     // Get screen width and height
     public static final int screenWidth = (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth();
     public static final int screenHeight = (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 
-    /**
-     * Panel for when the game is over
-     */
-    GameOverPanel() {
-        // Ensures full screen and reduces rendering time!
+    public WinPanel() {
         this.setDoubleBuffered(true);
         this.setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
-
     }
 
     @Override
@@ -31,6 +24,6 @@ public class GameOverPanel extends JPanel {
 
         // Draws the fullscreen menu image
         Graphics2D g2 = (Graphics2D) g;
-        g2.drawImage(gameOverLose, 0, 0, screenWidth, screenHeight, null);
+        g2.drawImage(gameWon, 0, 0, screenWidth, screenHeight, null);
     }
 }

@@ -1,6 +1,6 @@
 package World;
 
-import System.*;
+import System.Panels.GamePanel;
 
 public class Tile {
     public static final int normalTileSize = 16;

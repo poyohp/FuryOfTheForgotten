@@ -7,7 +7,7 @@ import Attacks.Melee;
 import Attacks.Ranged;
 import Entities.Enemies.Enemy;
 import Entities.Entity;
-import Entities.Player;
+import Entities.Players.Player;
 import Handlers.CollisionHandler;
 import Handlers.KeyHandler;
 import World.Tile;
@@ -151,8 +151,6 @@ public class AttackHandler {
                     playerAttacks.get(i).setDuration((playerAttacks.get(i).getDuration() - 1));
                 }
 
-            }
-            for (Attack a : playerToRemove) {
             }
             playerAttacks.removeAll(playerToRemove);
             playerToRemove.clear();

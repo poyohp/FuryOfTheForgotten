@@ -2,12 +2,8 @@ package Attacks;
 import Entities.Entity;
 import Entities.Hitbox;
 import java.awt.*;
-import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
 
-import Entities.Player;
-import Handlers.ImageHandler;
-import System.GamePanel;
+import Entities.Players.Player;
 
 public class Ranged extends Attack{
 

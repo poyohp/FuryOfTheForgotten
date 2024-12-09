@@ -1,11 +1,7 @@
-package System;
+package System.Resources;
 
-import Handlers.ImageHandler;
-
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 
 import static Handlers.ImageHandler.loadImage;
 
@@ -13,10 +9,10 @@ public class MenuButton {
     int x, y;
     int width, height;
     String buttonFilename;
-    boolean isSelected;
+    public boolean isSelected;
     BufferedImage image;
 
-    MenuButton(String buttonFilename, int x, int y, int width, int height) {
+    public MenuButton(String buttonFilename, int x, int y, int width, int height) {
         this.isSelected = false;
         this.x = x;
         this.y = y;

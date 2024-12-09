@@ -1,6 +1,8 @@
-package System;
+package System.Panels;
 
 import Handlers.ImageHandler;
+import System.Resources.MenuButton;
+import System.Main;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,7 +22,7 @@ public class HelpPanel extends JPanel implements KeyListener {
     /**
      * Panel for when the game is over
      */
-    HelpPanel() {
+    public HelpPanel() {
         // Ensures full screen and reduces rendering time!
         this.setDoubleBuffered(true);
         this.setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());

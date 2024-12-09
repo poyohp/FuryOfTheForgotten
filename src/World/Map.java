@@ -1,8 +1,7 @@
 package World;
 
 import Handlers.ImageHandler;
-import System.Main;
-import Entities.Player;
+import Entities.Players.Player;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
