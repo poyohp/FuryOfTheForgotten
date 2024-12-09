@@ -14,9 +14,9 @@ public class InventoryHandler {
     private final int inventoryCapacity = 5;
     public Object[] inventory = new Object[inventoryCapacity];
 
-    private final int inventoryDrawSize = 20;
+    private final int inventoryDrawSize = Tile.normalTileSize;
     private final int inventoryFinalDrawSize = Tile.tileMultipler*inventoryDrawSize;
-    private final int innerGap = inventoryFinalDrawSize/5;
+    private final int innerGap = inventoryFinalDrawSize/6;
     private final int outerGap = inventoryFinalDrawSize/4;
 
     private final int outlineWidth =  (6*innerGap) + inventoryFinalDrawSize*inventoryCapacity;

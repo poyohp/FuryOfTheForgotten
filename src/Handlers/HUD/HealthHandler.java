@@ -12,7 +12,7 @@ public class HealthHandler {
     BufferedImage heartSprite = ImageHandler.loadImage("src/Assets/HUD//PlayerStatus/hearts.png");
     private final int spriteSize = 16;
 
-    private final int heartDrawSize = 20;
+    private final int heartDrawSize = Tile.normalTileSize;
     private final int heartFinalDrawSize = Tile.tileMultipler*heartDrawSize;
 
     private final int innerGap = heartFinalDrawSize/5;
@@ -46,11 +46,11 @@ public class HealthHandler {
     }
 
     public void drawHearts(Graphics2D g2) {
-        int x = heartsX + outerGap;
+        int x = heartsX + outerGap - innerGap;
         int y = heartsY;
         for (int i = 0; i < currentFullHearts; i++) {
             g2.drawImage(heartSprite, x, y, x + heartFinalDrawSize, y + heartFinalDrawSize, 0, spriteSize * 3, spriteSize, spriteSize * 3 + spriteSize, null);
-            x += heartFinalDrawSize;
+            x += heartFinalDrawSize - innerGap;
         }
         if (halfHeart || currentFullHearts == 0) {
             g2.drawImage(heartSprite, x, y, x + heartFinalDrawSize, y + heartFinalDrawSize, spriteSize * 2, spriteSize * 3,spriteSize * 2 + spriteSize, spriteSize * 3 + spriteSize, null);
