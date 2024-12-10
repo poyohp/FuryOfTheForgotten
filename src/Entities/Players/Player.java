@@ -16,6 +16,7 @@ public abstract class Player extends Entity {
 
     Boolean canAttack = true;
     public char type;
+    public boolean inAbility = false;
 
 
     int updateFrames , attackFrames, characterAttackFrames, attackCooldown, characterAttackCooldown;
@@ -64,7 +65,7 @@ public abstract class Player extends Entity {
      * Check for player movement
      * @return true if movement key is pressed, false if not
      */
-    boolean checkMoving() {
+    public boolean checkMoving() {
         if (keyHandler.leftPress || keyHandler.downPress || keyHandler.upPress || keyHandler.rightPress) {
             return true;
         } else {
