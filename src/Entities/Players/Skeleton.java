@@ -9,12 +9,16 @@ import java.awt.image.BufferedImage;
 
 public class Skeleton extends Player{
 
+
     BufferedImage sprites = ImageHandler.loadImage("src/Assets/Entities/Players/Skeleton/Sprites.png");
+    /*
     BufferedImage sideRoll1 = ImageHandler.loadImage("src/Assets/Entities/Players/Skeleton/SkeletonSideRoll1.png");
     BufferedImage sideRoll2 = ImageHandler.loadImage("src/Assets/Entities/Players/Skeleton/SkeletonSideRoll2.png");
     BufferedImage sideRoll3 = ImageHandler.loadImage("src/Assets/Entities/Players/Skeleton/SkeletonSideRoll3.png");
     BufferedImage sideRoll4 = ImageHandler.loadImage("src/Assets/Entities/Players/Skeleton/SkeletonSideRoll4.png");
     BufferedImage sideRoll5 = ImageHandler.loadImage("src/Assets/Entities/Players/Skeleton/SkeletonSideRoll5.png");
+
+     */
     int column1 = 7, column2 = 39, column3 = 71, column4 = 103, row1 = 7, row2 = 39, row3 = 71, row4 = 103, row5 = 135, row6 = 167, row7 = 199, row8 = 231, row9 = 263, row10 = 295, row11 = 327, row12 = 359, row13 = 391, row14 = 423, row15 = 455;
 
     void setCharacterState(){
@@ -248,7 +252,9 @@ public class Skeleton extends Player{
                         break;
                 }
             }
-        } else {
+        }
+        /*
+        else {
             if (direction == 'r') {
                 switch (animationState) {
                     case 0:
@@ -311,6 +317,8 @@ public class Skeleton extends Player{
                 }
             }
         }
+
+         */
     }
 
 }
