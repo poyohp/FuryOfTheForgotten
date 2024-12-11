@@ -11,9 +11,13 @@ import java.awt.image.BufferedImage;
 
 public class Melee extends Attack{
 
-    //BufferedImage stab1 = ImageHandler.loadImage("src/Assets/Projectiles/Stab1.png");
-    //BufferedImage stab2 = ImageHandler.loadImage("src/Assets/Projectiles/Stab2.png");
-    //BufferedImage stab3 = ImageHandler.loadImage("src/Assets/Projectiles/Stab3.png");
+    BufferedImage stab1 = ImageHandler.loadImage("src/Assets/Projectiles/Stab1.png");
+    BufferedImage stab2 = ImageHandler.loadImage("src/Assets/Projectiles/Stab2.png");
+    BufferedImage stab3 = ImageHandler.loadImage("src/Assets/Projectiles/Stab3.png");
+    BufferedImage stab1Up = ImageHandler.loadImage("src/Assets/Projectiles/Stab1Up.png");
+    BufferedImage stab2Up = ImageHandler.loadImage("src/Assets/Projectiles/Stab2Up.png");
+    BufferedImage stab3Up = ImageHandler.loadImage("src/Assets/Projectiles/Stab3Up.png");
+
 
     /**
      * Create melee attack
@@ -77,18 +81,22 @@ public class Melee extends Attack{
     public void setScreenPosition(Player player ) {
         // If direction is up
         if (getDirection()[0] == 'u') {
+            angle = Math.PI/2;
             setScreenX(entity.screenX + (double) entity.getWidth() / 2 - (double) getWidth() / 2);
             setScreenY(entity.screenY - getRange());
         // If direction is right
         } else if (getDirection()[0] == 'r') {
+            angle = 0;
             setScreenX(entity.screenX + entity.getWidth());
             setScreenY(entity.screenY + (double) entity.getHeight() / 2 - (double) getWidth() / 2);
         // If direction is down
         } else if (getDirection()[0] == 'd') {
+            angle = 3*Math.PI/2;
             setScreenX(entity.screenX + (double) entity.getWidth() / 2 - (double) getWidth() / 2);
             setScreenY(entity.screenY + entity.getHeight());
         // If direction is left
         } else {
+            angle = Math.PI;
             setScreenX(entity.screenX - getRange());
             setScreenY(entity.screenY + (double) entity.getHeight() / 2 - (double) getWidth() / 2);
         }
@@ -138,11 +146,56 @@ public class Melee extends Attack{
 
         g2.setColor(Color.BLACK);
 
-        if (getDirection()[0] == 'u' || getDirection()[0] == 'd') {
-            g2.fillRect((int)getScreenX(), (int)getScreenY(), getWidth(), getRange());
-        } else {
-            g2.fillRect((int)getScreenX(), (int)getScreenY(), getRange(), getWidth());
+        int centerX, centerY;
+
+        switch (entity.animationState) {
+            case 0, 3:
+                if (angle == Math.PI || angle == 0) {
+                    centerX = (int) getScreenX() + (getRange() / 2);
+                    centerY = (int) getScreenY() + (getWidth() / 2);
+                    ImageHandler.drawRotatedImage(g2, centerX, centerY, -angle, stab1, (int) getScreenX(), (int) getScreenY(), (int) getScreenX() + getRange(), (int) getScreenY() + getWidth(), 0, 0, 16, 16);
+                } else if (angle == Math.PI/2) {
+                    centerX = (int) getScreenX() + (getWidth() / 2);
+                    centerY = (int) getScreenY() + (getRange() / 2);
+                    ImageHandler.drawRotatedImage(g2, centerX, centerY, 0, stab1Up, (int) getScreenX(), (int) getScreenY(), (int) getScreenX() + getWidth(), (int) getScreenY() + getRange(), 0, 0, 16, 16);
+                } else {
+                    centerX = (int) getScreenX() + (getWidth() / 2);
+                    centerY = (int) getScreenY() + (getRange() / 2);
+                    ImageHandler.drawRotatedImage(g2, centerX, centerY, Math.PI, stab1Up, (int) getScreenX(), (int) getScreenY(), (int) getScreenX() + getWidth(), (int) getScreenY() + getRange(), 0, 0, 16, 16);
+                }
+                break;
+            case 1:
+                if (angle == Math.PI || angle == 0) {
+                    centerX = (int) getScreenX() + (getRange() / 2);
+                    centerY = (int) getScreenY() + (getWidth() / 2);
+                    ImageHandler.drawRotatedImage(g2, centerX, centerY, -angle, stab3, (int) getScreenX(), (int) getScreenY(), (int) getScreenX() + getRange(), (int) getScreenY() + getWidth(), 0, 0, 16, 16);
+                } else if (angle == Math.PI/2) {
+                    centerX = (int) getScreenX() + (getWidth() / 2);
+                    centerY = (int) getScreenY() + (getRange() / 2);
+                    ImageHandler.drawRotatedImage(g2, centerX, centerY, 0, stab3Up, (int) getScreenX(), (int) getScreenY(), (int) getScreenX() + getWidth(), (int) getScreenY() + getRange(), 0, 0, 16, 16);
+                } else {
+                    centerX = (int) getScreenX() + (getWidth() / 2);
+                    centerY = (int) getScreenY() + (getRange() / 2);
+                    ImageHandler.drawRotatedImage(g2, centerX, centerY, Math.PI, stab3Up, (int) getScreenX(), (int) getScreenY(), (int) getScreenX() + getWidth(), (int) getScreenY() + getRange(), 0, 0, 16, 16);
+                }
+                break;
+            case 2:
+                if (angle == Math.PI || angle == 0) {
+                    centerX = (int) getScreenX() + (getRange() / 2);
+                    centerY = (int) getScreenY() + (getWidth() / 2);
+                    ImageHandler.drawRotatedImage(g2, centerX, centerY, -angle, stab2, (int) getScreenX(), (int) getScreenY(), (int) getScreenX() + getRange(), (int) getScreenY() + getWidth(), 0, 0, 16, 16);
+                } else if (angle == Math.PI/2) {
+                    centerX = (int) getScreenX() + (getWidth() / 2);
+                    centerY = (int) getScreenY() + (getRange() / 2);
+                    ImageHandler.drawRotatedImage(g2, centerX, centerY, 0, stab2Up, (int) getScreenX(), (int) getScreenY(), (int) getScreenX() + getWidth(), (int) getScreenY() + getRange(), 0, 0, 16, 16);
+                } else {
+                    centerX = (int) getScreenX() + (getWidth() / 2);
+                    centerY = (int) getScreenY() + (getRange() / 2);
+                    ImageHandler.drawRotatedImage(g2, centerX, centerY, Math.PI, stab2Up, (int) getScreenX(), (int) getScreenY(), (int) getScreenX() + getWidth(), (int) getScreenY() + getRange(), 0, 0, 16, 16);
+                }
+                break;
         }
+
 
         /*
         if (entity.direction == 'u') {
@@ -194,7 +247,11 @@ public class Melee extends Attack{
                     break;
             }
         }
-        
+
          */
+
+
+        
+
     }
 }
