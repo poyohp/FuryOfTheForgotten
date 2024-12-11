@@ -1,11 +1,12 @@
-package Attacks;
+package Attacks.Ranged;
+import Attacks.Attack;
 import Entities.Entity;
 import Entities.Hitbox;
 import java.awt.*;
 
 import Entities.Players.Player;
 
-public class Ranged extends Attack{
+public class Ranged extends Attack {
 
     int spawnDistance;
 

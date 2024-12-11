@@ -17,7 +17,7 @@ public abstract class Attack {
     public double angle;
     private char[] direction = new char[2];
     public Hitbox hitbox;
-    Entity entity;
+    public Entity entity;
 
 
     /**

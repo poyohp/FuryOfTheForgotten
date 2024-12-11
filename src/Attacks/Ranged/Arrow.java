@@ -1,4 +1,4 @@
-package Attacks;
+package Attacks.Ranged;
 
 import Entities.Entity;
 import Entities.Hitbox;
@@ -8,7 +8,7 @@ import Handlers.ImageHandler;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Arrow extends Ranged{
+public class Arrow extends Ranged {
     static BufferedImage arrow = ImageHandler.loadImage("src/Assets/Projectiles/Arrow.png");
     double drawAngle;
 
