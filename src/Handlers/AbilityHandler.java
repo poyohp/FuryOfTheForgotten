@@ -25,11 +25,13 @@ public class AbilityHandler {
 
     public boolean checkAbility() {
         if (keyHandler.abilityPress && canAbility) {
-            canAbility = false;
-            player.inAbility = true;
-            player.maxAnimationState = 5;
-            player.animationState = 0;
-            player.updateFrames = 7;
+            if (player.type == 's') {
+                canAbility = false;
+                player.inAbility = true;
+                player.maxAnimationState = 5;
+                player.animationState = 0;
+                player.updateFrames = 7;
+            }
             return true;
         } else {
             return false;
@@ -59,7 +61,9 @@ public class AbilityHandler {
     public void update() {
         System.out.println(player.getSpeed());
         if (checkAbility()) {
-            ability();
+            if (player.type == 's') {
+                ability();
+            }
         }
 
         if (player.inAbility) {
@@ -71,14 +75,20 @@ public class AbilityHandler {
 
                 }
             } else {
-                if (player.direction == 'u') {
-                    if (!collisionHandler.playerWithTileCollision(player, player.tiles)) player.worldY -= player.getSpeed();
-                } else if (player.direction == 'd') {
-                    if (!collisionHandler.playerWithTileCollision(player, player.tiles)) player.worldY += player.getSpeed();
-                } else if (player.direction == 'l') {
-                    if (!collisionHandler.playerWithTileCollision(player, player.tiles)) player.worldX -= player.getSpeed();
-                } else {
-                    if (!collisionHandler.playerWithTileCollision(player, player.tiles)) player.worldX += player.getSpeed();
+                if (player.type == 's') {
+                    if (player.direction == 'u') {
+                        if (!collisionHandler.playerWithTileCollision(player, player.tiles))
+                            player.worldY -= player.getSpeed();
+                    } else if (player.direction == 'd') {
+                        if (!collisionHandler.playerWithTileCollision(player, player.tiles))
+                            player.worldY += player.getSpeed();
+                    } else if (player.direction == 'l') {
+                        if (!collisionHandler.playerWithTileCollision(player, player.tiles))
+                            player.worldX -= player.getSpeed();
+                    } else {
+                        if (!collisionHandler.playerWithTileCollision(player, player.tiles))
+                            player.worldX += player.getSpeed();
+                    }
                 }
                 abilityLength--;
             }
