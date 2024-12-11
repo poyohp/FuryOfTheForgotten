@@ -10,6 +10,11 @@ import java.awt.image.BufferedImage;
 public class Skeleton extends Player{
 
     BufferedImage sprites = ImageHandler.loadImage("src/Assets/Entities/Players/Skeleton/Sprites.png");
+    BufferedImage sideRoll1 = ImageHandler.loadImage("src/Assets/Entities/Players/Skeleton/SkeletonSideRoll1.png");
+    BufferedImage sideRoll2 = ImageHandler.loadImage("src/Assets/Entities/Players/Skeleton/SkeletonSideRoll2.png");
+    BufferedImage sideRoll3 = ImageHandler.loadImage("src/Assets/Entities/Players/Skeleton/SkeletonSideRoll3.png");
+    BufferedImage sideRoll4 = ImageHandler.loadImage("src/Assets/Entities/Players/Skeleton/SkeletonSideRoll4.png");
+    BufferedImage sideRoll5 = ImageHandler.loadImage("src/Assets/Entities/Players/Skeleton/SkeletonSideRoll5.png");
     int column1 = 7, column2 = 39, column3 = 71, column4 = 103, row1 = 7, row2 = 39, row3 = 71, row4 = 103, row5 = 135, row6 = 167, row7 = 199, row8 = 231, row9 = 263, row10 = 295, row11 = 327, row12 = 359, row13 = 391, row14 = 423, row15 = 455;
 
     void setCharacterState(){
@@ -18,6 +23,7 @@ public class Skeleton extends Player{
         characterAttackCooldown = 30;
         attackFrames = characterAttackFrames;
         attackCooldown = characterAttackCooldown;
+        maxAnimationState = 3;
     }
 
     /**
@@ -49,7 +55,7 @@ public class Skeleton extends Player{
         healthHandler.updateHealth(this.getHealth());
         this.tiles = baseLayerTiles;
         updateEntityPosition();
-        if (!attacking) move(); // If player is not attacking, they can move
+        if (!attacking && !inAbility) move(); // If player is not attacking, they can move
         hitbox.update(this); // Update hitbox
         updateFrames();
     }
@@ -62,7 +68,7 @@ public class Skeleton extends Player{
     public void draw(Graphics2D g2) {
         drawHealth(g2);
 
-        if (!attacking) {
+        if (!attacking && !inAbility) {
             if (direction == 'd') {
                 if (!checkMoving()) {
                     switch (animationState) {
@@ -192,7 +198,7 @@ public class Skeleton extends Player{
                     }
                 }
             }
-        } else {
+        } else if (attacking && !inAbility){
             if (direction == 'd') {
                 switch (animationState) {
                     case 0:
@@ -239,6 +245,68 @@ public class Skeleton extends Player{
                         break;
                     case 3:
                         g2.drawImage(sprites, (int) screenX + getWidth(), (int) screenY, (int) screenX, (int) screenY + this.getHeight(), column3, row14, column3 + Tile.normalTileSize, row14 + Tile.normalTileSize, transparent, null);
+                        break;
+                }
+            }
+        } else {
+            if (direction == 'r') {
+                switch (animationState) {
+                    case 0:
+                        g2.drawImage(sideRoll1, (int) screenX, (int) screenY, (int) screenX + getWidth(), (int) screenY + this.getHeight(), 0, 0, 16, 16, transparent, null);
+                        break;
+                    case 1:
+                        g2.drawImage(sideRoll2, (int) screenX, (int) screenY, (int) screenX + getWidth(), (int) screenY + this.getHeight(), 0, 0, 16, 16, transparent, null);
+                        break;
+                    case 2:
+                        g2.drawImage(sideRoll3, (int) screenX, (int) screenY, (int) screenX + getWidth(), (int) screenY + this.getHeight(), 0, 0, 16, 16, transparent, null);
+                        break;
+                    case 3:
+                        g2.drawImage(sideRoll4, (int) screenX, (int) screenY, (int) screenX + getWidth(), (int) screenY + this.getHeight(), 0, 0, 16, 16, transparent, null);
+                        break;
+                    case 4:
+                        g2.drawImage(sideRoll5, (int) screenX, (int) screenY, (int) screenX + getWidth(), (int) screenY + this.getHeight(), 0, 0, 16, 16, transparent, null);
+                        break;
+                }
+            } else if (direction == 'l') {
+                switch (animationState) {
+                    case 0:
+                        g2.drawImage(sideRoll1, (int) screenX + getWidth(), (int) screenY, (int) screenX, (int) screenY + this.getHeight(), 0, 0, 16, 16, transparent, null);
+                        break;
+                    case 1:
+                        g2.drawImage(sideRoll2, (int) screenX + getWidth(), (int) screenY, (int) screenX, (int) screenY + this.getHeight(), 0, 0, 16, 16, transparent, null);
+                        break;
+                    case 2:
+                        g2.drawImage(sideRoll3, (int) screenX + getWidth(), (int) screenY, (int) screenX, (int) screenY + this.getHeight(), 0, 0, 16, 16, transparent, null);
+                        break;
+                    case 3:
+                        g2.drawImage(sideRoll4, (int) screenX + getWidth(), (int) screenY, (int) screenX, (int) screenY + this.getHeight(), 0, 0, 16, 16, transparent, null);
+                        break;
+                    case 4:
+                        g2.drawImage(sideRoll5, (int) screenX + getWidth(), (int) screenY, (int) screenX, (int) screenY + this.getHeight(), 0, 0, 16, 16, transparent, null);
+                        break;
+                }
+            } else if (direction == 'u') {
+                switch (animationState) {
+                    case 0:
+                        g2.drawImage(sprites, (int) screenX, (int) screenY, (int) screenX + getWidth(), (int) screenY + this.getHeight(), column1, row15, column1 + Tile.normalTileSize, row15 + Tile.normalTileSize, transparent, null);
+                        break;
+                    case 1, 2:
+                        g2.drawImage(sprites, (int) screenX, (int) screenY, (int) screenX + getWidth(), (int) screenY + this.getHeight(), column2, row15, column2 + Tile.normalTileSize, row15 + Tile.normalTileSize, transparent, null);
+                        break;
+                    case 3:
+                        g2.drawImage(sprites, (int) screenX, (int) screenY, (int) screenX + getWidth(), (int) screenY + this.getHeight(), column3, row15, column3 + Tile.normalTileSize, row15 + Tile.normalTileSize, transparent, null);
+                        break;
+                }
+            } else {
+                switch (animationState) {
+                    case 0:
+                        g2.drawImage(sprites, (int) screenX, (int) screenY, (int) screenX + getWidth(), (int) screenY + this.getHeight(), column1, row13, column1 + Tile.normalTileSize, row13 + Tile.normalTileSize, transparent, null);
+                        break;
+                    case 1, 2:
+                        g2.drawImage(sprites, (int) screenX, (int) screenY, (int) screenX + getWidth(), (int) screenY + this.getHeight(), column2, row13, column2 + Tile.normalTileSize, row13 + Tile.normalTileSize, transparent, null);
+                        break;
+                    case 3:
+                        g2.drawImage(sprites, (int) screenX, (int) screenY, (int) screenX + getWidth(), (int) screenY + this.getHeight(), column3, row13, column3 + Tile.normalTileSize, row13 + Tile.normalTileSize, transparent, null);
                         break;
                 }
             }

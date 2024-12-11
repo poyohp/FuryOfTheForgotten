@@ -19,13 +19,18 @@ public abstract class Player extends Entity {
     public boolean inAbility = false;
 
 
-    int updateFrames , attackFrames, characterAttackFrames, attackCooldown, characterAttackCooldown;
+    public int updateFrames;
+    int attackFrames;
+    int characterAttackFrames;
+    int attackCooldown;
+    int characterAttackCooldown;
+    public int maxAnimationState;
 
     Color transparent = new Color(0,0,0,0);
 
     public HealthHandler healthHandler = new HealthHandler((int)this.getHealth());
     CollisionHandler collisionHandler = new CollisionHandler();
-    Tile[][] tiles;
+    public Tile[][] tiles;
 
     /**
      * Enemy that follows player
@@ -147,7 +152,7 @@ public abstract class Player extends Entity {
      */
     public void updateFrames() {
         if (updateFrames == 0) {
-            if (animationState < 3) {
+            if (animationState < maxAnimationState) {
                 animationState++;
             } else {
                 animationState = 0;
