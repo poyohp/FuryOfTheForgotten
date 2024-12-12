@@ -9,7 +9,7 @@ public class Object {
     boolean isEquippable;
     boolean isPickedUp;
 
-    private final int objectSize = 20;
+    private final int objectSize = Tile.normalTileSize;
     public final int HUDWidth = Tile.tileMultipler*objectSize;
     public final int HUDHeight = Tile.tileMultipler*objectSize;
 
