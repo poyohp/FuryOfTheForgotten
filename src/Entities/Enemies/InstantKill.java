@@ -4,6 +4,7 @@ import Entities.Players.Player;
 import Handlers.ImageHandler;
 import World.Tile;
 
+import java.awt.image.BufferedImage;
 import java.util.Random;
 
 import java.awt.*;
@@ -12,6 +13,15 @@ public class InstantKill extends Enemy {
 
     Random rand = new Random();
     double upBound, downBound, leftBound, rightBound;
+
+    BufferedImage pancakeBunnySprite = ImageHandler.loadImage("src/Assets/Entities/Enemies/Bunnies/pancakeBunny.png");
+    final int MAX_ROWS = 4;
+    final int MAX_COLS = 3;
+    int spriteW = 1022/3;
+    int spriteH = 1154/4;
+    int currentRow = 0;
+    int currentCol = 0;
+    int updateFrames = 12;
 
     int movesPerTile;
     int direction;
@@ -31,7 +41,33 @@ public class InstantKill extends Enemy {
 
     @Override
     public void draw(Graphics2D g2) {
-        g2.drawImage(ImageHandler.loadImage("src/Assets/Entities/Enemies/Bunnies/ghostBunny.png"), (int)this.screenX, (int)this.screenY, this.getWidth(), this.getHeight(), null);
+        updateRowsAndCols();
+        g2.drawImage(pancakeBunnySprite,
+                (int)this.screenX, (int)this.screenY, (int)this.screenX + this.getWidth(), (int)this.screenY + this.getHeight(),  //destination
+                currentCol * spriteW, currentRow * spriteH, (currentCol+1) * spriteW, (currentRow+1) * spriteH,
+                null);
+    }
+
+    /**
+     * Used for updating animation
+     */
+    public boolean updateFrames() {
+        if (updateFrames == 0) {
+            updateFrames = 20;
+            return true;
+        } else {
+            updateFrames--;
+            return false;
+        }
+    }
+
+    public void updateRowsAndCols() {
+        if (updateFrames()) {
+            currentCol++;
+            if (currentCol >= MAX_COLS) currentCol = 0;
+            currentRow++;
+            if (currentRow >= MAX_ROWS) currentRow = 0;
+        }
     }
 
     @Override
