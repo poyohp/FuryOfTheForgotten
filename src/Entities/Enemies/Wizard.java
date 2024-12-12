@@ -85,8 +85,8 @@ public class Wizard extends Enemy{
     public void move() {
         // If enemy is going to follow player
         if (onPath && !attacking) {
-            int goalRow = (int) (player.entityTop/ Tile.tileSize); //top row of the player
-            int goalCol = (int) (player.entityLeft/Tile.tileSize); //left row of the player
+            int goalRow = (int) (entityToFollow.entityTop/ Tile.tileSize); //top row of the player
+            int goalCol = (int) (entityToFollow.entityLeft/Tile.tileSize); //left row of the player
 
             searchPath(goalRow, goalCol);
 

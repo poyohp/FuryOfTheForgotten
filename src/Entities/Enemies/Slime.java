@@ -60,8 +60,8 @@ public class Slime extends Enemy{
 
         // If enemy is going to follow player
         if (onPath) {
-            int goalRow = (int) (player.entityTop/ Tile.tileSize); //top row of the player
-            int goalCol = (int) (player.entityLeft/Tile.tileSize); //left row of the player
+            int goalRow = (int) (entityToFollow.entityTop/ Tile.tileSize); //top row of the player
+            int goalCol = (int) (entityToFollow.entityLeft/Tile.tileSize); //left row of the player
 
             searchPath(goalRow, goalCol);
 
