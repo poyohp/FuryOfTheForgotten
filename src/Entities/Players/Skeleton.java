@@ -17,6 +17,16 @@ public class Skeleton extends Player{
     BufferedImage sideRoll3 = ImageHandler.loadImage("src/Assets/Entities/Players/Skeleton/SkeletonSideRoll3.png");
     BufferedImage sideRoll4 = ImageHandler.loadImage("src/Assets/Entities/Players/Skeleton/SkeletonSideRoll4.png");
     BufferedImage sideRoll5 = ImageHandler.loadImage("src/Assets/Entities/Players/Skeleton/SkeletonSideRoll5.png");
+    BufferedImage upRoll1 = ImageHandler.loadImage("src/Assets/Entities/Players/Skeleton/SkeletonUpRoll1.png");
+    BufferedImage upRoll2 = ImageHandler.loadImage("src/Assets/Entities/Players/Skeleton/SkeletonUpRoll2.png");
+    BufferedImage upRoll3 = ImageHandler.loadImage("src/Assets/Entities/Players/Skeleton/SkeletonUpRoll3.png");
+    BufferedImage upRoll4 = ImageHandler.loadImage("src/Assets/Entities/Players/Skeleton/SkeletonUpRoll4.png");
+    BufferedImage upRoll5 = ImageHandler.loadImage("src/Assets/Entities/Players/Skeleton/SkeletonUpRoll5.png");
+    BufferedImage downRoll1 = ImageHandler.loadImage("src/Assets/Entities/Players/Skeleton/SkeletonDownRoll1.png");
+    BufferedImage downRoll2 = ImageHandler.loadImage("src/Assets/Entities/Players/Skeleton/SkeletonDownRoll2.png");
+    BufferedImage downRoll3 = ImageHandler.loadImage("src/Assets/Entities/Players/Skeleton/SkeletonDownRoll3.png");
+    BufferedImage downRoll4 = ImageHandler.loadImage("src/Assets/Entities/Players/Skeleton/SkeletonDownRoll4.png");
+    BufferedImage downRoll5 = ImageHandler.loadImage("src/Assets/Entities/Players/Skeleton/SkeletonDownRoll5.png");
 
 
     int column1 = 7, column2 = 39, column3 = 71, column4 = 103, row1 = 7, row2 = 39, row3 = 71, row4 = 103, row5 = 135, row6 = 167, row7 = 199, row8 = 231, row9 = 263, row10 = 295, row11 = 327, row12 = 359, row13 = 391, row14 = 423, row15 = 455;
@@ -292,25 +302,37 @@ public class Skeleton extends Player{
             } else if (direction == 'u') {
                 switch (animationState) {
                     case 0:
-                        g2.drawImage(sprites, (int) screenX, (int) screenY, (int) screenX + getWidth(), (int) screenY + this.getHeight(), column1, row15, column1 + Tile.normalTileSize, row15 + Tile.normalTileSize, transparent, null);
+                        g2.drawImage(upRoll1, (int) screenX + Tile.tileRatio, (int) screenY, (int) screenX + getWidth() + Tile.tileRatio, (int) screenY + this.getHeight(), 0, 0, 16, 16, transparent, null);
                         break;
-                    case 1, 2:
-                        g2.drawImage(sprites, (int) screenX, (int) screenY, (int) screenX + getWidth(), (int) screenY + this.getHeight(), column2, row15, column2 + Tile.normalTileSize, row15 + Tile.normalTileSize, transparent, null);
+                    case 1:
+                        g2.drawImage(upRoll2, (int) screenX + Tile.tileRatio, (int) screenY, (int) screenX + getWidth() + Tile.tileRatio, (int) screenY + this.getHeight(), 0, 0, 16, 16, transparent, null);
+                        break;
+                    case 2:
+                        g2.drawImage(upRoll3, (int) screenX + Tile.tileRatio, (int) screenY, (int) screenX + getWidth() + Tile.tileRatio, (int) screenY + this.getHeight(), 0, 0, 16, 16, transparent, null);
                         break;
                     case 3:
-                        g2.drawImage(sprites, (int) screenX, (int) screenY, (int) screenX + getWidth(), (int) screenY + this.getHeight(), column3, row15, column3 + Tile.normalTileSize, row15 + Tile.normalTileSize, transparent, null);
+                        g2.drawImage(upRoll4, (int) screenX + Tile.tileRatio, (int) screenY, (int) screenX + getWidth() + Tile.tileRatio, (int) screenY + this.getHeight(), 0, 0, 16, 16, transparent, null);
+                        break;
+                    case 4:
+                        g2.drawImage(upRoll5, (int) screenX + Tile.tileRatio, (int) screenY, (int) screenX + getWidth() + Tile.tileRatio, (int) screenY + this.getHeight(), 0, 0, 16, 16, transparent, null);
                         break;
                 }
             } else {
                 switch (animationState) {
                     case 0:
-                        g2.drawImage(sprites, (int) screenX, (int) screenY, (int) screenX + getWidth(), (int) screenY + this.getHeight(), column1, row13, column1 + Tile.normalTileSize, row13 + Tile.normalTileSize, transparent, null);
+                        g2.drawImage(downRoll1, (int) screenX + Tile.tileRatio, (int) screenY, (int) screenX + getWidth() + Tile.tileRatio, (int) screenY + this.getHeight(), 0, 0, 16, 16, transparent, null);
                         break;
-                    case 1, 2:
-                        g2.drawImage(sprites, (int) screenX, (int) screenY, (int) screenX + getWidth(), (int) screenY + this.getHeight(), column2, row13, column2 + Tile.normalTileSize, row13 + Tile.normalTileSize, transparent, null);
+                    case 1:
+                        g2.drawImage(downRoll2, (int) screenX + Tile.tileRatio, (int) screenY, (int) screenX + getWidth() + Tile.tileRatio, (int) screenY + this.getHeight(), 0, 0, 16, 16, transparent, null);
+                        break;
+                    case 2:
+                        g2.drawImage(downRoll3, (int) screenX + Tile.tileRatio, (int) screenY, (int) screenX + getWidth() + Tile.tileRatio, (int) screenY + this.getHeight(), 0, 0, 16, 16, transparent, null);
                         break;
                     case 3:
-                        g2.drawImage(sprites, (int) screenX, (int) screenY, (int) screenX + getWidth(), (int) screenY + this.getHeight(), column3, row13, column3 + Tile.normalTileSize, row13 + Tile.normalTileSize, transparent, null);
+                        g2.drawImage(downRoll4, (int) screenX + Tile.tileRatio, (int) screenY, (int) screenX + getWidth() + Tile.tileRatio, (int) screenY + this.getHeight(), 0, 0, 16, 16, transparent, null);
+                        break;
+                    case 4:
+                        g2.drawImage(downRoll5, (int) screenX + Tile.tileRatio, (int) screenY, (int) screenX + getWidth() + Tile.tileRatio, (int) screenY + this.getHeight(), 0, 0, 16, 16, transparent, null);
                         break;
                 }
             }
