@@ -1,19 +1,16 @@
-package Attacks;
+package Attacks.Melee;
 
+import Attacks.Attack;
 import Entities.Entity;
 import Entities.Hitbox;
 import Entities.Players.Player;
 import Handlers.ImageHandler;
-import World.Tile;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Melee extends Attack{
+public class Melee extends Attack {
 
-    //BufferedImage stab1 = ImageHandler.loadImage("src/Assets/Projectiles/Stab1.png");
-    //BufferedImage stab2 = ImageHandler.loadImage("src/Assets/Projectiles/Stab2.png");
-    //BufferedImage stab3 = ImageHandler.loadImage("src/Assets/Projectiles/Stab3.png");
 
     /**
      * Create melee attack
@@ -77,18 +74,22 @@ public class Melee extends Attack{
     public void setScreenPosition(Player player ) {
         // If direction is up
         if (getDirection()[0] == 'u') {
+            angle = Math.PI/2;
             setScreenX(entity.screenX + (double) entity.getWidth() / 2 - (double) getWidth() / 2);
             setScreenY(entity.screenY - getRange());
         // If direction is right
         } else if (getDirection()[0] == 'r') {
+            angle = 0;
             setScreenX(entity.screenX + entity.getWidth());
             setScreenY(entity.screenY + (double) entity.getHeight() / 2 - (double) getWidth() / 2);
         // If direction is down
         } else if (getDirection()[0] == 'd') {
+            angle = 3*Math.PI/2;
             setScreenX(entity.screenX + (double) entity.getWidth() / 2 - (double) getWidth() / 2);
             setScreenY(entity.screenY + entity.getHeight());
         // If direction is left
         } else {
+            angle = Math.PI;
             setScreenX(entity.screenX - getRange());
             setScreenY(entity.screenY + (double) entity.getHeight() / 2 - (double) getWidth() / 2);
         }
@@ -135,58 +136,7 @@ public class Melee extends Attack{
      */
     @Override
     public void draw(Graphics2D g2) {
-
-        /*
-        if (entity.direction == 'u') {
-            switch (entity.animationState) {
-                case 0, 3:
-                    ImageHandler.drawRotatedImage(g2, (int)(getScreenX() + getWidth()/2), (int)(getScreenY() + getRange()/2), -Math.PI/2, stab1, (int)getScreenX(), (int)getScreenY(), (int)(getScreenX() + getWidth()), (int)(getScreenY() + getRange()), 0, 0, 16, 16);
-                    break;
-                case 1:
-                    ImageHandler.drawRotatedImage(g2, (int)(getScreenX() + getWidth()/2), (int)(getScreenY() + getRange()/2), -Math.PI/2, stab3, (int)getScreenX(), (int)getScreenY(), (int)(getScreenX() + getWidth()), (int)(getScreenY() + getRange()), 0, 0, 16, 16);
-                    break;
-                case 2:
-                    ImageHandler.drawRotatedImage(g2, (int)(getScreenX() + getWidth()/2), (int)(getScreenY() + getRange()/2), -Math.PI/2, stab2, (int)getScreenX(), (int)getScreenY(), (int)(getScreenX() + getWidth()), (int)(getScreenY() + getRange()), 0, 0, 16, 16);
-                    break;
-            }
-        } else if (entity.direction == 'l') {
-            switch (entity.animationState) {
-                case 0, 3:
-                    ImageHandler.drawRotatedImage(g2, (int)(getScreenX() + getRange()/2), (int)(getScreenY() + getWidth()/2), Math.PI, stab1, (int)getScreenX(), (int)getScreenY(), (int)(getScreenX() + getRange()), (int)(getScreenY() + getWidth()), 0, 0, 16, 16);
-                    break;
-                case 1:
-                    ImageHandler.drawRotatedImage(g2, (int)(getScreenX() + getRange()/2), (int)(getScreenY() + getWidth()/2), Math.PI, stab3, (int)getScreenX(), (int)getScreenY(), (int)(getScreenX() + getRange()), (int)(getScreenY() + getWidth()), 0, 0, 16, 16);
-                    break;
-                case 2:
-                    ImageHandler.drawRotatedImage(g2, (int)(getScreenX() + getRange()/2), (int)(getScreenY() + getWidth()/2), Math.PI, stab2, (int)getScreenX(), (int)getScreenY(), (int)(getScreenX() + getRange()), (int)(getScreenY() + getWidth()), 0, 0, 16, 16);
-                    break;
-            }
-        } else if (entity.direction == 'd') {
-            switch (entity.animationState) {
-                case 0, 3:
-                    ImageHandler.drawRotatedImage(g2, (int)(getScreenX() + getWidth()/2), (int)(getScreenY() + getRange()/2), -3*Math.PI/2, stab1, (int)getScreenX(), (int)getScreenY(), (int)(getScreenX() + getWidth()), (int)(getScreenY() + getRange()), 0, 0, 16, 16);
-                    break;
-                case 1:
-                    ImageHandler.drawRotatedImage(g2, (int)(getScreenX() + getWidth()/2), (int)(getScreenY() + getRange()/2), -3*Math.PI/2, stab3, (int)getScreenX(), (int)getScreenY(), (int)(getScreenX() + getWidth()), (int)(getScreenY() + getRange()), 0, 0, 16, 16);
-                    break;
-                case 2:
-                    ImageHandler.drawRotatedImage(g2, (int)(getScreenX() + getWidth()/2), (int)(getScreenY() + getRange()/2), -3*Math.PI/2, stab2, (int)getScreenX(), (int)getScreenY(), (int)(getScreenX() + getWidth()), (int)(getScreenY() + getRange()), 0, 0, 16, 16);
-                    break;
-            }
-        } else {
-            switch (entity.animationState) {
-                case 0, 3:
-                    ImageHandler.drawRotatedImage(g2, (int)(getScreenX() + getRange()/2), (int)(getScreenY() + getWidth()/2), 0, stab1, (int)getScreenX(), (int)getScreenY(), (int)(getScreenX() + getRange()), (int)(getScreenY() + getWidth()), 0, 0, 16, 16);
-                    break;
-                case 1:
-                    ImageHandler.drawRotatedImage(g2, (int)(getScreenX() + getRange()/2), (int)(getScreenY() + getWidth()/2), 0, stab3, (int)getScreenX(), (int)getScreenY(), (int)(getScreenX() + getRange()), (int)(getScreenY() + getWidth()), 0, 0, 16, 16);
-                    break;
-                case 2:
-                    ImageHandler.drawRotatedImage(g2, (int)(getScreenX() + getRange()/2), (int)(getScreenY() + getWidth()/2), 0, stab2, (int)getScreenX(), (int)getScreenY(), (int)(getScreenX() + getRange()), (int)(getScreenY() + getWidth()), 0, 0, 16, 16);
-                    break;
-            }
-        }
         
-         */
+
     }
 }

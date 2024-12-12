@@ -1,10 +1,11 @@
 package Handlers.Attacks;
 
 
-import Attacks.Arrow;
+import Attacks.Melee.Stab;
+import Attacks.Ranged.Arrow;
 import Attacks.Attack;
-import Attacks.Melee;
-import Attacks.Ranged;
+import Attacks.Melee.Melee;
+import Attacks.Ranged.Ranged;
 import Entities.Enemies.Enemy;
 import Entities.Entity;
 import Entities.Players.Player;
@@ -49,8 +50,8 @@ public class AttackHandler {
      * @param yOffset attack y offset
      * @param duration attack duration
      */
-    void createMelee(int damage, int range, int width, char direction, Entity entity, int xOffset, int yOffset, int duration) {
-        playerAttacks.add(new Melee(damage, range, width, direction, entity, xOffset, yOffset, duration));
+    void createPlayerStab(int damage, int range, int width, char direction, Entity entity, int xOffset, int yOffset, int duration) {
+        playerAttacks.add(new Stab(damage, range, width, direction, entity, xOffset, yOffset, duration));
     }
 
     /**
@@ -65,7 +66,7 @@ public class AttackHandler {
      * @param duration attack duration
      * @param speed attack speed
      */
-    void createPlayerRanged(int damage, int range, int width, char direction, Entity entity, int xOffset, int yOffset, int duration, int speed, double angle) {
+    void createPlayerArrow(int damage, int range, int width, char direction, Entity entity, int xOffset, int yOffset, int duration, int speed, double angle) {
         playerAttacks.add(new Arrow(damage, range, width, direction, entity, xOffset, yOffset, duration, speed, angle));
     }
 
@@ -101,24 +102,24 @@ public class AttackHandler {
     void createPlayerAttacks(Player p) {
         if (p.type == 's') {
             if (p.direction == 'r') {
-                createPlayerRanged(5, 8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 0);
-                createPlayerRanged(5, 8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 15 * Math.PI / 8);
-                createPlayerRanged(5, 8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, Math.PI / 8);
+                createPlayerArrow(10, 8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 0);
+                createPlayerArrow(10, 8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 15 * Math.PI / 8);
+                createPlayerArrow(10, 8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, Math.PI / 8);
             } else if (p.direction == 'u') {
-                createPlayerRanged(5, 8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, Math.PI / 2);
-                createPlayerRanged(5, 8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 3 * Math.PI / 8);
-                createPlayerRanged(5, 8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 5 * Math.PI / 8);
+                createPlayerArrow(10, 8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, Math.PI / 2);
+                createPlayerArrow(10, 8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 3 * Math.PI / 8);
+                createPlayerArrow(10, 8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 5 * Math.PI / 8);
             } else if (p.direction == 'l') {
-                createPlayerRanged(5, 8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, Math.PI);
-                createPlayerRanged(5, 8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 7 * Math.PI / 8);
-                createPlayerRanged(5, 8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 9 * Math.PI / 8);
+                createPlayerArrow(10, 8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, Math.PI);
+                createPlayerArrow(10, 8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 7 * Math.PI / 8);
+                createPlayerArrow(10, 8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 9 * Math.PI / 8);
             } else {
-                createPlayerRanged(5, 8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 3 * Math.PI / 2);
-                createPlayerRanged(5, 8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 11 * Math.PI / 8);
-                createPlayerRanged(5, 8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 13 * Math.PI / 8);
+                createPlayerArrow(10, 8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 3 * Math.PI / 2);
+                createPlayerArrow(10, 8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 11 * Math.PI / 8);
+                createPlayerArrow(10, 8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 13 * Math.PI / 8);
             }
         } else if (p.type == 'g') {
-            createMelee(25, 10 * Tile.tileRatio, 5 * Tile.tileRatio, p.direction, p, 0, 0, 30);
+            createPlayerStab(25, 20 * Tile.tileRatio, 10 * Tile.tileRatio, p.direction, p, 0, 0, 30);
         }
     }
 

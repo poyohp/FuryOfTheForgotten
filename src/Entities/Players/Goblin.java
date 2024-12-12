@@ -19,6 +19,7 @@ public class Goblin extends Player{
         characterAttackCooldown = 30;
         attackFrames = characterAttackFrames;
         attackCooldown = characterAttackCooldown;
+        maxAnimationState = 3;
     }
 
     /**

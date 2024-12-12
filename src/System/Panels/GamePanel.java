@@ -3,6 +3,7 @@ package System.Panels;
 import Entities.Players.Goblin;
 import Entities.Players.Player;
 import Entities.Players.Skeleton;
+import Handlers.AbilityHandler;
 import Handlers.HUD.InventoryHandler;
 import System.Main;
 
@@ -41,6 +42,7 @@ public class GamePanel extends JPanel implements Runnable{
     LevelHandler levelHandler;
     KeyHandler keyHandler;
     AttackHandler attackHandler;
+    AbilityHandler abilityHandler;
     CollisionHandler collisionHandler;
     SpawnHandler spawnHandler;
     DamageDealer damageDealer;
@@ -63,11 +65,12 @@ public class GamePanel extends JPanel implements Runnable{
         spawnHandler = new SpawnHandler();
         damageDealer = new DamageDealer();
 
-        player = new Goblin(100, 4, Tile.tileSize, Tile.tileSize, "Player", 0, 0, 4*Tile.tileSize/Tile.normalTileSize, 6*Tile.tileSize/Tile.normalTileSize-1, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
+        player = new Skeleton(100, 4, Tile.tileSize, Tile.tileSize, "Player", 0, 0, 4*Tile.tileSize/Tile.normalTileSize, 6*Tile.tileSize/Tile.normalTileSize-1, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
 
         levelHandler = new LevelHandler(1, spawnHandler, player);
         collisionHandler = new CollisionHandler();
         attackHandler = new AttackHandler(keyHandler, levelHandler.getCurrentLevel().getMap().baseLayerTiles);
+        abilityHandler = new AbilityHandler(player, keyHandler, collisionHandler);
 
         pathfinding = new APathfinding(levelHandler.getCurrentLevel().getMap().baseLayerTiles);
 
@@ -133,6 +136,7 @@ public class GamePanel extends JPanel implements Runnable{
         player.update(levelHandler.getCurrentLevel().getMap().baseLayerTiles);
         levelHandler.update(player, spawnHandler, attackHandler, damageDealer);
         attackHandler.update(player, levelHandler.getCurrentLevel().enemies);
+        abilityHandler.update();
         damageDealer.dealDamageToEnemies(attackHandler, levelHandler.getCurrentLevel());
 
         ghost.update();

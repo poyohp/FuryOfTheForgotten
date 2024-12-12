@@ -13,7 +13,7 @@ public abstract class Enemy extends Entity {
     public boolean isFollowing = false;
     public boolean attacking = true;
 
-    Player player; // Player to reference
+    Entity entityToFollow; // Player to reference
 
     /**
      * Enemy that follows player
@@ -33,7 +33,7 @@ public abstract class Enemy extends Entity {
      */
     public Enemy(int health, int speed, int width, int height, String name, int worldX, int worldY, int xOffset, int yOffset, int hitBoxWidth, int hitBoxHeight, Player player, boolean isFollowing) {
         super(health, speed, width, height, name, worldX, worldY, xOffset, yOffset, hitBoxWidth, hitBoxHeight);
-        this.player = player;
+        this.entityToFollow = player;
         this.isFollowing = isFollowing;
 
         damage = 0.5; // Damage for all enemies
@@ -57,7 +57,7 @@ public abstract class Enemy extends Entity {
      * @return True if player is in vision, false if not
      */
     public boolean playerInVision() {
-        if (Math.abs(player.entityLeft - this.entityLeft) < vision && Math.abs(player.entityTop - this.entityTop) < vision) {
+        if (Math.abs(entityToFollow.entityLeft - this.entityLeft) < vision && Math.abs(entityToFollow.entityTop - this.entityTop) < vision) {
             return true;
         }
         else return false;
@@ -69,8 +69,8 @@ public abstract class Enemy extends Entity {
     @Override
     public void setScreenPosition() {
         // gets player coordinates and offsets by the player's place on the screen
-        screenX = worldX - player.worldX + player.screenX;
-        screenY = worldY - player.worldY + player.screenY;
+        screenX = worldX - entityToFollow.worldX + entityToFollow.screenX;
+        screenY = worldY - entityToFollow.worldY + entityToFollow.screenY;
     }
 
 
