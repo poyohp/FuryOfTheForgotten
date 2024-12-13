@@ -44,45 +44,45 @@ public class Stab extends Melee {
                 if (angle == Math.PI || angle == 0) {
                     centerX = (int) getScreenX() + (getRange() / 2);
                     centerY = (int) getScreenY() + (getWidth() / 2);
-                    ImageHandler.drawRotatedImage(g2, centerX, centerY, angle + Math.PI, stab1, (int) getScreenX(), (int) getScreenY(), (int) getScreenX() + getRange(), (int) getScreenY() + getWidth(), 0, 0, 1000, 500);
+                    ImageHandler.drawRotatedImage(g2, centerX, centerY, -angle, stab1, (int) getScreenX(), (int) getScreenY(), (int) getScreenX() + getRange(), (int) getScreenY() + getWidth(), 0, 0, 1000, 500);
                 } else if (angle == Math.PI / 2) {
                     centerX = (int) getScreenX() + (getWidth() / 2);
                     centerY = (int) getScreenY() + (getRange() / 2);
-                    ImageHandler.drawRotatedImage(g2, centerX, centerY, Math.PI, stab1Up, (int) getScreenX(), (int) getScreenY(), (int) getScreenX() + getWidth(), (int) getScreenY() + getRange(), 0, 0, 500, 1000);
+                    ImageHandler.drawRotatedImage(g2, centerX, centerY, 0, stab1Up, (int) getScreenX(), (int) getScreenY(), (int) getScreenX() + getWidth(), (int) getScreenY() + getRange(), 0, 0, 500, 1000);
                 } else {
                     centerX = (int) getScreenX() + (getWidth() / 2);
                     centerY = (int) getScreenY() + (getRange() / 2);
-                    ImageHandler.drawRotatedImage(g2, centerX, centerY, 2*Math.PI, stab1Up, (int) getScreenX(), (int) getScreenY(), (int) getScreenX() + getWidth(), (int) getScreenY() + getRange(), 0, 0, 500, 1000);
+                    ImageHandler.drawRotatedImage(g2, centerX, centerY, Math.PI, stab1Up, (int) getScreenX(), (int) getScreenY(), (int) getScreenX() + getWidth(), (int) getScreenY() + getRange(), 0, 0, 500, 1000);
                 }
                 break;
             case 1:
                 if (angle == Math.PI || angle == 0) {
                     centerX = (int) getScreenX() + (getRange() / 2);
                     centerY = (int) getScreenY() + (getWidth() / 2);
-                    ImageHandler.drawRotatedImage(g2, centerX, centerY, angle + Math.PI, stab3, (int) getScreenX(), (int) getScreenY(), (int) getScreenX() + getRange(), (int) getScreenY() + getWidth(), 0, 0, 1000, 500);
+                    ImageHandler.drawRotatedImage(g2, centerX, centerY, -angle, stab3, (int) getScreenX(), (int) getScreenY(), (int) getScreenX() + getRange(), (int) getScreenY() + getWidth(), 0, 0, 1000, 500);
                 } else if (angle == Math.PI / 2) {
                     centerX = (int) getScreenX() + (getWidth() / 2);
                     centerY = (int) getScreenY() + (getRange() / 2);
-                    ImageHandler.drawRotatedImage(g2, centerX, centerY,  Math.PI, stab3Up, (int) getScreenX(), (int) getScreenY(), (int) getScreenX() + getWidth(), (int) getScreenY() + getRange(), 0, 0, 500, 1000);
+                    ImageHandler.drawRotatedImage(g2, centerX, centerY, 0, stab3Up, (int) getScreenX(), (int) getScreenY(), (int) getScreenX() + getWidth(), (int) getScreenY() + getRange(), 0, 0, 500, 1000);
                 } else {
                     centerX = (int) getScreenX() + (getWidth() / 2);
                     centerY = (int) getScreenY() + (getRange() / 2);
-                    ImageHandler.drawRotatedImage(g2, centerX, centerY, 2*Math.PI, stab3Up, (int) getScreenX(), (int) getScreenY(), (int) getScreenX() + getWidth(), (int) getScreenY() + getRange(), 0, 0, 500, 1000);
+                    ImageHandler.drawRotatedImage(g2, centerX, centerY, Math.PI, stab3Up, (int) getScreenX(), (int) getScreenY(), (int) getScreenX() + getWidth(), (int) getScreenY() + getRange(), 0, 0, 500, 1000);
                 }
                 break;
             case 2:
                 if (angle == Math.PI || angle == 0) {
                     centerX = (int) getScreenX() + (getRange() / 2);
                     centerY = (int) getScreenY() + (getWidth() / 2);
-                    ImageHandler.drawRotatedImage(g2, centerX, centerY, angle + Math.PI, stab2, (int) getScreenX(), (int) getScreenY(), (int) getScreenX() + getRange(), (int) getScreenY() + getWidth(), 0, 0, 1000, 500);
+                    ImageHandler.drawRotatedImage(g2, centerX, centerY, -angle, stab2, (int) getScreenX(), (int) getScreenY(), (int) getScreenX() + getRange(), (int) getScreenY() + getWidth(), 0, 0, 1000, 500);
                 } else if (angle == Math.PI / 2) {
                     centerX = (int) getScreenX() + (getWidth() / 2);
                     centerY = (int) getScreenY() + (getRange() / 2);
-                    ImageHandler.drawRotatedImage(g2, centerX, centerY, Math.PI, stab2Up, (int) getScreenX(), (int) getScreenY(), (int) getScreenX() + getWidth(), (int) getScreenY() + getRange(), 0, 0, 500, 1000);
+                    ImageHandler.drawRotatedImage(g2, centerX, centerY, 0, stab2Up, (int) getScreenX(), (int) getScreenY(), (int) getScreenX() + getWidth(), (int) getScreenY() + getRange(), 0, 0, 500, 1000);
                 } else {
                     centerX = (int) getScreenX() + (getWidth() / 2);
                     centerY = (int) getScreenY() + (getRange() / 2);
-                    ImageHandler.drawRotatedImage(g2, centerX, centerY, 2*Math.PI, stab2Up, (int) getScreenX(), (int) getScreenY(), (int) getScreenX() + getWidth(), (int) getScreenY() + getRange(), 0, 0, 500, 1000);
+                    ImageHandler.drawRotatedImage(g2, centerX, centerY,  Math.PI, stab2Up, (int) getScreenX(), (int) getScreenY(), (int) getScreenX() + getWidth(), (int) getScreenY() + getRange(), 0, 0, 500, 1000);
                 }
                 break;
         }
