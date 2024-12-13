@@ -6,7 +6,8 @@ import java.awt.*;
 
 public class Hitbox extends Rectangle {
 
-    private int xOffset, yOffset; // Offset from positions
+    public int xOffset;
+    public int yOffset; // Offset from positions
     public double worldX, worldY;
     public double screenX, screenY;
 

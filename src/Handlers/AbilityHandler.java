@@ -1,6 +1,10 @@
 package Handlers;
 
+import Entities.Players.Decoy;
 import Entities.Players.Player;
+
+import java.awt.*;
+import java.util.ArrayList;
 
 public class AbilityHandler {
 
@@ -9,6 +13,7 @@ public class AbilityHandler {
     CollisionHandler collisionHandler;
     int cooldown, abilityLength;
     boolean canAbility = true;
+    ArrayList<Decoy> decoys = new ArrayList<Decoy>();
 
     public AbilityHandler (Player player, KeyHandler keyHandler, CollisionHandler collisionHandler) {
         this.player = player;
@@ -25,12 +30,14 @@ public class AbilityHandler {
 
     public boolean checkAbility() {
         if (keyHandler.abilityPress && canAbility) {
+            canAbility = false;
+            player.inAbility = true;
             if (player.type == 's') {
-                canAbility = false;
-                player.inAbility = true;
                 player.maxAnimationState = 5;
                 player.animationState = 0;
                 player.updateFrames = 7;
+            } else if (player.type == 'g'){
+
             }
             return true;
         } else {
@@ -42,7 +49,7 @@ public class AbilityHandler {
         if (player.type == 's') {
             player.setSpeed(player.getSpeed() * 2);
         } else if (player.type == 'g'){
-
+            decoys.add(new Decoy(player));
         }
     }
 
@@ -54,26 +61,24 @@ public class AbilityHandler {
             player.updateFrames = 12;
             player.inAbility = false;
         } else if (player.type == 'g'){
-
+            decoys.clear();
         }
     }
 
     public void update() {
-        System.out.println(player.getSpeed());
+        //System.out.println(player.getSpeed());
         if (checkAbility()) {
-            if (player.type == 's') {
-                ability();
-            }
+            ability();
         }
 
         if (player.inAbility) {
             if (abilityLength == 0) {
                 if (player.type == 's') {
                     abilityLength = 35;
-                    cancelAbility();
                 } else if (player.type == 'g') {
-
+                    abilityLength = 300;
                 }
+                cancelAbility();
             } else {
                 if (player.type == 's') {
                     if (player.direction == 'u') {
@@ -89,20 +94,41 @@ public class AbilityHandler {
                         if (!collisionHandler.playerWithTileCollision(player, player.tiles))
                             player.worldX += player.getSpeed();
                     }
+                } else if (player.type == 'g') {
+                    if (!decoys.isEmpty()) {
+                        decoys.getFirst().update();
+                    }
                 }
                 abilityLength--;
             }
+
+            /*
+            for (Decoy d : decoys) {
+                System.out.println(1);
+            }
+
+             */
         }
 
         if (!canAbility) {
             if (cooldown == 0) {
-                cooldown = 120;
+                if (player.type == 's') {
+                    cooldown = 120;
+                } else if (player.type == 'g') {
+                    cooldown = 600;
+                }
                 canAbility = true;
             } else {
                 cooldown--;
             }
         }
 
+    }
+
+    public void drawDecoy(Graphics2D g2) {
+        if (!decoys.isEmpty()) {
+            decoys.getFirst().draw(g2);
+        }
     }
 
 }

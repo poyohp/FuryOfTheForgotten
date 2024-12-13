@@ -141,4 +141,18 @@ public abstract class Entity {
         health = newHealth;
         if (newHealth < 0) health = 0;
     }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public abstract void draw(Graphics2D g2);
 }

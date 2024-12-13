@@ -217,6 +217,7 @@ public class Goblin extends Player{
                 }
             }
         }
+        //hitbox.draw(g2);
     }
 
 

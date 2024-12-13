@@ -65,7 +65,7 @@ public class GamePanel extends JPanel implements Runnable{
         spawnHandler = new SpawnHandler();
         damageDealer = new DamageDealer();
 
-        player = new Skeleton(100, 4, Tile.tileSize, Tile.tileSize, "Player", 0, 0, 4*Tile.tileSize/Tile.normalTileSize, 6*Tile.tileSize/Tile.normalTileSize-1, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
+        player = new Goblin(100, 4, Tile.tileSize, Tile.tileSize, "Player", 0, 0, 4*Tile.tileSize/Tile.normalTileSize, 6*Tile.tileSize/Tile.normalTileSize-1, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
 
         levelHandler = new LevelHandler(1, spawnHandler, player);
         collisionHandler = new CollisionHandler();
@@ -160,6 +160,7 @@ public class GamePanel extends JPanel implements Runnable{
 
         levelHandler.draw(g2, player);
         player.draw(g2);
+        abilityHandler.drawDecoy(g2);
         attackHandler.draw(g2, player);
         ghost.draw(g2);
 
