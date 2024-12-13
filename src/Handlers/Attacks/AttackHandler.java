@@ -93,7 +93,6 @@ public class AttackHandler {
      * Determine the player's ranged attack's velocities
      */
     void updateAttacks(Player player) {
-
         for (Attack a : playerAttacks) {
             a.update(player);
         }
@@ -128,7 +127,7 @@ public class AttackHandler {
         player.checkAttack();
         player.setAttackCooldown();
 
-        if(player.toCreateAttack()) {
+        if (player.toCreateAttack()) {
             createPlayerAttacks(player);
         }
 

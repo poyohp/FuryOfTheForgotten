@@ -63,7 +63,9 @@ public class Melee extends Attack {
 
     @Override
     public void update(Player player) {
+        hitbox.update(this);
         setScreenPosition(player);
+        System.out.println(getScreenX());
     }
 
 
@@ -73,17 +75,17 @@ public class Melee extends Attack {
     @Override
     public void setScreenPosition(Player player ) {
         // If direction is up
-        if (getDirection()[0] == 'u') {
+        if (player.direction == 'u') {
             angle = Math.PI/2;
             setScreenX(entity.screenX + (double) entity.getWidth() / 2 - (double) getWidth() / 2);
             setScreenY(entity.screenY - getRange());
         // If direction is right
-        } else if (getDirection()[0] == 'r') {
+        } else if (player.direction == 'r') {
             angle = 0;
             setScreenX(entity.screenX + entity.getWidth());
             setScreenY(entity.screenY + (double) entity.getHeight() / 2 - (double) getWidth() / 2);
         // If direction is down
-        } else if (getDirection()[0] == 'd') {
+        } else if (player.direction == 'd') {
             angle = 3*Math.PI/2;
             setScreenX(entity.screenX + (double) entity.getWidth() / 2 - (double) getWidth() / 2);
             setScreenY(entity.screenY + entity.getHeight());
@@ -124,10 +126,10 @@ public class Melee extends Attack {
         if (getDirection()[0] == 'u' || getDirection()[0] == 'd') {
             hitbox = new Hitbox((int) getWorldX(), (int) getWorldY(), (int)getScreenX(), (int)getScreenY(), getWidth(), getRange(), 0, 0);
         } else {
-            hitbox = new Hitbox((int) getWorldX(), (int) getWorldY(), (int)getScreenX(), (int)getScreenY(), getRange(), getWidth()                                                                                                                                                                                                                                                                                                                                                                                                                           , 0, 0);
+            hitbox = new Hitbox((int) getWorldX(), (int) getWorldY(), (int)getScreenX(), (int)getScreenY(), getRange(), getWidth(), 0, 0);
         }
 
-
+        hitbox.update(this);
     }
 
     /**
