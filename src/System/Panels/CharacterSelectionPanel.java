@@ -1,23 +1,21 @@
 package System.Panels;
 
-import System.Main;
-
 import Handlers.ImageHandler;
 import Handlers.KeyHandler;
-import System.Resources.MenuButton;
+import System.Resources.CharacterButton;
+import System.Main;
 
 import javax.swing.*;
 import java.awt.*;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-public class MenuPanel extends JPanel {
+public class CharacterSelectionPanel extends JPanel {
 
     // Loads menu image
-    BufferedImage menu = ImageHandler.loadImage("src/Assets/MenuImages/menu.png");
+    BufferedImage selection = ImageHandler.loadImage("src/Assets/MenuImages/characterSelection.png");
 
     KeyHandler keyHandler;
 
@@ -27,21 +25,22 @@ public class MenuPanel extends JPanel {
     int cooldownCounter = 0;
     int cooldownTime = 200;
     boolean keyProcessed = false;
+    CharacterButton selectedButton;
+
+    static String selectedCharacter;
 
     // Get screen width and height
     public static final int screenWidth = (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth();
     public static final int screenHeight = (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 
     // Sets buttons and arraylist to keep them in
-    MenuButton start = new MenuButton("start.png", screenWidth/3, screenHeight/2 + screenHeight/16, screenWidth/3, screenHeight/6);
-    MenuButton quit = new MenuButton("quit.png", screenWidth/3, screenHeight/2 + screenHeight/4, screenWidth/3, screenHeight/6);
-    MenuButton help = new MenuButton("help.png", screenWidth/12, screenHeight/2 + screenHeight/4, screenHeight/6, screenHeight/6);
-    ArrayList<MenuButton> buttons = new ArrayList<>();
+    CharacterButton zombie = new CharacterButton("zombie", screenWidth/8, screenHeight/7*6);
+    CharacterButton skeleton = new CharacterButton("skeleton", screenWidth/8*3, screenHeight/7*6);
+    CharacterButton goblin = new CharacterButton("goblin", screenWidth/8*5, screenHeight/7*6);
+    CharacterButton vampire = new CharacterButton("vampire", screenWidth/8*7, screenHeight/7*6);
+    ArrayList<CharacterButton> buttons = new ArrayList<>();
 
-    // Keyhandler to handle user options
-    MenuButton selectedButton;
-
-    public MenuPanel() {
+    public CharacterSelectionPanel() {
         this.setDoubleBuffered(true);
         this.setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
 
@@ -51,8 +50,8 @@ public class MenuPanel extends JPanel {
         addKeyListener(keyHandler);
         setFocusable(true);
 
-        start.isSelected = true; // Begins with one button pre-selected
-        selectedButton = start;
+        zombie.isSelected = true; // Begins with one button pre-selected
+        selectedButton = zombie;
 
         addButtonsToArrayList();
 
@@ -74,13 +73,8 @@ public class MenuPanel extends JPanel {
     public void handleChoice() {
         if (keyHandler.choicePress) {
             timer.stop();
-            if (selectedButton == start) {
-                Main.updateGameState(6); // Go to character selection screen
-            } else if (selectedButton == help) { // Update for help later
-                Main.updateGameState(5); // Show ending screen!
-            } else if (selectedButton == quit) {
-                System.exit(0);
-            }
+            selectedCharacter = selectedButton.characterType;
+            Main.updateGameState(2);
         }
     }
 
@@ -88,9 +82,10 @@ public class MenuPanel extends JPanel {
      * Adds all the buttons to an array list
      */
     public void addButtonsToArrayList() {
-        buttons.add(start);
-        buttons.add(quit);
-        buttons.add(help);
+        buttons.add(zombie);
+        buttons.add(skeleton);
+        buttons.add(goblin);
+        buttons.add(vampire);
     }
 
     @Override
@@ -99,12 +94,11 @@ public class MenuPanel extends JPanel {
 
         // Draws the fullscreen menu image
         Graphics2D g2 = (Graphics2D) g;
-        g2.drawImage(menu, 0, 0, screenWidth, screenHeight, null);
+        g2.drawImage(selection, 0, 0, screenWidth, screenHeight, null);
 
-        // Draw buttons. If one is selected, then draw it as selected.
-        for (MenuButton button : buttons) {
-            button.drawButton(g2);
-            if (button.isSelected) button.renderCurrentChoice(g2);
+        // Draw arrow if selected
+        for (CharacterButton button : buttons) {
+            if (button.isSelected) button.drawButton(g2);
         }
     }
 
@@ -118,14 +112,14 @@ public class MenuPanel extends JPanel {
         }
 
         // If key is ready to be processed, process it
-        if (!keyProcessed && (keyHandler.upPress || keyHandler.downPress)) {
+        if (!keyProcessed && (keyHandler.leftPress || keyHandler.rightPress)) {
             setSelected();
             keyProcessed = true;
             cooldownCounter = cooldownTime;
         }
 
         // Means that key was released, and new key press can be processed
-        if (!keyHandler.upPress && !keyHandler.downPress) {
+        if (!keyHandler.leftPress && !keyHandler.rightPress) {
             keyProcessed = false;
         }
     }
@@ -138,16 +132,16 @@ public class MenuPanel extends JPanel {
         int oldIndex = buttons.indexOf(selectedButton);
 
         int newIndex = 0;
-        if (keyHandler.upPress) {
-            newIndex = oldIndex - 1; // Get the button above the old button
+        if (keyHandler.leftPress) {
+            newIndex = oldIndex - 1; // Get the button to the left of the old button
             if (newIndex < 0) newIndex = buttons.size() - 1; // Makes sure that array access does not go out of bounds
-        } else if (keyHandler.downPress) {
-            newIndex = oldIndex + 1;
-            if (newIndex > buttons.size() - 1) newIndex = 0;
+        } else if (keyHandler.rightPress) {
+            newIndex = oldIndex + 1; // Get the button to the right of the old button
+            if (newIndex > buttons.size() - 1) newIndex = 0; // Makes sure that array access does not go out of bounds
         }
 
         // Reset all selected values
-        for (MenuButton button : buttons) {
+        for (CharacterButton button : buttons) {
             button.isSelected = false;
         }
 

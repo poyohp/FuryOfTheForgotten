@@ -9,11 +9,12 @@ public class Main {
     /**
      * All the game panel (for game states)
      */
-    public static final GamePanel gamePanel = new GamePanel();
+    public static GamePanel gamePanel;
     public static MenuPanel menuPanel;
     public static GameOverPanel gameOverPanel = new GameOverPanel();
     public static WinPanel winPanel = new WinPanel();
     public static HelpPanel helpPanel;
+    public static CharacterSelectionPanel characterSelectionPanel;
 
 
     public static JFrame window = new JFrame();
@@ -48,6 +49,7 @@ public class Main {
                 menuPanel.requestFocusInWindow();
                 break;
             case 2:
+                gamePanel = new GamePanel();
                 window.add(gamePanel);
                 gamePanel.initiateGamePanel();
                 break;
@@ -62,6 +64,12 @@ public class Main {
                 window.add(helpPanel);
                 helpPanel.requestFocusInWindow();
                 break;
+            case 6:
+                characterSelectionPanel = new CharacterSelectionPanel();
+                window.add(characterSelectionPanel);
+                characterSelectionPanel.requestFocusInWindow();
+                break;
+
         }
 
         window.pack();
