@@ -40,13 +40,13 @@ public class KeyHandler implements KeyListener {
             downPress = false;
             leftPress = false;
         }
-        if(e.getKeyCode() == KeyEvent.VK_J) {
+        if(e.getKeyCode() == KeyEvent.VK_U) {
             attackPress = true;
         }
-        if(e.getKeyCode() == KeyEvent.VK_SPACE) {
+        if(e.getKeyCode() == KeyEvent.VK_J) {
             choicePress = true;
         }
-        if(e.getKeyCode() == KeyEvent.VK_Q) {
+        if(e.getKeyCode() == KeyEvent.VK_I) {
             abilityPress = true;
         }
 
@@ -70,10 +70,10 @@ public class KeyHandler implements KeyListener {
         if(e.getKeyCode() == KeyEvent.VK_D) {
             rightPress = false;
         }
-        if(e.getKeyCode() == KeyEvent.VK_J) {
+        if(e.getKeyCode() == KeyEvent.VK_U) {
             attackPress = false;
         }
-        if (e.getKeyCode() == KeyEvent.VK_Q) {
+        if (e.getKeyCode() == KeyEvent.VK_I) {
             abilityPress = false;
         }
     }
