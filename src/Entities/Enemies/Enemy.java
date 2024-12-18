@@ -31,7 +31,7 @@ public abstract class Enemy extends Entity {
      * @param player player to follow
      * @param isFollowing whether enemy is following player or not
      */
-    public Enemy(int health, int speed, int width, int height, String name, int worldX, int worldY, int xOffset, int yOffset, int hitBoxWidth, int hitBoxHeight, Player player, boolean isFollowing) {
+    public Enemy(int health, double speed, int width, int height, String name, int worldX, int worldY, int xOffset, int yOffset, int hitBoxWidth, int hitBoxHeight, Player player, boolean isFollowing) {
         super(health, speed, width, height, name, worldX, worldY, xOffset, yOffset, hitBoxWidth, hitBoxHeight);
         this.entityToFollow = player;
         this.isFollowing = isFollowing;

@@ -1,5 +1,6 @@
 package System.Panels;
 
+import Entities.Enemies.EternalSnail;
 import Entities.Players.Goblin;
 import Entities.Players.Player;
 import Entities.Players.Skeleton;
@@ -48,6 +49,7 @@ public class GamePanel extends JPanel implements Runnable{
     DamageDealer damageDealer;
     InventoryHandler inventory = new InventoryHandler(keyHandler);
     InstantKill ghost;
+    EternalSnail snail;
 
     Font spawnsRemaining = new Font("Arial", Font.PLAIN, 20);
 
@@ -80,6 +82,8 @@ public class GamePanel extends JPanel implements Runnable{
 
         ghost = new InstantKill(100, 6, Tile.tileSize, Tile.tileSize, "Invincible!", Tile.tileSize * 2, Tile.tileSize * 4, Tile.tileRatio,5*Tile.tileRatio, 70, 50, player, false);
         ghost.setBounds(1, 23, 1, 23);
+
+        snail = new EternalSnail(100, 0.01, Tile.tileSize, Tile.tileSize, "Snail", Tile.tileSize * 2, Tile.tileSize * 4, Tile.tileRatio,5*Tile.tileRatio, 70, 50, player, levelHandler.getCurrentLevel().getMap().baseLayerTiles, true);
 
         //Start game after loading all objects
         gameThread = new Thread(this);
@@ -148,8 +152,9 @@ public class GamePanel extends JPanel implements Runnable{
         damageDealer.dealDamageToEnemies(attackHandler, levelHandler.getCurrentLevel());
 
         ghost.update();
+        snail.update();
 
-        if (ghost.hitbox.intersects(player.hitbox) || player.getHealth() <= 0) {
+        if (ghost.hitbox.intersects(player.hitbox) || player.getHealth() <= 0 || snail.hitbox.intersects(player.hitbox)) {
             Main.updateGameState(3);
         }
     }
@@ -171,6 +176,7 @@ public class GamePanel extends JPanel implements Runnable{
         abilityHandler.drawDecoy(g2);
         attackHandler.draw(g2, player);
         ghost.draw(g2);
+        snail.draw(g2);
 
         for(SpawnPoint spawnPoint : spawnHandler.enemySpawnPoints) {
             spawnPoint.draw(g2, player);
@@ -182,6 +188,5 @@ public class GamePanel extends JPanel implements Runnable{
         //HUD DRAWING
         inventory.draw(g2);
         player.healthHandler.drawHearts(g2);
-
     }
 }
