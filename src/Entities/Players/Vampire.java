@@ -14,9 +14,6 @@ public class Vampire extends Player{
     BufferedImage idleSprites = ImageHandler.loadImage("src/Assets/Entities/Players/Vampire/Vampire_idle.png");
     int spriteW = 64/4, spriteH = 96/4;
     int maxCol = 4;
-
-    int switchImage = 7;
-
     int currentRow = 0, currentCol = 0;
 
 
