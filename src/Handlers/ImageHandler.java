@@ -12,18 +12,16 @@ public class ImageHandler {
 
     /**
      * Static method to load an image from a specified path
-     * @param filename the path to the image
+     * @param path the path to the image
      * @return
      */
-    public static BufferedImage loadImage(String filename) {
-        BufferedImage img = null;
-        try{
-            img = ImageIO.read(new File(filename));
-        } catch (IOException e) {
-            System.out.println(e.toString());
-            JOptionPane.showMessageDialog(null, "An image failed to load: " + filename, "Error", JOptionPane.ERROR_MESSAGE);
+    public static BufferedImage loadImage(String path) {
+        try {
+            return ImageIO.read(ImageHandler.class.getClassLoader().getResourceAsStream(path));
+        } catch (IOException | NullPointerException e) {
+            e.printStackTrace();
+            return null;
         }
-        return img;
     }
 
     /**

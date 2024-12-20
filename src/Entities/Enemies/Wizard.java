@@ -24,10 +24,10 @@ public class Wizard extends Enemy{
     public boolean attacking;
 
     void loadWizard() {
-        wizard = ImageHandler.loadImage("src/Entities/Enemies/Loyalists/Wizard_idle.png");
-        wizardMove = ImageHandler.loadImage("src/Entities/Enemies/Loyalists/Wizard_walk.png");
-        wizardAttack = ImageHandler.loadImage("src/Entities/Enemies/Loyalists/Wizard_attack_NOhitbox.png");
-        wizardAttackFire = ImageHandler.loadImage("src/Entities/Enemies/Loyalists/Wizard_attack.png");
+        wizard = ImageHandler.loadImage("Assets/Entities/Enemies/Loyalists/Wizard_idle.png");
+        wizardMove = ImageHandler.loadImage("Assets/Entities/Enemies/Loyalists/Wizard_walk.png");
+        wizardAttack = ImageHandler.loadImage("Assets/Entities/Enemies/Loyalists/Wizard_attack_NOhitbox.png");
+        wizardAttackFire = ImageHandler.loadImage("Assets/Entities/Enemies/Loyalists/Wizard_attack.png");
     }
 
     /**

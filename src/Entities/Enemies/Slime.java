@@ -50,7 +50,7 @@ public class Slime extends Enemy{
     }
 
     void loadSlime() {
-        slimes = ImageHandler.loadImage("src/Assets/Entities/Enemies/Bog Dwellers/Slime_move.png");
+        slimes = ImageHandler.loadImage("Assets/Entities/Enemies/Bog Dwellers/Slime_move.png");
     }
 
     /**

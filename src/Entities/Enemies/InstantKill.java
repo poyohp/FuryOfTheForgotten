@@ -14,7 +14,7 @@ public class InstantKill extends Enemy {
     Random rand = new Random();
     double upBound, downBound, leftBound, rightBound;
 
-    BufferedImage pancakeBunnySprite = ImageHandler.loadImage("src/Assets/Entities/Enemies/Bunnies/pancakeBunny.png");
+    BufferedImage pancakeBunnySprite = ImageHandler.loadImage("Assets/Entities/Enemies/Bunnies/pancakeBunny.png");
     final int MAX_ROWS = 4;
     final int MAX_COLS = 3;
     int spriteW = 1022/3;

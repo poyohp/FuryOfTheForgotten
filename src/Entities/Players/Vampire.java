@@ -10,8 +10,8 @@ import java.awt.image.BufferedImage;
 public class Vampire extends Player{
 
     boolean attack;
-    BufferedImage movingSprites = ImageHandler.loadImage("src/Assets/Entities/Players/Vampire/Vampire_walk.png");
-    BufferedImage idleSprites = ImageHandler.loadImage("src/Assets/Entities/Players/Vampire/Vampire_idle.png");
+    BufferedImage movingSprites = ImageHandler.loadImage("Assets/Entities/Players/Vampire/Vampire_walk.png");
+    BufferedImage idleSprites = ImageHandler.loadImage("Assets/Entities/Players/Vampire/Vampire_idle.png");
     int spriteW = 64/4, spriteH = 96/4;
     int maxCol = 4;
 

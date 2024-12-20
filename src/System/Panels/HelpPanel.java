@@ -11,7 +11,7 @@ import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 
 public class HelpPanel extends JPanel implements KeyListener {
-    BufferedImage helpScreen = ImageHandler.loadImage("src/Assets/MenuImages/helpOptions.png");
+    BufferedImage helpScreen = ImageHandler.loadImage("Assets/MenuImages/helpOptions.png");
 
     MenuButton continueButton = new MenuButton("continue.png", screenWidth/3 + screenHeight/5, screenHeight/2 + screenHeight/4, screenWidth/2, screenHeight/6);
 

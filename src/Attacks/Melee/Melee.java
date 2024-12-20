@@ -65,7 +65,6 @@ public class Melee extends Attack {
     public void update(Player player) {
         hitbox.update(this);
         setScreenPosition(player);
-        System.out.println(getScreenX());
     }
 
 

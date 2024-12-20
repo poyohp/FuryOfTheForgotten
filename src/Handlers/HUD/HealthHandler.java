@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 
 public class HealthHandler {
 
-    BufferedImage heartSprite = ImageHandler.loadImage("src/Assets/HUD//PlayerStatus/hearts.png");
+    BufferedImage heartSprite = ImageHandler.loadImage("Assets/HUD/PlayerStatus/hearts.png");
     private final int spriteSize = 16;
 
     private final int heartDrawSize = Tile.normalTileSize;

@@ -139,7 +139,6 @@ public abstract class Player extends Entity {
      * @param baseLayerTiles
      */
     public void update(Tile[][] baseLayerTiles) {
-        System.out.println(this.getHealth());
         this.tiles = baseLayerTiles;
         updateEntityPosition();
         if (!attacking) move(); // If player is not attacking, they can move

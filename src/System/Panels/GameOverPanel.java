@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class GameOverPanel extends JPanel {
-    BufferedImage gameOverLose = ImageHandler.loadImage("src/Assets/MenuImages/gameOver.png");
+    BufferedImage gameOverLose = ImageHandler.loadImage("Assets/MenuImages/gameOver.png");
 
     // Get screen width and height
     public static final int screenWidth = (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth();

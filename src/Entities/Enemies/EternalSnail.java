@@ -49,7 +49,7 @@ public class EternalSnail extends Enemy{
     }
 
     void loadSlime() {
-        snail = ImageHandler.loadImage("src/Assets/Entities/Enemies/Snail/snail1.png");
+        snail = ImageHandler.loadImage("Assets/Entities/Enemies/Snail/snail1.png");
     }
 
     /**

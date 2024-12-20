@@ -20,7 +20,7 @@ public class MenuButton {
         this.height = height;
         this.buttonFilename = buttonFilename;
 
-        image = loadImage("src/Assets/MenuImages/" + buttonFilename);
+        image = loadImage("Assets/MenuImages/" + buttonFilename);
     }
 
     /**

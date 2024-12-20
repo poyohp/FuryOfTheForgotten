@@ -154,7 +154,7 @@ public class LevelHandler {
      * Used to add ALL levels to the list of levels
      */
     private void addLevels() {
-        levels[0] = new Level("src/Assets/Maps/Levels/Level1Map.json");
+        levels[0] = new Level("Assets/Maps/Level1Map.json");
         //ADD MORE LEVELS LATER
     }
 

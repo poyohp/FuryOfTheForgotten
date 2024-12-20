@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class CharacterSelectionPanel extends JPanel {
 
     // Loads menu image
-    BufferedImage selection = ImageHandler.loadImage("src/Assets/MenuImages/characterSelection.png");
+    BufferedImage selection = ImageHandler.loadImage("Assets/MenuImages/characterSelection.png");
 
     KeyHandler keyHandler;
 

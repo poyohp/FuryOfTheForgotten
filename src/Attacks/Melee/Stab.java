@@ -8,12 +8,12 @@ import java.awt.image.BufferedImage;
 
 public class Stab extends Melee {
 
-    BufferedImage stab1 = ImageHandler.loadImage("src/Assets/Projectiles/Stab1.png");
-    BufferedImage stab2 = ImageHandler.loadImage("src/Assets/Projectiles/Stab2.png");
-    BufferedImage stab3 = ImageHandler.loadImage("src/Assets/Projectiles/Stab3.png");
-    BufferedImage stab1Up = ImageHandler.loadImage("src/Assets/Projectiles/Stab1Up.png");
-    BufferedImage stab2Up = ImageHandler.loadImage("src/Assets/Projectiles/Stab2Up.png");
-    BufferedImage stab3Up = ImageHandler.loadImage("src/Assets/Projectiles/Stab3Up.png");
+    BufferedImage stab1 = ImageHandler.loadImage("Assets/Projectiles/Stab1.png");
+    BufferedImage stab2 = ImageHandler.loadImage("Assets/Projectiles/Stab2.png");
+    BufferedImage stab3 = ImageHandler.loadImage("Assets/Projectiles/Stab3.png");
+    BufferedImage stab1Up = ImageHandler.loadImage("Assets/Projectiles/Stab1Up.png");
+    BufferedImage stab2Up = ImageHandler.loadImage("Assets/Projectiles/Stab2Up.png");
+    BufferedImage stab3Up = ImageHandler.loadImage("Assets/Projectiles/Stab3Up.png");
 
     /**
      * Create melee attack

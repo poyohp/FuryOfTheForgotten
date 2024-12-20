@@ -9,14 +9,12 @@ import org.json.simple.parser.ParseException;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 
 public class Map {
 
-    private final BufferedImage tileSetImage = ImageHandler.loadImage("src/Assets/Tilesets/universalTileset.png");
+    private final BufferedImage tileSetImage = ImageHandler.loadImage("Assets/Tilesets/universalTileset.png");
 
     private String mapDirectory;
     private JSONParser parser;
@@ -43,45 +41,48 @@ public class Map {
      * @throws ParseException
      */
     void getMap() throws IOException, ParseException {
-        // Create a JSON parser and reader - catch exception if file not found
-        try {
+        // Create a JSON parser and reader
+        try (InputStream is = Map.class.getClassLoader().getResourceAsStream(mapDirectory);
+             InputStreamReader isr = new InputStreamReader(is)) {
+
             parser = new JSONParser();
-            reader = new FileReader(mapDirectory);
-        } catch(FileNotFoundException e) {
-            System.out.println("File not found");
-        }
 
-        // Parse the JSON file
-        JSONObject jsonMapObject = (JSONObject) parser.parse(reader);
+            if (is == null) {
+                throw new FileNotFoundException("Map file not found: " + mapDirectory);
+            }
 
-        mapWidth = Integer.parseInt(jsonMapObject.get("width").toString());
-        mapHeight = Integer.parseInt(jsonMapObject.get("height").toString());
+            JSONObject jsonMapObject = (JSONObject) parser.parse(isr);
 
-        baseLayerTiles = new Tile[mapWidth][mapHeight];
-        spawnLayerTiles = new Tile[mapWidth][mapHeight];
+            mapWidth = Integer.parseInt(jsonMapObject.get("width").toString());
+            mapHeight = Integer.parseInt(jsonMapObject.get("height").toString());
 
-        //Get layers and read data
-        JSONArray layers = (JSONArray) jsonMapObject.get("layers");
-        for(int i = 0; i < layers.size(); i++) {
-            JSONObject currentLayer = (JSONObject) layers.get(i);
-            JSONArray dataArray = (JSONArray) currentLayer.get("data");
+            baseLayerTiles = new Tile[mapWidth][mapHeight];
+            spawnLayerTiles = new Tile[mapWidth][mapHeight];
 
-            for(int j = 0; j < dataArray.size(); j++) {
+            // Get layers and read data
+            JSONArray layers = (JSONArray) jsonMapObject.get("layers");
+            for (int i = 0; i < layers.size(); i++) {
+                JSONObject currentLayer = (JSONObject) layers.get(i);
+                JSONArray dataArray = (JSONArray) currentLayer.get("data");
 
-                int m = j / mapWidth;
-                int n = j % mapWidth;
+                for (int j = 0; j < dataArray.size(); j++) {
 
-                boolean walkable = !nonWalkableValues.contains(Integer.parseInt(dataArray.get(j).toString()));
+                    int m = j / mapWidth;
+                    int n = j % mapWidth;
 
-                // Create a new tile object and add it to the baseLayerTiles array
-                if(i == 0) {
-                    baseLayerTiles[m][n] = new Tile(m, n, Integer.parseInt(dataArray.get(j).toString()), walkable);
-                }
-                // Create a new tile object and add it to the spawnLayerTiles array
-                if(i == 1) {
-                    spawnLayerTiles[m][n] = new Tile(m, n, Integer.parseInt(dataArray.get(j).toString()), walkable);
+                    boolean walkable = !nonWalkableValues.contains(Integer.parseInt(dataArray.get(j).toString()));
+
+                    // Create a new tile object and add it to the appropriate layer
+                    if (i == 0) {
+                        baseLayerTiles[m][n] = new Tile(m, n, Integer.parseInt(dataArray.get(j).toString()), walkable);
+                    } else if (i == 1) {
+                        spawnLayerTiles[m][n] = new Tile(m, n, Integer.parseInt(dataArray.get(j).toString()), walkable);
+                    }
                 }
             }
+        } catch (FileNotFoundException e) {
+            System.err.println("Map file not found: " + mapDirectory);
+            throw e;
         }
     }
 

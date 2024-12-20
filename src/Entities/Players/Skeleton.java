@@ -10,23 +10,23 @@ import java.awt.image.BufferedImage;
 public class Skeleton extends Player{
 
 
-    BufferedImage sprites = ImageHandler.loadImage("src/Assets/Entities/Players/Skeleton/Sprites.png");
+    BufferedImage sprites = ImageHandler.loadImage("Assets/Entities/Players/Skeleton/Sprites.png");
 
-    BufferedImage sideRoll1 = ImageHandler.loadImage("src/Assets/Entities/Players/Skeleton/SkeletonSideRoll1.png");
-    BufferedImage sideRoll2 = ImageHandler.loadImage("src/Assets/Entities/Players/Skeleton/SkeletonSideRoll2.png");
-    BufferedImage sideRoll3 = ImageHandler.loadImage("src/Assets/Entities/Players/Skeleton/SkeletonSideRoll3.png");
-    BufferedImage sideRoll4 = ImageHandler.loadImage("src/Assets/Entities/Players/Skeleton/SkeletonSideRoll4.png");
-    BufferedImage sideRoll5 = ImageHandler.loadImage("src/Assets/Entities/Players/Skeleton/SkeletonSideRoll5.png");
-    BufferedImage upRoll1 = ImageHandler.loadImage("src/Assets/Entities/Players/Skeleton/SkeletonUpRoll1.png");
-    BufferedImage upRoll2 = ImageHandler.loadImage("src/Assets/Entities/Players/Skeleton/SkeletonUpRoll2.png");
-    BufferedImage upRoll3 = ImageHandler.loadImage("src/Assets/Entities/Players/Skeleton/SkeletonUpRoll3.png");
-    BufferedImage upRoll4 = ImageHandler.loadImage("src/Assets/Entities/Players/Skeleton/SkeletonUpRoll4.png");
-    BufferedImage upRoll5 = ImageHandler.loadImage("src/Assets/Entities/Players/Skeleton/SkeletonUpRoll5.png");
-    BufferedImage downRoll1 = ImageHandler.loadImage("src/Assets/Entities/Players/Skeleton/SkeletonDownRoll1.png");
-    BufferedImage downRoll2 = ImageHandler.loadImage("src/Assets/Entities/Players/Skeleton/SkeletonDownRoll2.png");
-    BufferedImage downRoll3 = ImageHandler.loadImage("src/Assets/Entities/Players/Skeleton/SkeletonDownRoll3.png");
-    BufferedImage downRoll4 = ImageHandler.loadImage("src/Assets/Entities/Players/Skeleton/SkeletonDownRoll4.png");
-    BufferedImage downRoll5 = ImageHandler.loadImage("src/Assets/Entities/Players/Skeleton/SkeletonDownRoll5.png");
+    BufferedImage sideRoll1 = ImageHandler.loadImage("Assets/Entities/Players/Skeleton/SkeletonSideRoll1.png");
+    BufferedImage sideRoll2 = ImageHandler.loadImage("Assets/Entities/Players/Skeleton/SkeletonSideRoll2.png");
+    BufferedImage sideRoll3 = ImageHandler.loadImage("Assets/Entities/Players/Skeleton/SkeletonSideRoll3.png");
+    BufferedImage sideRoll4 = ImageHandler.loadImage("Assets/Entities/Players/Skeleton/SkeletonSideRoll4.png");
+    BufferedImage sideRoll5 = ImageHandler.loadImage("Assets/Entities/Players/Skeleton/SkeletonSideRoll5.png");
+    BufferedImage upRoll1 = ImageHandler.loadImage("Assets/Entities/Players/Skeleton/SkeletonUpRoll1.png");
+    BufferedImage upRoll2 = ImageHandler.loadImage("Assets/Entities/Players/Skeleton/SkeletonUpRoll2.png");
+    BufferedImage upRoll3 = ImageHandler.loadImage("Assets/Entities/Players/Skeleton/SkeletonUpRoll3.png");
+    BufferedImage upRoll4 = ImageHandler.loadImage("Assets/Entities/Players/Skeleton/SkeletonUpRoll4.png");
+    BufferedImage upRoll5 = ImageHandler.loadImage("Assets/Entities/Players/Skeleton/SkeletonUpRoll5.png");
+    BufferedImage downRoll1 = ImageHandler.loadImage("Assets/Entities/Players/Skeleton/SkeletonDownRoll1.png");
+    BufferedImage downRoll2 = ImageHandler.loadImage("Assets/Entities/Players/Skeleton/SkeletonDownRoll2.png");
+    BufferedImage downRoll3 = ImageHandler.loadImage("Assets/Entities/Players/Skeleton/SkeletonDownRoll3.png");
+    BufferedImage downRoll4 = ImageHandler.loadImage("Assets/Entities/Players/Skeleton/SkeletonDownRoll4.png");
+    BufferedImage downRoll5 = ImageHandler.loadImage("Assets/Entities/Players/Skeleton/SkeletonDownRoll5.png");
 
 
     int column1 = 7, column2 = 39, column3 = 71, column4 = 103, row1 = 7, row2 = 39, row3 = 71, row4 = 103, row5 = 135, row6 = 167, row7 = 199, row8 = 231, row9 = 263, row10 = 295, row11 = 327, row12 = 359, row13 = 391, row14 = 423, row15 = 455;

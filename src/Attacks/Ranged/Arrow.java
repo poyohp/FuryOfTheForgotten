@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Arrow extends Ranged {
-    static BufferedImage arrow = ImageHandler.loadImage("src/Assets/Projectiles/Arrow.png");
+    static BufferedImage arrow = ImageHandler.loadImage("Assets/Projectiles/Arrow.png");
     double drawAngle;
 
     /**
@@ -84,12 +84,6 @@ public class Arrow extends Ranged {
 
     @Override
     public void update(Player player) {
-        //System.out.println((int)determineXVelocity(angle, getSpeed()) + " " + (int)determineYVelocity(angle, getSpeed()));\
-        if (getDirection()[0] == 'u') {
-            System.out.println(hitbox.worldX + " " + hitbox.worldY);
-            System.out.println(getWorldX() + " " + getWorldY());
-            System.out.println(" ");
-        }
         move((int)determineXVelocity(angle, getSpeed()), (int)determineYVelocity(angle, getSpeed()));
         setScreenPosition(player);
         hitbox.update(this);

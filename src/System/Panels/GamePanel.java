@@ -154,9 +154,6 @@ public class GamePanel extends JPanel implements Runnable{
 
         ghost.update();
         snail.update();
-
-        System.out.print(player.getHealth());
-
         if (ghost.hitbox.intersects(player.hitbox) || player.getHealth() <= 0 || snail.hitbox.intersects(player.hitbox)) {
             Main.updateGameState(3);
         }
