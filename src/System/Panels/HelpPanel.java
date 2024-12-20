@@ -39,7 +39,7 @@ public class HelpPanel extends JPanel implements KeyListener {
      */
     @Override
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+        if (e.getKeyCode() == KeyEvent.VK_J) {
             Main.updateGameState(1); // Return to menu panel
         }
     }
