@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class WinPanel extends JPanel {
-    BufferedImage gameWon = ImageHandler.loadImage("Assets/MenuImages/gameWon.png");
+    BufferedImage gameWon = ImageHandler.loadImage("Panel.Images/gameWon.png");
 
     // Get screen width and height
     public static final int screenWidth = (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth();
