@@ -84,7 +84,7 @@ public class GamePanel extends JPanel implements Runnable{
         ghost = new InstantKill(100, 6, Tile.tileSize, Tile.tileSize, "Invincible!", Tile.tileSize * 2, Tile.tileSize * 4, Tile.tileRatio,5*Tile.tileRatio, 70, 50, player, false);
         ghost.setBounds(1, 23, 1, 23);
 
-        snail = new EternalSnail(100, 0.03, Tile.tileSize, Tile.tileSize, "Snail", Tile.tileSize * 2, Tile.tileSize * 4, Tile.tileRatio,5*Tile.tileRatio, 70, 50, player, levelHandler.getCurrentLevel().getMap().baseLayerTiles, true);
+        snail = new EternalSnail(100, 0.5, Tile.tileSize, Tile.tileSize, "Snail", Tile.tileSize * 2, Tile.tileSize * 23, Tile.tileRatio,5*Tile.tileRatio, 70, 50, player, levelHandler.getCurrentLevel().getMap().baseLayerTiles, true);
 
         //Start game after loading all objects
         gameThread = new Thread(this);

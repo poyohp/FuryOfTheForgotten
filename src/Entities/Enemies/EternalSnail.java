@@ -17,7 +17,6 @@ public class EternalSnail extends Enemy{
     APathfinding pathFinder;
     Tile[][] tileset;
 
-
     // Variables for drawing
     private int updateFrames = 7;
     BufferedImage snail;
@@ -42,13 +41,13 @@ public class EternalSnail extends Enemy{
      */
     public EternalSnail(int health, double speed, int width, int height, String name, int worldX, int worldY, int xOffset, int yOffset, int hitBoxWidth, int hitBoxHeight, Player player, Tile[][] tileset, boolean isFollowing) {
         super(health, speed, width, height, name, worldX, worldY, xOffset, yOffset, hitBoxWidth, hitBoxHeight, player, isFollowing);
-        loadSlime();
+        loadSnail();
         this.tileset = tileset;
         pathFinder = new APathfinding(tileset);
         this.onPath = true;
     }
 
-    void loadSlime() {
+    void loadSnail() {
         snail = ImageHandler.loadImage("Assets/Entities/Enemies/Snail/snail1.png");
     }
 
@@ -134,7 +133,7 @@ public class EternalSnail extends Enemy{
     @Override
     public void draw(Graphics2D g2) {
         drawHealth(g2);
-        g2.drawImage(snail, (int)this.screenX, (int)this.screenY, (int)this.getWidth(), (int)this.getHeight(), null);
+        g2.drawImage(snail, (int)this.screenX, (int)this.screenY, this.getWidth(), this.getHeight(), null);
         updateFrames();
     }
 
