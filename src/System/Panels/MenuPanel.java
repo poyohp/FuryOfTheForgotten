@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class MenuPanel extends JPanel {
 
     // Loads menu image
-    BufferedImage menu = ImageHandler.loadImage("Assets/MenuImages/menu.png");
+    BufferedImage menu = ImageHandler.loadImage("Panel.Images/menu.png");
 
     KeyHandler keyHandler;
 

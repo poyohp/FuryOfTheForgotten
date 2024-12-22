@@ -20,7 +20,7 @@ public class CharacterButton {
         this.height = 50;
         this.characterType = characterType;
 
-        image = loadImage("Assets/MenuImages/arrow.png");
+        image = loadImage("Panel.Images/arrow.png");
     }
 
     /**
