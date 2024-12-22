@@ -18,9 +18,9 @@ public class Level {
      * Constructor for Level (generates map)
      * @param mapDirectory directory of map file
      */
-    public Level(String mapDirectory) {
+    public Level(String mapDirectory, String tileSetDirectory, int numTilesHeight, int numTilesWidth) {
 
-        map = new Map(mapDirectory);
+        map = new Map(mapDirectory, tileSetDirectory, numTilesHeight, numTilesWidth);
 
         try {
             map.getMap();

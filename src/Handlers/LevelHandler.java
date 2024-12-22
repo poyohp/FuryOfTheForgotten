@@ -154,11 +154,29 @@ public class LevelHandler {
      * Used to add ALL levels to the list of levels
      */
     private void addLevels() {
-        levels[0] = new Level("Assets/Maps/Level1Map.json");
+        levels[0] = new Level("Assets/Maps/Level1Map.json", "Assets/Tilesets/universalTileset.png", 28, 28);
+        addAllNonWalkableValuesLevel1();
         //ADD MORE LEVELS LATER
     }
 
-
+    /**
+     * Add all non-walkable tile values to the nonWalkableValues ArrayList
+     */
+    private void addAllNonWalkableValuesLevel1() {
+        levels[0].getMap().nonWalkableValues.add(201);
+        levels[0].getMap().nonWalkableValues.add(202);
+        levels[0].getMap().nonWalkableValues.add(203);
+        levels[0].getMap().nonWalkableValues.add(229);
+        levels[0].getMap().nonWalkableValues.add(230);
+        levels[0].getMap().nonWalkableValues.add(232);
+        levels[0].getMap().nonWalkableValues.add(257);
+        levels[0].getMap().nonWalkableValues.add(258);
+        levels[0].getMap().nonWalkableValues.add(260);
+        levels[0].getMap().nonWalkableValues.add(285);
+        levels[0].getMap().nonWalkableValues.add(286);
+        levels[0].getMap().nonWalkableValues.add(287);
+        levels[0].getMap().nonWalkableValues.add(288);
+    }
 
 
 }

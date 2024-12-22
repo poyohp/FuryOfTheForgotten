@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class Map {
 
-    private final BufferedImage tileSetImage = ImageHandler.loadImage("Assets/Tilesets/universalTileset.png");
+    private BufferedImage tileSetImage;
 
     private String mapDirectory;
     private JSONParser parser;
@@ -24,15 +24,21 @@ public class Map {
     public Tile[][] baseLayerTiles;
     public Tile[][] spawnLayerTiles;
 
-    ArrayList<Integer> nonWalkableValues = new ArrayList<Integer>();
+    private int numTilesHeight, numTilesWidth;
+
+    public ArrayList<Integer> nonWalkableValues = new ArrayList<Integer>();
 
     /**
      * Constructor for Map - sets map directory and sets all the non-walkable values
      * @param mapDirectory the directory of the map file
      */
-    Map(String mapDirectory) {
+    Map(String mapDirectory, String tileSetDirectory, int numTilesHeight, int numTilesWidth) {
         this.mapDirectory = mapDirectory;
-        addAllNonWalkableValues();
+
+        this.numTilesHeight = numTilesHeight;
+        this.numTilesWidth = numTilesWidth;
+
+        tileSetImage = ImageHandler.loadImage(tileSetDirectory);
     }
 
     /**
@@ -74,9 +80,9 @@ public class Map {
 
                     // Create a new tile object and add it to the appropriate layer
                     if (i == 0) {
-                        baseLayerTiles[m][n] = new Tile(m, n, Integer.parseInt(dataArray.get(j).toString()), walkable);
+                        baseLayerTiles[m][n] = new Tile(m, n, Integer.parseInt(dataArray.get(j).toString()), walkable, numTilesHeight, numTilesWidth);
                     } else if (i == 1) {
-                        spawnLayerTiles[m][n] = new Tile(m, n, Integer.parseInt(dataArray.get(j).toString()), walkable);
+                        spawnLayerTiles[m][n] = new Tile(m, n, Integer.parseInt(dataArray.get(j).toString()), walkable, numTilesHeight, numTilesWidth);
                     }
                 }
             }
@@ -120,25 +126,6 @@ public class Map {
         baseLayerTiles[x][y].setScreenYPos((int)(baseLayerTiles[x][y].getWorldYPos() - player.worldY + player.screenY));
         spawnLayerTiles[x][y].setScreenYPos((int)(spawnLayerTiles[x][y].getWorldYPos() - player.worldY + player.screenY));
 
-    }
-
-    /**
-     * Add all non-walkable tile values to the nonWalkableValues ArrayList
-     */
-    private void addAllNonWalkableValues() {
-        this.nonWalkableValues.add(201);
-        this.nonWalkableValues.add(202);
-        this.nonWalkableValues.add(203);
-        this.nonWalkableValues.add(229);
-        this.nonWalkableValues.add(230);
-        this.nonWalkableValues.add(232);
-        this.nonWalkableValues.add(257);
-        this.nonWalkableValues.add(258);
-        this.nonWalkableValues.add(260);
-        this.nonWalkableValues.add(285);
-        this.nonWalkableValues.add(286);
-        this.nonWalkableValues.add(287);
-        this.nonWalkableValues.add(288);
     }
 
 }

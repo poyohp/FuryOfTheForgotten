@@ -4,7 +4,7 @@ import System.Panels.GamePanel;
 
 public class Tile {
     public static final int normalTileSize = 16;
-    private static final int numToMultiply = 5;
+    private static final int numToMultiply = 6;
     public static final int tileMultipler = (int) (GamePanel.screenWidth/GamePanel.screenHeight) * numToMultiply;
 
     //Tile size is determined based on screen ratio
@@ -19,6 +19,8 @@ public class Tile {
 
     public boolean walkable;
 
+    private int numTilesHeight, numTilesWidth;
+
     /**
      * Constructor for the Tile class - sets positions and values
      * @param row Tile row
@@ -26,11 +28,13 @@ public class Tile {
      * @param value Tile value (used for image)
      * @param walkable Whether the tile is walkable or not
      */
-    Tile(int row, int col, int value, boolean walkable) {
+    Tile(int row, int col, int value, boolean walkable, int numTilesHeight, int numTilesWidth) {
         this.row = row;
         this.col = col;
         this.orgValue = value;
         this.value = value - 1;
+        this.numTilesHeight = numTilesHeight;
+        this.numTilesWidth = numTilesWidth;
 
         setWorldXPos();
         setWorldYPos();
@@ -44,8 +48,8 @@ public class Tile {
      * Get the row and column of the IMAGE (on the tileset) that corresponds to the value
      */
     public void getImageRowCol() {
-        imageRow = (value / 28);
-        imageCol = (value % 28);
+        imageRow = (value / numTilesHeight);
+        imageCol = (value % numTilesWidth);
     }
 
     private void setWorldXPos() {
