@@ -79,7 +79,7 @@ public class CollisionHandler {
             if (isNotWalkableTileInCol(leftCol, topRow, bottomRow, tiles)) {
                 return true;
             }
-            if (rightCol + 1 >= tiles[0].length) {
+            if (rightCol + 1 > tiles[0].length) {
                 System.out.println("Right");
                 return true;
             }
