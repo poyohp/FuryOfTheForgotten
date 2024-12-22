@@ -132,7 +132,6 @@ public class EternalSnail extends Enemy{
 
     @Override
     public void draw(Graphics2D g2) {
-        drawHealth(g2);
         g2.drawImage(snail, (int)this.screenX, (int)this.screenY, this.getWidth(), this.getHeight(), null);
         updateFrames();
     }
