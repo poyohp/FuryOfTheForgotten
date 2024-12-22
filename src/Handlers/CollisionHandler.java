@@ -60,7 +60,6 @@ public class CollisionHandler {
 
         // Checking if the attack is colliding with any tiles in all directions
             if (topRow - 1 < 0) {
-               // System.out.println(arrowTop);
                 return true;
             }
             if (isNotWalkableTileInRow(topRow, leftCol, rightCol, tiles)) {
@@ -80,7 +79,7 @@ public class CollisionHandler {
             if (isNotWalkableTileInCol(leftCol, topRow, bottomRow, tiles)) {
                 return true;
             }
-            if (rightCol + 1 > tiles[0].length) {
+            if (rightCol + 1 >= tiles[0].length) {
                 System.out.println("Right");
                 return true;
             }
