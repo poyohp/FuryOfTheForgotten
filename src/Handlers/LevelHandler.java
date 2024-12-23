@@ -116,7 +116,7 @@ public class LevelHandler {
             }
 
             // If there are no more active spawn points, player has defeated all enemies!
-            if (!spawnPointsActive && currentLevel.enemies.isEmpty()) Main.updateGameState(4);
+//            if (!spawnPointsActive && currentLevel.enemies.isEmpty()) Main.updateGameState(4);
         }
     }
 
@@ -155,8 +155,8 @@ public class LevelHandler {
      * Used to add ALL levels to the list of levels
      */
     private void addLevels() {
-        levels[0] = new Level("Assets/Maps/Level1Map.json", "Assets/Tilesets/universalTileset.png", nonWalkableValues1(), 28, 28);
-        //ADD MORE LEVELS LATER
+//        levels[0] = new Level("Assets/Maps/Level1Map.json", "Assets/Tilesets/universalTileset.png", nonWalkableValues1(), 28, 28);
+        levels[0] = new Level("Assets/Maps/Level2Map.json", "Assets/Tilesets/dungeonTileset.png", nonWalkableValues2(), 50, 50);
 
     }
 
@@ -176,12 +176,13 @@ public class LevelHandler {
     /**
      * Add all non-walkable tile values to the nonWalkableValues ArrayList
      */
-    private void nonWalkableValues2() {
-        int[] nonWalkableValues = {30, 31, 32, 33, 34, 35, 83, 84, 85, 108, 109, 110, 133, 158};
+    private ArrayList<Integer> nonWalkableValues2() {
+        ArrayList<Integer> nonWalkableValues = new ArrayList<>();
+        int[] values = {30, 31, 32, 33, 34, 35, 83, 84, 85, 108, 109, 110, 133, 158};
 
-        for (int value: nonWalkableValues) {
+        for (int value: values) {
+            nonWalkableValues.add(value);
         }
-
-
+        return nonWalkableValues;
     }
 }
