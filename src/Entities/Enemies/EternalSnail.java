@@ -45,6 +45,9 @@ public class EternalSnail extends Enemy{
         this.tileset = tileset;
         pathFinder = new APathfinding(tileset);
         this.onPath = true;
+
+        this.worldX = entityToFollow.worldX - Tile.tileSize;
+        this.worldY = entityToFollow.worldY - Tile.tileSize;
     }
 
     void loadSnail() {
