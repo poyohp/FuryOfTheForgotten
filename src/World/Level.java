@@ -1,10 +1,12 @@
 package World;
 
 import Entities.Enemies.Enemy;
+import Entities.Players.Player;
 import Objects.Chest;
 import Objects.Object;
 import org.json.simple.parser.ParseException;
 
+import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -34,12 +36,32 @@ public class Level {
         }
     }
 
+    public void update(Player player) {
+        for(Chest chest: chests) {
+            chest.update(player);
+        }
+        for(Object object: objects) {
+            object.update(player);
+        }
+    }
+
     /**
      * Get map
      * @return the map
      */
     public Map getMap() {
         return map;
+    }
+
+    public void drawLevel(Graphics2D g2, Player player) {
+        map.drawMap(g2, player);
+
+        for(Chest chest: chests) {
+            chest.draw(g2);
+        }
+        for(Object object: objects) {
+            //draw object!
+        }
     }
 
 }

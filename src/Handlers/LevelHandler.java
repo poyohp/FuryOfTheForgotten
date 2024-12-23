@@ -70,10 +70,12 @@ public class LevelHandler {
      * Update the current level - spawns and enemies
      * @param player
      * @param spawnHandler
-     * @param attackHandler
      * @param damageDealer
      */
-    public void update(Player player, SpawnHandler spawnHandler, AttackHandler attackHandler, DamageDealer damageDealer) {
+    public void update(Player player, SpawnHandler spawnHandler, DamageDealer damageDealer) {
+
+        //LEVEL UPDATING
+        currentLevel.update(player);
 
         // ENEMY HANDLING
         updateEnemies(player, damageDealer);
@@ -139,7 +141,7 @@ public class LevelHandler {
      * @param player
      */
     public void draw(Graphics2D g2, Player player) {
-        this.getCurrentLevel().getMap().drawMap(g2, player);
+        this.getCurrentLevel().drawLevel(g2, player);
 
         for (Enemy enemy : currentLevel.enemies) {
             enemy.draw(g2);
@@ -155,8 +157,8 @@ public class LevelHandler {
      * Used to add ALL levels to the list of levels
      */
     private void addLevels() {
-//        levels[0] = new Level("Assets/Maps/Level1Map.json", "Assets/Tilesets/universalTileset.png", nonWalkableValues1(), 16);
-        levels[0] = new Level("Assets/Maps/Level2Map.json", "Assets/Tilesets/dungeonTileset.png", nonWalkableValues2(), 16);
+        levels[0] = new Level("Assets/Maps/Level1Map.json", "Assets/Tilesets/universalTileset.png", nonWalkableValues1(), 16);
+//        levels[0] = new Level("Assets/Maps/Level2Map.json", "Assets/Tilesets/dungeonTileset.png", nonWalkableValues2(), 16);
 
     }
 
@@ -178,7 +180,7 @@ public class LevelHandler {
      */
     private ArrayList<Integer> nonWalkableValues2() {
         ArrayList<Integer> nonWalkableValues = new ArrayList<>();
-        int[] values = {30, 31, 32, 33, 34, 35, 58, 82, 83, 84, 85, 108, 109, 110, 134, 158};
+        int[] values = {30, 31, 32, 33, 34, 35, 58, 60, 82, 83, 84, 85, 108, 109, 110, 134, 158};
 
         for (int value: values) {
             nonWalkableValues.add(value);

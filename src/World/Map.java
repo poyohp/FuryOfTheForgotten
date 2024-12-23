@@ -49,7 +49,7 @@ public class Map {
     }
 
     private void getHeightandWidthInTiles() {
-        this.numTilesHeight = tileSetImage.getHeight()/tileSetTileSize;
+        this.numTilesHeight = tileSetImage.getWidth()/tileSetTileSize;
         this.numTilesWidth = tileSetImage.getWidth()/tileSetTileSize;
     }
 
@@ -95,7 +95,10 @@ public class Map {
                         boolean walkable = Integer.parseInt(dataArray.get(j).toString()) > 0;
                         spawnLayerTiles[m][n] = new Tile(m, n, Integer.parseInt(dataArray.get(j).toString()), walkable, numTilesHeight, numTilesWidth);
                     } else if (i == 2) {
-                        //level.objects.add(new Chest());
+                        if(Integer.parseInt(dataArray.get(j).toString()) > 0) {
+                            System.out.println("ADDING!");
+                            level.chests.add(new Chest("Chest", Tile.tileSize, Tile.tileSize, n*Tile.tileSize, m*Tile.tileSize, 0, 0));
+                        }
                     }
                 }
             }
