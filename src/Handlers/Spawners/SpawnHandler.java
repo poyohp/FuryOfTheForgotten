@@ -40,9 +40,9 @@ public class SpawnHandler implements ActionListener {
         for (int i = 0; i < level.getMap().spawnLayerTiles.length; i++) {
             for (int j = 0; j < level.getMap().spawnLayerTiles.length; j++) {
                 Tile tile = level.getMap().spawnLayerTiles[i][j];
-                if (tile.getOrgValue() == 244) {
+                if (tile.getOrgValue() == 244 || tile.getOrgValue() == 64) {
                     playerSpawnX = tile.getCol() * Tile.tileSize;
-                    playerSpawnY = tile.getRow() * Tile.tileSize;;
+                    playerSpawnY = tile.getRow() * Tile.tileSize;
                     player.worldX = playerSpawnX;
                     player.worldY = playerSpawnY;
                 }
