@@ -180,7 +180,6 @@ public class LevelHandler {
         int[] nonWalkableValues = {30, 31, 32, 33, 34, 35, 83, 84, 85, 108, 109, 110, 133, 158};
 
         for (int value: nonWalkableValues) {
-            levels[1].getMap().nonWalkableValues.add(value);
         }
 
 
