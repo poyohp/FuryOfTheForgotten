@@ -10,6 +10,7 @@ import Handlers.Attacks.DamageDealer;
 import System.Main;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class LevelHandler {
 
@@ -154,28 +155,29 @@ public class LevelHandler {
      * Used to add ALL levels to the list of levels
      */
     private void addLevels() {
-        levels[0] = new Level("Assets/Maps/Level1Map.json", "Assets/Tilesets/universalTileset.png", 28, 28);
-        addAllNonWalkableValuesLevel1();
+        levels[0] = new Level("Assets/Maps/Level1Map.json", "Assets/Tilesets/universalTileset.png", nonWalkableValues1(), 28, 28);
         //ADD MORE LEVELS LATER
     }
 
     /**
      * Add all non-walkable tile values to the nonWalkableValues ArrayList
      */
-    private void addAllNonWalkableValuesLevel1() {
-        levels[0].getMap().nonWalkableValues.add(201);
-        levels[0].getMap().nonWalkableValues.add(202);
-        levels[0].getMap().nonWalkableValues.add(203);
-        levels[0].getMap().nonWalkableValues.add(229);
-        levels[0].getMap().nonWalkableValues.add(230);
-        levels[0].getMap().nonWalkableValues.add(232);
-        levels[0].getMap().nonWalkableValues.add(257);
-        levels[0].getMap().nonWalkableValues.add(258);
-        levels[0].getMap().nonWalkableValues.add(260);
-        levels[0].getMap().nonWalkableValues.add(285);
-        levels[0].getMap().nonWalkableValues.add(286);
-        levels[0].getMap().nonWalkableValues.add(287);
-        levels[0].getMap().nonWalkableValues.add(288);
+    private ArrayList<Integer> nonWalkableValues1() {
+        ArrayList<Integer> nonWalkableValues = new ArrayList<>();
+        nonWalkableValues.add(201);
+        nonWalkableValues.add(202);
+        nonWalkableValues.add(203);
+        nonWalkableValues.add(229);
+        nonWalkableValues.add(230);
+        nonWalkableValues.add(232);
+        nonWalkableValues.add(257);
+        nonWalkableValues.add(258);
+        nonWalkableValues.add(260);
+        nonWalkableValues.add(285);
+        nonWalkableValues.add(286);
+        nonWalkableValues.add(287);
+        nonWalkableValues.add(288);
+        return nonWalkableValues;
     }
 
 

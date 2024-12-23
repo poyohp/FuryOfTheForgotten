@@ -18,7 +18,6 @@ public class Map {
 
     private String mapDirectory;
     private JSONParser parser;
-    private FileReader reader;
 
     private int mapWidth, mapHeight;
     public Tile[][] baseLayerTiles;
@@ -70,7 +69,6 @@ public class Map {
             for (int i = 0; i < layers.size(); i++) {
                 JSONObject currentLayer = (JSONObject) layers.get(i);
                 JSONArray dataArray = (JSONArray) currentLayer.get("data");
-
                 for (int j = 0; j < dataArray.size(); j++) {
 
                     int m = j / mapWidth;

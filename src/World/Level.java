@@ -18,9 +18,10 @@ public class Level {
      * Constructor for Level (generates map)
      * @param mapDirectory directory of map file
      */
-    public Level(String mapDirectory, String tileSetDirectory, int numTilesHeight, int numTilesWidth) {
+    public Level(String mapDirectory, String tileSetDirectory, ArrayList<Integer> nonWalkableValues, int numTilesHeight, int numTilesWidth) {
 
         map = new Map(mapDirectory, tileSetDirectory, numTilesHeight, numTilesWidth);
+        map.nonWalkableValues = nonWalkableValues;
 
         try {
             map.getMap();
