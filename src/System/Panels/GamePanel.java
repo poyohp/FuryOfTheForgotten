@@ -147,7 +147,7 @@ public class GamePanel extends JPanel implements Runnable{
      */
     void update() {
         player.update(levelHandler.getCurrentLevel().getMap().baseLayerTiles);
-        levelHandler.update(player, spawnHandler, attackHandler, damageDealer);
+        levelHandler.update(player, spawnHandler, damageDealer);
         attackHandler.update(player, levelHandler.getCurrentLevel().enemies);
         abilityHandler.update();
         damageDealer.dealDamageToEnemies(attackHandler, levelHandler.getCurrentLevel());

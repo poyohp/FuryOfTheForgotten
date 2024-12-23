@@ -2,7 +2,7 @@ package World;
 
 import Entities.Enemies.Enemy;
 import Entities.Players.Player;
-import Objects.Chest;
+//import Objects.Chest;
 import Objects.Object;
 import org.json.simple.parser.ParseException;
 
@@ -17,7 +17,7 @@ public class Level {
     // Holds all enemy data in the current level
     public ArrayList<Enemy> enemies = new ArrayList<>();
     public ArrayList<Enemy> enemiesToRemove = new ArrayList<>();
-    public ArrayList<Chest> chests = new ArrayList<>();
+//    public ArrayList<Chest> chests = new ArrayList<>();
     public ArrayList<Object> objects = new ArrayList<>();
 
     /**
@@ -37,12 +37,12 @@ public class Level {
     }
 
     public void update(Player player) {
-        for(Chest chest: chests) {
-            chest.update(player);
-        }
-        for(Object object: objects) {
-            object.update(player);
-        }
+//        for(Chest chest: chests) {
+//            chest.update(player);
+//        }
+//        for(Object object: objects) {
+//            object.update(player);
+//        }
     }
 
     /**
@@ -56,9 +56,9 @@ public class Level {
     public void drawLevel(Graphics2D g2, Player player) {
         map.drawMap(g2, player);
 
-        for(Chest chest: chests) {
-            chest.draw(g2);
-        }
+//        for(Chest chest: chests) {
+//            chest.draw(g2);
+//        }
         for(Object object: objects) {
             //draw object!
         }
