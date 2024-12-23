@@ -2,6 +2,7 @@ package World;
 
 import Handlers.ImageHandler;
 import Entities.Players.Player;
+import Objects.Chest;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -23,7 +24,10 @@ public class Map {
     public Tile[][] baseLayerTiles;
     public Tile[][] spawnLayerTiles;
 
+    private int tileSetTileSize;
     private int numTilesHeight, numTilesWidth;
+
+    Level level;
 
     public ArrayList<Integer> nonWalkableValues = new ArrayList<Integer>();
 
@@ -31,13 +35,22 @@ public class Map {
      * Constructor for Map - sets map directory and sets all the non-walkable values
      * @param mapDirectory the directory of the map file
      */
-    Map(String mapDirectory, String tileSetDirectory, int numTilesHeight, int numTilesWidth) {
+    Map(String mapDirectory, String tileSetDirectory, int tileSetTileSize, Level level) {
         this.mapDirectory = mapDirectory;
 
-        this.numTilesHeight = numTilesHeight;
-        this.numTilesWidth = numTilesWidth;
+        this.tileSetTileSize = tileSetTileSize;
+
+        this.level = level;
 
         tileSetImage = ImageHandler.loadImage(tileSetDirectory);
+
+        getHeightandWidthInTiles();
+
+    }
+
+    private void getHeightandWidthInTiles() {
+        this.numTilesHeight = tileSetImage.getHeight()/tileSetTileSize;
+        this.numTilesWidth = tileSetImage.getWidth()/tileSetTileSize;
     }
 
     /**
@@ -74,13 +87,15 @@ public class Map {
                     int m = j / mapWidth;
                     int n = j % mapWidth;
 
-                    boolean walkable = !nonWalkableValues.contains(Integer.parseInt(dataArray.get(j).toString()));
-
                     // Create a new tile object and add it to the appropriate layer
                     if (i == 0) {
+                        boolean walkable = !nonWalkableValues.contains(Integer.parseInt(dataArray.get(j).toString()));
                         baseLayerTiles[m][n] = new Tile(m, n, Integer.parseInt(dataArray.get(j).toString()), walkable, numTilesHeight, numTilesWidth);
                     } else if (i == 1) {
+                        boolean walkable = Integer.parseInt(dataArray.get(j).toString()) > 0;
                         spawnLayerTiles[m][n] = new Tile(m, n, Integer.parseInt(dataArray.get(j).toString()), walkable, numTilesHeight, numTilesWidth);
+                    } else if (i == 2) {
+                        //level.objects.add(new Chest());
                     }
                 }
             }

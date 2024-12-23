@@ -1,6 +1,8 @@
 package World;
 
 import Entities.Enemies.Enemy;
+import Objects.Chest;
+import Objects.Object;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
@@ -13,14 +15,16 @@ public class Level {
     // Holds all enemy data in the current level
     public ArrayList<Enemy> enemies = new ArrayList<>();
     public ArrayList<Enemy> enemiesToRemove = new ArrayList<>();
+    public ArrayList<Chest> chests = new ArrayList<>();
+    public ArrayList<Object> objects = new ArrayList<>();
 
     /**
      * Constructor for Level (generates map)
      * @param mapDirectory directory of map file
      */
-    public Level(String mapDirectory, String tileSetDirectory, ArrayList<Integer> nonWalkableValues, int numTilesHeight, int numTilesWidth) {
+    public Level(String mapDirectory, String tileSetDirectory, ArrayList<Integer> nonWalkableValues, int tileSetTileSize) {
 
-        map = new Map(mapDirectory, tileSetDirectory, numTilesHeight, numTilesWidth);
+        map = new Map(mapDirectory, tileSetDirectory, tileSetTileSize, this);
         map.nonWalkableValues = nonWalkableValues;
 
         try {
