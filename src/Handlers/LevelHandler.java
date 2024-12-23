@@ -178,7 +178,7 @@ public class LevelHandler {
      */
     private ArrayList<Integer> nonWalkableValues2() {
         ArrayList<Integer> nonWalkableValues = new ArrayList<>();
-        int[] values = {30, 31, 32, 33, 34, 35, 83, 84, 85, 108, 109, 110, 133, 158};
+        int[] values = {30, 31, 32, 33, 34, 35, 58, 82, 83, 84, 85, 108, 109, 110, 134, 158};
 
         for (int value: values) {
             nonWalkableValues.add(value);
