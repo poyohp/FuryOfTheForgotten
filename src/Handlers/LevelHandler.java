@@ -157,6 +157,7 @@ public class LevelHandler {
     private void addLevels() {
         levels[0] = new Level("Assets/Maps/Level1Map.json", "Assets/Tilesets/universalTileset.png", nonWalkableValues1(), 28, 28);
         //ADD MORE LEVELS LATER
+
     }
 
     /**
@@ -164,21 +165,24 @@ public class LevelHandler {
      */
     private ArrayList<Integer> nonWalkableValues1() {
         ArrayList<Integer> nonWalkableValues = new ArrayList<>();
-        nonWalkableValues.add(201);
-        nonWalkableValues.add(202);
-        nonWalkableValues.add(203);
-        nonWalkableValues.add(229);
-        nonWalkableValues.add(230);
-        nonWalkableValues.add(232);
-        nonWalkableValues.add(257);
-        nonWalkableValues.add(258);
-        nonWalkableValues.add(260);
-        nonWalkableValues.add(285);
-        nonWalkableValues.add(286);
-        nonWalkableValues.add(287);
-        nonWalkableValues.add(288);
+        int[] values = {201, 202, 203, 229, 230, 232, 257, 258, 260, 285, 286, 287, 288};
+
+        for (int value: values) {
+            nonWalkableValues.add(value);
+        }
         return nonWalkableValues;
     }
 
+    /**
+     * Add all non-walkable tile values to the nonWalkableValues ArrayList
+     */
+    private void nonWalkableValues2() {
+        int[] nonWalkableValues = {30, 31, 32, 33, 34, 35, 83, 84, 85, 108, 109, 110, 133, 158};
 
+        for (int value: nonWalkableValues) {
+            levels[1].getMap().nonWalkableValues.add(value);
+        }
+
+
+    }
 }
