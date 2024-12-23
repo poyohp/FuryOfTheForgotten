@@ -1,10 +1,7 @@
 package System.Panels;
 
 import Entities.Enemies.EternalSnail;
-import Entities.Players.Goblin;
-import Entities.Players.Player;
-import Entities.Players.Skeleton;
-import Entities.Players.Vampire;
+import Entities.Players.*;
 import Handlers.AbilityHandler;
 import Handlers.HUD.InventoryHandler;
 import System.Main;
@@ -92,7 +89,7 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     void initiatePlayerType() {
-        if (CharacterSelectionPanel.selectedCharacter.equals("zombie")) player = new Skeleton(100, 4, Tile.tileSize, Tile.tileSize, "Player", 0, 0, 4*Tile.tileSize/Tile.normalTileSize, 6*Tile.tileSize/Tile.normalTileSize-1, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
+        if (CharacterSelectionPanel.selectedCharacter.equals("zombie")) player = new Zombie(100, 4, Tile.tileSize, Tile.tileSize, "Player", 0, 0, 4*Tile.tileSize/Tile.normalTileSize, 6*Tile.tileSize/Tile.normalTileSize-1, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
         else if (CharacterSelectionPanel.selectedCharacter.equals("skeleton")) player = new Skeleton(100, 4, Tile.tileSize, Tile.tileSize, "Player", 0, 0, 4*Tile.tileSize/Tile.normalTileSize, 6*Tile.tileSize/Tile.normalTileSize-1, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
         else if (CharacterSelectionPanel.selectedCharacter.equals("goblin")) player = new Goblin(100, 4, Tile.tileSize, Tile.tileSize, "Player", 0, 0, 4*Tile.tileSize/Tile.normalTileSize, 6*Tile.tileSize/Tile.normalTileSize-1, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
         else if (CharacterSelectionPanel.selectedCharacter.equals("vampire")) player = new Vampire(100, 4, Tile.tileSize, Tile.tileSize, "Player", 0, 0, 4*Tile.tileSize/Tile.normalTileSize, 6*Tile.tileSize/Tile.normalTileSize-1, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
