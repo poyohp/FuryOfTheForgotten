@@ -53,6 +53,14 @@ public class Map {
         this.numTilesWidth = tileSetImage.getWidth()/tileSetTileSize;
     }
 
+    public int getMapWidth() {
+        return mapWidth;
+    }
+
+    public int getMapHeight() {
+        return mapHeight;
+    }
+
     /**
      * Get the map from the JSON file using JSON parser and JSON array
      * @throws IOException

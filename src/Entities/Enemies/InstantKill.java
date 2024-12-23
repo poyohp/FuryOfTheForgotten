@@ -106,12 +106,18 @@ public class InstantKill extends Enemy {
         }
     }
 
-    public void setBounds(double upBound, double downBound, double leftBound, double rightBound) {
-        int randomY = rand.nextInt(1, 24);
-        int randomX = rand.nextInt(1, 24);
+    public void setBounds(double upBound, double downBound, double leftBound, double rightBound, int mapCols, int mapRows) {
+        while (true) {
+            int randomY = rand.nextInt(1, mapRows-1);
+            int randomX = rand.nextInt(1, mapCols-1);
 
-        this.worldX = Tile.tileSize * randomX;
-        this.worldY = Tile.tileSize * randomY;
+            this.worldX = Tile.tileSize * randomX;
+            this.worldY = Tile.tileSize * randomY;
+
+            // Check if bunny is far enough from the player
+            if (Math.abs(this.entityToFollow.worldX - this.worldX) > 150 && Math.abs(this.entityToFollow.worldY - this.worldY) > 150) break;
+        }
+
 
         this.upBound = upBound * Tile.tileSize;
         this.downBound = downBound * Tile.tileSize;

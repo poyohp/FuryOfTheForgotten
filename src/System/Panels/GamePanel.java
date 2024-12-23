@@ -18,6 +18,7 @@ import Handlers.LevelHandler;
 import Handlers.Spawners.SpawnHandler;
 import Handlers.Spawners.SpawnPoint;
 import Pathfinding.APathfinding;
+import World.Map;
 import World.Tile;
 
 
@@ -81,8 +82,9 @@ public class GamePanel extends JPanel implements Runnable{
 
         player.updateWorldValues(spawnHandler.playerSpawnX, spawnHandler.playerSpawnY);
 
+        Map currentMap = levelHandler.getCurrentLevel().getMap();
         ghost = new InstantKill(100, 6, Tile.tileSize, Tile.tileSize, "Invincible!", Tile.tileSize * 2, Tile.tileSize * 4, Tile.tileRatio,5*Tile.tileRatio, 70, 50, player, false);
-        ghost.setBounds(1, 23, 1, 23);
+        ghost.setBounds(1, 23, 1, 23, currentMap.getMapWidth(), currentMap.getMapHeight());
 
         snail = new EternalSnail(100, 0.4, Tile.tileSize, Tile.tileSize, "Snail", Tile.tileSize * 2, Tile.tileSize * 23, Tile.tileRatio,5*Tile.tileRatio, 70, 50, player, levelHandler.getCurrentLevel().getMap().baseLayerTiles, true);
 
