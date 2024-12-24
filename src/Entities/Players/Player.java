@@ -18,6 +18,8 @@ public abstract class Player extends Entity {
     public char type;
     public boolean inAbility = false;
 
+    public boolean collisionWithChest;
+    public int coinValue;
 
     public int updateFrames;
     int attackFrames;
@@ -53,6 +55,9 @@ public abstract class Player extends Entity {
         setScreenPosition();
 
         this.keyHandler = keyHandler;
+
+        collisionWithChest = false;
+        coinValue = 0;
 
     }
 
@@ -166,21 +171,22 @@ public abstract class Player extends Entity {
      * Moves player (unless collision with tiles is detected)
      */
     public void move() {
-        if (keyHandler.upPress) {
-            direction = 'u';
-            if (!collisionHandler.playerWithTileCollision(this, tiles)) this.worldY -= getSpeed();
+        if(!keyHandler.toggleInventory) {
+            if (keyHandler.upPress) {
+                direction = 'u';
+                if (!collisionHandler.playerWithTileCollision(this, tiles) && !collisionWithChest) this.worldY -= getSpeed();
+            } else if (keyHandler.downPress) {
+                direction = 'd';
+                if (!collisionHandler.playerWithTileCollision(this, tiles) && !collisionWithChest) worldY += getSpeed();
+            }
+            if (keyHandler.leftPress) {
+                direction = 'l';
+                if (!collisionHandler.playerWithTileCollision(this, tiles) && !collisionWithChest) worldX -= getSpeed();
 
-        } else if (keyHandler.downPress) {
-            direction = 'd';
-            if (!collisionHandler.playerWithTileCollision(this, tiles)) worldY += getSpeed();
-        }
-        if (keyHandler.leftPress) {
-            direction = 'l';
-            if (!collisionHandler.playerWithTileCollision(this, tiles)) worldX -= getSpeed();
-
-        } else if (keyHandler.rightPress) {
-            direction = 'r';
-            if (!collisionHandler.playerWithTileCollision(this, tiles)) worldX += getSpeed();
+            } else if (keyHandler.rightPress) {
+                direction = 'r';
+                if (!collisionHandler.playerWithTileCollision(this, tiles) && !collisionWithChest) worldX += getSpeed();
+            }
         }
     }
 

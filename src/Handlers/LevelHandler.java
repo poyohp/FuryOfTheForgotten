@@ -3,13 +3,18 @@ package Handlers;
 import Entities.Enemies.Enemy;
 import Entities.Players.Player;
 import Handlers.Attacks.AttackHandler;
+import Handlers.HUD.InventoryHandler;
 import Handlers.Spawners.SpawnHandler;
 import Handlers.Spawners.SpawnPoint;
+import Objects.Chest;
+import Objects.Object;
 import World.Level;
 import Handlers.Attacks.DamageDealer;
 import System.Main;
+import World.Tile;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class LevelHandler {
@@ -21,6 +26,9 @@ public class LevelHandler {
 
     int numLevels;
 
+    //FOR COIN DRAWING
+    BufferedImage coinImage = ImageHandler.loadImage("Assets/Objects/coins.png");
+    private final int coinDrawSize = Tile.tileSize*Tile.tileMultipler/4;
 
     /**
      * Constructor for LevelHandler - initializes all levels and enemies
@@ -38,6 +46,7 @@ public class LevelHandler {
         currentLevel = levels[currentLevelIndex];
 
         spawnHandler.levelChanged(player, currentLevel);
+
     }
 
     // THE FOLLOWING TWO METHODS WILL BE USED WHEN MULTIPLE LEVELS ARE IMPLEMENTED
@@ -72,7 +81,14 @@ public class LevelHandler {
      * @param spawnHandler
      * @param damageDealer
      */
-    public void update(Player player, SpawnHandler spawnHandler, DamageDealer damageDealer) {
+    public void update(Player player, SpawnHandler spawnHandler, DamageDealer damageDealer, CollisionHandler collisionHandler, InventoryHandler inventoryHandler) {
+
+        //CHECKING LEVEL
+        currentLevel = levels[currentLevelIndex];
+
+        //OBJECT HANDLING
+        playerChestCollision(collisionHandler, player);
+        playerObjectInteract(collisionHandler, player, inventoryHandler);
 
         //LEVEL UPDATING
         currentLevel.update(player);
@@ -84,7 +100,7 @@ public class LevelHandler {
 
         // SPAWN HANDLING
         spawnHandler.update(player, currentLevel);
-        handleSpawns(spawnHandler);
+        handleSpawns(spawnHandler, player);
 
     }
 
@@ -106,7 +122,7 @@ public class LevelHandler {
      * Checks to determine initial number of active spawns as well
      * @param spawnHandler to handle the spawns
      */
-    public void handleSpawns(SpawnHandler spawnHandler) {
+    public void handleSpawns(SpawnHandler spawnHandler, Player player) {
         if (spawnHandler.started) { // Timer has started
             boolean spawnPointsActive = false; // Checks if there are any active spawn points
             spawnHandler.numActiveSpawns = 0;
@@ -118,7 +134,7 @@ public class LevelHandler {
             }
 
             // If there are no more active spawn points, player has defeated all enemies!
-//            if (!spawnPointsActive && currentLevel.enemies.isEmpty()) Main.updateGameState(4);
+            if (!spawnPointsActive && currentLevel.enemies.isEmpty()) goToNextLevel(spawnHandler, player);
         }
     }
 
@@ -134,6 +150,44 @@ public class LevelHandler {
         currentLevel.enemies.removeAll(currentLevel.enemiesToRemove);
     }
 
+    //checks for chest openings, and also for object collisions (if player picks up or not)
+    public void playerObjectInteract(CollisionHandler collisionHandler, Player player, InventoryHandler inventoryHandler) {
+        System.out.println(player.keyHandler.choicePress);
+        for(Chest chest: currentLevel.chests) {
+            if(collisionHandler.checkPlayerWithObjectCollision(player, chest)) {
+                if(!chest.isOpen) {
+                    if(player.keyHandler.choicePress) {
+                        chest.chestOpened();
+                    }
+                }
+            }
+        }
+
+        for(Object object : currentLevel.objects) {
+            if(collisionHandler.checkPlayerWithObjectCollision(player, object)) {
+                if(object.isEquippable && !object.isPickedUp) {
+                    if(player.keyHandler.choicePress) {
+                        object.isPickedUp = true;
+                        if(inventoryHandler.indexFree > 0) {
+                            inventoryHandler.inventory[inventoryHandler.indexFree] = object;
+                        } else {
+                            //REPLACE ITEM IN CURRENT INDEX!
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    //player-chest collision
+    public void playerChestCollision(CollisionHandler collisionHandler, Player player) {
+        boolean collisionOccurs = false;
+        for(Chest chest : currentLevel.chests) {
+            if(collisionHandler.checkChestWithEntityCollision(player, chest)) collisionOccurs = true;
+        }
+        player.collisionWithChest = collisionOccurs;
+    }
+
     /**
      * Draw the current level, and all enemies in the level
      * WILL DRAW MORE OBJECTS LATER
@@ -147,6 +201,10 @@ public class LevelHandler {
             enemy.draw(g2);
         }
 
+        //COIN DRAWING
+        g2.drawImage(coinImage, Tile.tileSize/2, Tile.tileSize/2, Tile.tileSize/2 + coinDrawSize, Tile.tileSize/2 + coinDrawSize, 16*6, 16, 16*7, 32, null);
+        g2.setColor(Color.MAGENTA);
+        g2.drawString(String.valueOf(player.coinValue), Tile.tileSize/2 + coinDrawSize, coinDrawSize);
     }
 
     public Level getCurrentLevel() {
@@ -158,7 +216,7 @@ public class LevelHandler {
      */
     private void addLevels() {
         levels[0] = new Level("Assets/Maps/Level1Map.json", "Assets/Tilesets/universalTileset.png", nonWalkableValues1(), 16);
-//        levels[0] = new Level("Assets/Maps/Level2Map.json", "Assets/Tilesets/dungeonTileset.png", nonWalkableValues2(), 16);
+        levels[1] = new Level("Assets/Maps/Level2Map.json", "Assets/Tilesets/dungeonTileset.png", nonWalkableValues2(), 16);
 
     }
 

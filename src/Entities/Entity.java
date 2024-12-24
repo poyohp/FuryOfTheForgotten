@@ -55,9 +55,9 @@ public abstract class Entity {
 
         // Variables that refer to the different sides of the entities
         entityLeft = hitbox.getWorldX();
-        entityRight = entityLeft + (double) hitbox.getWidth();
+        entityRight = entityLeft + hitbox.getWidth();
         entityTop = hitbox.getWorldY();
-        entityBottom = entityTop + (double) hitbox.getHeight();
+        entityBottom = entityTop + hitbox.getHeight();
     }
 
     public abstract void setScreenPosition();
@@ -68,9 +68,9 @@ public abstract class Entity {
     public void updateEntityPosition() {
         hitbox.update(this);
         entityLeft = hitbox.getWorldX();
-        entityRight = entityLeft + (double) hitbox.getWidth();
+        entityRight = entityLeft + hitbox.getWidth();
         entityTop = hitbox.getWorldY();
-        entityBottom = entityTop + (double) hitbox.getHeight();
+        entityBottom = entityTop + hitbox.getHeight();
     }
 
 

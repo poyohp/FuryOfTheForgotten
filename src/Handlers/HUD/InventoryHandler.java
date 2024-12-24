@@ -28,30 +28,55 @@ public class InventoryHandler {
     private final Color innerSquare = new Color(190,190,190, 220);
 
     private int indexSelected;
+    public int indexFree;
 
     public InventoryHandler(KeyHandler keyHandler) {
         this.keyHandler = keyHandler;
     }
 
     public void update() {
-        if(keyHandler.rightPress) {
-            indexSelected++;
-            if(indexSelected >= inventoryCapacity) {
-                indexSelected = 0;
+        if (keyHandler.toggleInventory) {
+            if (keyHandler.rightPress) {
+                indexSelected++;
+                if (indexSelected >= inventoryCapacity) {
+                    indexSelected = 0;
+                }
+                keyHandler.rightPress = false;
             }
-        }
-        if(keyHandler.leftPress) {
-            indexSelected--;
-            if(indexSelected < 0) {
-                indexSelected = inventoryCapacity - 1;
+            if (keyHandler.leftPress) {
+                indexSelected--;
+                if (indexSelected < 0) {
+                    indexSelected = inventoryCapacity - 1;
+                }
+                keyHandler.leftPress = false;
             }
+        } else {
+            indexSelected = 0;
         }
-    }
 
+        for(int i = 0; i < inventoryCapacity; i++) {
+            if(inventory[i] == null) {
+                indexFree = i;
+                break;
+            } else indexFree = -1;
+        }
+
+    }
 
     public void draw(Graphics2D g2) {
         drawOutline(g2);
         drawInventorySquares(g2, outlineX, outlineY);
+        if(keyHandler.toggleInventory) {
+            drawSelectedOutlne(g2);
+        }
+    }
+
+    private void drawSelectedOutlne(Graphics2D g2) {
+        int boxX = outlineX + innerGap + (indexSelected * (innerGap + inventoryFinalDrawSize));
+        int boxY = outlineY + innerGap;
+        g2.setColor(Color.RED);
+        g2.setStroke(new BasicStroke(5));
+        g2.drawRoundRect(boxX, boxY, inventoryFinalDrawSize, inventoryFinalDrawSize, 10, 10);
     }
 
     private void drawOutline(Graphics2D g2) {

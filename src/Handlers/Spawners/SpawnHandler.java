@@ -137,9 +137,6 @@ public class SpawnHandler implements ActionListener {
         }
     }
 
-
-
-
     /**
      * Each timer tick - increments the frames since last spawn for each spawn point
      * Overall, used to spawn enemies at constant rates

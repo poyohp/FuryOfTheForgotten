@@ -22,6 +22,7 @@ import World.Tile;
 import javax.swing.JPanel;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Random;
 
 
 public class GamePanel extends JPanel implements Runnable{
@@ -46,11 +47,15 @@ public class GamePanel extends JPanel implements Runnable{
     CollisionHandler collisionHandler;
     SpawnHandler spawnHandler;
     DamageDealer damageDealer;
-    InventoryHandler inventory = new InventoryHandler(keyHandler);
+    InventoryHandler inventory;
     InstantKill ghost;
     EternalSnail snail;
 
+    public static Random random = new Random();
+
     Font spawnsRemaining = new Font("Arial", Font.PLAIN, 20);
+    Font coinFont = new Font("Arial", Font.PLAIN, 50);
+
 
     /**
      * Constructor for the GamePanel - initializes all objects and starts the game
@@ -72,6 +77,8 @@ public class GamePanel extends JPanel implements Runnable{
         collisionHandler = new CollisionHandler();
         attackHandler = new AttackHandler(keyHandler, levelHandler.getCurrentLevel().getMap().baseLayerTiles);
         abilityHandler = new AbilityHandler(player, keyHandler, collisionHandler);
+
+        inventory = new InventoryHandler(keyHandler);
 
         pathfinding = new APathfinding(levelHandler.getCurrentLevel().getMap().baseLayerTiles);
 
@@ -146,13 +153,14 @@ public class GamePanel extends JPanel implements Runnable{
      */
     void update() {
         player.update(levelHandler.getCurrentLevel().getMap().baseLayerTiles);
-        levelHandler.update(player, spawnHandler, damageDealer);
+        levelHandler.update(player, spawnHandler, damageDealer, collisionHandler, inventory);
         attackHandler.update(player, levelHandler.getCurrentLevel().enemies);
         abilityHandler.update();
         damageDealer.dealDamageToEnemies(attackHandler, levelHandler.getCurrentLevel());
+        inventory.update();
 
         ghost.update();
-        snail.update();
+        snail.update(levelHandler.getCurrentLevel().getMap().baseLayerTiles);
         if (ghost.hitbox.intersects(player.hitbox) || player.getHealth() <= 0 || snail.hitbox.intersects(player.hitbox)) {
             Main.updateGameState(3);
         }
@@ -170,6 +178,7 @@ public class GamePanel extends JPanel implements Runnable{
         Graphics2D g2 = (Graphics2D)g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
+        g2.setFont(coinFont);
         levelHandler.draw(g2, player);
         player.draw(g2);
         abilityHandler.drawDecoy(g2);

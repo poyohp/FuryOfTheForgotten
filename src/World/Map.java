@@ -3,6 +3,7 @@ package World;
 import Handlers.ImageHandler;
 import Entities.Players.Player;
 //import Objects.Chest;
+import Objects.Chest;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -105,7 +106,7 @@ public class Map {
                     } else if (i == 2) {
                         if(Integer.parseInt(dataArray.get(j).toString()) > 0) {
                             System.out.println("ADDING!");
-//                            level.chests.add(new Chest("Chest", Tile.tileSize, Tile.tileSize, n*Tile.tileSize, m*Tile.tileSize, 0, 0));
+                            level.chests.add(new Chest("Chest", Tile.tileSize, Tile.tileSize, n*Tile.tileSize, m*Tile.tileSize, 0, 0));
                         }
                     }
                 }

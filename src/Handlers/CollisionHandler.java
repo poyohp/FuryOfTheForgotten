@@ -3,6 +3,8 @@ import Attacks.Attack;
 import Entities.*;
 import Entities.Enemies.Enemy;
 import Entities.Players.Player;
+import Objects.Object;
+import Objects.Chest;
 import World.Tile;
 
 import java.awt.*;
@@ -40,6 +42,65 @@ public class CollisionHandler {
         return false;
     }
 
+    //Specifically for player-chest; since player can't walk over chest
+    boolean checkChestWithEntityCollision(Entity entity, Chest chest) {
+        double chestTop = chest.hitbox.worldY;
+        double chestBottom = chestTop + chest.hitbox.height;
+        double chestRight = chest.hitbox.worldX + chest.hitbox.width;
+        double chestLeft = chest.hitbox.worldX;
+
+        char entityDirection = entity.direction;
+
+        if (entityDirection == 'u') {
+            if (entity.entityBottom > chestBottom && entity.entityTop - entity.getSpeed() < chestBottom && entity.entityLeft < chestRight && entity.entityRight > chestLeft) {
+                entity.worldY = chestBottom - entity.hitbox.yOffset;
+                return true;
+            }
+        }
+
+        if (entityDirection == 'd') {
+            if (entity.entityTop < chestTop && entity.entityBottom + entity.getSpeed() > chestTop && entity.entityLeft < chestRight && entity.entityRight > chestLeft) {
+                double bottomOffset = entity.getHeight() - (entity.hitbox.height + entity.hitbox.yOffset);
+                entity.worldY = (chestTop + bottomOffset) - entity.getHeight();
+                return true;
+            }
+        }
+
+        if (entityDirection == 'l') {
+            if (entity.entityRight > chestRight && entity.entityLeft - entity.getSpeed() < chestRight && entity.entityTop < chestBottom && entity.entityBottom > chestTop) {
+                entity.worldX = chestRight - entity.hitbox.xOffset;
+                return true;
+            }
+        }
+
+        if (entityDirection == 'r') {
+            if (entity.entityLeft < chestLeft && entity.entityRight + entity.getSpeed() > chestLeft && entity.entityTop < chestBottom && entity.entityBottom > chestTop) {
+                double rightOffset = entity.getWidth() - (entity.hitbox.width + entity.hitbox.xOffset);
+                entity.worldX = (chestLeft + rightOffset) - entity.getWidth();
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    //for interact checking --> going to be distance based!
+    public boolean checkPlayerWithObjectCollision(Player player, Object object) {
+        double distanceLimit = (Tile.tileSize * 0.75) * 2;
+        return getDistance(player, object) <= distanceLimit;
+    }
+
+    private double getDistance(Player player, Object object) {
+        double playerX = player.worldX + (double) player.getWidth() /2;
+        double playerY = player.worldY + (double) player.getHeight() /2;
+
+        double objectX = object.worldX + (double) object.width /2;
+        double objectY = object.worldY + (double) object.height /2;
+
+        return Math.abs(Math.sqrt(Math.pow(playerX - objectX, 2) + Math.pow(playerY - objectY, 2)));
+
+    }
+
     /**
      * Checks attack collision with tiles all directions
      * @param attack to check collision with
@@ -66,7 +127,6 @@ public class CollisionHandler {
                 return true;
             }
             if ((bottomRow + 1 >= tiles.length)) {
-                System.out.println("Bottom");
                 return true;
             }
             if (isNotWalkableTileInRow(bottomRow, leftCol, rightCol, tiles)) {

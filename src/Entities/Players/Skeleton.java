@@ -338,7 +338,7 @@ public class Skeleton extends Player{
             }
         }
 
-
+        hitbox.draw(g2);
     }
 
 }

@@ -54,6 +54,15 @@ public class EternalSnail extends Enemy{
         snail = ImageHandler.loadImage("Assets/Entities/Enemies/Snail/snail1.png");
     }
 
+    public void update(Tile[][] tileset) {
+        pathFinder = new APathfinding(tileset);
+        updateEntityPosition();
+        setScreenPosition();
+        hitbox.update(this);
+        move();
+    }
+
+
     /**
      * Moves enemy
      */

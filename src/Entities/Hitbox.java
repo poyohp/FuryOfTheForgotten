@@ -1,6 +1,7 @@
 package Entities;
 
 import Attacks.Attack;
+import Objects.Object;
 
 import java.awt.*;
 
@@ -59,9 +60,18 @@ public class Hitbox extends Rectangle {
         screenY = attack.getScreenY()+yOffset;
     }
 
+    public void update(Object object) {
+        worldX = object.worldX+xOffset;
+        worldY = object.worldY+yOffset;
+        x = (int)worldX;
+        y = (int)worldY;
+        screenX = object.screenX+xOffset;
+        screenY = object.screenY+yOffset;
+    }
+
     public void draw(Graphics2D g2) {
         g2.setColor(Color.BLACK);
-        g2.fillRect((int)screenX, (int)screenY, width, height);
+        g2.drawRect((int)screenX, (int)screenY, width, height);
     }
 
     /**
