@@ -7,6 +7,7 @@ import World.Tile;
 import System.Panels.GamePanel;
 
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -134,6 +135,12 @@ public class SpawnHandler implements ActionListener {
                     spawnEnemies(spawnPoint, player, level);
                 }
             }
+        }
+    }
+
+    public void drawSpawns(Graphics2D g2, Player player) {
+        for(SpawnPoint spawnPoint : enemySpawnPoints) {
+            spawnPoint.draw(g2, player);
         }
     }
 

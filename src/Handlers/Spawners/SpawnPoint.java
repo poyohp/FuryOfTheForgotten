@@ -2,6 +2,7 @@ package Handlers.Spawners;
 
 
 import Entities.Enemies.Slime;
+import Handlers.ImageHandler;
 import System.Panels.GamePanel;
 import Entities.Enemies.Enemy;
 import Entities.Players.Player;
@@ -10,6 +11,7 @@ import World.Tile;
 
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.Random;
 
 
@@ -26,7 +28,7 @@ public class SpawnPoint {
     private final int framesBetweenSpawn = secondsBetweenSpawn * (int) GamePanel.FPS;
 
 
-    final int enemyHealth = 100;
+    final int enemyHealth = 2;
     final int enemySpeed = Tile.tileSize/40;
     final int enemySize = Tile.tileSize;
 
@@ -40,11 +42,14 @@ public class SpawnPoint {
 
 
     public double worldX, worldY;
-
+    public double screenX, screenY;
 
     boolean playerWithinRange;
     final int range = Tile.tileSize * 3;
 
+    BufferedImage image;
+    private final int imageSize = 16;
+    private final int size = Tile.tileSize;
 
     /**
      * Constructor for SpawnPoint - initializes all spawn point values
@@ -55,15 +60,14 @@ public class SpawnPoint {
         this.worldX = worldX;
         this.worldY = worldY;
 
-
         activeSpawn = true;
         spawnEnemy = false;
         playerWithinRange = false;
         framesSinceLastSpawn = 0;
 
-
         setNumEnemies();
 
+        this.image = ImageHandler.loadImage("Assets/Objects/ores&ingots&gems.png");
 
     }
 
@@ -84,7 +88,7 @@ public class SpawnPoint {
      */
     public Enemy spawnEnemy(Player player, Level level) {
         numEnemies--;
-        return new Slime(enemyHealth, enemySpeed, enemySize, enemySize, "Enemy", (int)worldX, (int)worldY, 3*Tile.tileSize/Tile.normalTileSize, 4*Tile.tileSize/Tile.normalTileSize, 11*Tile.tileSize/Tile.normalTileSize, 9*Tile.tileSize/Tile.normalTileSize, player, level.getMap().baseLayerTiles, true);
+        return new Slime(enemyHealth, enemySpeed, enemySize, enemySize, "Enemy", (int)worldX, (int)worldY, 3*Tile.tileSize/Tile.normalTileSize, 4*Tile.tileSize/Tile.normalTileSize, 11*Tile.tileSize/Tile.normalTileSize, 11*Tile.tileSize/Tile.normalTileSize, player, level.getMap().baseLayerTiles, true);
     }
 
 
@@ -102,14 +106,26 @@ public class SpawnPoint {
         }
     }
 
+    private void setScreenX(double playerWX, double playerSX) {
+        this.screenX = worldX - playerWX + playerSX;
+    }
+
+    private void setScreenY(double playerWY, double playerSY) {
+        this.screenY = worldY - playerWY + playerSY;
+    }
 
     /**
      * Draw
      */
     public void draw(Graphics2D g2, Player player) {
+
+        setScreenX(player.worldX, player.screenX);
+        setScreenY(player.worldY, player.screenY);
+
+        g2.drawImage(image, (int) screenX, (int) screenY, (int) screenX + size, (int) screenY + size, 16*9, 0, 16*9 + imageSize, imageSize, null);
+
         g2.setColor(Color.GREEN);
         g2.setFont(new Font("Arial", Font.PLAIN, 50));
         g2.drawString(Integer.toString(numEnemies), (int) (worldX - player.worldX + player.screenX), (int) (worldY - player.worldY + player.screenY));
     }
-    // Draw the spawn point
 }
