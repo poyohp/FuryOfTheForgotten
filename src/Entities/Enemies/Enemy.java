@@ -40,6 +40,7 @@ public abstract class Enemy extends Entity {
         super(health, speed, width, height, name, worldX, worldY, xOffset, yOffset, hitBoxWidth, hitBoxHeight);
         this.entityToFollow = player;
 
+        freezeTimer = 0;
         this.hitPlayer = false;
         damage = 0.5; // Damage for all enemies
 

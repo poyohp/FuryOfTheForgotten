@@ -229,15 +229,15 @@ public class CollisionHandler {
      * @return true if there is overlap, false otherwise
      */
     public boolean enemyPlayerCollision(Enemy enemy, Player player) {
-        double enemyTop = enemy.worldY + enemy.getSpeed();
-        double enemyBottom = enemyTop + enemy.getHeight();
-        double enemyLeft = enemy.worldX + enemy.getSpeed();
-        double enemyRight = enemyLeft + enemy.getWidth();
+        double enemyTop = enemy.hitbox.worldY;
+        double enemyBottom = enemyTop + enemy.hitbox.height;
+        double enemyLeft = enemy.hitbox.worldX;
+        double enemyRight = enemyLeft + enemy.hitbox.width;
 
-        double playerTop = player.worldY + player.getSpeed();
-        double playerBottom = playerTop + player.getHeight();
-        double playerLeft = player.worldX + player.getSpeed();
-        double playerRight = playerLeft + player.getWidth();
+        double playerTop = player.hitbox.worldY;
+        double playerBottom = playerTop + player.hitbox.height;
+        double playerLeft = player.hitbox.worldX;
+        double playerRight = playerLeft + player.hitbox.width;
 
         if (playerTop < enemyBottom && playerBottom > enemyTop && playerLeft < enemyRight && playerRight > enemyLeft) {
             return true;

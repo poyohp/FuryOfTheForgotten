@@ -1,6 +1,8 @@
 package Handlers;
 
 import Entities.Enemies.Enemy;
+import Entities.Enemies.EternalSnail;
+import Entities.Enemies.InstantKill;
 import Entities.Players.Player;
 import Handlers.Attacks.AttackHandler;
 import Handlers.HUD.InventoryHandler;
@@ -20,7 +22,7 @@ import java.util.ArrayList;
 public class LevelHandler {
 
     // Holds all levels and level data
-    private Level[] levels;
+    private final Level[] levels;
     private Level currentLevel;
     int currentLevelIndex;
 
@@ -82,7 +84,7 @@ public class LevelHandler {
      * @param spawnHandler
      * @param damageDealer
      */
-    public void update(Player player, SpawnHandler spawnHandler, DamageDealer damageDealer, CollisionHandler collisionHandler, InventoryHandler inventoryHandler) {
+    public void update(Player player, SpawnHandler spawnHandler, DamageDealer damageDealer, CollisionHandler collisionHandler, InventoryHandler inventoryHandler, InstantKill ghost, EternalSnail snail) {
 
         //CHECKING LEVEL
         currentLevel = levels[currentLevelIndex];
@@ -90,6 +92,9 @@ public class LevelHandler {
         //OBJECT HANDLING
         playerChestCollision(collisionHandler, player);
         playerObjectInteract(collisionHandler, player, inventoryHandler);
+
+        //SNAIL UPDATING
+        checkForDeath(player, collisionHandler, ghost, snail);
 
         //LEVEL UPDATING
         currentLevel.update(player);
@@ -103,6 +108,15 @@ public class LevelHandler {
         spawnHandler.update(player, currentLevel);
         handleSpawns(spawnHandler, player);
 
+    }
+
+    public void checkForDeath(Player player, CollisionHandler collisionHandler, InstantKill ghost, EternalSnail snail) {
+        if(player.getHealth() <= 0) {
+            Main.updateGameState(3);
+        }
+        if(collisionHandler.enemyPlayerCollision(ghost, player) || collisionHandler.enemyPlayerCollision(snail, player) ) {
+            Main.updateGameState(3);
+        }
     }
 
     /**

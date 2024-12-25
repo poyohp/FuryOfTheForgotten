@@ -82,6 +82,7 @@ public class EternalSnail extends Enemy{
 
     @Override
     public void hitPlayer() {
+        System.out.println("SKIB!");
         Main.updateGameState(3);
     }
 

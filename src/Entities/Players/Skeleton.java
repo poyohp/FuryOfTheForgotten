@@ -66,7 +66,15 @@ public class Skeleton extends Player{
      * @param baseLayerTiles
      */
     public void update(Tile[][] baseLayerTiles) {
-        System.out.println(healthHandler.currentHearts);
+
+        if(isHit) {
+            if(iFramesCounter > 0) {
+                iFramesCounter--;
+            } else {
+                isHit = false;
+            }
+        }
+
         this.tiles = baseLayerTiles;
         updateEntityPosition();
         if (!attacking && !inAbility) move(); // If player is not attacking, they can move

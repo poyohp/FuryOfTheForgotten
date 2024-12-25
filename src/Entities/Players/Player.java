@@ -30,6 +30,13 @@ public abstract class Player extends Entity {
     int characterAttackCooldown;
     public int maxAnimationState;
 
+    //Hit timers
+    public boolean isHit;
+    public double iFramesCounter;
+    public final double iFramesTimerSeconds = 2;
+    public final double iFramesTimerFrames = GamePanel.FPS*iFramesTimerSeconds;
+
+
     Color transparent = new Color(0,0,0,0);
 
     public HealthHandler healthHandler = new HealthHandler(initNumHearts);
@@ -60,8 +67,16 @@ public abstract class Player extends Entity {
         collisionWithChest = false;
         coinValue = 0;
 
+        isHit = false;
+        iFramesCounter = 0;
+
     }
 
+    public void isHit(double damage) {
+        healthHandler.isHit(damage);
+        isHit = true;
+        iFramesCounter = iFramesTimerFrames;
+    }
 
     /**
      * Sets player in the middle of the screen

@@ -22,9 +22,8 @@ public class DamageDealer {
     public void dealDamageToPlayer(Enemy enemy, Player player) {
         if (collisionHandler.enemyPlayerCollision(enemy, player) && !enemy.hitPlayer) {
             enemy.hitPlayer();
-            player.healthHandler.isHit(enemy.damage);
+            player.isHit(enemy.damage);
         }
-
     }
 
     /**

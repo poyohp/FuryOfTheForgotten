@@ -153,7 +153,7 @@ public class GamePanel extends JPanel implements Runnable{
      */
     void update() {
         player.update(levelHandler.getCurrentLevel().getMap().baseLayerTiles);
-        levelHandler.update(player, spawnHandler, damageDealer, collisionHandler, inventory);
+        levelHandler.update(player, spawnHandler, damageDealer, collisionHandler, inventory, ghost, snail);
         attackHandler.update(player, levelHandler.getCurrentLevel().getMap().baseLayerTiles);
         abilityHandler.update();
         damageDealer.dealDamageToEnemies(attackHandler, levelHandler.getCurrentLevel());
@@ -161,6 +161,7 @@ public class GamePanel extends JPanel implements Runnable{
 
         ghost.update();
         snail.update(levelHandler.getCurrentLevel().getMap().baseLayerTiles);
+
     }
 
 
