@@ -1,6 +1,7 @@
 package Handlers.HUD;
 
 import Handlers.ImageHandler;
+import System.Main;
 import System.Panels.GamePanel;
 import World.Tile;
 
@@ -21,40 +22,57 @@ public class HealthHandler {
     private final int heartsX = outerGap;
     private final int heartsY = (int)(GamePanel.screenHeight - outerGap - heartFinalDrawSize);
 
-    private final double initialHealth = 100;
-    private double health;
+    private double transitionTimer;
+    private final double transitionDrawSeconds = 1.5;
+    private final double transitionDrawFrames = GamePanel.FPS * transitionDrawSeconds;
+    boolean lostFullHeart;
+    boolean lostHalfHeart;
 
-    private final int maxHearts = 8;
-    private double currentFullHearts;
-    private boolean halfHeart;
+    public double maxHearts;
+    public double currentHearts;
 
-    public HealthHandler(double health) {
-        this.health = health;
+    public HealthHandler(double hearts) {
+        this.maxHearts = hearts;
+        this.currentHearts = hearts;
+
+        lostFullHeart = false;
+        lostHalfHeart = false;
     }
 
-    public void updateHealth(double health) {
-        this.health = health;
-        determineHearts();
+    public void isHit(double damage) {
+        double previousHearts = currentHearts;
+        currentHearts -= damage;
+        transitionTimer = transitionDrawFrames;
 
-    }
+        // Check transitions
+        if (previousHearts % 1 == 0.5 && currentHearts % 1 == 0) {
+            lostFullHeart = true;
+        } else if (previousHearts % 1 == 0 && currentHearts % 1 == 0.5) {
+            lostHalfHeart = true;
+        }
 
-    private void determineHearts() {
-        double hearts = (health / initialHealth) * maxHearts;
-        currentFullHearts = Math.floor(hearts);
-        halfHeart = (hearts - currentFullHearts) > 0.5;
-
+        if (currentHearts <= 0) {
+            Main.updateGameState(3);
+        }
     }
 
     public void drawHearts(Graphics2D g2) {
+        double numDrawn = 0.5;
         int x = heartsX + outerGap - innerGap;
         int y = heartsY;
-        for (int i = 0; i < currentFullHearts; i++) {
-            g2.drawImage(heartSprite, x, y, x + heartFinalDrawSize, y + heartFinalDrawSize, 0, spriteSize * 3, spriteSize, spriteSize * 3 + spriteSize, null);
+        for (int i = 0; i < maxHearts; i++) {
+            if(currentHearts > numDrawn) {
+                //FULL HEART
+                g2.drawImage(heartSprite, x, y, x + heartFinalDrawSize, y + heartFinalDrawSize, 0, spriteSize * 3, spriteSize, spriteSize * 3 + spriteSize, null);
+            } else if(currentHearts == numDrawn) {
+                //HALF HEART
+                g2.drawImage(heartSprite, x, y, x + heartFinalDrawSize, y + heartFinalDrawSize, spriteSize * 2, spriteSize * 3,spriteSize * 2 + spriteSize, spriteSize * 3 + spriteSize, null);
+            } else {
+                //EMPTY HEARTS
+                g2.drawImage(heartSprite, x, y, x + heartFinalDrawSize, y + heartFinalDrawSize, 0, 0, spriteSize, spriteSize, null);
+            }
+            numDrawn++;
             x += heartFinalDrawSize - innerGap;
         }
-        if (halfHeart || currentFullHearts == 0) {
-            g2.drawImage(heartSprite, x, y, x + heartFinalDrawSize, y + heartFinalDrawSize, spriteSize * 2, spriteSize * 3,spriteSize * 2 + spriteSize, spriteSize * 3 + spriteSize, null);
-        }
-
     }
 }

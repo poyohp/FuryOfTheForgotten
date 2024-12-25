@@ -66,7 +66,7 @@ public class Skeleton extends Player{
      * @param baseLayerTiles
      */
     public void update(Tile[][] baseLayerTiles) {
-        healthHandler.updateHealth(this.getHealth());
+        System.out.println(healthHandler.currentHearts);
         this.tiles = baseLayerTiles;
         updateEntityPosition();
         if (!attacking && !inAbility) move(); // If player is not attacking, they can move
@@ -337,8 +337,6 @@ public class Skeleton extends Player{
                 }
             }
         }
-
-        hitbox.draw(g2);
     }
 
 }

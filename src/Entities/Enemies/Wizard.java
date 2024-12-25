@@ -93,6 +93,11 @@ public class Wizard extends Enemy{
         } //else: different random actions if the player is not in enemy vision
     }
 
+    @Override
+    public void hitPlayer() {
+        //DO NOTHING FOR NOW
+    }
+
     /**
      * Searches for a path to the player
      * @param goalRow Player's row

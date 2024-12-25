@@ -21,6 +21,8 @@ public abstract class Player extends Entity {
     public boolean collisionWithChest;
     public int coinValue;
 
+    public final int initNumHearts = 8;
+
     public int updateFrames;
     int attackFrames;
     int characterAttackFrames;
@@ -30,13 +32,12 @@ public abstract class Player extends Entity {
 
     Color transparent = new Color(0,0,0,0);
 
-    public HealthHandler healthHandler = new HealthHandler((int)this.getHealth());
+    public HealthHandler healthHandler = new HealthHandler(initNumHearts);
     CollisionHandler collisionHandler = new CollisionHandler();
     public Tile[][] tiles;
 
     /**
      * Enemy that follows player
-     * @param health enemy health
      * @param speed enemy speed
      * @param width enemy width
      * @param height enemy height

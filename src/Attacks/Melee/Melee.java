@@ -23,7 +23,7 @@ public class Melee extends Attack {
      * @param yOffset attack y offset
      * @param duration attack duration
      */
-    public Melee(int damage, int range, int width, char direction, Entity entity, int xOffset, int yOffset, int duration) {
+    public Melee(double damage, int range, int width, char direction, Entity entity, int xOffset, int yOffset, int duration) {
         super(damage, range, width, direction, entity, xOffset, yOffset, duration);
         setSpeed(0);
         setInitialHitbox();

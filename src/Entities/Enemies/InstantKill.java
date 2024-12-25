@@ -1,5 +1,6 @@
 package Entities.Enemies;
 
+import System.Main;
 import Entities.Players.Player;
 import Handlers.ImageHandler;
 import World.Tile;
@@ -104,6 +105,11 @@ public class InstantKill extends Enemy {
                 this.worldY += this.getSpeed(); // Down
             }
         }
+    }
+
+    @Override
+    public void hitPlayer() {
+        Main.updateGameState(3);
     }
 
     public void setBounds(double upBound, double downBound, double leftBound, double rightBound, int mapCols, int mapRows) {

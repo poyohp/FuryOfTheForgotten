@@ -41,7 +41,6 @@ public class AttackHandler {
 
     /**
      * Create melee attack
-     * @param damage attack damage
      * @param range attack range
      * @param width attack width, perpendicular to range
      * @param direction second attack direction, first one is the direction of entity
@@ -50,13 +49,12 @@ public class AttackHandler {
      * @param yOffset attack y offset
      * @param duration attack duration
      */
-    void createPlayerStab(int damage, int range, int width, char direction, Entity entity, int xOffset, int yOffset, int duration) {
-        playerAttacks.add(new Stab(damage, range, width, direction, entity, xOffset, yOffset, duration));
+    void createPlayerStab(int range, int width, char direction, Entity entity, int xOffset, int yOffset, int duration) {
+        playerAttacks.add(new Stab(range, width, direction, entity, xOffset, yOffset, duration));
     }
 
     /**
      * Create player ranged attack
-     * @param damage attack damage
      * @param range attack range
      * @param width attack width, perpendicular to range
      * @param direction second attack direction, first one is the direction of entity
@@ -66,27 +64,8 @@ public class AttackHandler {
      * @param duration attack duration
      * @param speed attack speed
      */
-    void createPlayerArrow(int damage, int range, int width, char direction, Entity entity, int xOffset, int yOffset, int duration, int speed, double angle) {
-        playerAttacks.add(new Arrow(damage, range, width, direction, entity, xOffset, yOffset, duration, speed, angle));
-    }
-
-    /**
-     * Create enemy ranged attack
-     * @param damage attack damage
-     * @param range attack range
-     * @param width attack width, perpendicular to range
-     * @param direction second attack direction, first one is the direction of entity
-     * @param enemy enemy that attack corresponds to
-     * @param xOffset attack x offset
-     * @param yOffset attack y offset
-     * @param duration attack duration
-     * @param speed attack speed
-     * @param player player to target
-     */
-    void createEnemyRanged(int damage, int range, int width, char direction, Enemy enemy, int xOffset, int yOffset, int duration, int speed, Player player) {
-        Ranged enemyAttack = new Ranged(damage, range, width, direction, enemy, xOffset, yOffset, duration, speed);
-//        enemyAttack.angle = enemyAttack.calculateAttackAngle(enemyAttack.hitbox, player.hitbox);
-        enemyAttacks.add(enemyAttack);
+    void createPlayerArrow(int range, int width, char direction, Entity entity, int xOffset, int yOffset, int duration, int speed, double angle) {
+        playerAttacks.add(new Arrow(range, width, direction, entity, xOffset, yOffset, duration, speed, angle));
     }
 
     /**
@@ -101,29 +80,30 @@ public class AttackHandler {
     void createPlayerAttacks(Player p) {
         if (p.type == 's') {
             if (p.direction == 'r') {
-                createPlayerArrow(10, 8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 0);
-                createPlayerArrow(10, 8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 15 * Math.PI / 8);
-                createPlayerArrow(10, 8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, Math.PI / 8);
+                createPlayerArrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 0);
+                createPlayerArrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 15 * Math.PI / 8);
+                createPlayerArrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, Math.PI / 8);
             } else if (p.direction == 'u') {
-                createPlayerArrow(10, 8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, Math.PI / 2);
-                createPlayerArrow(10, 8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 3 * Math.PI / 8);
-                createPlayerArrow(10, 8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 5 * Math.PI / 8);
+                createPlayerArrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, Math.PI / 2);
+                createPlayerArrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 3 * Math.PI / 8);
+                createPlayerArrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 5 * Math.PI / 8);
             } else if (p.direction == 'l') {
-                createPlayerArrow(10, 8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, Math.PI);
-                createPlayerArrow(10, 8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 7 * Math.PI / 8);
-                createPlayerArrow(10, 8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 9 * Math.PI / 8);
+                createPlayerArrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, Math.PI);
+                createPlayerArrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 7 * Math.PI / 8);
+                createPlayerArrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 9 * Math.PI / 8);
             } else {
-                createPlayerArrow(10, 8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 3 * Math.PI / 2);
-                createPlayerArrow(10, 8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 11 * Math.PI / 8);
-                createPlayerArrow(10, 8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 13 * Math.PI / 8);
+                createPlayerArrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 3 * Math.PI / 2);
+                createPlayerArrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 11 * Math.PI / 8);
+                createPlayerArrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 13 * Math.PI / 8);
             }
         } else if (p.type == 'g') {
-            createPlayerStab(25, 20 * Tile.tileRatio, 10 * Tile.tileRatio, p.direction, p, 0, 0, 30);
+            createPlayerStab(20 * Tile.tileRatio, 10 * Tile.tileRatio, p.direction, p, 0, 0, 30);
         }
     }
 
     // Must be updated when other entities are included to take an arraylist of all entities as a parameter, not just a player)
-    public void update(Player player, ArrayList<Enemy> enemy) {
+    public void update(Player player, Tile[][] currentTileset) {
+        this.tileset = currentTileset;
         player.checkAttack();
         player.setAttackCooldown();
 

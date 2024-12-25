@@ -69,12 +69,12 @@ public class GamePanel extends JPanel implements Runnable{
         //Handling ALL LOADING
         keyHandler = new KeyHandler();
         spawnHandler = new SpawnHandler();
-        damageDealer = new DamageDealer();
 
         initiatePlayerType();
 
         levelHandler = new LevelHandler(2, spawnHandler, player);
         collisionHandler = new CollisionHandler();
+        damageDealer = new DamageDealer(collisionHandler);
         attackHandler = new AttackHandler(keyHandler, levelHandler.getCurrentLevel().getMap().baseLayerTiles);
         abilityHandler = new AbilityHandler(player, keyHandler, collisionHandler);
 
@@ -154,16 +154,13 @@ public class GamePanel extends JPanel implements Runnable{
     void update() {
         player.update(levelHandler.getCurrentLevel().getMap().baseLayerTiles);
         levelHandler.update(player, spawnHandler, damageDealer, collisionHandler, inventory);
-        attackHandler.update(player, levelHandler.getCurrentLevel().enemies);
+        attackHandler.update(player, levelHandler.getCurrentLevel().getMap().baseLayerTiles);
         abilityHandler.update();
         damageDealer.dealDamageToEnemies(attackHandler, levelHandler.getCurrentLevel());
         inventory.update();
 
         ghost.update();
         snail.update(levelHandler.getCurrentLevel().getMap().baseLayerTiles);
-        if (ghost.hitbox.intersects(player.hitbox) || player.getHealth() <= 0 || snail.hitbox.intersects(player.hitbox)) {
-            Main.updateGameState(3);
-        }
     }
 
 

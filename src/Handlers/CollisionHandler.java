@@ -11,37 +11,6 @@ import java.awt.*;
 
 public class CollisionHandler {
 
-    /**
-     * Checks entity collision with attacks
-     * Used for player-attack and enemy-attack collision
-     * @param entity entity to check collision with
-     * @param attack attack to check collision with
-     * @return true if entity collides with attack, false otherwise
-     */
-    boolean checkEntityWithAttackCollision(Entity entity, Attack attack) {
-        double attackTop = attack.hitbox.getWorldY();
-        double attackBottom = attackTop + attack.hitbox.getHeight();
-        double attackLeft = attack.hitbox.getWorldX();
-        double attackRight = attackLeft + attack.hitbox.getWidth();
-
-        char attackDirection1 = attack.getDirection()[0];
-        char attackDirection2 = attack.getDirection()[1];
-
-        if (attackDirection1 == 'u' || attackDirection2 == 'u') {
-            if (attackTop <= entity.entityBottom && attackLeft <= entity.entityRight && attackRight >= entity.entityLeft) return true;
-        }
-        if (attackDirection1 == 'd' || attackDirection2 == 'd') {
-            if (attackBottom >= entity.entityTop && attackLeft <= entity.entityRight && attackRight >= entity.entityLeft) return true;
-        }
-        if (attackDirection1 == 'l' || attackDirection2 == 'l') {
-            if (attackLeft <= entity.entityRight && attackTop > entity.entityBottom && attackBottom < entity.entityTop) return true;
-        }
-        if(attackDirection1 == 'd' || attackDirection2 == 'd') {
-            if (attackRight > entity.entityLeft && attackTop > entity.entityBottom && attackBottom < entity.entityTop) return true;
-        }
-        return false;
-    }
-
     //Specifically for player-chest; since player can't walk over chest
     boolean checkChestWithEntityCollision(Entity entity, Chest chest) {
         double chestTop = chest.hitbox.worldY;
@@ -133,14 +102,12 @@ public class CollisionHandler {
                 return true;
             }
             if (leftCol - 1 < 0) {
-                System.out.println("Left");
                 return true;
             }
             if (isNotWalkableTileInCol(leftCol, topRow, bottomRow, tiles)) {
                 return true;
             }
             if (rightCol + 1 > tiles[0].length) {
-                System.out.println("Right");
                 return true;
             }
             if (isNotWalkableTileInCol(rightCol, topRow, bottomRow, tiles)) {
@@ -231,29 +198,51 @@ public class CollisionHandler {
     // THE FOLLOWING 2 METHODS USE RECTANGLES - WE WILL USE OUR "checkEntityWithAttackCollision" METHOD AFTER PROTOTYPE
 
     /**
-     * Checks enemy collision with attack (temporary, will be updated after prototype is completed)
+     * Checks enemy collision with attack
+     * Takes speed into account
      * @param enemy the enemy to check collision with
      * @param attack the attack to check collision with
-     * @return
+     * @return true if there is overlap, false otherwise
      */
-    static public boolean enemyWithAttackCollision (Enemy enemy, Attack attack) {
-        if (enemy.hitbox.intersects(attack.hitbox)) return true;
-        else return false;
+    public boolean enemyWithAttackCollision(Enemy enemy, Attack attack) {
+        double enemyTop = enemy.worldY + enemy.getSpeed();
+        double enemyBottom = enemyTop + enemy.getHeight();
+        double enemyLeft = enemy.worldX + enemy.getSpeed();
+        double enemyRight = enemyLeft + enemy.getWidth();
+
+        double attackTop = attack.hitbox.worldY + attack.getSpeed();
+        double attackBottom = attackTop + attack.hitbox.height;
+        double attackLeft = attack.hitbox.worldX + attack.getSpeed();
+        double attackRight = attackLeft + attack.hitbox.width;
+
+        if (attackTop < enemyBottom && attackBottom > enemyTop && attackLeft < enemyRight && attackRight > enemyLeft) {
+            return true;
+        }
+        return false;
     }
 
     /**
-     * Checks enemy collision with player (temporary, will be updated after prototype is completed)
-     * Used to deal damage - since enemies deal damage through collision for now
+     * Checks enemy collision with player
+     * Takes speed into account
      * @param enemy the enemy to check collision with
      * @param player the player to check collision with
-     * @return
+     * @return true if there is overlap, false otherwise
      */
-    static public boolean enemyPlayerCollision(Enemy enemy, Player player) {
-        Rectangle enemyBox = new Rectangle((int)enemy.worldX, (int)enemy.worldY, enemy.getWidth(), enemy.getHeight());
-        Rectangle playerBox = new Rectangle((int)player.worldX, (int)player.worldY, player.getWidth(), player.getHeight());
+    public boolean enemyPlayerCollision(Enemy enemy, Player player) {
+        double enemyTop = enemy.worldY + enemy.getSpeed();
+        double enemyBottom = enemyTop + enemy.getHeight();
+        double enemyLeft = enemy.worldX + enemy.getSpeed();
+        double enemyRight = enemyLeft + enemy.getWidth();
 
-        if (enemyBox.intersects(playerBox)) return true;
-        else return false;
+        double playerTop = player.worldY + player.getSpeed();
+        double playerBottom = playerTop + player.getHeight();
+        double playerLeft = player.worldX + player.getSpeed();
+        double playerRight = playerLeft + player.getWidth();
+
+        if (playerTop < enemyBottom && playerBottom > enemyTop && playerLeft < enemyRight && playerRight > enemyLeft) {
+            return true;
+        }
+        return false;
     }
 
 }

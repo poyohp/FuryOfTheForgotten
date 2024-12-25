@@ -17,7 +17,6 @@ public class Slime extends Enemy{
     APathfinding pathFinder;
     Tile[][] tileset;
 
-
     // Variables for drawing
     private int updateFrames = 7;
     private int column1 = 0, column2 = 16, column3 = 32, column4 = 48, row1 = 0, row2 = 16, row3 = 32, row4 = 48, width = 15, height = 15;
@@ -47,6 +46,8 @@ public class Slime extends Enemy{
         this.tileset = tileset;
         pathFinder = new APathfinding(tileset);
         this.onPath = true;
+
+        hitPlayer = false;
     }
 
     void loadSlime() {
@@ -58,14 +59,28 @@ public class Slime extends Enemy{
      */
     public void move() {
 
+        if(hitPlayer) {
+            if(freezeTimer > 0) {
+                freezeTimer--;
+            } else {
+                hitPlayer = false;
+            }
+        }
+
         // If enemy is going to follow player
-        if (onPath) {
+        if (onPath && !hitPlayer) {
             int goalRow = (int) (entityToFollow.entityTop/ Tile.tileSize); //top row of the player
             int goalCol = (int) (entityToFollow.entityLeft/Tile.tileSize); //left row of the player
 
             searchPath(goalRow, goalCol);
 
         } //else: different random actions if the player is not in enemy vision
+    }
+
+    @Override
+    public void hitPlayer() {
+        hitPlayer = true;
+        freezeTimer = freezeTimerFrames;
     }
 
     /**
@@ -136,7 +151,6 @@ public class Slime extends Enemy{
     public void draw(Graphics2D g2) {
         drawHealth(g2);
 
-
         if (direction == 'd') {
             switch (animationState) {
                 case 0:
@@ -198,9 +212,7 @@ public class Slime extends Enemy{
                     break;
             }
         }
-
-
-
+        hitbox.draw(g2);
         updateFrames();
     }
 }

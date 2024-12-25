@@ -2,6 +2,7 @@ package Entities.Enemies;
 
 import Entities.Entity;
 import Entities.Players.Player;
+import System.Panels.GamePanel;
 
 import java.awt.*;
 
@@ -10,8 +11,12 @@ public abstract class Enemy extends Entity {
     // Used for attacking
     int vision = 600;
     public double damage;
-    public boolean isFollowing = false;
-    public boolean attacking = true;
+
+    //Used for player attack pause...
+    public boolean hitPlayer;
+    public int freezeTimer;
+    private final int freezeTimerSeconds = 2;
+    public final int freezeTimerFrames = (int) GamePanel.FPS*freezeTimerSeconds;
 
     Entity entityToFollow; // Player to reference
 
@@ -34,8 +39,8 @@ public abstract class Enemy extends Entity {
     public Enemy(int health, double speed, int width, int height, String name, int worldX, int worldY, int xOffset, int yOffset, int hitBoxWidth, int hitBoxHeight, Player player, boolean isFollowing) {
         super(health, speed, width, height, name, worldX, worldY, xOffset, yOffset, hitBoxWidth, hitBoxHeight);
         this.entityToFollow = player;
-        this.isFollowing = isFollowing;
 
+        this.hitPlayer = false;
         damage = 0.5; // Damage for all enemies
 
         setScreenPosition();
@@ -80,5 +85,6 @@ public abstract class Enemy extends Entity {
      */
     public abstract void draw(Graphics2D g2);
     public abstract void move();
+    public abstract void hitPlayer();
 
 }

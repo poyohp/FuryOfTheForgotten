@@ -12,7 +12,8 @@ import java.awt.*;
 public abstract class Attack {
 
     // Attack attributes
-    private int damage, range, width, duration, speed;
+    public double damage;
+    private int range, width, duration, speed;
     private double worldX, worldY, screenX, screenY;
     public double angle;
     private char[] direction = new char[2];
@@ -31,7 +32,7 @@ public abstract class Attack {
      * @param yOffset attack y offset
      * @param duration attack duration
      */
-    public Attack (int damage, int range, int width, char direction, Entity entity, int xOffset, int yOffset, int duration) {
+    public Attack (double damage, int range, int width, char direction, Entity entity, int xOffset, int yOffset, int duration) {
         this.damage = damage;
         this.range = range;
         this.width = width;
@@ -86,7 +87,7 @@ public abstract class Attack {
      * Get attack damage
      * @return attack damage
      */
-    public int getDamage() { return damage; }
+    public double getDamage() { return damage; }
 
     /**
      * Get attack range

@@ -66,7 +66,6 @@ public class AbilityHandler {
     }
 
     public void update() {
-        //System.out.println(player.getSpeed());
         if (checkAbility()) {
             ability();
         }
@@ -101,13 +100,6 @@ public class AbilityHandler {
                 }
                 abilityLength--;
             }
-
-            /*
-            for (Decoy d : decoys) {
-                System.out.println(1);
-            }
-
-             */
         }
 
         if (!canAbility) {

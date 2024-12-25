@@ -28,24 +28,6 @@ public class Decoy extends Player {
         this.tiles = player.tiles;
     }
 
-    /*
-    public Decoy(Player player) {
-        super(100000000, 4, player.getWidth(), player.getHeight(), "decoy", player.worldX, player.worldY, player.hitbox.xOffset, player.hitbox.yOffset, player.hitbox.width, player.hitbox.height);
-        System.out.println(hitbox.screenX);
-        this.player = player;
-        this.direction = player.direction;
-        this.collisionHandler = player.collisionHandler;
-        this.tiles = player.tiles;
-        this.animationState = player.animationState;
-
-        hitbox = new Hitbox((int) worldX, (int) worldY, 0, 0, player.hitbox.width, player.hitbox.height, xOffset, yOffset); // Create hitbox that corresponds to given values
-        hitbox.update(this);
-
-        setScreenPosition();
-    }
-
-     */
-
     public void move() {
         if (direction == 'u') {
             if (!collisionHandler.playerWithTileCollision(this, tiles)) worldY -= getSpeed();

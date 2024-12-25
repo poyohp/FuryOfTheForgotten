@@ -114,7 +114,6 @@ public class LevelHandler {
         for (Enemy enemy : currentLevel.enemies) {
             enemy.update();
             damageDealer.dealDamageToPlayer(enemy, player);
-            if (player.getHealth() <= 0) Main.updateGameState(3);
         }
     }
 
@@ -153,7 +152,6 @@ public class LevelHandler {
 
     //checks for chest openings, and also for object collisions (if player picks up or not)
     public void playerObjectInteract(CollisionHandler collisionHandler, Player player, InventoryHandler inventoryHandler) {
-        System.out.println(player.keyHandler.choicePress);
         for(Chest chest: currentLevel.chests) {
             if(collisionHandler.checkPlayerWithObjectCollision(player, chest)) {
                 if(!chest.isOpen) {

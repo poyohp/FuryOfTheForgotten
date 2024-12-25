@@ -1,6 +1,7 @@
 package Entities.Enemies;
 
 import Entities.Players.Player;
+import System.Main;
 import Handlers.ImageHandler;
 import Pathfinding.APathfinding;
 import Pathfinding.Node;
@@ -77,6 +78,11 @@ public class EternalSnail extends Enemy{
             searchPath(goalRow, goalCol);
 
         } //else: different random actions if the player is not in enemy vision
+    }
+
+    @Override
+    public void hitPlayer() {
+        Main.updateGameState(3);
     }
 
     /**

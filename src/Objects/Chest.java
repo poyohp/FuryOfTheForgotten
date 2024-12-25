@@ -1,10 +1,8 @@
 package Objects;
 
 import System.Panels.GamePanel;
-import Entities.Hitbox;
 import Entities.Players.Player;
 import Handlers.ImageHandler;
-import World.Tile;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -92,7 +90,6 @@ public class Chest extends Object {
         if(chestSize == 0) {
             imageY += imageWidth*2;
         }
-        System.out.println(imageX + " " + imageY);
     }
 
     @Override

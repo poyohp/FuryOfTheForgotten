@@ -4,6 +4,7 @@ import Handlers.ImageHandler;
 import Entities.Players.Player;
 //import Objects.Chest;
 import Objects.Chest;
+import System.Panels.GamePanel;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -105,7 +106,6 @@ public class Map {
                         spawnLayerTiles[m][n] = new Tile(m, n, Integer.parseInt(dataArray.get(j).toString()), walkable, numTilesHeight, numTilesWidth);
                     } else if (i == 2) {
                         if(Integer.parseInt(dataArray.get(j).toString()) > 0) {
-                            System.out.println("ADDING!");
                             level.chests.add(new Chest("Chest", Tile.tileSize, Tile.tileSize, n*Tile.tileSize, m*Tile.tileSize, 0, 0));
                         }
                     }
@@ -127,8 +127,15 @@ public class Map {
             for(int j = 0; j < mapWidth; j++) {
                 setScreenPositions(i, j, player);
 
-                g2.drawImage(tileSetImage, (int) baseLayerTiles[i][j].getScreenXPos(), (int) baseLayerTiles[i][j].getScreenYPos(), (int) baseLayerTiles[i][j].getScreenXPos() + Tile.tileSize, (int) baseLayerTiles[i][j].getScreenYPos() + Tile.tileSize, baseLayerTiles[i][j].getImageCol()*Tile.normalTileSize, baseLayerTiles[i][j].getImageRow()*Tile.normalTileSize, baseLayerTiles[i][j].getImageCol()*Tile.normalTileSize+Tile.normalTileSize, baseLayerTiles[i][j].getImageRow()*Tile.normalTileSize + Tile.normalTileSize, null);
-                
+                int tileWorldX = (int)baseLayerTiles[i][j].getWorldXPos();
+                int tileWorldY = (int)baseLayerTiles[i][j].getWorldYPos();
+
+                if(tileWorldX + Tile.tileSize > player.worldX - player.screenX && tileWorldX - Tile.tileSize < player.worldX + player.screenX &&
+                        tileWorldY + Tile.tileSize > player.worldY - player.screenY && tileWorldY - Tile.tileSize < player.worldY + player.screenY) {
+                    g2.drawImage(tileSetImage, (int) baseLayerTiles[i][j].getScreenXPos(), (int) baseLayerTiles[i][j].getScreenYPos(), (int) baseLayerTiles[i][j].getScreenXPos() + Tile.tileSize, (int) baseLayerTiles[i][j].getScreenYPos() + Tile.tileSize, baseLayerTiles[i][j].getImageCol()*Tile.normalTileSize, baseLayerTiles[i][j].getImageRow()*Tile.normalTileSize, baseLayerTiles[i][j].getImageCol()*Tile.normalTileSize+Tile.normalTileSize, baseLayerTiles[i][j].getImageRow()*Tile.normalTileSize + Tile.normalTileSize, null);
+
+                }
+
                 if(spawnLayerTiles[i][j].getValue() > 0) {
                     g2.setColor(Color.ORANGE);
                     g2.fillRect((int)spawnLayerTiles[i][j].getScreenXPos(), (int)spawnLayerTiles[i][j].getScreenYPos(), Tile.tileSize, Tile.tileSize);

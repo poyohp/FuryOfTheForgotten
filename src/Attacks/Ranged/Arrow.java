@@ -10,12 +10,10 @@ import java.awt.image.BufferedImage;
 
 public class Arrow extends Ranged {
     static BufferedImage arrow = ImageHandler.loadImage("Assets/Projectiles/Arrow.png");
-    double drawAngle;
 
     /**
      * Create ranged attack
      *
-     * @param damage    attack damage
      * @param range     attack range
      * @param width     attack width, perpendicular to range
      * @param direction second attack direction, first one is the direction of entity
@@ -25,8 +23,8 @@ public class Arrow extends Ranged {
      * @param duration  attack duration
      * @param speed     attack speed
      */
-    public Arrow(int damage, int range, int width, char direction, Entity entity, int xOffset, int yOffset, int duration, int speed, double angle) {
-        super(damage, range, width, direction, entity, xOffset, yOffset, duration, speed);
+    public Arrow(int range, int width, char direction, Entity entity, int xOffset, int yOffset, int duration, int speed, double angle) {
+        super(1.0, range, width, direction, entity, xOffset, yOffset, duration, speed);
         this.angle = angle;
         spawnDistance = 80;
         setInitialHitbox();

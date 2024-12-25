@@ -48,7 +48,6 @@ public class Goblin extends Player{
      * @param baseLayerTiles
      */
     public void update(Tile[][] baseLayerTiles) {
-        healthHandler.updateHealth(this.getHealth());
         this.tiles = baseLayerTiles;
         updateEntityPosition();
         if (!attacking) move(); // If player is not attacking, they can move

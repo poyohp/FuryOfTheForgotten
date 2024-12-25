@@ -22,7 +22,7 @@ public class Ranged extends Attack {
      * @param duration attack duration
      * @param speed attack speed
      */
-    public Ranged(int damage, int range, int width, char direction, Entity entity, int xOffset, int yOffset, int duration, int speed) {
+    public Ranged(double damage, int range, int width, char direction, Entity entity, int xOffset, int yOffset, int duration, int speed) {
         super(damage, range, width, direction, entity, xOffset, yOffset, duration);
         setSpeed(speed);
     }
