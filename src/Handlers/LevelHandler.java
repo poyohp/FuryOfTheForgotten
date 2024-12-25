@@ -1,5 +1,6 @@
 package Handlers;
 
+import Attacks.Attack;
 import Entities.Enemies.Enemy;
 import Entities.Enemies.EternalSnail;
 import Entities.Enemies.InstantKill;
@@ -58,10 +59,11 @@ public class LevelHandler {
      * @param spawnHandler to update spawns in the new level
      * @param player the game player
      */
-    public void goToNextLevel(SpawnHandler spawnHandler, Player player) {
+    public void goToNextLevel(SpawnHandler spawnHandler, Player player, AttackHandler attackHandler) {
         if(currentLevelIndex < numLevels - 1 ) {
             currentLevelIndex++;
             currentLevel = levels[currentLevelIndex];
+            attackHandler.levelChanged(currentLevel);
             spawnHandler.levelChanged(player, currentLevel);
         }
     }
@@ -84,7 +86,7 @@ public class LevelHandler {
      * @param spawnHandler
      * @param damageDealer
      */
-    public void update(Player player, SpawnHandler spawnHandler, DamageDealer damageDealer, CollisionHandler collisionHandler, InventoryHandler inventoryHandler, InstantKill ghost, EternalSnail snail) {
+    public void update(Player player, SpawnHandler spawnHandler, DamageDealer damageDealer, CollisionHandler collisionHandler, InventoryHandler inventoryHandler, AttackHandler attackHandler, InstantKill ghost, EternalSnail snail) {
 
         //CHECKING LEVEL
         currentLevel = levels[currentLevelIndex];
@@ -106,7 +108,7 @@ public class LevelHandler {
 
         // SPAWN HANDLING
         spawnHandler.update(player, currentLevel);
-        handleSpawns(spawnHandler, player);
+        handleSpawns(spawnHandler, player, attackHandler); //THIS ALSO HANDLES ATTACK REMOVAL WHEN LEVEL CHANGED!
 
     }
 
@@ -136,7 +138,7 @@ public class LevelHandler {
      * Checks to determine initial number of active spawns as well
      * @param spawnHandler to handle the spawns
      */
-    public void handleSpawns(SpawnHandler spawnHandler, Player player) {
+    public void handleSpawns(SpawnHandler spawnHandler, Player player, AttackHandler attackHandler) {
         if (spawnHandler.started) { // Timer has started
             boolean spawnPointsActive = false; // Checks if there are any active spawn points
             spawnHandler.numActiveSpawns = 0;
@@ -148,7 +150,7 @@ public class LevelHandler {
             }
 
             // If there are no more active spawn points, player has defeated all enemies!
-            if (!spawnPointsActive && currentLevel.enemies.isEmpty()) goToNextLevel(spawnHandler, player);
+            if (!spawnPointsActive && currentLevel.enemies.isEmpty()) goToNextLevel(spawnHandler, player, attackHandler);
         }
     }
 
@@ -159,7 +161,11 @@ public class LevelHandler {
 
         // Removes enemies if they die
         for (Enemy enemy: currentLevel.enemies) {
-            if (enemy.getHealth() == 0) currentLevel.enemiesToRemove.add(enemy);
+            if(enemy.getHealth() <= 0) {
+                System.out.println("THIS ENEMY!");
+                System.out.println(enemy.freezeTimer);
+            }
+            if (enemy.getHealth() <= 0 && enemy.freezeTimer <= 0) currentLevel.enemiesToRemove.add(enemy);
         }
         currentLevel.enemies.removeAll(currentLevel.enemiesToRemove);
     }

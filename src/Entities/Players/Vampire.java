@@ -42,7 +42,7 @@ public class Vampire extends Player{
      * @param hitBoxHeight hitbox height
      * @param keyHandler   keyhandler to handle key presses
      */
-    public Vampire(int health, double speed, int width, int height, String name, double worldX, double worldY, int xOffset, int yOffset, int hitBoxWidth, int hitBoxHeight, KeyHandler keyHandler) {
+    public Vampire(double health, double speed, int width, int height, String name, double worldX, double worldY, int xOffset, int yOffset, int hitBoxWidth, int hitBoxHeight, KeyHandler keyHandler) {
         super(health, speed, width, height, name, worldX, worldY, xOffset, yOffset, hitBoxWidth, hitBoxHeight, keyHandler);
         setCharacterState();
     }
@@ -52,17 +52,17 @@ public class Vampire extends Player{
      * @param baseLayerTiles
      */
     public void update(Tile[][] baseLayerTiles) {
+        checkHit();
         this.tiles = baseLayerTiles;
         updateEntityPosition();
         if (!attacking) move(); // If player is not attacking, they can move
         hitbox.update(this); // Update hitbox
         updateFrames();
+        setHealth(healthHandler.currentHearts);
     }
 
     @Override
     public void draw(Graphics2D g2) {
-        drawHealth(g2);
-
         if (direction == 'd') {
             currentRow = 0;
         } else if (direction == 'l') {

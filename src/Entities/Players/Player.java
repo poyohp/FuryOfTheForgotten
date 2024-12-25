@@ -57,7 +57,7 @@ public abstract class Player extends Entity {
      * @param hitBoxHeight hitbox height
      * @param keyHandler keyhandler to handle key presses
      */
-    public Player(int health, double speed, int width, int height, String name, double worldX, double worldY, int xOffset, int yOffset, int hitBoxWidth, int hitBoxHeight, KeyHandler keyHandler) {
+    public Player(double health, double speed, int width, int height, String name, double worldX, double worldY, int xOffset, int yOffset, int hitBoxWidth, int hitBoxHeight, KeyHandler keyHandler) {
         super(health, speed, width, height, name, worldX, worldY, xOffset, yOffset, hitBoxWidth, hitBoxHeight);
 
         setScreenPosition();
@@ -76,6 +76,18 @@ public abstract class Player extends Entity {
         healthHandler.isHit(damage);
         isHit = true;
         iFramesCounter = iFramesTimerFrames;
+    }
+
+    public void checkHit() {
+        if(isHit) {
+            if(iFramesCounter > 0) {
+                iFramesCounter--;
+            } else {
+                isHit = false;
+            }
+        }
+
+        setHealth(healthHandler.currentHearts);
     }
 
     /**

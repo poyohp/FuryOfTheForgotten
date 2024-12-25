@@ -5,6 +5,7 @@ import java.awt.*;
 public abstract class Entity {
 
     // Various entity attributes
+    private double originalHealth;
     private double health;
     private double speed;
     private int width, height;
@@ -38,7 +39,8 @@ public abstract class Entity {
      * @param hitBoxWidth  hitbox width
      * @param hitBoxHeight hitbox height
      */
-    public Entity(int health, double speed, int width, int height, String name, double worldX, double worldY, int xOffset, int yOffset, int hitBoxWidth, int hitBoxHeight) {
+    public Entity(double health, double speed, int width, int height, String name, double worldX, double worldY, int xOffset, int yOffset, int hitBoxWidth, int hitBoxHeight) {
+        this.originalHealth = health;
         this.health = health;
         this.speed = speed;
         this.width = width;
@@ -80,7 +82,7 @@ public abstract class Entity {
      * @param g2 Graphics2D object to draw health bar on
      */
     public void drawHealth(Graphics2D g2) {
-        double fillPercentage = health / 100.0; // Health percentage remaining
+        double fillPercentage = health / originalHealth; // Health percentage remaining
         int barLength = (int) (fillPercentage * width); // Draw bar based on percentage remaining
 
         // Bar fill
@@ -88,8 +90,10 @@ public abstract class Entity {
         g2.fillRect((int) screenX, (int) screenY - 40, barLength, 20);
 
         // Bar outline
-        g2.setColor(Color.BLACK);
-        g2.drawRect((int) screenX, (int) screenY - 40, width, 20);
+        if(health > 0) {
+            g2.setColor(Color.BLACK);
+            g2.drawRect((int) screenX, (int) screenY - 40, width, 20);
+        }
 
     }
 

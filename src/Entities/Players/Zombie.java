@@ -29,7 +29,7 @@ public class Zombie extends Player{
      * @param hitBoxHeight hitbox height
      * @param keyHandler   keyhandler to handle key presses
      */
-    public Zombie(int health, double speed, int width, int height, String name, double worldX, double worldY, int xOffset, int yOffset, int hitBoxWidth, int hitBoxHeight, KeyHandler keyHandler) {
+    public Zombie(double health, double speed, int width, int height, String name, double worldX, double worldY, int xOffset, int yOffset, int hitBoxWidth, int hitBoxHeight, KeyHandler keyHandler) {
         super(health, speed, width, height, name, worldX, worldY, xOffset, yOffset, hitBoxWidth, hitBoxHeight, keyHandler);
         setCharacterState();
     }
@@ -48,6 +48,8 @@ public class Zombie extends Player{
      * @param baseLayerTiles
      */
     public void update(Tile[][] baseLayerTiles) {
+        checkHit();
+
         this.tiles = baseLayerTiles;
         updateEntityPosition();
         if (!attacking && !inAbility) move(); // If player is not attacking, they can move
@@ -188,7 +190,6 @@ public class Zombie extends Player{
                 }
             }
         }
-        hitbox.draw(g2);
     }
 
 }

@@ -1,6 +1,7 @@
 package System.Panels;
 
 import Handlers.ImageHandler;
+import System.Main;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,6 +21,8 @@ public class GameOverPanel extends JPanel {
         // Ensures full screen and reduces rendering time!
         this.setDoubleBuffered(true);
         this.setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
+
+        Main.hideCursor(this);
 
     }
 

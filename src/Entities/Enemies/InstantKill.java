@@ -112,6 +112,11 @@ public class InstantKill extends Enemy {
         Main.updateGameState(3);
     }
 
+    @Override
+    public void isHit(double damage) {
+        Main.updateGameState(3);
+    }
+
     public void setBounds(double upBound, double downBound, double leftBound, double rightBound, int mapCols, int mapRows) {
         while (true) {
             int randomY = rand.nextInt(1, mapRows-1);

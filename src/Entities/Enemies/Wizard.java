@@ -98,6 +98,12 @@ public class Wizard extends Enemy{
         //DO NOTHING FOR NOW
     }
 
+    @Override
+    public void isHit(double damage) {
+        this.setHealth(this.getHealth() - damage);
+        //DO NOTHING FOR NOW
+    }
+
     /**
      * Searches for a path to the player
      * @param goalRow Player's row

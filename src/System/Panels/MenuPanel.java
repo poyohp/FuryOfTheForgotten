@@ -56,6 +56,8 @@ public class MenuPanel extends JPanel {
 
         addButtonsToArrayList();
 
+        Main.hideCursor(this);
+
         timer = new Timer(TIMERSPEED, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

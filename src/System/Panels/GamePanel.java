@@ -64,7 +64,7 @@ public class GamePanel extends JPanel implements Runnable{
         this.setDoubleBuffered(true);
         this.setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
         setFocusable(true);
-        hideCursor();
+        Main.hideCursor(this);
 
         //Handling ALL LOADING
         keyHandler = new KeyHandler();
@@ -98,10 +98,10 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     void initiatePlayerType() {
-        if (CharacterSelectionPanel.selectedCharacter.equals("zombie")) player = new Zombie(100, 4, Tile.tileSize, Tile.tileSize, "Player", 0, 0, 4*Tile.tileSize/Tile.normalTileSize, 6*Tile.tileSize/Tile.normalTileSize-1, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
-        else if (CharacterSelectionPanel.selectedCharacter.equals("skeleton")) player = new Skeleton(100, 4, Tile.tileSize, Tile.tileSize, "Player", 0, 0, 4*Tile.tileSize/Tile.normalTileSize, 6*Tile.tileSize/Tile.normalTileSize-1, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
-        else if (CharacterSelectionPanel.selectedCharacter.equals("goblin")) player = new Goblin(100, 4, Tile.tileSize, Tile.tileSize, "Player", 0, 0, 4*Tile.tileSize/Tile.normalTileSize, 6*Tile.tileSize/Tile.normalTileSize-1, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
-        else if (CharacterSelectionPanel.selectedCharacter.equals("vampire")) player = new Vampire(100, 4, Tile.tileSize, Tile.tileSize, "Player", 0, 0, 4*Tile.tileSize/Tile.normalTileSize, 6*Tile.tileSize/Tile.normalTileSize-1, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
+        if (CharacterSelectionPanel.selectedCharacter.equals("zombie")) player = new Zombie(8, 4, Tile.tileSize, Tile.tileSize, "Player", 0, 0, 4*Tile.tileSize/Tile.normalTileSize, 6*Tile.tileSize/Tile.normalTileSize-1, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
+        else if (CharacterSelectionPanel.selectedCharacter.equals("skeleton")) player = new Skeleton(8, 4, Tile.tileSize, Tile.tileSize, "Player", 0, 0, 4*Tile.tileSize/Tile.normalTileSize, 6*Tile.tileSize/Tile.normalTileSize-1, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
+        else if (CharacterSelectionPanel.selectedCharacter.equals("goblin")) player = new Goblin(8, 4, Tile.tileSize, Tile.tileSize, "Player", 0, 0, 4*Tile.tileSize/Tile.normalTileSize, 6*Tile.tileSize/Tile.normalTileSize-1, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
+        else if (CharacterSelectionPanel.selectedCharacter.equals("vampire")) player = new Vampire(8, 4, Tile.tileSize, Tile.tileSize, "Player", 0, 0, 4*Tile.tileSize/Tile.normalTileSize, 6*Tile.tileSize/Tile.normalTileSize-1, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
         else System.out.println("Invalid character");
     }
 
@@ -112,15 +112,6 @@ public class GamePanel extends JPanel implements Runnable{
         this.setFocusable(true);
         this.requestFocusInWindow();
         gameThread.start();
-    }
-
-    /**
-     * Hides the cursor (since it's not used in the game)
-     */
-    private void hideCursor() {
-        this.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(
-                new BufferedImage(3, 3, BufferedImage.TYPE_INT_ARGB), new Point(0, 0),
-                "null"));
     }
 
 
@@ -153,7 +144,7 @@ public class GamePanel extends JPanel implements Runnable{
      */
     void update() {
         player.update(levelHandler.getCurrentLevel().getMap().baseLayerTiles);
-        levelHandler.update(player, spawnHandler, damageDealer, collisionHandler, inventory, ghost, snail);
+        levelHandler.update(player, spawnHandler, damageDealer, collisionHandler, inventory, attackHandler, ghost, snail);
         attackHandler.update(player, levelHandler.getCurrentLevel().getMap().baseLayerTiles);
         abilityHandler.update();
         damageDealer.dealDamageToEnemies(attackHandler, levelHandler.getCurrentLevel());
@@ -184,10 +175,7 @@ public class GamePanel extends JPanel implements Runnable{
         ghost.draw(g2);
         snail.draw(g2);
 
-        for(SpawnPoint spawnPoint : spawnHandler.enemySpawnPoints) {
-            spawnPoint.draw(g2, player);
-        }
-
+        spawnHandler.drawSpawns(g2, player);
         g2.setFont(spawnsRemaining);
         g2.drawString("Active Spawns Remaining: " + spawnHandler.numActiveSpawns, (int)(screenWidth - 300), (int)(100));
 

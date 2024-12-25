@@ -20,7 +20,8 @@ public class DamageDealer {
      * @param player player to deal damage to
      */
     public void dealDamageToPlayer(Enemy enemy, Player player) {
-        if (collisionHandler.enemyPlayerCollision(enemy, player) && !enemy.hitPlayer) {
+        if (collisionHandler.enemyPlayerCollision(enemy, player) && !enemy.hitPlayer && !player.isHit) {
+            // WHAT HAPPENS WHEN PLAYER IS HIT! (COMPLETED)
             enemy.hitPlayer();
             player.isHit(enemy.damage);
         }
@@ -32,10 +33,21 @@ public class DamageDealer {
      * @param level the current level
      */
     public void dealDamageToEnemies(AttackHandler attackHandler, Level level) {
-        for (Attack playerAttack: attackHandler.playerAttacks) {
+        int indexMarked = -1;
+        for(int i = 0; i < attackHandler.playerAttacks.size(); i++) {
+            Attack playerAttack = attackHandler.playerAttacks.get(i);
             for (Enemy enemy: level.enemies) {
                 // Lowers enemy health by damage
-                if (collisionHandler.enemyWithAttackCollision(enemy, playerAttack)) enemy.setHealth(enemy.getHealth() - playerAttack.getDamage());
+                if (collisionHandler.enemyWithAttackCollision(enemy, playerAttack)) {
+                    indexMarked = i;
+                    enemy.isHit(playerAttack.damage);
+                }
+            }
+
+            //REMOVES ANY MARKED INDEX FROM ATTACKS
+            if(indexMarked != -1) {
+                attackHandler.playerAttacks.remove(indexMarked);
+                i--;
             }
         }
     }

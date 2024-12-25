@@ -4,7 +4,7 @@ import System.Panels.GamePanel;
 
 public class Tile {
     public static final int normalTileSize = 16;
-    private static final int numToMultiply = 5;
+    private static final int numToMultiply = 6;
     public static final int tileMultipler = (int) (GamePanel.screenWidth/GamePanel.screenHeight) * numToMultiply;
 
     //Tile size is determined based on screen ratio

@@ -30,6 +30,8 @@ public class HelpPanel extends JPanel implements KeyListener {
         // Makes sure that panel can listen for key events
         this.addKeyListener(this);
         this.setFocusable(true);
+
+        Main.hideCursor(this);
     }
 
 

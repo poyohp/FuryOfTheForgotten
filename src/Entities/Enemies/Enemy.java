@@ -12,11 +12,15 @@ public abstract class Enemy extends Entity {
     int vision = 600;
     public double damage;
 
+    //Used for if enemy is attacked
+    public boolean isHit;
+
     //Used for player attack pause...
     public boolean hitPlayer;
-    public int freezeTimer;
-    private final int freezeTimerSeconds = 2;
-    public final int freezeTimerFrames = (int) GamePanel.FPS*freezeTimerSeconds;
+    public double freezeTimer;
+    private final double freezeTimerSeconds = 0.5;
+    public final double freezeTimerFrames = (int) GamePanel.FPS*freezeTimerSeconds;
+    public final double freezeTimerFramesHalfway = freezeTimerFrames/2.0;
 
     Entity entityToFollow; // Player to reference
 
@@ -36,13 +40,15 @@ public abstract class Enemy extends Entity {
      * @param player player to follow
      * @param isFollowing whether enemy is following player or not
      */
-    public Enemy(int health, double speed, int width, int height, String name, int worldX, int worldY, int xOffset, int yOffset, int hitBoxWidth, int hitBoxHeight, Player player, boolean isFollowing) {
+    public Enemy(double health, double speed, int width, int height, String name, int worldX, int worldY, int xOffset, int yOffset, int hitBoxWidth, int hitBoxHeight, Player player, boolean isFollowing) {
         super(health, speed, width, height, name, worldX, worldY, xOffset, yOffset, hitBoxWidth, hitBoxHeight);
         this.entityToFollow = player;
 
         freezeTimer = 0;
-        this.hitPlayer = false;
+        hitPlayer = false;
         damage = 0.5; // Damage for all enemies
+
+        isHit = false;
 
         setScreenPosition();
     }
@@ -87,5 +93,6 @@ public abstract class Enemy extends Entity {
     public abstract void draw(Graphics2D g2);
     public abstract void move();
     public abstract void hitPlayer();
+    public abstract void isHit(double damage);
 
 }

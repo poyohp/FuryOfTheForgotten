@@ -11,6 +11,7 @@ import Entities.Entity;
 import Entities.Players.Player;
 import Handlers.CollisionHandler;
 import Handlers.KeyHandler;
+import World.Level;
 import World.Tile;
 
 
@@ -37,6 +38,12 @@ public class AttackHandler {
     public AttackHandler(KeyHandler keyHandler, Tile[][] tileset) {
         this.keyHandler = keyHandler;
         this.tileset = tileset;
+    }
+
+    public void levelChanged(Level newLevel) {
+        this.tileset = newLevel.getMap().baseLayerTiles;
+        playerAttacks.clear();
+        enemyAttacks.clear();
     }
 
     /**

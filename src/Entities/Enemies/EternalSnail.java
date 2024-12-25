@@ -82,7 +82,11 @@ public class EternalSnail extends Enemy{
 
     @Override
     public void hitPlayer() {
-        System.out.println("SKIB!");
+        Main.updateGameState(3);
+    }
+
+    @Override
+    public void isHit(double damage) {
         Main.updateGameState(3);
     }
 

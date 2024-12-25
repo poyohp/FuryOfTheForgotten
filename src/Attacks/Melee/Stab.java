@@ -18,7 +18,6 @@ public class Stab extends Melee {
     /**
      * Create melee attack
      *
-     * @param damage    attack damage
      * @param range     attack range
      * @param width     attack width, perpendicular to range
      * @param direction second attack direction, first one is the direction of entity

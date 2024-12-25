@@ -38,7 +38,7 @@ public class Goblin extends Player{
      * @param hitBoxHeight hitbox height
      * @param keyHandler   keyhandler to handle key presses
      */
-    public Goblin(int health, double speed, int width, int height, String name, double worldX, double worldY, int xOffset, int yOffset, int hitBoxWidth, int hitBoxHeight, KeyHandler keyHandler) {
+    public Goblin(double health, double speed, int width, int height, String name, double worldX, double worldY, int xOffset, int yOffset, int hitBoxWidth, int hitBoxHeight, KeyHandler keyHandler) {
         super(health, speed, width, height, name, worldX, worldY, xOffset, yOffset, hitBoxWidth, hitBoxHeight, keyHandler);
         setCharacterState();
     }
@@ -48,17 +48,17 @@ public class Goblin extends Player{
      * @param baseLayerTiles
      */
     public void update(Tile[][] baseLayerTiles) {
+        checkHit();
         this.tiles = baseLayerTiles;
         updateEntityPosition();
         if (!attacking) move(); // If player is not attacking, they can move
         hitbox.update(this); // Update hitbox
         updateFrames();
+        setHealth(healthHandler.currentHearts);
     }
 
     @Override
     public void draw(Graphics2D g2) {
-        drawHealth(g2);
-
         if (!attacking) {
             if (direction == 'd') {
                 if (!checkMoving()) {

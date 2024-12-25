@@ -3,6 +3,8 @@ package System;
 import System.Panels.*;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class Main {
 
@@ -75,4 +77,14 @@ public class Main {
         window.pack();
         window.setVisible(true);
     }
+
+    /**
+     * Hides the cursor (since it's not used in the game)
+     */
+    public static void hideCursor(JPanel panel) {
+        panel.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(
+                new BufferedImage(3, 3, BufferedImage.TYPE_INT_ARGB), new Point(0, 0),
+                "null"));
+    }
+
 }

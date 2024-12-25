@@ -1,6 +1,7 @@
 package System.Panels;
 
 import Handlers.ImageHandler;
+import System.Main;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,6 +17,7 @@ public class WinPanel extends JPanel {
     public WinPanel() {
         this.setDoubleBuffered(true);
         this.setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
+        Main.hideCursor(this);
     }
 
     @Override

@@ -56,7 +56,7 @@ public class Skeleton extends Player{
      * @param hitBoxHeight hitbox height
      * @param keyHandler   keyhandler to handle key presses
      */
-    public Skeleton(int health, double speed, int width, int height, String name, double worldX, double worldY, int xOffset, int yOffset, int hitBoxWidth, int hitBoxHeight, KeyHandler keyHandler) {
+    public Skeleton(double health, double speed, int width, int height, String name, double worldX, double worldY, int xOffset, int yOffset, int hitBoxWidth, int hitBoxHeight, KeyHandler keyHandler) {
         super(health, speed, width, height, name, worldX, worldY, xOffset, yOffset, hitBoxWidth, hitBoxHeight, keyHandler);
         setCharacterState();
     }
@@ -66,14 +66,7 @@ public class Skeleton extends Player{
      * @param baseLayerTiles
      */
     public void update(Tile[][] baseLayerTiles) {
-
-        if(isHit) {
-            if(iFramesCounter > 0) {
-                iFramesCounter--;
-            } else {
-                isHit = false;
-            }
-        }
+        checkHit();
 
         this.tiles = baseLayerTiles;
         updateEntityPosition();
@@ -88,8 +81,6 @@ public class Skeleton extends Player{
      */
     @Override
     public void draw(Graphics2D g2) {
-        drawHealth(g2);
-
         if (!attacking && !inAbility) {
             if (direction == 'd') {
                 if (!checkMoving()) {
