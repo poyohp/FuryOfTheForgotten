@@ -58,8 +58,9 @@ public class LevelHandler {
      */
     public void goToNextLevel(SpawnHandler spawnHandler, Player player) {
         if(currentLevelIndex < numLevels - 1 ) {
-            spawnHandler.levelChanged(player, currentLevel);
             currentLevelIndex++;
+            currentLevel = levels[currentLevelIndex];
+            spawnHandler.levelChanged(player, currentLevel);
         }
     }
 

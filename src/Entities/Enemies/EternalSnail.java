@@ -56,6 +56,7 @@ public class EternalSnail extends Enemy{
 
     public void update(Tile[][] tileset) {
         pathFinder = new APathfinding(tileset);
+        this.tileset = tileset;
         updateEntityPosition();
         setScreenPosition();
         hitbox.update(this);
