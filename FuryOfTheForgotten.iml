@@ -10,10 +10,10 @@
     <content url="jar://$USER_HOME$/json-simple-1.1.1.jar!/" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library" exported="">
+    <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../json-simple-1.1.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../json-simple-1.1.1.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

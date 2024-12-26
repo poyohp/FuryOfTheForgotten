@@ -1,6 +1,5 @@
 package Handlers;
 
-import Attacks.Attack;
 import Entities.Enemies.Enemy;
 import Entities.Enemies.EternalSnail;
 import Entities.Enemies.InstantKill;
@@ -238,7 +237,7 @@ public class LevelHandler {
      */
     private void addLevels() {
         levels[0] = new Level("Assets/Maps/Level1Map.json", "Assets/Tilesets/universalTileset.png", nonWalkableValues1(), 16);
-        levels[1] = new Level("Assets/Maps/Level2Map.json", "Assets/Tilesets/dungeonTileset.png", nonWalkableValues2(), 16);
+        levels[1] = new Level("Maps/Level2Map.json", "Assets/Tilesets/dungeonTileset.png", nonWalkableValues2(), 16);
 
     }
 

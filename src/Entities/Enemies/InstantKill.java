@@ -126,7 +126,7 @@ public class InstantKill extends Enemy {
             this.worldY = Tile.tileSize * randomY;
 
             // Check if bunny is far enough from the player
-            if (Math.abs(this.entityToFollow.worldX - this.worldX) > 150 && Math.abs(this.entityToFollow.worldY - this.worldY) > 150) break;
+            if (Math.abs(this.entityToFollow.worldX - this.worldX) > Tile.tileSize*3 && Math.abs(this.entityToFollow.worldY - this.worldY) > Tile.tileSize*3) break;
         }
 
 
