@@ -22,7 +22,7 @@ public abstract class Enemy extends Entity {
     public final double freezeTimerFrames = (int) GamePanel.FPS*freezeTimerSeconds;
     public final double freezeTimerFramesHalfway = freezeTimerFrames/2.0;
 
-    Entity entityToFollow; // Player to reference
+    public Entity entityToFollow; // Player to reference
 
     /**
      * Enemy that follows player

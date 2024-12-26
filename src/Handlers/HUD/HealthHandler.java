@@ -62,6 +62,14 @@ public class HealthHandler {
         }
     }
 
+    public void heal(double hearts) {
+        if (currentHearts + hearts <= maxHearts) {
+            currentHearts += hearts;
+        } else {
+            currentHearts = maxHearts;
+        }
+    }
+
     public void drawHearts(Graphics2D g2) {
         double numDrawn = 0.5;
         int x = heartsX + outerGap - innerGap;

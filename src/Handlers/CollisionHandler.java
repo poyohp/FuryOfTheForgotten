@@ -56,7 +56,7 @@ public class CollisionHandler {
     //for interact checking --> going to be distance based!
     public boolean checkPlayerWithObjectCollision(Player player, Object object) {
         double distanceLimit = (Tile.tileSize * 1.25);
-        System.out.println(distanceLimit);
+        //System.out.println(distanceLimit);
         return getDistance(player, object) <= distanceLimit;
     }
 
