@@ -6,6 +6,8 @@ import Entities.Players.Player;
 import Handlers.CollisionHandler;
 import World.Level;
 
+import java.util.ArrayList;
+
 public class DamageDealer {
 
     private final CollisionHandler collisionHandler;
@@ -29,26 +31,27 @@ public class DamageDealer {
 
     /**
      * Deals damage to enemies if the player's attacks are colliding
-     * @param attackHandler The attackhandles which contains the
-     * @param level the current level
+     * @param attackHandler The attack handler containing the player's attacks
+     * @param level The current level
      */
     public void dealDamageToEnemies(AttackHandler attackHandler, Level level) {
-        int indexMarked = -1;
-        for(int i = 0; i < attackHandler.playerAttacks.size(); i++) {
+        ArrayList<Integer> indicesToRemove = new ArrayList<>();
+
+        for (int i = 0; i < attackHandler.playerAttacks.size(); i++) {
             Attack playerAttack = attackHandler.playerAttacks.get(i);
-            for (Enemy enemy: level.enemies) {
-                // Lowers enemy health by damage
-                if (collisionHandler.enemyWithAttackCollision(enemy, playerAttack)) {
-                    indexMarked = i;
+
+            for (Enemy enemy : level.enemies) {
+                if (collisionHandler.enemyWithAttackCollision(enemy, playerAttack) && !enemy.isHit) {
                     enemy.isHit(playerAttack.damage);
+                    indicesToRemove.add(i);
+                    break;
                 }
             }
+        }
 
-            //REMOVES ANY MARKED INDEX FROM ATTACKS
-            if(indexMarked != -1) {
-                attackHandler.playerAttacks.remove(indexMarked);
-                i--;
-            }
+        //REMOVE IN REVERSE ORDER!!
+        for (int i = indicesToRemove.size() - 1; i >= 0; i--) {
+            attackHandler.playerAttacks.remove((int) indicesToRemove.get(i));
         }
     }
 }

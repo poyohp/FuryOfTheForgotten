@@ -18,7 +18,9 @@ public class Level {
     public ArrayList<Enemy> enemies = new ArrayList<>();
     public ArrayList<Enemy> enemiesToRemove = new ArrayList<>();
     public ArrayList<Chest> chests = new ArrayList<>();
+
     public ArrayList<Object> objects = new ArrayList<>();
+    public ArrayList<Object> objectsToRemove = new ArrayList<>();
 
     /**
      * Constructor for Level (generates map)
@@ -43,6 +45,7 @@ public class Level {
         for(Object object: objects) {
             object.update(player);
         }
+        objects.removeAll(objectsToRemove);
     }
 
     /**
@@ -59,9 +62,9 @@ public class Level {
         for(Chest chest: chests) {
             chest.draw(g2);
         }
-//        for(Object object: objects) {
-//            //draw object!
-//        }
+        for(Object object: objects) {
+            object.draw(g2);
+        }
     }
 
 }

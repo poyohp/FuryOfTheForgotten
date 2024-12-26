@@ -2,6 +2,7 @@ package Objects;
 
 import Entities.Hitbox;
 import Entities.Players.Player;
+import World.Level;
 import World.Tile;
 
 import java.awt.*;
@@ -23,11 +24,16 @@ public abstract class Object {
     public final int HUDWidth = Tile.tileMultipler*objectSize;
     public final int HUDHeight = Tile.tileMultipler*objectSize;
 
+    public final int imageWidth = 16;
     public int imageX, imageY;
-    public int width, height;
+    public double origWidth, origHeight;
+    public double width, height;
     public double worldX, worldY, screenX, screenY;
 
-    public Object(String name, int width, int height, double worldX, double worldY, double screenX, double screenY) {
+    public double vx, vy;
+    public final double friction = 0.98;
+
+    public Object(String name, double width, double height, double worldX, double worldY, double screenX, double screenY, double vx, double vy) {
         this.name = name;
         this.width = width;
         this.height = height;
@@ -36,23 +42,50 @@ public abstract class Object {
         this.screenX = screenX;
         this.screenY = screenY;
 
-        isEquippable = false;
+        this.origHeight = height;
+        this.origWidth = width;
+
+        this.vx = vx;
+        this.vy = vy;
+
+        isEquippable = true;
         isPickedUp = false;
 
-        hitbox = new Hitbox((int)worldX, (int)worldY, (int)screenX, (int) screenY, width, height, 0, 0);
+        hitbox = new Hitbox((int)worldX, (int)worldY, (int)screenX, (int) screenY, (int)width, (int)height, 0, 0);
 
     }
 
     public void update(Player player) {
-        setScreenPosition(player);
-    }
 
+        if(!isPickedUp) {
+            width = origWidth*0.75;
+            height = origHeight*0.75;
+        } else {
+            width = origWidth;
+            height = origHeight;
+        }
+
+        setScreenPosition(player);
+
+        this.worldX += vx;
+        this.worldY += vy;
+        this.vx *= friction;
+        this.vy *= friction;
+
+        if(Math.abs(vx) < 0.001) vx = 0;
+        if(Math.abs(vy) < 0.001) vy = 0;
+
+        hitbox.update(this);
+
+    }
 
     public void setScreenPosition(Player player) {
         this.screenX = worldX - player.worldX + player.screenX;
         this.screenY = worldY - player.worldY + player.screenY;
     }
 
+    public abstract void isInteracted(Player player, Level level);
+    //public abstract void isUsed();
     public abstract void draw(Graphics2D g2);
 
 }

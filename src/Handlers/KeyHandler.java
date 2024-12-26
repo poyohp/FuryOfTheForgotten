@@ -6,7 +6,7 @@ import java.awt.event.KeyListener;
 public class KeyHandler implements KeyListener {
 
     public boolean upPress, downPress, leftPress, rightPress, attackPress, choicePress, abilityPress;
-    public boolean toggleInventory, inventoryHandled, inventoryIndexMoved;
+    public boolean toggleInventory, inventoryHandled, inventoryIndexMoved, choiceTriggered;
 
     @Override
     public void keyTyped(KeyEvent e) {}
@@ -17,7 +17,6 @@ public class KeyHandler implements KeyListener {
      */
     @Override
     public void keyPressed(KeyEvent e) {
-
         if (e.getKeyCode() == KeyEvent.VK_K) {
             if (!inventoryHandled) {
                 toggleInventory = !toggleInventory;
@@ -54,7 +53,8 @@ public class KeyHandler implements KeyListener {
             if(e.getKeyCode() == KeyEvent.VK_U) {
                 attackPress = true;
             }
-            if(e.getKeyCode() == KeyEvent.VK_J) {
+            if(e.getKeyCode() == KeyEvent.VK_J && !choiceTriggered) {
+                choiceTriggered = true;
                 choicePress = true;
             }
             if(e.getKeyCode() == KeyEvent.VK_I) {
@@ -101,6 +101,7 @@ public class KeyHandler implements KeyListener {
         }
 
         if(e.getKeyCode() == KeyEvent.VK_J) {
+            choiceTriggered = false;
             choicePress = false;
         }
 

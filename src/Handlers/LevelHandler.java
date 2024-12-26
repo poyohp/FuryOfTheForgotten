@@ -176,7 +176,8 @@ public class LevelHandler {
             if(collisionHandler.checkPlayerWithObjectCollision(player, chest)) {
                 if(!chest.isOpen) {
                     if(player.keyHandler.choicePress) {
-                        chest.chestOpened();
+                        player.keyHandler.choicePress = false;
+                        chest.isInteracted(player, currentLevel);
                     }
                 }
             }
@@ -184,10 +185,12 @@ public class LevelHandler {
 
         for(Object object : currentLevel.objects) {
             if(collisionHandler.checkPlayerWithObjectCollision(player, object)) {
-                if(object.isEquippable && !object.isPickedUp) {
+                if(!object.isPickedUp) {
                     if(player.keyHandler.choicePress) {
+                        player.keyHandler.choicePress = false;
                         object.isPickedUp = true;
-                        if(inventoryHandler.indexFree > 0) {
+                        object.isInteracted(player, currentLevel);
+                        if(object.isEquippable && inventoryHandler.indexFree > 0) {
                             inventoryHandler.inventory[inventoryHandler.indexFree] = object;
                         } else {
                             //REPLACE ITEM IN CURRENT INDEX!

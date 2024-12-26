@@ -74,6 +74,7 @@ public class CharacterSelectionPanel extends JPanel {
      */
     public void handleChoice() {
         if (keyHandler.choicePress) {
+            keyHandler.choicePress = false;
             timer.stop();
             selectedCharacter = selectedButton.characterType;
             Main.updateGameState(2);

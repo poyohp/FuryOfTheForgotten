@@ -54,11 +54,12 @@ public class InventoryHandler {
             indexSelected = 0;
         }
 
+        indexFree = -1;
         for(int i = 0; i < inventoryCapacity; i++) {
             if(inventory[i] == null) {
                 indexFree = i;
                 break;
-            } else indexFree = -1;
+            }
         }
 
     }

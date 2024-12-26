@@ -3,13 +3,13 @@ package Objects;
 import System.Panels.GamePanel;
 import Entities.Players.Player;
 import Handlers.ImageHandler;
+import World.Level;
+import World.Tile;
 
 import java.awt.*;
 import java.util.ArrayList;
 
 public class Chest extends Object {
-
-    private final int imageWidth = 16;
 
     //Sizes (1 - big or 0 - small)
     public int chestSize;
@@ -22,29 +22,34 @@ public class Chest extends Object {
     public ArrayList<Object> itemsContained = new ArrayList<>();
 
     public Chest(String name, int width, int height, double worldX, double worldY, double screenX, double screenY) {
-        super(name, width, height, worldX, worldY, screenX, screenY);
+        super(name, width, height, worldX, worldY, screenX, screenY, 0, 0);
         determineSizeRarity();
         determineImageCoords();
         image = ImageHandler.loadImage("Assets/Objects/chests&keys.png");
 
         fillItemsContained();
 
+        isEquippable = false;
+
     }
 
-    public void update(Player player) {
-        setScreenPosition(player);
-    }
-
-    public void chestOpened() {
+    @Override
+    public void isInteracted(Player player, Level level) {
         isOpen = true;
         imageX += imageWidth;
 
         //DROP DROP DROP DROP DPOP STUFF!
-
+        level.objects.addAll(itemsContained);
     }
 
+
     private void fillItemsContained() {
-        //FILL ITEMS CONTAINED!
+        double centerX = (worldX + width/2) - ((double) Tile.tileSize /2)*0.75;
+        double centerY = worldY + height/2;
+        itemsContained.add(new Coin(this.rarity, "Coin", Tile.tileSize, Tile.tileSize, centerX, centerY, screenX, screenY, 0, Tile.tileRatio*0.25));
+        if(chestSize == 1) {
+            //ADD 2 OTHER ITEMS
+        }
     }
 
     private void determineSizeRarity() {
@@ -78,7 +83,7 @@ public class Chest extends Object {
                 break;
             case 3:
                 // high (pink)
-                imageX = imageWidth*2;
+                imageX = imageWidth*4;
                 imageY = imageWidth;
                 break;
             default:
@@ -94,7 +99,7 @@ public class Chest extends Object {
 
     @Override
     public void draw(Graphics2D g2) {
-        g2.drawImage(image, (int) screenX, (int) screenY, (int) screenX+width, (int) screenY+height, imageX, imageY, imageX+imageWidth, imageY+imageWidth, null);
+        g2.drawImage(image, (int) screenX, (int) screenY, (int) (screenX+origWidth), (int) (screenY+origHeight), imageX, imageY, imageX+imageWidth, imageY+imageWidth, null);
     }
 
 }
