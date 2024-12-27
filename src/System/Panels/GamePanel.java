@@ -2,16 +2,13 @@ package System.Panels;
 
 import Entities.Enemies.EternalSnail;
 import Entities.Players.*;
-import Handlers.AbilityHandler;
+import Handlers.*;
 import Handlers.HUD.InventoryHandler;
 import System.Main;
 
 import Entities.Enemies.InstantKill;
 import Handlers.Attacks.DamageDealer;
 import Handlers.Attacks.AttackHandler;
-import Handlers.CollisionHandler;
-import Handlers.KeyHandler;
-import Handlers.LevelHandler;
 import Handlers.Spawners.SpawnHandler;
 import Handlers.Spawners.SpawnPoint;
 import Pathfinding.APathfinding;
@@ -41,6 +38,7 @@ public class GamePanel extends JPanel implements Runnable{
     //Create objects for GAME LOGIC
     public Player player;
     LevelHandler levelHandler;
+    ObjectHandler objectHandler;
     KeyHandler keyHandler;
     AttackHandler attackHandler;
     AbilityHandler abilityHandler;
@@ -72,6 +70,7 @@ public class GamePanel extends JPanel implements Runnable{
 
         initiatePlayerType();
 
+        objectHandler = new ObjectHandler();
         levelHandler = new LevelHandler(3, spawnHandler, player);
         collisionHandler = new CollisionHandler();
         damageDealer = new DamageDealer(collisionHandler);
@@ -144,7 +143,8 @@ public class GamePanel extends JPanel implements Runnable{
      */
     void update() {
         player.update(levelHandler.getCurrentLevel().getMap().baseLayerTiles);
-        levelHandler.update(player, spawnHandler, damageDealer, collisionHandler, inventory, attackHandler, ghost, snail);
+        objectHandler.update(collisionHandler, player, inventory, levelHandler.getCurrentLevel());
+        levelHandler.update(player, spawnHandler, damageDealer, collisionHandler, attackHandler, ghost, snail);
         attackHandler.update(player, levelHandler.getCurrentLevel().getMap().baseLayerTiles);
         abilityHandler.update();
         damageDealer.dealDamageToEnemies(attackHandler, levelHandler.getCurrentLevel());
@@ -167,9 +167,9 @@ public class GamePanel extends JPanel implements Runnable{
         Graphics2D g2 = (Graphics2D)g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        g2.setFont(coinFont);
         levelHandler.draw(g2, player);
         player.draw(g2);
+        levelHandler.getCurrentLevel().drawItems(g2);
         abilityHandler.drawDecoy(g2);
         attackHandler.draw(g2, player);
         ghost.draw(g2);
@@ -182,5 +182,7 @@ public class GamePanel extends JPanel implements Runnable{
         //HUD DRAWING
         inventory.draw(g2);
         player.healthHandler.drawHearts(g2);
+        g2.setFont(coinFont);
+        objectHandler.draw(g2, player);
     }
 }

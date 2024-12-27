@@ -124,8 +124,6 @@ public class AbilityHandler {
             }
         }
 
-        //System.out.println(player.getHealth());
-
         if (!canAbility) {
             if (cooldown == 0) {
                 if (player.type == 's') {

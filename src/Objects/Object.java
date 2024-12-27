@@ -10,19 +10,15 @@ import java.awt.image.BufferedImage;
 
 public abstract class Object {
 
-    BufferedImage image;
+    public BufferedImage image;
 
-    String name;
+    public String name;
 
     // equippable meaning you can have it in your INVENTORY
     // pickedUp meaning you have picked it up (and its IN your inventory)
     public boolean isEquippable, isPickedUp;
 
     public Hitbox hitbox;
-
-    private final int objectSize = Tile.normalTileSize;
-    public final int HUDWidth = Tile.tileMultipler*objectSize;
-    public final int HUDHeight = Tile.tileMultipler*objectSize;
 
     public final int imageWidth = 16;
     public int imageX, imageY;
@@ -65,8 +61,6 @@ public abstract class Object {
             height = origHeight;
         }
 
-        setScreenPosition(player);
-
         this.worldX += vx;
         this.worldY += vy;
         this.vx *= friction;
@@ -74,6 +68,8 @@ public abstract class Object {
 
         if(Math.abs(vx) < 0.001) vx = 0;
         if(Math.abs(vy) < 0.001) vy = 0;
+
+        setScreenPosition(player);
 
         hitbox.update(this);
 
@@ -84,8 +80,11 @@ public abstract class Object {
         this.screenY = worldY - player.worldY + player.screenY;
     }
 
-    public abstract void isInteracted(Player player, Level level);
-    //public abstract void isUsed();
+    public abstract void getImageCoords();
+    public abstract void isPickedUp(Player player, Level level);
+    public abstract void isUsed(Player player);
+    public abstract void isDropped(Player player, Level level);
     public abstract void draw(Graphics2D g2);
+    public abstract void drawHUD(Graphics2D g2, int x, int y, int size);
 
 }

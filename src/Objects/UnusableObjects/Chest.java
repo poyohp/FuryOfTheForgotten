@@ -1,5 +1,8 @@
-package Objects;
+package Objects.UnusableObjects;
 
+import Handlers.ObjectHandler;
+import Objects.Object;
+import Objects.UsableObjects.Potions.DamagePotion;
 import System.Panels.GamePanel;
 import Entities.Players.Player;
 import Handlers.ImageHandler;
@@ -9,7 +12,7 @@ import World.Tile;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class Chest extends Object {
+public class Chest extends Objects.Object {
 
     //Sizes (1 - big or 0 - small)
     public int chestSize;
@@ -24,7 +27,7 @@ public class Chest extends Object {
     public Chest(String name, int width, int height, double worldX, double worldY, double screenX, double screenY) {
         super(name, width, height, worldX, worldY, screenX, screenY, 0, 0);
         determineSizeRarity();
-        determineImageCoords();
+        getImageCoords();
         image = ImageHandler.loadImage("Assets/Objects/chests&keys.png");
 
         fillItemsContained();
@@ -34,12 +37,24 @@ public class Chest extends Object {
     }
 
     @Override
-    public void isInteracted(Player player, Level level) {
+    public void isPickedUp(Player player, Level level) {
         isOpen = true;
         imageX += imageWidth;
 
         //DROP DROP DROP DROP DPOP STUFF!
         level.objects.addAll(itemsContained);
+    }
+
+    @Override
+    public void isUsed(Player player) {
+        //DO NOTHING
+        //CHEST CANNOT BE USED
+    }
+
+    @Override
+    public void isDropped(Player player, Level level) {
+        //DO NOTHING
+        //CHEST CANNOT BE DROPPED!
     }
 
 
@@ -48,12 +63,17 @@ public class Chest extends Object {
         double centerY = worldY + height/2;
         itemsContained.add(new Coin(this.rarity, "Coin", Tile.tileSize, Tile.tileSize, centerX, centerY, screenX, screenY, 0, Tile.tileRatio*0.25));
         if(chestSize == 1) {
-            //ADD 2 OTHER ITEMS
+//            itemsContained.add(new DamagePotion("DamagePotion", Tile.tileSize, Tile.tileSize, centerX, centerY, screenX, screenY, Tile.tileRatio*0.25, Tile.tileRatio*0.25));
+//            itemsContained.add(new DamagePotion("DamagePotion", Tile.tileSize, Tile.tileSize, centerX, centerY, screenX, screenY, -Tile.tileRatio*0.25, Tile.tileRatio*0.25));
+            itemsContained.add(ObjectHandler.getRandomObject(Tile.tileSize, Tile.tileSize, centerX, centerY, screenX, screenY, Tile.tileRatio*0.25));
+            itemsContained.add(ObjectHandler.getRandomObject(Tile.tileSize, Tile.tileSize, centerX, centerY, screenX, screenY, -Tile.tileRatio*0.25));
         }
     }
 
     private void determineSizeRarity() {
-        chestSize = GamePanel.random.nextInt(2);
+        if(Math.random() < 0.75) {
+            chestSize = 1;
+        } else chestSize = 0;
         int rarityGen = GamePanel.random.nextInt(10);
         if(rarityGen < 4) {
             rarity = 0;
@@ -64,7 +84,8 @@ public class Chest extends Object {
         } else rarity = 3;
     }
 
-    private void determineImageCoords() {
+    @Override
+    public void getImageCoords() {
         switch(rarity) {
             case 0:
                 //lowest rarity (brown)
@@ -100,6 +121,11 @@ public class Chest extends Object {
     @Override
     public void draw(Graphics2D g2) {
         g2.drawImage(image, (int) screenX, (int) screenY, (int) (screenX+origWidth), (int) (screenY+origHeight), imageX, imageY, imageX+imageWidth, imageY+imageWidth, null);
+    }
+
+    @Override
+    public void drawHUD(Graphics2D g2, int x, int y, int size) {
+        //NEVER DRAW COIN HERE
     }
 
 }

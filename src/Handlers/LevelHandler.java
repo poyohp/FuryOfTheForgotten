@@ -5,18 +5,13 @@ import Entities.Enemies.EternalSnail;
 import Entities.Enemies.InstantKill;
 import Entities.Players.Player;
 import Handlers.Attacks.AttackHandler;
-import Handlers.HUD.InventoryHandler;
 import Handlers.Spawners.SpawnHandler;
 import Handlers.Spawners.SpawnPoint;
-import Objects.Chest;
-import Objects.Object;
 import World.Level;
 import Handlers.Attacks.DamageDealer;
 import System.Main;
-import World.Tile;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class LevelHandler {
@@ -28,9 +23,6 @@ public class LevelHandler {
 
     int numLevels;
 
-    //FOR COIN DRAWING
-    BufferedImage coinImage = ImageHandler.loadImage("Assets/Objects/coins.png");
-    private final int coinDrawSize = Tile.tileSize*Tile.tileMultipler/4;
 
     /**
      * Constructor for LevelHandler - initializes all levels and enemies
@@ -85,14 +77,10 @@ public class LevelHandler {
      * @param spawnHandler
      * @param damageDealer
      */
-    public void update(Player player, SpawnHandler spawnHandler, DamageDealer damageDealer, CollisionHandler collisionHandler, InventoryHandler inventoryHandler, AttackHandler attackHandler, InstantKill ghost, EternalSnail snail) {
+    public void update(Player player, SpawnHandler spawnHandler, DamageDealer damageDealer, CollisionHandler collisionHandler, AttackHandler attackHandler, InstantKill ghost, EternalSnail snail) {
 
         //CHECKING LEVEL
         currentLevel = levels[currentLevelIndex];
-
-        //OBJECT HANDLING
-        playerChestCollision(collisionHandler, player);
-        playerObjectInteract(collisionHandler, player, inventoryHandler);
 
         //SNAIL UPDATING
         checkForDeath(player, collisionHandler, ghost, snail);
@@ -160,53 +148,9 @@ public class LevelHandler {
 
         // Removes enemies if they die
         for (Enemy enemy: currentLevel.enemies) {
-            if(enemy.getHealth() <= 0) {
-                System.out.println("THIS ENEMY!");
-                System.out.println(enemy.freezeTimer);
-            }
             if (enemy.getHealth() <= 0 && enemy.freezeTimer <= 0) currentLevel.enemiesToRemove.add(enemy);
         }
         currentLevel.enemies.removeAll(currentLevel.enemiesToRemove);
-    }
-
-    //checks for chest openings, and also for object collisions (if player picks up or not)
-    public void playerObjectInteract(CollisionHandler collisionHandler, Player player, InventoryHandler inventoryHandler) {
-        for(Chest chest: currentLevel.chests) {
-            if(collisionHandler.checkPlayerWithObjectCollision(player, chest)) {
-                if(!chest.isOpen) {
-                    if(player.keyHandler.choicePress) {
-                        player.keyHandler.choicePress = false;
-                        chest.isInteracted(player, currentLevel);
-                    }
-                }
-            }
-        }
-
-        for(Object object : currentLevel.objects) {
-            if(collisionHandler.checkPlayerWithObjectCollision(player, object)) {
-                if(!object.isPickedUp) {
-                    if(player.keyHandler.choicePress) {
-                        player.keyHandler.choicePress = false;
-                        object.isPickedUp = true;
-                        object.isInteracted(player, currentLevel);
-                        if(object.isEquippable && inventoryHandler.indexFree > 0) {
-                            inventoryHandler.inventory[inventoryHandler.indexFree] = object;
-                        } else {
-                            //REPLACE ITEM IN CURRENT INDEX!
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    //player-chest collision
-    public void playerChestCollision(CollisionHandler collisionHandler, Player player) {
-        boolean collisionOccurs = false;
-        for(Chest chest : currentLevel.chests) {
-            if(collisionHandler.checkChestWithEntityCollision(player, chest)) collisionOccurs = true;
-        }
-        player.collisionWithChest = collisionOccurs;
     }
 
     /**
@@ -221,11 +165,6 @@ public class LevelHandler {
         for (Enemy enemy : currentLevel.enemies) {
             enemy.draw(g2);
         }
-
-        //COIN DRAWING
-        g2.drawImage(coinImage, Tile.tileSize/2, Tile.tileSize/2, Tile.tileSize/2 + coinDrawSize, Tile.tileSize/2 + coinDrawSize, 16*6, 16, 16*7, 32, null);
-        g2.setColor(Color.MAGENTA);
-        g2.drawString(String.valueOf(player.coinValue), Tile.tileSize/2 + coinDrawSize, coinDrawSize);
     }
 
     public Level getCurrentLevel() {

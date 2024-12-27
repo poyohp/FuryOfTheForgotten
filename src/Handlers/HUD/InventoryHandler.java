@@ -6,6 +6,7 @@ import System.Panels.GamePanel;
 import World.Tile;
 
 import java.awt.*;
+import java.util.Arrays;
 
 public class InventoryHandler {
 
@@ -32,6 +33,7 @@ public class InventoryHandler {
 
     public InventoryHandler(KeyHandler keyHandler) {
         this.keyHandler = keyHandler;
+        Arrays.fill(inventory, null);
     }
 
     public void update() {
@@ -61,7 +63,6 @@ public class InventoryHandler {
                 break;
             }
         }
-
     }
 
     public void draw(Graphics2D g2) {
@@ -91,7 +92,11 @@ public class InventoryHandler {
         int boxY = outlineY+ innerGap;
         g2.setColor(innerSquare);
         for(int i = 0; i < inventoryCapacity; i++) {
-            g2.fillRoundRect(boxX, boxY, inventoryFinalDrawSize, inventoryFinalDrawSize, 10, 10);
+            if(inventory[i] == null) {
+                g2.fillRoundRect(boxX, boxY, inventoryFinalDrawSize, inventoryFinalDrawSize, 10, 10);
+            } else {
+                inventory[i].drawHUD(g2, boxX, boxY, inventoryFinalDrawSize);
+            }
             boxX += innerGap + inventoryFinalDrawSize;
         }
     }

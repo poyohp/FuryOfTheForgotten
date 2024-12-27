@@ -4,10 +4,8 @@ import Entities.*;
 import Entities.Enemies.Enemy;
 import Entities.Players.Player;
 import Objects.Object;
-import Objects.Chest;
+import Objects.UnusableObjects.Chest;
 import World.Tile;
-
-import java.awt.*;
 
 public class CollisionHandler {
 
@@ -56,7 +54,6 @@ public class CollisionHandler {
     //for interact checking --> going to be distance based!
     public boolean checkPlayerWithObjectCollision(Player player, Object object) {
         double distanceLimit = (Tile.tileSize * 1.25);
-        //System.out.println(distanceLimit);
         return getDistance(player, object) <= distanceLimit;
     }
 

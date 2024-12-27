@@ -2,9 +2,8 @@ package World;
 
 import Handlers.ImageHandler;
 import Entities.Players.Player;
-//import Objects.Chest;
-import Objects.Chest;
-import System.Panels.GamePanel;
+//import Objects.UnusableObjects.Chest;
+import Objects.UnusableObjects.Chest;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;

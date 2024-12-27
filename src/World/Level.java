@@ -2,7 +2,7 @@ package World;
 
 import Entities.Enemies.Enemy;
 import Entities.Players.Player;
-import Objects.Chest;
+import Objects.UnusableObjects.Chest;
 import Objects.Object;
 import org.json.simple.parser.ParseException;
 
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class Level {
 
-    private Map map;
+    private final Map map;
 
     // Holds all enemy data in the current level
     public ArrayList<Enemy> enemies = new ArrayList<>();
@@ -42,10 +42,13 @@ public class Level {
         for(Chest chest: chests) {
             chest.update(player);
         }
+
         for(Object object: objects) {
             object.update(player);
         }
+
         objects.removeAll(objectsToRemove);
+        objectsToRemove.clear();
     }
 
     /**
@@ -58,7 +61,9 @@ public class Level {
 
     public void drawLevel(Graphics2D g2, Player player) {
         map.drawMap(g2, player);
+    }
 
+    public void drawItems(Graphics2D g2) {
         for(Chest chest: chests) {
             chest.draw(g2);
         }

@@ -1,7 +1,8 @@
-package Objects;
+package Objects.UnusableObjects;
 
 import Entities.Players.Player;
 import Handlers.ImageHandler;
+import Objects.Object;
 import System.Panels.GamePanel;
 import World.Level;
 
@@ -21,8 +22,8 @@ public class Coin extends Object {
     public Coin(int rarity, String name, double width, double height, double worldX, double worldY, double screenX, double screenY, double vx, double vy) {
         super(name, width, height, worldX, worldY, screenX, screenY, vx, vy);
         this.rarity = rarity;
-        determineImageCoords(rarity);
-        determineValue(rarity);
+        determineValue();
+        getImageCoords();
 
         frameCounter = 0;
         image = ImageHandler.loadImage("Assets/Objects/coins.png");
@@ -49,7 +50,8 @@ public class Coin extends Object {
         }
     }
 
-    private void determineImageCoords(int rarity) {
+    @Override
+    public void getImageCoords() {
         imageY = 0;
         switch(rarity) {
             case 0:
@@ -74,7 +76,7 @@ public class Coin extends Object {
         }
     }
 
-    private void determineValue(int rarity) {
+    private void determineValue() {
         //lowest rarity (brown) - 0
         //second lower (blue) - 1
         // mid (purple) - 2
@@ -99,16 +101,33 @@ public class Coin extends Object {
     }
 
     @Override
-    public void isInteracted(Player player, Level level) {
-        System.out.println("HERE");
+    public void isPickedUp(Player player, Level level) {
+        isPickedUp = true;
         player.coinValue += this.value;
         level.objectsToRemove.add(this);
+    }
+
+    @Override
+    public void isUsed(Player player) {
+        //DO NOTHING
+        //COIN CANNOT BE USED
+    }
+
+    @Override
+    public void isDropped(Player player, Level level) {
+        //DO NOTHING
+        //COIN CANNOT BE DROPPED!
     }
 
     @Override
     public void draw(Graphics2D g2) {
         updateFrames();
         g2.drawImage(image, (int) screenX, (int) screenY, (int) (screenX+width), (int) (screenY+height), imageX, imageY, imageX+imageWidth, imageY+imageWidth, null);
+    }
+
+    @Override
+    public void drawHUD(Graphics2D g2, int x, int y, int size) {
+        //NEVER DRAW COIN HERE
     }
 
 }
