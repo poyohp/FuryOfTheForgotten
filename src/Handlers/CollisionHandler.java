@@ -57,7 +57,7 @@ public class CollisionHandler {
         return getDistance(player, object) <= distanceLimit;
     }
 
-    private double getDistance(Player player, Object object) {
+    public double getDistance(Player player, Object object) {
         double playerX = player.worldX + (double) player.getWidth() /2;
         double playerY = player.worldY + (double) player.getHeight() /2;
 

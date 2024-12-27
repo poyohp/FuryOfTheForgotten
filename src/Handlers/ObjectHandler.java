@@ -21,12 +21,17 @@ public class ObjectHandler {
 
     static ArrayList<String> allGameItems = new ArrayList<>();
 
+    Object closestMarked;
+
     //FOR COIN DRAWING
     BufferedImage coinImage = ImageHandler.loadImage("Assets/Objects/coins.png");
     private final int coinDrawSize = Tile.tileSize*Tile.tileMultipler/4;
 
     public ObjectHandler() {
         addAllObjects();
+
+        closestMarked = null;
+
     }
 
     private void addAllObjects() {
@@ -37,8 +42,23 @@ public class ObjectHandler {
     }
 
     public void update(CollisionHandler collisionHandler, Player player, InventoryHandler inventoryHandler, Level level) {
+        markClosestObject(collisionHandler, level, player);
         playerChestCollision(collisionHandler, player, level);
         playerObjectInteract(collisionHandler, player, inventoryHandler, level);
+    }
+
+    public void markClosestObject(CollisionHandler collisionHandler, Level level, Player player) {
+        if(level.objects.isEmpty()) {
+            closestMarked = null;
+            return;
+        }
+
+        closestMarked = level.objects.getFirst();
+        for(int i = 1; i < level.objects.size(); i++) {
+            if (collisionHandler.getDistance(player, level.objects.get(i)) < collisionHandler.getDistance(player, closestMarked)) {
+                closestMarked = level.objects.get(i);
+            }
+        }
     }
 
     //checks for chest openings, and also for object collisions (if player picks up or not)
@@ -58,7 +78,7 @@ public class ObjectHandler {
         boolean replaceObject = false;
         Object objectToReplace = null;
         for(Objects.Object object : level.objects) {
-            if(collisionHandler.checkPlayerWithObjectCollision(player, object)) {
+            if(collisionHandler.checkPlayerWithObjectCollision(player, object) && object == closestMarked) {
                 if(!object.isPickedUp) {
                     if(player.keyHandler.choicePress) {
                         player.keyHandler.choicePress = false;
