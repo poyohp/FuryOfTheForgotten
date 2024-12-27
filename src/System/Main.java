@@ -17,6 +17,7 @@ public class Main {
     public static WinPanel winPanel = new WinPanel();
     public static HelpPanel helpPanel;
     public static CharacterSelectionPanel characterSelectionPanel;
+    public static ShopPanel shopPanel;
 
 
     public static JFrame window = new JFrame();
@@ -71,7 +72,11 @@ public class Main {
                 window.add(characterSelectionPanel);
                 characterSelectionPanel.requestFocusInWindow();
                 break;
-
+            case 7:
+                ShopPanel shopPanel = new ShopPanel();
+                window.add(shopPanel);
+                shopPanel.requestFocusInWindow();
+                break;
         }
 
         window.pack();

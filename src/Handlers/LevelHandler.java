@@ -137,7 +137,8 @@ public class LevelHandler {
             }
 
             // If there are no more active spawn points, player has defeated all enemies!
-            if (!spawnPointsActive && currentLevel.enemies.isEmpty()) goToNextLevel(spawnHandler, player, attackHandler);
+//            if (!spawnPointsActive && currentLevel.enemies.isEmpty()) goToNextLevel(spawnHandler, player, attackHandler);
+            if (!spawnPointsActive && currentLevel.enemies.isEmpty()) Main.updateGameState(7);
         }
     }
 
