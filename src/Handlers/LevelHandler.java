@@ -21,6 +21,8 @@ public class LevelHandler {
     private Level currentLevel;
     int currentLevelIndex;
 
+    boolean levelComplete = false;
+
     int numLevels;
 
 
@@ -138,7 +140,10 @@ public class LevelHandler {
 
             // If there are no more active spawn points, player has defeated all enemies!
 //            if (!spawnPointsActive && currentLevel.enemies.isEmpty()) goToNextLevel(spawnHandler, player, attackHandler);
-            if (!spawnPointsActive && currentLevel.enemies.isEmpty()) Main.updateGameState(7);
+            if (!spawnPointsActive && currentLevel.enemies.isEmpty() && !levelComplete) {
+                levelComplete = true;
+                Main.updateGameState(7);
+            }
         }
     }
 

@@ -31,7 +31,7 @@ public class ShopPanel extends JPanel {
     public static final int screenHeight = (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 
     // Sets buttons and arraylist to keep them in
-    MenuButton continueButton = new MenuButton("continue.png", screenWidth/3, screenHeight/2 + screenHeight/16, screenWidth/3, screenHeight/6);
+    MenuButton continueButton = new MenuButton("continue.png", screenWidth/4 + screenWidth/17, screenHeight/2 + screenHeight/16, screenWidth/5*2, screenHeight/6);
     MenuButton shopButton = new MenuButton("shop.png", screenWidth/3, screenHeight/2 + screenHeight/4, screenWidth/3, screenHeight/6);
     ArrayList<MenuButton> buttons = new ArrayList<>();
 

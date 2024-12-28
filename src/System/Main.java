@@ -73,7 +73,7 @@ public class Main {
                 characterSelectionPanel.requestFocusInWindow();
                 break;
             case 7:
-                ShopPanel shopPanel = new ShopPanel();
+                shopPanel = new ShopPanel();
                 window.add(shopPanel);
                 shopPanel.requestFocusInWindow();
                 break;
