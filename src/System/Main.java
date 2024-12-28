@@ -18,6 +18,7 @@ public class Main {
     public static HelpPanel helpPanel;
     public static CharacterSelectionPanel characterSelectionPanel;
     public static ShopPanel shopPanel;
+    public static BuyPanel buyPanel;
 
 
     public static JFrame window = new JFrame();
@@ -78,6 +79,11 @@ public class Main {
                 shopPanel = new ShopPanel();
                 window.add(shopPanel);
                 shopPanel.requestFocusInWindow();
+                break;
+            case 8:
+                buyPanel = new BuyPanel();
+                window.add(buyPanel);
+                buyPanel.requestFocusInWindow();
                 break;
         }
 

@@ -26,13 +26,14 @@ public class ShopPanel extends AbstractPanel {
         if (keyHandler.choicePress) {
             timer.stop();
             if (selectedButton == continueButton) {
+                // Return to game, go to next level
                 GamePanel currentGamePanel = Main.gamePanel;
                 Main.updateGameState(2);
                 currentGamePanel.resumeGame();
                 currentGamePanel.levelHandler.goToNextLevel(currentGamePanel.spawnHandler, currentGamePanel.player, currentGamePanel.attackHandler);
                 currentGamePanel.levelHandler.levelComplete = false;
             } else {
-                System.exit(0);
+                Main.updateGameState(8); // continue on to shop
             }
         }
     }
