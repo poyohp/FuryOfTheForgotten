@@ -52,9 +52,11 @@ public class Main {
                 menuPanel.requestFocusInWindow();
                 break;
             case 2:
-                gamePanel = new GamePanel();
+                boolean start = false;
+                if (gamePanel == null) start = true;
+                if (start) gamePanel = new GamePanel();
                 window.add(gamePanel);
-                gamePanel.initiateGamePanel();
+                if (start) gamePanel.initiateGamePanel();
                 break;
             case 3:
                 window.add(gameOverPanel);

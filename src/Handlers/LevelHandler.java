@@ -21,7 +21,7 @@ public class LevelHandler {
     private Level currentLevel;
     int currentLevelIndex;
 
-    boolean levelComplete = false;
+    public boolean levelComplete = false;
 
     int numLevels;
 
@@ -142,6 +142,7 @@ public class LevelHandler {
 //            if (!spawnPointsActive && currentLevel.enemies.isEmpty()) goToNextLevel(spawnHandler, player, attackHandler);
             if (!spawnPointsActive && currentLevel.enemies.isEmpty() && !levelComplete) {
                 levelComplete = true;
+                Main.gamePanel.pauseGame();
                 Main.updateGameState(7);
             }
         }
