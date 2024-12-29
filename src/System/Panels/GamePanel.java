@@ -97,10 +97,10 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     void initiatePlayerType() {
-        if (CharacterSelectionPanel.selectedCharacter.equals("zombie")) player = new Zombie(4, 15, Tile.tileSize, Tile.tileSize, "Player", 0, 0, 4*Tile.tileSize/Tile.normalTileSize, 6*Tile.tileSize/Tile.normalTileSize-1, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
-        else if (CharacterSelectionPanel.selectedCharacter.equals("skeleton")) player = new Skeleton(4, 15, Tile.tileSize, Tile.tileSize, "Player", 0, 0, 4*Tile.tileSize/Tile.normalTileSize, 6*Tile.tileSize/Tile.normalTileSize-1, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
-        else if (CharacterSelectionPanel.selectedCharacter.equals("goblin")) player = new Goblin(4, 15, Tile.tileSize, Tile.tileSize, "Player", 0, 0, 4*Tile.tileSize/Tile.normalTileSize, 6*Tile.tileSize/Tile.normalTileSize-1, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
-        else if (CharacterSelectionPanel.selectedCharacter.equals("vampire")) player = new Vampire(4, 15, Tile.tileSize, Tile.tileSize, "Player", 0, 0, 4*Tile.tileSize/Tile.normalTileSize, 6*Tile.tileSize/Tile.normalTileSize-1, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
+        if (CharacterSelectionPanel.selectedCharacter.equals("zombie")) player = new Zombie(8, 4, Tile.tileSize, Tile.tileSize, "Player", 0, 0, 4*Tile.tileSize/Tile.normalTileSize, 6*Tile.tileSize/Tile.normalTileSize-1, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
+        else if (CharacterSelectionPanel.selectedCharacter.equals("skeleton")) player = new Skeleton(8, 4, Tile.tileSize, Tile.tileSize, "Player", 0, 0, 4*Tile.tileSize/Tile.normalTileSize, 6*Tile.tileSize/Tile.normalTileSize-1, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
+        else if (CharacterSelectionPanel.selectedCharacter.equals("goblin")) player = new Goblin(8, 4, Tile.tileSize, Tile.tileSize, "Player", 0, 0, 4*Tile.tileSize/Tile.normalTileSize, 6*Tile.tileSize/Tile.normalTileSize-1, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
+        else if (CharacterSelectionPanel.selectedCharacter.equals("vampire")) player = new Vampire(8, 4, Tile.tileSize, Tile.tileSize, "Player", 0, 0, 4*Tile.tileSize/Tile.normalTileSize, 6*Tile.tileSize/Tile.normalTileSize-1, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
         else System.out.println("Invalid character");
     }
 
