@@ -113,7 +113,7 @@ public class AttackHandler {
         }
 
         else if (p.type == 'v') {
-            createMelee(2.0, (10 * Tile.tileRatio), 10 * Tile.tileRatio, p.direction, p, 0, 0, 30);
+            createMelee(1.0, (10 * Tile.tileRatio), 10 * Tile.tileRatio, p.direction, p, 0, 0, 15);
         }
     }
 
