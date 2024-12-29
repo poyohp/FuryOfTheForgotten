@@ -12,7 +12,9 @@ public class Vampire extends Player{
     boolean attack;
     BufferedImage movingSprites = ImageHandler.loadImage("Assets/Entities/Players/Vampire/Vampire_walk.png");
     BufferedImage idleSprites = ImageHandler.loadImage("Assets/Entities/Players/Vampire/Vampire_idle.png");
-    int spriteW = 64/4, spriteH = 96/4;
+    BufferedImage attackSprites = ImageHandler.loadImage("Assets/Entities/Players/Vampire/Vampire_attack_hitbox.png");
+    int spriteW1 = 64/4, spriteH1 = 96/4; // Sizes for the vampire sprites
+    int spriteW2 = 192/4, spriteH2 = 224/4;
     int maxCol = 4;
     int currentRow = 0, currentCol = 0;
 
@@ -75,17 +77,23 @@ public class Vampire extends Player{
 
         currentCol = animationState;
         if (currentCol > maxCol) currentCol = 0;
-
         if (checkMoving()) {
             g2.drawImage(movingSprites,
-                    (int)this.screenX, (int)this.screenY - Tile.tileRatio*8, (int)(this.screenX + this.getWidth()), (int)(this.screenY) + this.getHeight(),
-                    currentCol * spriteW, currentRow * spriteH, (currentCol+1) * spriteW, (currentRow + 1) * spriteH,
+                    (int) this.screenX, (int) this.screenY - Tile.tileRatio * 8, (int) (this.screenX + this.getWidth()), (int) (this.screenY) + this.getHeight(),
+                    currentCol * spriteW1, currentRow * spriteH1, (currentCol + 1) * spriteW1, (currentRow + 1) * spriteH1,
                     null);
 
         } else {
             g2.drawImage(idleSprites,
-                    (int)this.screenX, (int)this.screenY - Tile.tileRatio*8, (int)(this.screenX + this.getWidth()), (int)(this.screenY) + this.getHeight(),
-                    currentCol * spriteW, currentRow * spriteH, (currentCol+1) * spriteW, (currentRow + 1) * spriteH,
+                    (int) this.screenX, (int) this.screenY - Tile.tileRatio * 8, (int) (this.screenX + this.getWidth()), (int) (this.screenY) + this.getHeight(),
+                    currentCol * spriteW1, currentRow * spriteH1, (currentCol + 1) * spriteW1, (currentRow + 1) * spriteH1,
+                    null);
+        }
+
+        if (attacking) {
+            g2.drawImage(attackSprites,
+                    (int) this.screenX, (int) this.screenY - Tile.tileRatio * 8, (int) (this.screenX + this.getWidth()), (int) (this.screenY) + this.getHeight(),
+                    currentCol * spriteW2, currentRow * spriteH2, (currentCol + 1) * spriteW2, (currentRow + 1) * spriteH2,
                     null);
         }
     }
