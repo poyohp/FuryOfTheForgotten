@@ -65,14 +65,20 @@ public class Vampire extends Player{
 
     @Override
     public void draw(Graphics2D g2) {
+        int xNeeded = (int)this.screenX;
+        int yNeeded = (int)this.screenY;
         if (direction == 'd') {
             currentRow = 0;
+            yNeeded = (int)(this.screenY + this.getHeight());
         } else if (direction == 'l') {
             currentRow = 1;
+            xNeeded = (int)(this.screenX - this.getWidth());
         } else if (direction == 'r') {
             currentRow = 2;
+            xNeeded = (int)(this.screenX + this.getWidth());
         } else {
             currentRow = 3;
+            yNeeded = (int)(this.screenY - this.getHeight());
         }
 
         currentCol = animationState;
@@ -91,8 +97,9 @@ public class Vampire extends Player{
         }
 
         if (attacking) {
+
             g2.drawImage(attackSprites,
-                    (int) this.screenX, (int) this.screenY - Tile.tileRatio * 8, (int) (this.screenX + this.getWidth()), (int) (this.screenY) + this.getHeight(),
+                    xNeeded, yNeeded, xNeeded + Tile.tileSize, yNeeded + Tile.tileSize,
                     currentCol * spriteW2, currentRow * spriteH2, (currentCol + 1) * spriteW2, (currentRow + 1) * spriteH2,
                     null);
         }
