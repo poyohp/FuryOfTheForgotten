@@ -60,6 +60,10 @@ public class AttackHandler {
         playerAttacks.add(new Stab(range, width, direction, entity, xOffset, yOffset, duration));
     }
 
+    void createMelee(double damage, int range, int width, char direction, Entity entity, int xOffset, int yOffset, int duration) {
+        playerAttacks.add(new Melee(damage, range, width, direction, entity, xOffset, yOffset, duration));
+    }
+
     /**
      * Create player ranged attack
      * @param range attack range
@@ -74,6 +78,7 @@ public class AttackHandler {
     void createPlayerArrow(int range, int width, char direction, Entity entity, int xOffset, int yOffset, int duration, int speed, double angle) {
         playerAttacks.add(new Arrow(range, width, direction, entity, xOffset, yOffset, duration, speed, angle));
     }
+
 
     /**
      * Determine the player's ranged attack's velocities
@@ -105,6 +110,10 @@ public class AttackHandler {
             }
         } else if (p.type == 'g') {
             createPlayerStab(20 * Tile.tileRatio, 10 * Tile.tileRatio, p.direction, p, 0, 0, 30);
+        }
+
+        else if (p.type == 'v') {
+            createMelee(2.0, (10 * Tile.tileRatio), 10 * Tile.tileRatio, p.direction, p, 0, 0, 30);
         }
     }
 
