@@ -2,6 +2,7 @@ package Handlers.Attacks;
 
 
 import Attacks.Melee.Stab;
+import Attacks.Melee.Swing;
 import Attacks.Ranged.Arrow;
 import Attacks.Attack;
 import Attacks.Melee.Melee;
@@ -65,6 +66,20 @@ public class AttackHandler {
     }
 
     /**
+     * Create melee attack
+     * @param range attack range
+     * @param width attack width, perpendicular to range
+     * @param direction second attack direction, first one is the direction of entity
+     * @param entity Entity attack corresponds to
+     * @param xOffset attack x offset
+     * @param yOffset attack y offset
+     * @param duration attack duration
+     */
+    void createPlayerSwing(int range, int width, char direction, Entity entity, int xOffset, int yOffset, int duration) {
+        playerAttacks.add(new Swing(range, width, direction, entity, xOffset, yOffset, duration));
+    }
+
+    /**
      * Create player ranged attack
      * @param range attack range
      * @param width attack width, perpendicular to range
@@ -110,9 +125,9 @@ public class AttackHandler {
             }
         } else if (p.type == 'g') {
             createPlayerStab(20 * Tile.tileRatio, 10 * Tile.tileRatio, p.direction, p, 0, 0, 30);
-        }
-
-        else if (p.type == 'v') {
+        } else if (p.type == 'z') {
+            createPlayerSwing(15 * Tile.tileRatio, 20 * Tile.tileRatio, p.direction, p, 0, 0, 30);
+        } else if (p.type == 'v') {
             createMelee(1.0, (10 * Tile.tileRatio), 10 * Tile.tileRatio, p.direction, p, 0, 0, 15);
         }
     }

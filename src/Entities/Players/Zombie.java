@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 
 public class Zombie extends Player{
 
+    boolean attack;
     BufferedImage sprites = ImageHandler.loadImage("Assets/Entities/Players/Zombie/zombies.png");
     int column1 = 7, column2 = 39, column3 = 71, column4 = 103, row1 = 7, row2 = 39, row3 = 71, row4 = 103, row5 = 135, row6 = 167, row7 = 199, row8 = 231, row9 = 263, row10 = 295, row11 = 327, row12 = 359, row13 = 391, row14 = 423, row15 = 455;
 
@@ -37,7 +38,7 @@ public class Zombie extends Player{
     void setCharacterState(){
         type = 'z';
         characterAttackFrames = 36;
-        characterAttackCooldown = 30;
+        characterAttackCooldown = 50;
         attackFrames = characterAttackFrames;
         attackCooldown = characterAttackCooldown;
         maxAnimationState = 3;
@@ -55,6 +56,37 @@ public class Zombie extends Player{
         if (!attacking && !inAbility) move(); // If player is not attacking, they can move
         hitbox.update(this); // Update hitbox
         updateFrames();
+    }
+
+    @Override
+    public void checkAttack() {
+
+        // Checking for keypress
+        if (keyHandler.attackPress && canAttack) {
+            attacking = true;
+            animationState = 0;
+            canAttack = false;
+            attack = true;
+        }
+
+        // Setting attack to true
+        if (attacking) {
+            if (attackFrames == 0) {
+                attackFrames = characterAttackFrames;
+                attacking = false;
+            } else {
+                attackFrames--;
+            }
+        }
+    }
+
+    @Override
+    public boolean toCreateAttack() {
+        if (keyHandler.attackPress && attack) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
@@ -189,6 +221,8 @@ public class Zombie extends Player{
                     }
                 }
             }
+        } else if (attacking && !inAbility) {
+
         }
     }
 
