@@ -97,7 +97,6 @@ public class Vampire extends Player{
         }
 
         if (attacking) {
-
             g2.drawImage(attackSprites,
                     xNeeded, yNeeded, xNeeded + Tile.tileSize, yNeeded + Tile.tileSize,
                     currentCol * spriteW2, currentRow * spriteH2, (currentCol + 1) * spriteW2, (currentRow + 1) * spriteH2,

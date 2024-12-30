@@ -18,7 +18,6 @@ import World.Tile;
 
 import javax.swing.JPanel;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.util.Random;
 
 
@@ -71,7 +70,7 @@ public class GamePanel extends JPanel implements Runnable{
         initiatePlayerType();
 
         objectHandler = new ObjectHandler();
-        levelHandler = new LevelHandler(3, spawnHandler, player);
+        levelHandler = new LevelHandler(4, spawnHandler, player);
         collisionHandler = new CollisionHandler();
         damageDealer = new DamageDealer(collisionHandler);
         attackHandler = new AttackHandler(keyHandler, levelHandler.getCurrentLevel().getMap().baseLayerTiles);
