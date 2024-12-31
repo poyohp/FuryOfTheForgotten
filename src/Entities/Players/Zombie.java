@@ -11,6 +11,10 @@ public class Zombie extends Player{
 
     boolean attack;
     BufferedImage sprites = ImageHandler.loadImage("Assets/Entities/Players/Zombie/zombies.png");
+    BufferedImage ability_1 = ImageHandler.loadImage("Assets/Entities/Players/Zombie/ability_1.png");
+    BufferedImage ability_2 = ImageHandler.loadImage("Assets/Entities/Players/Zombie/ability_2.png");
+    BufferedImage ability_3 = ImageHandler.loadImage("Assets/Entities/Players/Zombie/ability_3.png");
+    BufferedImage ability_4 = ImageHandler.loadImage("Assets/Entities/Players/Zombie/ability_4.png");
     int column1 = 7, column2 = 39, column3 = 71, column4 = 103, row1 = 7, row2 = 39, row3 = 71, row4 = 103, row5 = 135, row6 = 167, row7 = 199, row8 = 231, row9 = 263, row10 = 295, row11 = 327, row12 = 359, row13 = 391, row14 = 423, row15 = 455;
 
 
@@ -270,6 +274,21 @@ public class Zombie extends Player{
                         g2.drawImage(sprites, (int) screenX + getWidth(), (int) screenY, (int) screenX, (int) screenY + this.getHeight(), column3, row14, column3 + Tile.normalTileSize, row14 + Tile.normalTileSize, transparent, null);
                         break;
                 }
+            }
+        } else {
+            switch (animationState) {
+                case 0:
+                    g2.drawImage(ability_1, (int) screenX, (int) screenY, (int) screenX + getWidth(), (int) screenY + this.getHeight(), 0, 0, 16, 16, transparent, null);
+                    break;
+                case 1:
+                    g2.drawImage(ability_2, (int) screenX, (int) screenY, (int) screenX + getWidth(), (int) screenY + this.getHeight(), 0, 0, 16, 16, transparent, null);
+                    break;
+                case 2:
+                    g2.drawImage(ability_3, (int) screenX, (int) screenY, (int) screenX + getWidth(), (int) screenY + this.getHeight(), 0, 0, 16, 16, transparent, null);
+                    break;
+                case 3:
+                    g2.drawImage(ability_4, (int) screenX, (int) screenY, (int) screenX + getWidth(), (int) screenY + this.getHeight(), 0, 0, 16, 16, transparent, null);
+                    break;
             }
         }
     }

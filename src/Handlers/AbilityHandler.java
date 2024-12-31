@@ -34,7 +34,7 @@ public class AbilityHandler {
             abilityLength = 300;
         } else if (player.type == 'z') {
             cooldown = 600;
-            abilityLength = 48;
+            abilityLength = 47;
         }
     }
 
@@ -46,8 +46,8 @@ public class AbilityHandler {
                 player.maxAnimationState = 5;
                 player.animationState = 0;
                 player.updateFrames = 7;
-            } else if (player.type == 'g'){
-
+            } else if (player.type == 'z'){
+                player.animationState = 0;
             }
             return true;
         } else {
