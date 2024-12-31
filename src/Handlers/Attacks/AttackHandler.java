@@ -126,7 +126,7 @@ public class AttackHandler {
         } else if (p.type == 'g') {
             createPlayerStab(20 * Tile.tileRatio, 10 * Tile.tileRatio, p.direction, p, 0, 0, 30);
         } else if (p.type == 'z') {
-            createPlayerSwing(15 * Tile.tileRatio, 20 * Tile.tileRatio, p.direction, p, 0, 0, 30);
+            createPlayerSwing(15 * Tile.tileRatio, 20 * Tile.tileRatio, p.direction, p, 0, 0, 36);
         } else if (p.type == 'v') {
             createMelee(1.0, (10 * Tile.tileRatio), 10 * Tile.tileRatio, p.direction, p, 0, 0, 15);
         }
