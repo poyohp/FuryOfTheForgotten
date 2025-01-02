@@ -6,6 +6,7 @@ import Attacks.Melee.Swing;
 import Attacks.Ranged.Arrow;
 import Attacks.Attack;
 import Attacks.Melee.Melee;
+import Attacks.Ranged.BloodOrb;
 import Attacks.Ranged.Ranged;
 import Entities.Enemies.Enemy;
 import Entities.Entity;
@@ -29,6 +30,7 @@ public class AttackHandler {
     KeyHandler keyHandler;
     CollisionHandler collisionHandler = new CollisionHandler();
     Tile[][] tileset;
+    Level level;
     
     final int playerRangedSpeed = (int) (Tile.tileRatio * 2.2);
 
@@ -36,9 +38,10 @@ public class AttackHandler {
      * Create attackHandler object
      * @param keyHandler keyHandler to detect key inputs
      */
-    public AttackHandler(KeyHandler keyHandler, Tile[][] tileset) {
+    public AttackHandler(KeyHandler keyHandler, Tile[][] tileset, Level level) {
         this.keyHandler = keyHandler;
         this.tileset = tileset;
+        this.level = level;
     }
 
     public void levelChanged(Level newLevel) {
@@ -102,6 +105,10 @@ public class AttackHandler {
         for (Attack a : playerAttacks) {
             a.update(player);
         }
+    }
+
+    public void createPlayerBloodOrb(int range, int width, char direction, Entity entity, int xOffset, int yOffset, int duration, int speed, double angle, ArrayList<Enemy> enemies) {
+        playerAttacks.add(new BloodOrb(range, width, direction, entity, xOffset, yOffset, duration, speed, angle, enemies));
     }
 
     void createPlayerAttacks(Player p) {

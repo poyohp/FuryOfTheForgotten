@@ -3,8 +3,10 @@ package Handlers;
 import Entities.Enemies.Enemy;
 import Entities.Players.Decoy;
 import Entities.Players.Player;
+import Handlers.Attacks.AttackHandler;
 import Handlers.HUD.HealthHandler;
 import World.Level;
+import World.Tile;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -16,15 +18,17 @@ public class AbilityHandler {
     KeyHandler keyHandler;
     CollisionHandler collisionHandler;
     HealthHandler healthHandler;
+    AttackHandler attackHandler;
     int cooldown, abilityLength;
     boolean canAbility = true;
     ArrayList<Decoy> decoys = new ArrayList<Decoy>();
 
-    public AbilityHandler (Player player, KeyHandler keyHandler, CollisionHandler collisionHandler, Level level, HealthHandler healthHandler) {
+    public AbilityHandler (Player player, KeyHandler keyHandler, CollisionHandler collisionHandler, Level level, HealthHandler healthHandler, AttackHandler attackHandler) {
         this.player = player;
         this.keyHandler = keyHandler;
         this.collisionHandler = collisionHandler;
         this.healthHandler = healthHandler;
+        this.attackHandler = attackHandler;
         this.level = level;
         if (player.type == 's') {
             cooldown = 120;
@@ -35,6 +39,9 @@ public class AbilityHandler {
         } else if (player.type == 'z') {
             cooldown = 600;
             abilityLength = 47;
+        } else if (player.type == 'v') {
+            cooldown = 300;
+            abilityLength = 1;
         }
     }
 
@@ -62,6 +69,24 @@ public class AbilityHandler {
             decoys.add(new Decoy(player));
             for (Enemy e : level.enemies) {
                 e.entityToFollow = decoys.getFirst();
+            }
+        } else if (player.type == 'v') {
+            if (player.direction == 'r') {
+                attackHandler.createPlayerBloodOrb(8 * Tile.tileRatio, 3 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, 0, level.enemies);
+                attackHandler.createPlayerBloodOrb(8 * Tile.tileRatio, 3 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, 15 * Math.PI / 8, level.enemies);
+                attackHandler.createPlayerBloodOrb(8 * Tile.tileRatio, 3 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, Math.PI / 8, level.enemies);
+            } else if (player.direction == 'u') {
+                attackHandler.createPlayerBloodOrb(8 * Tile.tileRatio, 3 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, Math.PI / 2, level.enemies);
+                attackHandler.createPlayerBloodOrb(8 * Tile.tileRatio, 3 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, 3 * Math.PI / 8, level.enemies);
+                attackHandler.createPlayerBloodOrb(8 * Tile.tileRatio, 3 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, 5 * Math.PI / 8, level.enemies);
+            } else if (player.direction == 'l') {
+                attackHandler.createPlayerBloodOrb(8 * Tile.tileRatio, 3 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, Math.PI, level.enemies);
+                attackHandler.createPlayerBloodOrb(8 * Tile.tileRatio, 3 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, 7 * Math.PI / 8, level.enemies);
+                attackHandler.createPlayerBloodOrb(8 * Tile.tileRatio, 3 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, 9 * Math.PI / 8, level.enemies);
+            } else {
+                attackHandler.createPlayerBloodOrb(8 * Tile.tileRatio, 3 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, 3 * Math.PI / 2, level.enemies);
+                attackHandler.createPlayerBloodOrb(8 * Tile.tileRatio, 3 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, 11 * Math.PI / 8, level.enemies);
+                attackHandler.createPlayerBloodOrb(8 * Tile.tileRatio, 3 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, 13 * Math.PI / 8, level.enemies);
             }
         }
     }
@@ -130,6 +155,8 @@ public class AbilityHandler {
                     cooldown = 120;
                 } else if (player.type == 'g' || player.type == 'z') {
                     cooldown = 600;
+                } else if (player.type == 'v') {
+                    cooldown = 300;
                 }
                 canAbility = true;
             } else {

@@ -41,7 +41,7 @@ public class DamageDealer {
             Attack playerAttack = attackHandler.playerAttacks.get(i);
 
             for (Enemy enemy : level.enemies) {
-                if (collisionHandler.enemyWithAttackCollision(enemy, playerAttack) && !enemy.isHit) {
+                if (collisionHandler.enemyWithAttackCollision(enemy, playerAttack) && !enemy.isHit && playerAttack.isActive) {
                     if(player.isDamageBoost) {
                         enemy.isHit(playerAttack.damage+player.boostedDamage);
                     } else enemy.isHit(playerAttack.damage);
@@ -53,7 +53,8 @@ public class DamageDealer {
 
         //REMOVE IN REVERSE ORDER!!
         for (int i = indicesToRemove.size() - 1; i >= 0; i--) {
-            attackHandler.playerAttacks.remove((int) indicesToRemove.get(i));
+            attackHandler.playerAttacks.get((int) indicesToRemove.get(i)).isActive = false;
         }
+
     }
 }

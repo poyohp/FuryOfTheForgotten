@@ -73,8 +73,8 @@ public class GamePanel extends JPanel implements Runnable{
         levelHandler = new LevelHandler(4, spawnHandler, player);
         collisionHandler = new CollisionHandler();
         damageDealer = new DamageDealer(collisionHandler);
-        attackHandler = new AttackHandler(keyHandler, levelHandler.getCurrentLevel().getMap().baseLayerTiles);
-        abilityHandler = new AbilityHandler(player, keyHandler, collisionHandler, levelHandler.getCurrentLevel(), player.healthHandler);
+        attackHandler = new AttackHandler(keyHandler, levelHandler.getCurrentLevel().getMap().baseLayerTiles, levelHandler.getCurrentLevel());
+        abilityHandler = new AbilityHandler(player, keyHandler, collisionHandler, levelHandler.getCurrentLevel(), player.healthHandler, attackHandler);
 
         inventory = new InventoryHandler(keyHandler, player);
 

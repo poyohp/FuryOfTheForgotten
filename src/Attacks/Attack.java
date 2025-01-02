@@ -19,6 +19,7 @@ public abstract class Attack {
     private char[] direction = new char[2];
     public Hitbox hitbox;
     public Entity entity;
+    public boolean isActive = true;
 
 
     /**
