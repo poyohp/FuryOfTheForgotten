@@ -237,6 +237,19 @@ public class Goblin extends Player{
         }
     }
 
+    @Override
+    public void update(Tile[][] baseLayerTiles) {
+        checkHit();
+        updateSpeedBoost();
+        updateDamageBoost();
+
+        this.tiles = baseLayerTiles;
+        updateEntityPosition();
+        if (!attacking) move(); // If player is not attacking, they can move
+        hitbox.update(this); // Update hitbox
+        updateFrames();
+    }
+
 
 
 }
