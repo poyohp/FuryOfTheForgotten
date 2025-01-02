@@ -48,20 +48,6 @@ public class Zombie extends Player{
         maxAnimationState = 3;
     }
 
-    /**
-     * Updates the position of the player
-     * @param baseLayerTiles
-     */
-    public void update(Tile[][] baseLayerTiles) {
-        checkHit();
-
-        this.tiles = baseLayerTiles;
-        updateEntityPosition();
-        if (!attacking && !inAbility) move(); // If player is not attacking, they can move
-        hitbox.update(this); // Update hitbox
-        updateFrames();
-    }
-
     @Override
     public void checkAttack() {
 
@@ -291,6 +277,7 @@ public class Zombie extends Player{
                     break;
             }
         }
+        hitbox.draw(g2);
     }
 
 }

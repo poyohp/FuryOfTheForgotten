@@ -34,7 +34,7 @@ public class DamageDealer {
      * @param attackHandler The attack handler containing the player's attacks
      * @param level The current level
      */
-    public void dealDamageToEnemies(AttackHandler attackHandler, Level level) {
+    public void dealDamageToEnemies(AttackHandler attackHandler, Level level, Player player) {
         ArrayList<Integer> indicesToRemove = new ArrayList<>();
 
         for (int i = 0; i < attackHandler.playerAttacks.size(); i++) {
@@ -42,7 +42,9 @@ public class DamageDealer {
 
             for (Enemy enemy : level.enemies) {
                 if (collisionHandler.enemyWithAttackCollision(enemy, playerAttack) && !enemy.isHit) {
-                    enemy.isHit(playerAttack.damage);
+                    if(player.isDamageBoost) {
+                        enemy.isHit(playerAttack.damage+player.boostedDamage);
+                    } else enemy.isHit(playerAttack.damage);
                     indicesToRemove.add(i);
                     break;
                 }

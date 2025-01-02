@@ -1,5 +1,6 @@
 package Handlers.HUD;
 
+import Entities.Players.Player;
 import Handlers.KeyHandler;
 import Objects.Object;
 import System.Panels.GamePanel;
@@ -11,6 +12,7 @@ import java.util.Arrays;
 public class InventoryHandler {
 
     private KeyHandler keyHandler;
+    private Player player;
 
     private final int inventoryCapacity = 5;
     public Object[] inventory = new Object[inventoryCapacity];
@@ -31,8 +33,9 @@ public class InventoryHandler {
     private int indexSelected;
     public int indexFree;
 
-    public InventoryHandler(KeyHandler keyHandler) {
+    public InventoryHandler(KeyHandler keyHandler, Player player) {
         this.keyHandler = keyHandler;
+        this.player = player;
         Arrays.fill(inventory, null);
     }
 
@@ -52,8 +55,13 @@ public class InventoryHandler {
                 }
                 keyHandler.leftPress = false;
             }
-        } else {
-            indexSelected = 0;
+            if(keyHandler.choicePress) {
+                if(inventory[indexSelected] != null) {
+                    inventory[indexSelected].isUsed(player);
+                    inventory[indexSelected] = null;
+                    keyHandler.toggleInventory = false;
+                }
+            }
         }
 
         indexFree = -1;

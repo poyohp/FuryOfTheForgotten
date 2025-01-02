@@ -36,6 +36,14 @@ public abstract class Player extends Entity {
     public final double iFramesTimerSeconds = 2;
     public final double iFramesTimerFrames = GamePanel.FPS*iFramesTimerSeconds;
 
+    //EFFECT TIMERS
+    public double origSpeed, boostedSpeed, boostedDamage;
+    public boolean isSpeedBoost, isDamageBoost;
+    public double speedBoostCounter, damageBoostCounter;
+    public final double speedBoostTimerSeconds = 5, damageBoostTimerSeconds = 10;
+
+    public final double speedBoostTimerFrames = GamePanel.FPS*speedBoostTimerSeconds;
+    public final double damageBoostTimerFrames = GamePanel.FPS*damageBoostTimerSeconds;
 
     Color transparent = new Color(0,0,0,0);
 
@@ -60,6 +68,10 @@ public abstract class Player extends Entity {
     public Player(double health, double speed, int width, int height, String name, double worldX, double worldY, int xOffset, int yOffset, int hitBoxWidth, int hitBoxHeight, KeyHandler keyHandler) {
         super(health, speed, width, height, name, worldX, worldY, xOffset, yOffset, hitBoxWidth, hitBoxHeight);
 
+        origSpeed = speed;
+        boostedSpeed = speed+2;
+        boostedDamage = 1;
+
         setScreenPosition();
 
         this.keyHandler = keyHandler;
@@ -70,6 +82,41 @@ public abstract class Player extends Entity {
         isHit = false;
         iFramesCounter = 0;
 
+        isSpeedBoost = false;
+        speedBoostCounter = 0;
+
+    }
+
+    //SPEED BOOST OBJECT
+    public void updateSpeedBoost() {
+        if(isSpeedBoost) {
+            this.setSpeed(boostedSpeed);
+            if(speedBoostCounter > 0) {
+                speedBoostCounter--;
+            } else {
+                isSpeedBoost = false;
+                this.setSpeed(origSpeed);
+            }
+        }
+    }
+    public void speedBoostUsed() {
+        isSpeedBoost = true;
+        speedBoostCounter = speedBoostTimerFrames;
+    }
+
+    //DAMAGE BOOST OBJECT
+    public void updateDamageBoost() {
+        if(isDamageBoost) {
+            if(damageBoostCounter > 0) {
+                damageBoostCounter--;
+            } else {
+                isDamageBoost = false;
+            }
+        }
+    }
+    public void damageBoostUsed() {
+        isDamageBoost = true;
+        damageBoostCounter = damageBoostTimerFrames;
     }
 
     public void isHit(double damage) {
@@ -172,9 +219,13 @@ public abstract class Player extends Entity {
      * @param baseLayerTiles
      */
     public void update(Tile[][] baseLayerTiles) {
+        checkHit();
+        updateSpeedBoost();
+        updateDamageBoost();
+
         this.tiles = baseLayerTiles;
         updateEntityPosition();
-        if (!attacking) move(); // If player is not attacking, they can move
+        if (!attacking && !inAbility) move(); // If player is not attacking, they can move
         hitbox.update(this); // Update hitbox
         updateFrames();
     }

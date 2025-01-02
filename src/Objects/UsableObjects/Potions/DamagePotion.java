@@ -21,6 +21,6 @@ public class DamagePotion extends UsableObject {
 
     @Override
     public void isUsed(Player player) {
-        //TO BE CODED!
+        player.damageBoostUsed();
     }
 }

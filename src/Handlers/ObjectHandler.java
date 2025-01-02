@@ -3,25 +3,30 @@ package Handlers;
 import Entities.Players.Player;
 import Handlers.HUD.InventoryHandler;
 import Objects.Object;
-import Objects.UnusableObjects.Chest;
-import Objects.UnusableObjects.Coin;
-import Objects.UsableObjects.Potions.DamagePotion;
-import Objects.UsableObjects.Potions.HealthPotion;
-import Objects.UsableObjects.Potions.ShieldPotion;
-import Objects.UsableObjects.Potions.SpeedPotion;
+import Objects.UnusableObjects.*;
+import Objects.UsableObjects.Potions.*;
+import Objects.UsableObjects.Medicine.*;
+import Objects.UsableObjects.Food.*;
 import System.Panels.GamePanel;
 import World.Level;
 import World.Tile;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import javax.swing.Timer;
 
 public class ObjectHandler {
 
     static ArrayList<String> allGameItems = new ArrayList<>();
 
     Object closestMarked;
+
+    Timer timer;
+    private final double secondsBetweenPickup = 0.65;
+    private boolean canPickUp;
 
     //FOR COIN DRAWING
     BufferedImage coinImage = ImageHandler.loadImage("Assets/Objects/coins.png");
@@ -32,13 +37,41 @@ public class ObjectHandler {
 
         closestMarked = null;
 
+        canPickUp = true;
+
+        timer = new Timer((int) (1000.0*secondsBetweenPickup), new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                canPickUp = true;
+                timer.stop();
+            }
+        });
+
     }
 
+    /**
+     * ALL DROPPABLE ITEMS
+     * DOESN'T INCLUDE KEYS OR CHERRY
+     */
     private void addAllObjects() {
+        //POTIONS
         allGameItems.add("DamagePotion");
         allGameItems.add("HealthPotion");
         allGameItems.add("SpeedPotion");
         allGameItems.add("ShieldPotion");
+
+        //MEDICINE
+        allGameItems.add("Bandage");
+        allGameItems.add("Pills");
+
+        //FOOD
+        allGameItems.add("Cheese");
+        allGameItems.add("Garlic");
+        allGameItems.add("Milk");
+        allGameItems.add("Mushroom");
+        allGameItems.add("Onion");
+        allGameItems.add("Strawberry");
+
     }
 
     public void update(CollisionHandler collisionHandler, Player player, InventoryHandler inventoryHandler, Level level) {
@@ -64,7 +97,7 @@ public class ObjectHandler {
     //checks for chest openings, and also for object collisions (if player picks up or not)
     public void playerObjectInteract(CollisionHandler collisionHandler, Player player, InventoryHandler inventoryHandler, Level level) {
         for(Chest chest: level.chests) {
-            if(collisionHandler.checkPlayerWithObjectCollision(player, chest)) {
+            if(!player.keyHandler.toggleInventory && collisionHandler.checkPlayerWithObjectCollision(player, chest)) {
                 if(!chest.isOpen) {
                     if(player.keyHandler.choicePress) {
                         player.keyHandler.choicePress = false;
@@ -78,11 +111,14 @@ public class ObjectHandler {
         boolean replaceObject = false;
         Object objectToReplace = null;
         for(Objects.Object object : level.objects) {
-            if(collisionHandler.checkPlayerWithObjectCollision(player, object) && object == closestMarked) {
+            if(!player.keyHandler.toggleInventory && canPickUp && collisionHandler.checkPlayerWithObjectCollision(player, object) && object == closestMarked) {
                 if(!object.isPickedUp) {
                     if(player.keyHandler.choicePress) {
                         player.keyHandler.choicePress = false;
+                        canPickUp = false;
+                        if (!timer.isRunning()) timer.start();
                         object.isPickedUp(player, level);
+                        System.out.println(object.name);
                         if(object.isEquippable) {
                             if(inventoryHandler.indexFree >= 0) {
                                 // PUT ITEM INTO FREE SLOT
@@ -128,6 +164,25 @@ public class ObjectHandler {
                     new SpeedPotion(name, width, height, worldX, worldY, screenX, screenY, vx, vy);
             case "ShieldPotion" ->
                     new ShieldPotion(name, width, height, worldX, worldY, screenX, screenY, vx, vy);
+
+            case "Bandage" ->
+                    new Bandage(name, width, height, worldX, worldY, screenX, screenY, vx, vy);
+            case "Pills" ->
+                    new Pills(name, width, height, worldX, worldY, screenX, screenY, vx, vy);
+
+            case "Cheese" ->
+                    new Cheese(name, width, height, worldX, worldY, screenX, screenY, vx, vy);
+            case "Garlic" ->
+                    new Garlic(name, width, height, worldX, worldY, screenX, screenY, vx, vy);
+            case "Milk" ->
+                    new Milk(name, width, height, worldX, worldY, screenX, screenY, vx, vy);
+            case "Mushroom" ->
+                    new Mushroom(name, width, height, worldX, worldY, screenX, screenY, vx, vy);
+            case "Onion" ->
+                    new Onion(name, width, height, worldX, worldY, screenX, screenY, vx, vy);
+            case "Strawberry" ->
+                    new Strawberry(name, width, height, worldX, worldY, screenX, screenY, vx, vy);
+
             default -> new Coin(0, "Coin", Tile.tileSize, Tile.tileSize, worldX, worldY, screenX, screenY, vx, vy);
         };
     }

@@ -76,7 +76,7 @@ public class GamePanel extends JPanel implements Runnable{
         attackHandler = new AttackHandler(keyHandler, levelHandler.getCurrentLevel().getMap().baseLayerTiles);
         abilityHandler = new AbilityHandler(player, keyHandler, collisionHandler, levelHandler.getCurrentLevel(), player.healthHandler);
 
-        inventory = new InventoryHandler(keyHandler);
+        inventory = new InventoryHandler(keyHandler, player);
 
         pathfinding = new APathfinding(levelHandler.getCurrentLevel().getMap().baseLayerTiles);
 
@@ -96,10 +96,10 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     void initiatePlayerType() {
-        if (CharacterSelectionPanel.selectedCharacter.equals("zombie")) player = new Zombie(8, 4, Tile.tileSize, Tile.tileSize, "Player", 0, 0, 4*Tile.tileSize/Tile.normalTileSize, 6*Tile.tileSize/Tile.normalTileSize-1, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
-        else if (CharacterSelectionPanel.selectedCharacter.equals("skeleton")) player = new Skeleton(8, 4, Tile.tileSize, Tile.tileSize, "Player", 0, 0, 4*Tile.tileSize/Tile.normalTileSize, 6*Tile.tileSize/Tile.normalTileSize-1, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
-        else if (CharacterSelectionPanel.selectedCharacter.equals("goblin")) player = new Goblin(8, 4, Tile.tileSize, Tile.tileSize, "Player", 0, 0, 4*Tile.tileSize/Tile.normalTileSize, 6*Tile.tileSize/Tile.normalTileSize-1, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
-        else if (CharacterSelectionPanel.selectedCharacter.equals("vampire")) player = new Vampire(8, 5, Tile.tileSize, Tile.tileSize, "Player", 0, 0, 4*Tile.tileSize/Tile.normalTileSize, 6*Tile.tileSize/Tile.normalTileSize-1, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
+        if (CharacterSelectionPanel.selectedCharacter.equals("zombie")) player = new Zombie(8, 4, Tile.tileSize, Tile.tileSize, "Zombie", 0, 0, 4*Tile.tileSize/Tile.normalTileSize, 6*Tile.tileSize/Tile.normalTileSize-1, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
+        else if (CharacterSelectionPanel.selectedCharacter.equals("skeleton")) player = new Skeleton(8, 4, Tile.tileSize, Tile.tileSize, "Skeleton", 0, 0, 4*Tile.tileSize/Tile.normalTileSize, 6*Tile.tileSize/Tile.normalTileSize-1, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
+        else if (CharacterSelectionPanel.selectedCharacter.equals("goblin")) player = new Goblin(8, 4, Tile.tileSize, Tile.tileSize, "Goblin", 0, 0, 4*Tile.tileSize/Tile.normalTileSize, 6*Tile.tileSize/Tile.normalTileSize-1, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
+        else if (CharacterSelectionPanel.selectedCharacter.equals("vampire")) player = new Vampire(8, 5, Tile.tileSize, Tile.tileSize, "Vampire", 0, 0, 4*Tile.tileSize/Tile.normalTileSize, 6*Tile.tileSize/Tile.normalTileSize-1, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
         else System.out.println("Invalid character");
     }
 
@@ -156,7 +156,7 @@ public class GamePanel extends JPanel implements Runnable{
         levelHandler.update(player, spawnHandler, damageDealer, collisionHandler, attackHandler, ghost, snail);
         attackHandler.update(player, levelHandler.getCurrentLevel().getMap().baseLayerTiles);
         abilityHandler.update();
-        damageDealer.dealDamageToEnemies(attackHandler, levelHandler.getCurrentLevel());
+        damageDealer.dealDamageToEnemies(attackHandler, levelHandler.getCurrentLevel(), player);
         inventory.update();
 
         ghost.update();
@@ -190,7 +190,7 @@ public class GamePanel extends JPanel implements Runnable{
 
         //HUD DRAWING
         inventory.draw(g2);
-        player.healthHandler.drawHearts(g2);
+        player.healthHandler.drawHealth(g2);
         g2.setFont(coinFont);
         objectHandler.draw(g2, player);
     }

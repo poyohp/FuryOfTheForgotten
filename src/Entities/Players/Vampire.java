@@ -49,20 +49,6 @@ public class Vampire extends Player{
         setCharacterState();
     }
 
-    /**
-     * Updates the position of the player
-     * @param baseLayerTiles
-     */
-    public void update(Tile[][] baseLayerTiles) {
-        checkHit();
-        this.tiles = baseLayerTiles;
-        updateEntityPosition();
-        if (!attacking) move(); // If player is not attacking, they can move
-        hitbox.update(this); // Update hitbox
-        updateFrames();
-        setHealth(healthHandler.currentHearts);
-    }
-
     @Override
     public void draw(Graphics2D g2) {
         int xNeeded = (int)this.screenX;

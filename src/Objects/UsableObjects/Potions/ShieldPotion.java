@@ -21,6 +21,6 @@ public class ShieldPotion extends UsableObject {
 
     @Override
     public void isUsed(Player player) {
-        //TO BE CODED!
+        player.healthHandler.activatedShields(player.healthHandler.maxShields);
     }
 }

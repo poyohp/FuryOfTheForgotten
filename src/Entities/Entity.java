@@ -154,8 +154,9 @@ public abstract class Entity {
         this.height = height;
     }
 
-    public void setName(String name) {
-        this.name = name;
+
+    public String getName() {
+        return this.name;
     }
 
     public abstract void draw(Graphics2D g2);

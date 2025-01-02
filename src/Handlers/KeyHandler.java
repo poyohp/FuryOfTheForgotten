@@ -24,6 +24,11 @@ public class KeyHandler implements KeyListener {
             }
         }
 
+        if(e.getKeyCode() == KeyEvent.VK_J && !choiceTriggered) {
+            choiceTriggered = true;
+            choicePress = true;
+        }
+
         if(!toggleInventory) {
             if(e.getKeyCode() == KeyEvent.VK_W) {
                 upPress = true;
@@ -52,10 +57,6 @@ public class KeyHandler implements KeyListener {
 
             if(e.getKeyCode() == KeyEvent.VK_U) {
                 attackPress = true;
-            }
-            if(e.getKeyCode() == KeyEvent.VK_J && !choiceTriggered) {
-                choiceTriggered = true;
-                choicePress = true;
             }
             if(e.getKeyCode() == KeyEvent.VK_I) {
                 abilityPress = true;

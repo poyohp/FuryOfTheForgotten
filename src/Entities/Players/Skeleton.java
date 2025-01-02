@@ -62,20 +62,6 @@ public class Skeleton extends Player{
     }
 
     /**
-     * Updates the position of the player
-     * @param baseLayerTiles
-     */
-    public void update(Tile[][] baseLayerTiles) {
-        checkHit();
-
-        this.tiles = baseLayerTiles;
-        updateEntityPosition();
-        if (!attacking && !inAbility) move(); // If player is not attacking, they can move
-        hitbox.update(this); // Update hitbox
-        updateFrames();
-    }
-
-    /**
      * Draws player
      * @param g2 Graphics2D object to draw on
      */
