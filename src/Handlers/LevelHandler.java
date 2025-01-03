@@ -186,6 +186,8 @@ public class LevelHandler {
         levels[1] = new Level("Maps/Level2Map.json", "Assets/Tilesets/dungeonTileset.png", nonWalkableValues2(), 16);
         levels[2] = new Level("Maps/Level3Map.json", "Assets/Tilesets/facilityTileset.png", nonWalkableValues3(), 16);
         levels[3] = new Level("Maps/Level4Map.json", "Assets/Tilesets/catacombTileset.png", nonWalkableValues4(), 16);
+        levels[4] = new Level("Maps/Level5Map.json", "Assets/Tilesets/cuteTileset.png", nonWalkableValues5(), 16);
+
     }
 
     /**
@@ -237,6 +239,15 @@ public class LevelHandler {
         for (int value: values) {
             nonWalkableValues.add(value);
         }
+        return nonWalkableValues;
+    }
+
+    /**
+     * Add all non-walkable tile values to the nonWalkableValues ArrayList
+     */
+    private ArrayList<Integer> nonWalkableValues5() {
+        ArrayList<Integer> nonWalkableValues = new ArrayList<>();
+        nonWalkableValues.add(92);
         return nonWalkableValues;
     }
 
