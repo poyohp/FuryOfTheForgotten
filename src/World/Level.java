@@ -18,6 +18,7 @@ public class Level {
 
     // Holds all enemy data in the current level
     public ArrayList<Enemy> enemies = new ArrayList<>();
+    public ArrayList<Enemy> unkillableEnemies = new ArrayList<>();
     public ArrayList<Enemy> enemiesToRemove = new ArrayList<>();
     public ArrayList<Chest> chests = new ArrayList<>();
 

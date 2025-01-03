@@ -127,6 +127,11 @@ public class LevelHandler {
             enemy.update();
             damageDealer.dealDamageToPlayer(enemy, player);
         }
+
+        for (Enemy enemy: currentLevel.unkillableEnemies) {
+            enemy.update();
+            damageDealer.dealDamageToPlayer(enemy, player);
+        }
     }
 
     /**
@@ -179,6 +184,10 @@ public class LevelHandler {
         this.getCurrentLevel().drawLevel(g2, player);
 
         for (Enemy enemy : currentLevel.enemies) {
+            enemy.draw(g2);
+        }
+
+        for (Enemy enemy : currentLevel.unkillableEnemies) {
             enemy.draw(g2);
         }
     }

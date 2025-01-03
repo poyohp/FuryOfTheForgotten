@@ -1,6 +1,7 @@
 package Handlers.Spawners;
 
 
+import Entities.Enemies.Dragon;
 import Entities.Players.Player;
 import World.Level;
 import World.Tile;
@@ -41,7 +42,7 @@ public class SpawnHandler implements ActionListener {
         for (int i = 0; i < level.getMap().spawnLayerTiles.length; i++) {
             for (int j = 0; j < level.getMap().spawnLayerTiles.length; j++) {
                 Tile tile = level.getMap().spawnLayerTiles[i][j];
-                if (tile.getOrgValue() == 244 || tile.getOrgValue() == 64 || tile.getOrgValue() == 36 || tile.getOrgValue() == 367 || tile.getOrgValue() == 38 ) {
+                if (tile.getOrgValue() == 244 || tile.getOrgValue() == 64 || tile.getOrgValue() == 36 || tile.getOrgValue() == 367 || tile.getOrgValue() == 38) {
                     playerSpawnX = tile.getCol() * Tile.tileSize;
                     playerSpawnY = tile.getRow() * Tile.tileSize;
                     player.worldX = playerSpawnX;
@@ -65,17 +66,53 @@ public class SpawnHandler implements ActionListener {
      * Sets the enemy spawn points based on the level
      * @param level the current level to set enemy spawn points
      */
-    public void setEnemySpawnerPoints(Level level) {
+    public void setEnemySpawnerPoints(Level level, Player player) {
         for (int i = 0; i < level.getMap().spawnLayerTiles.length; i++) {
             for (int j = 0; j < level.getMap().spawnLayerTiles.length; j++) {
                 int value = level.getMap().spawnLayerTiles[i][j].getOrgValue();
                 if (value == 246 || value == 66 || value == 34 || value == 372 || value == 37) {
                     enemySpawnPoints.add(new SpawnPoint(level.getMap().spawnLayerTiles[i][j].getWorldXPos(), level.getMap().spawnLayerTiles[i][j].getWorldYPos(), level.levelNum));
                 }
+
+                // For adding Dragon enemies
+                if (value == -3) {
+                    String idlePngName = "";
+                    String attackPngName = "";
+
+                    // Assigning dragons for specific levels
+                    switch (level.levelNum) {
+                        case 0:
+                            idlePngName = "AdultRedDragon_idle.png";
+                            attackPngName = "AdultRedDragon_attack_hitbox.png";
+                            break;
+                        case 1:
+                            idlePngName = "AdultRedDragon_idle.png";
+                            attackPngName = "AdultRedDragon_attack_hitbox.png";
+                            break;
+                        case 2:
+                            idlePngName = "BlueWyrmling_idle.png.png";
+                            attackPngName = "BlueWyrmling_attack_hitbox.png";
+                            break;
+                        case 3:
+                            idlePngName = "YoungGreenDragon_idle.png";
+                            attackPngName = "YoungGreenDragon_attack_hitbox.png";
+                            break;
+                        case 4:
+                            idlePngName = "FaerieDragon_idle.png";
+                            attackPngName = "FaerieDragon_attack_hitbox.png";
+                            break;
+                        default:
+                            idlePngName = "AdultRedDragon_idle.png";
+                            attackPngName = "AdultRedDragon_attack_hitbox.png";
+                            break;
+
+                    }
+
+                    level.unkillableEnemies.add(new Dragon(100, 0.0, Tile.tileSize, Tile.tileSize, "Dragon", (int) level.getMap().spawnLayerTiles[i][j].getWorldXPos(), (int) level.getMap().spawnLayerTiles[i][j].getWorldYPos(), 0, 0, 0, 0, player, false, idlePngName, attackPngName, 'd'));
+                }
             }
         }
     }
-
 
     /**
      * Changes the level and updates the player spawn point and enemy spawn points
@@ -85,7 +122,7 @@ public class SpawnHandler implements ActionListener {
     public void levelChanged(Player player, Level level) {
         enemySpawnPoints.clear();
         setPlayerSpawn(player, level);
-        setEnemySpawnerPoints(level);
+        setEnemySpawnerPoints(level, player);
     }
 
 
