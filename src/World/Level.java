@@ -24,6 +24,8 @@ public class Level {
     public ArrayList<Object> objects = new ArrayList<>();
     public ArrayList<Object> objectsToRemove = new ArrayList<>();
 
+    public int levelNum;
+
     public boolean doorUnlockable;
     public boolean doorUnlocked;
 
@@ -31,10 +33,12 @@ public class Level {
      * Constructor for Level (generates map)
      * @param mapDirectory directory of map file
      */
-    public Level(String mapDirectory, String tileSetDirectory, ArrayList<Integer> nonWalkableValues, int tileSetTileSize) {
+    public Level(String mapDirectory, String tileSetDirectory, ArrayList<Integer> nonWalkableValues, int tileSetTileSize, int levelNum) {
 
         doorUnlockable = false;
         doorUnlocked = false;
+
+        this.levelNum = levelNum;
 
         map = new Map(mapDirectory, tileSetDirectory, tileSetTileSize, this);
         map.nonWalkableValues = nonWalkableValues;

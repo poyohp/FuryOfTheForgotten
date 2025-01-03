@@ -56,7 +56,7 @@ public class SpawnPoint {
      * @param worldX x position of the spawn point
      * @param worldY y position of the spawn point
      */
-    public SpawnPoint(double worldX, double worldY) {
+    public SpawnPoint(double worldX, double worldY, int level) {
         this.worldX = worldX;
         this.worldY = worldY;
 
@@ -67,7 +67,7 @@ public class SpawnPoint {
 
         setNumEnemies();
 
-        this.image = ImageHandler.loadImage("Assets/Objects/ores&ingots&gems.png");
+        if (level != 3 && level != 4) this.image = ImageHandler.loadImage("Assets/Objects/ores&ingots&gems.png");
 
     }
 

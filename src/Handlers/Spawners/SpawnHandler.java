@@ -70,7 +70,7 @@ public class SpawnHandler implements ActionListener {
             for (int j = 0; j < level.getMap().spawnLayerTiles.length; j++) {
                 int value = level.getMap().spawnLayerTiles[i][j].getOrgValue();
                 if (value == 246 || value == 66 || value == 34 || value == 372 || value == 37) {
-                    enemySpawnPoints.add(new SpawnPoint(level.getMap().spawnLayerTiles[i][j].getWorldXPos(), level.getMap().spawnLayerTiles[i][j].getWorldYPos()));
+                    enemySpawnPoints.add(new SpawnPoint(level.getMap().spawnLayerTiles[i][j].getWorldXPos(), level.getMap().spawnLayerTiles[i][j].getWorldYPos(), level.levelNum));
                 }
             }
         }
