@@ -61,6 +61,10 @@ public class LevelHandler {
                     inventoryHandler.inventory[i] = null;
                 }
             }
+
+            //CLEAR OUT UNKILLABLE ENEMIES
+            this.currentLevel.unkillableEnemies.clear();
+
             currentLevelIndex++;
             currentLevel = levels[currentLevelIndex];
             attackHandler.levelChanged(currentLevel);
