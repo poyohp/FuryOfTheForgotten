@@ -72,7 +72,7 @@ public class Melee extends Attack {
      * Set intial screen postition of melee attack
      */
     @Override
-    public void setScreenPosition(Player player ) {
+    public void setScreenPosition(Player player) {
         // If direction is up
         if (player.direction == 'u') {
             angle = Math.PI/2;
@@ -137,7 +137,7 @@ public class Melee extends Attack {
      */
     @Override
     public void draw(Graphics2D g2) {
-        
+
 
     }
 }

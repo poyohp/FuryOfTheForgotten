@@ -29,6 +29,25 @@ public class DamageDealer {
         }
     }
 
+    public void dealMeleeDamageToPlayer(AttackHandler attackHandler, Level level, Player player) {
+        ArrayList<Integer> indicesToRemove = new ArrayList<>();
+
+        for (int i = 0; i < attackHandler.enemyAttacks.size(); i++) {
+            Attack enemyAttack = attackHandler.enemyAttacks.get(i);
+                if (collisionHandler.playerWithAttackCollision(player, enemyAttack) && !player.isHit && enemyAttack.isActive) {
+                    player.isHit(enemyAttack.damage);
+                    indicesToRemove.add(i);
+                    break;
+                }
+
+        }
+
+        //REMOVE IN REVERSE ORDER!!
+        for (int i = indicesToRemove.size() - 1; i >= 0; i--) {
+            attackHandler.enemyAttacks.get(indicesToRemove.get(i)).isActive = false;
+        }
+    }
+
     /**
      * Deals damage to enemies if the player's attacks are colliding
      * @param attackHandler The attack handler containing the player's attacks

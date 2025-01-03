@@ -229,6 +229,23 @@ public class CollisionHandler {
         return false;
     }
 
+    public boolean playerWithAttackCollision(Player player, Attack attack) {
+        double playerTop = player.worldY + player.getSpeed();
+        double playerBottom = playerTop + player.getHeight();
+        double playerLeft = player.worldX + player.getSpeed();
+        double playerRight = playerLeft + player.getWidth();
+
+        double attackTop = attack.hitbox.worldY + attack.getSpeed();
+        double attackBottom = attackTop + attack.hitbox.height;
+        double attackLeft = attack.hitbox.worldX + attack.getSpeed();
+        double attackRight = attackLeft + attack.hitbox.width;
+
+        if (attackTop < playerBottom && attackBottom > playerTop && attackLeft < playerRight && attackRight > playerLeft) {
+            return true;
+        }
+        return false;
+    }
+
     /**
      * Checks enemy collision with player
      * Takes speed into account

@@ -25,6 +25,7 @@ public class AttackHandler {
     // Variables for handling attacks
     public ArrayList<Attack> playerAttacks = new ArrayList<Attack>();
     ArrayList<Attack> playerToRemove = new ArrayList<Attack>();
+
     public ArrayList<Attack> enemyAttacks = new ArrayList<Attack>();
     ArrayList<Attack> enemyToRemove = new ArrayList<Attack>();
     KeyHandler keyHandler;
@@ -62,10 +63,6 @@ public class AttackHandler {
      */
     void createPlayerStab(int range, int width, char direction, Entity entity, int xOffset, int yOffset, int duration) {
         playerAttacks.add(new Stab(range, width, direction, entity, xOffset, yOffset, duration));
-    }
-
-    void createMelee(double damage, int range, int width, char direction, Entity entity, int xOffset, int yOffset, int duration) {
-        playerAttacks.add(new Melee(damage, range, width, direction, entity, xOffset, yOffset, duration));
     }
 
     /**
@@ -135,7 +132,7 @@ public class AttackHandler {
         } else if (p.type == 'z') {
             createPlayerSwing(15 * Tile.tileRatio, 20 * Tile.tileRatio, p.direction, p, 0, 0, 36);
         } else if (p.type == 'v') {
-            createMelee(1.0, (10 * Tile.tileRatio), 10 * Tile.tileRatio, p.direction, p, 0, 0, 15);
+            playerAttacks.add(new Melee(1.0, (10 * Tile.tileRatio), 10 * Tile.tileRatio, p.direction, p, 0, 0, 15));
         }
     }
 
@@ -145,13 +142,10 @@ public class AttackHandler {
         player.checkAttack();
         player.setAttackCooldown();
 
-        if (player.toCreateAttack()) {
-            createPlayerAttacks(player);
-        }
+        if (player.toCreateAttack()) createPlayerAttacks(player);
+        if (!playerAttacks.isEmpty()) updateAttacks(player);
+        for (Enemy enemy: level.unkillableEnemies) enemyAttacks.add(new Melee(1.0, (10 * Tile.tileRatio), 10 * Tile.tileRatio, enemy.direction, enemy, 0, 0, 15));
 
-        if (!playerAttacks.isEmpty()) {
-            updateAttacks(player);
-        }
 
         removeAttacks();
     }

@@ -19,8 +19,6 @@ public class Dragon extends Enemy{
     final int maxCol1 = 4;
     final int maxCol2 = 5;
     int currentRow = 0, currentCol1 = 0, currentCol2 = 0;
-    int direction;
-
 
     /**
      * Enemy that follows player
