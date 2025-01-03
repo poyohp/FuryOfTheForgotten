@@ -2,6 +2,7 @@ package Entities.Players;
 
 import Handlers.ImageHandler;
 import Handlers.KeyHandler;
+import World.Level;
 import World.Tile;
 
 import java.awt.*;
@@ -238,7 +239,8 @@ public class Goblin extends Player{
     }
 
     @Override
-    public void update(Tile[][] baseLayerTiles) {
+    public void update(Tile[][] baseLayerTiles, Level level) {
+        this.currentLevel = level;
         checkHit();
         updateSpeedBoost();
         updateDamageBoost();

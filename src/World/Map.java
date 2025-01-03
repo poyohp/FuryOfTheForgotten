@@ -4,6 +4,8 @@ import Handlers.ImageHandler;
 import Entities.Players.Player;
 //import Objects.UnusableObjects.Chest;
 import Objects.UnusableObjects.Chest;
+import Objects.UsableObjects.Key;
+import System.Panels.GamePanel;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -17,11 +19,13 @@ import java.util.ArrayList;
 public class Map {
 
     private BufferedImage tileSetImage;
+    private BufferedImage doorImage;
 
     private String mapDirectory;
     private JSONParser parser;
 
     private int mapWidth, mapHeight;
+    public Tile door;
     public Tile[][] baseLayerTiles;
     public Tile[][] spawnLayerTiles;
 
@@ -44,6 +48,7 @@ public class Map {
         this.level = level;
 
         tileSetImage = ImageHandler.loadImage(tileSetDirectory);
+        doorImage = ImageHandler.loadImage("Assets/Tilesets/Door/lockdoor.png");
 
         getHeightandWidthInTiles();
 
@@ -106,10 +111,17 @@ public class Map {
                     } else if (i == 2) {
                         if(Integer.parseInt(dataArray.get(j).toString()) > 0) {
                             level.chests.add(new Chest("Chest", Tile.tileSize, Tile.tileSize, n*Tile.tileSize, m*Tile.tileSize, 0, 0));
+                        } else if(Integer.parseInt(dataArray.get(j).toString()) == -1) {
+                            //DOOR (negative value)
+                            door = new Tile(m, n, Integer.parseInt(dataArray.get(j).toString()), false, numTilesHeight, numTilesWidth);
                         }
                     }
                 }
             }
+
+            //ADD KEY TO RANDOM CHEST!
+            level.chests.get(GamePanel.random.nextInt(level.chests.size())).addKeyToChest();
+
         } catch (FileNotFoundException e) {
             System.err.println("Map file not found: " + mapDirectory);
             throw e;
@@ -136,6 +148,12 @@ public class Map {
                 }
             }
         }
+        setDoorPosition(player);
+        drawDoor(g2);
+    }
+
+    public void drawDoor(Graphics2D g2) {
+        g2.drawImage(doorImage, (int)door.getScreenXPos(), (int)door.getScreenYPos(), (int)door.getScreenXPos() + Tile.tileSize, (int)door.getScreenYPos() + Tile.tileSize, 0, 0, 16, 16, null);
     }
 
     /**
@@ -151,6 +169,11 @@ public class Map {
         baseLayerTiles[x][y].setScreenYPos((int)(baseLayerTiles[x][y].getWorldYPos() - player.worldY + player.screenY));
         spawnLayerTiles[x][y].setScreenYPos((int)(spawnLayerTiles[x][y].getWorldYPos() - player.worldY + player.screenY));
 
+    }
+
+    private void setDoorPosition(Player player) {
+        door.setScreenXPos((int)(door.getWorldXPos() - player.worldX + player.screenX));
+        door.setScreenYPos((int)(door.getWorldYPos() - player.worldY + player.screenY));
     }
 
 }

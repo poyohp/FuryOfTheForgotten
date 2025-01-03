@@ -2,11 +2,13 @@ package World;
 
 import Entities.Enemies.Enemy;
 import Entities.Players.Player;
+import Handlers.ImageHandler;
 import Objects.UnusableObjects.Chest;
 import Objects.Object;
 import org.json.simple.parser.ParseException;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -22,11 +24,17 @@ public class Level {
     public ArrayList<Object> objects = new ArrayList<>();
     public ArrayList<Object> objectsToRemove = new ArrayList<>();
 
+    public boolean doorUnlockable;
+    public boolean doorUnlocked;
+
     /**
      * Constructor for Level (generates map)
      * @param mapDirectory directory of map file
      */
     public Level(String mapDirectory, String tileSetDirectory, ArrayList<Integer> nonWalkableValues, int tileSetTileSize) {
+
+        doorUnlockable = false;
+        doorUnlocked = false;
 
         map = new Map(mapDirectory, tileSetDirectory, tileSetTileSize, this);
         map.nonWalkableValues = nonWalkableValues;

@@ -5,6 +5,7 @@ import Handlers.HUD.HealthHandler;
 import Handlers.ImageHandler;
 import Handlers.KeyHandler;
 import System.Panels.GamePanel;
+import World.Level;
 import World.Tile;
 
 import java.awt.*;
@@ -33,7 +34,7 @@ public abstract class Player extends Entity {
     //Hit timers
     public boolean isHit;
     public double iFramesCounter;
-    public final double iFramesTimerSeconds = 2;
+    public final double iFramesTimerSeconds = 0.5;
     public final double iFramesTimerFrames = GamePanel.FPS*iFramesTimerSeconds;
 
     //EFFECT TIMERS
@@ -50,6 +51,7 @@ public abstract class Player extends Entity {
     public HealthHandler healthHandler = new HealthHandler(initNumHearts);
     CollisionHandler collisionHandler = new CollisionHandler();
     public Tile[][] tiles;
+    public Level currentLevel;
 
     /**
      * Enemy that follows player
@@ -218,7 +220,8 @@ public abstract class Player extends Entity {
      * Updates the position of the player
      * @param baseLayerTiles
      */
-    public void update(Tile[][] baseLayerTiles) {
+    public void update(Tile[][] baseLayerTiles, Level level) {
+        this.currentLevel = level;
         checkHit();
         updateSpeedBoost();
         updateDamageBoost();
@@ -253,7 +256,7 @@ public abstract class Player extends Entity {
         if(!keyHandler.toggleInventory) {
             if (keyHandler.upPress) {
                 direction = 'u';
-                if (!collisionHandler.playerWithTileCollision(this, tiles) && !collisionWithChest) this.worldY -= getSpeed();
+                if (!collisionHandler.playerWithTileCollision(this, tiles) && !collisionWithChest) worldY -= getSpeed();
             } else if (keyHandler.downPress) {
                 direction = 'd';
                 if (!collisionHandler.playerWithTileCollision(this, tiles) && !collisionWithChest) worldY += getSpeed();

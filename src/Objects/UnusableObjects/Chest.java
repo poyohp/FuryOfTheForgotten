@@ -2,6 +2,7 @@ package Objects.UnusableObjects;
 
 import Handlers.ObjectHandler;
 import Objects.Object;
+import Objects.UsableObjects.Key;
 import Objects.UsableObjects.Potions.DamagePotion;
 import System.Panels.GamePanel;
 import Entities.Players.Player;
@@ -57,6 +58,15 @@ public class Chest extends Objects.Object {
         //CHEST CANNOT BE DROPPED!
     }
 
+    public void addKeyToChest() {
+        double centerX = (worldX + width/2) - ((double) Tile.tileSize /2)*0.75;
+        double centerY = worldY + height/2;
+        if(chestSize == 0) {
+            itemsContained.set(0, new Key("Key", Tile.tileSize, Tile.tileSize, centerX, centerY, screenX, screenY, 0, Tile.tileRatio*0.25));
+        } else {
+            itemsContained.set(2, new Key("Key", Tile.tileSize, Tile.tileSize, centerX, centerY, screenX, screenY, -Tile.tileRatio*0.25, Tile.tileRatio*0.25));
+        }
+    }
 
     private void fillItemsContained() {
         double centerX = (worldX + width/2) - ((double) Tile.tileSize /2)*0.75;

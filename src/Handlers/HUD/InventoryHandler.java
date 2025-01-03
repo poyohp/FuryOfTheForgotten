@@ -57,9 +57,14 @@ public class InventoryHandler {
             }
             if(keyHandler.choicePress) {
                 if(inventory[indexSelected] != null) {
-                    inventory[indexSelected].isUsed(player);
-                    inventory[indexSelected] = null;
-                    keyHandler.toggleInventory = false;
+                    if(inventory[indexSelected].name.equalsIgnoreCase("Key")) {
+                        inventory[indexSelected].isUsed(player);
+                        keyHandler.toggleInventory = false;
+                    } else {
+                        inventory[indexSelected].isUsed(player);
+                        inventory[indexSelected] = null;
+                        keyHandler.toggleInventory = false;
+                    }
                 }
             }
         }

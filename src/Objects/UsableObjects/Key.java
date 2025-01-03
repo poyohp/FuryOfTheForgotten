@@ -1,9 +1,14 @@
 package Objects.UsableObjects;
 
 import Entities.Players.Player;
+import Handlers.CollisionHandler;
 import Handlers.ImageHandler;
+import World.Level;
+import World.Tile;
 
 public class Key extends UsableObject {
+
+    private final double distanceToUnlock = Tile.tileSize;
 
     public Key(String name, double width, double height, double worldX, double worldY, double screenX, double screenY, double vx, double vy) {
         super(name, width, height, worldX, worldY, screenX, screenY, vx, vy);
@@ -14,13 +19,15 @@ public class Key extends UsableObject {
 
     @Override
     public void getImageCoords() {
-        imageX = 16*4;
-        imageY = 16*4;
+        imageX = 16*5;
+        imageY = 16*5;
     }
 
     @Override
     public void isUsed(Player player) {
-        //TO BE CODED!
+        if(CollisionHandler.getDistance(player, player.currentLevel.getMap().door) <= distanceToUnlock && player.currentLevel.doorUnlockable) {
+            player.currentLevel.doorUnlocked = true;
+        }
     }
 
 }

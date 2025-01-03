@@ -30,7 +30,8 @@ public class ShopPanel extends AbstractPanel {
                 GamePanel currentGamePanel = Main.gamePanel;
                 Main.updateGameState(2);
                 currentGamePanel.resumeGame();
-                currentGamePanel.levelHandler.goToNextLevel(currentGamePanel.spawnHandler, currentGamePanel.player, currentGamePanel.attackHandler);
+                System.out.println("GOT HERE!");
+                currentGamePanel.levelHandler.goToNextLevel(currentGamePanel.spawnHandler, currentGamePanel.player, currentGamePanel.attackHandler, currentGamePanel.inventory);
                 currentGamePanel.levelHandler.levelComplete = false;
             } else {
                 Main.updateGameState(8); // continue on to shop

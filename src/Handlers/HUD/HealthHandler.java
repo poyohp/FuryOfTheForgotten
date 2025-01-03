@@ -28,7 +28,7 @@ public class HealthHandler {
     boolean lostHalfHeart;
 
     private double transitionTimer;
-    private final double transitionDrawSeconds = 1.0;
+    private final double transitionDrawSeconds = 0.5;
     private final double transitionDrawFrames = GamePanel.FPS * transitionDrawSeconds;
 
     public double maxHearts;

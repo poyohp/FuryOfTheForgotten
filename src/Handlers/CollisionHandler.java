@@ -68,6 +68,17 @@ public class CollisionHandler {
         return Math.abs(Math.sqrt(Math.pow(playerX - objectX, 2) + Math.pow(playerY - objectY, 2)));
 
     }
+    
+    public static double getDistance(Player player, Tile tile) {
+        double playerX = player.worldX + (double) player.getWidth() /2;
+        double playerY = player.worldY + (double) player.getHeight() /2;
+
+        double tileX = tile.getWorldXPos() + Tile.tileSize/2.0;
+        double tileY = tile.getWorldYPos() + Tile.tileSize/2.0;
+
+
+        return Math.abs(Math.sqrt(Math.pow(playerX - tileX, 2) + Math.pow(playerY - tileY, 2)));
+    }
 
     /**
      * Checks attack collision with tiles all directions
@@ -141,7 +152,7 @@ public class CollisionHandler {
             if ((bottomRow + 1 > tiles.length)) return true;
             if (isNotWalkableTileInRow(bottomRow + 1, leftCol, rightCol, tiles)) {
                 double tileTop = tiles[bottomRow + 1][leftCol].getWorldYPos();
-                if (player.entityBottom + player.getSpeed() > tileTop) return true;
+                if (player.entityBottom + 1 + player.getSpeed() > tileTop) return true;
 
             }
         } else if (player.direction == 'l') {
@@ -193,8 +204,6 @@ public class CollisionHandler {
         }
         return false;
     }
-
-    // THE FOLLOWING 2 METHODS USE RECTANGLES - WE WILL USE OUR "checkEntityWithAttackCollision" METHOD AFTER PROTOTYPE
 
     /**
      * Checks enemy collision with attack

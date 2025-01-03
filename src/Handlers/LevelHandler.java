@@ -5,6 +5,7 @@ import Entities.Enemies.EternalSnail;
 import Entities.Enemies.InstantKill;
 import Entities.Players.Player;
 import Handlers.Attacks.AttackHandler;
+import Handlers.HUD.InventoryHandler;
 import Handlers.Spawners.SpawnHandler;
 import Handlers.Spawners.SpawnPoint;
 import World.Level;
@@ -52,8 +53,14 @@ public class LevelHandler {
      * @param spawnHandler to update spawns in the new level
      * @param player the game player
      */
-    public void goToNextLevel(SpawnHandler spawnHandler, Player player, AttackHandler attackHandler) {
+    public void goToNextLevel(SpawnHandler spawnHandler, Player player, AttackHandler attackHandler, InventoryHandler inventoryHandler) {
         if(currentLevelIndex < numLevels - 1 ) {
+            //REMOVES KEY FROM INVENTORY!!
+            for(int i = 0; i < inventoryHandler.inventory.length; i++) {
+                if(inventoryHandler.inventory[i] != null && inventoryHandler.inventory[i].name.equalsIgnoreCase("Key")) {
+                    inventoryHandler.inventory[i] = null;
+                }
+            }
             currentLevelIndex++;
             currentLevel = levels[currentLevelIndex];
             attackHandler.levelChanged(currentLevel);
@@ -97,7 +104,7 @@ public class LevelHandler {
 
         // SPAWN HANDLING
         spawnHandler.update(player, currentLevel);
-        handleSpawns(spawnHandler, player, attackHandler); //THIS ALSO HANDLES ATTACK REMOVAL WHEN LEVEL CHANGED!
+        handleSpawns(spawnHandler, player);
 
     }
 
@@ -127,7 +134,7 @@ public class LevelHandler {
      * Checks to determine initial number of active spawns as well
      * @param spawnHandler to handle the spawns
      */
-    public void handleSpawns(SpawnHandler spawnHandler, Player player, AttackHandler attackHandler) {
+    public void handleSpawns(SpawnHandler spawnHandler, Player player) {
         if (spawnHandler.started) { // Timer has started
             boolean spawnPointsActive = false; // Checks if there are any active spawn points
             spawnHandler.numActiveSpawns = 0;
@@ -138,12 +145,14 @@ public class LevelHandler {
                 }
             }
 
-            // If there are no more active spawn points, player has defeated all enemies!
-//            if (!spawnPointsActive && currentLevel.enemies.isEmpty()) goToNextLevel(spawnHandler, player, attackHandler);
-            if (!spawnPointsActive && currentLevel.enemies.isEmpty() && !levelComplete) {
-                levelComplete = true;
-                Main.gamePanel.pauseGame();
-                Main.updateGameState(7);
+
+            if (!spawnPointsActive && currentLevel.enemies.isEmpty()) {
+                currentLevel.doorUnlockable = true;
+                if(!levelComplete && currentLevel.doorUnlocked) {
+                    levelComplete = true;
+                    Main.gamePanel.pauseGame();
+                    Main.updateGameState(7);
+                }
             }
         }
     }
