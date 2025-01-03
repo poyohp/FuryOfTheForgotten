@@ -90,7 +90,7 @@ public class SpawnHandler implements ActionListener {
                             attackPngName = "AdultRedDragon_attack_hitbox.png";
                             break;
                         case 2:
-                            idlePngName = "BlueWyrmling_idle.png.png";
+                            idlePngName = "BlueWyrmling_idle.png";
                             attackPngName = "BlueWyrmling_attack_hitbox.png";
                             break;
                         case 3:
