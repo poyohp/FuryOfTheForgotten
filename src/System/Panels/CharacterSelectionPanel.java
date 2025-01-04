@@ -17,6 +17,12 @@ public class CharacterSelectionPanel extends JPanel {
     // Loads menu image
     BufferedImage selection = ImageHandler.loadImage("Panel.Images/characterSelection.png");
 
+    // Loads character images
+    BufferedImage vampireImg = ImageHandler.loadImage("Entities/Players/Vampire/Vampire_idle.png");
+    BufferedImage goblinImg = ImageHandler.loadImage("Entities/Players/Goblin/Goblin_Rogue.png");
+    BufferedImage skeletonImg = ImageHandler.loadImage("Entities/Players/Skeleton/Sprites.png");
+    BufferedImage zombieImg = ImageHandler.loadImage("Entities/Players/Zombie/zombies.png");
+
     KeyHandler keyHandler;
 
     Timer timer;
@@ -98,6 +104,24 @@ public class CharacterSelectionPanel extends JPanel {
         // Draws the fullscreen menu image
         Graphics2D g2 = (Graphics2D) g;
         g2.drawImage(selection, 0, 0, screenWidth, screenHeight, null);
+
+        //Draws characters
+        g2.drawImage(zombieImg,
+                screenWidth/8-140, screenHeight/3 - 50, screenWidth/8+150, screenHeight/2 + 100,
+                0, 0, 128/4, 480/15, null);
+
+        g2.drawImage(skeletonImg,
+                screenWidth/8-140+ screenWidth/4, screenHeight/3 - 50, screenWidth/8+150+ screenWidth/4, screenHeight/2 + 100,
+                0, 0, 128/4, 480/15, null);
+
+        g2.drawImage(goblinImg,
+                screenWidth/8-140+ screenWidth/4*2, screenHeight/3 - 50, screenWidth/8+150+ screenWidth/4*2, screenHeight/2 + 100,
+                0, 0, 128/4, 864/27, null);
+
+        g2.drawImage(vampireImg,
+                screenWidth/8-110+ screenWidth/4*3, screenHeight/3 - 70, screenWidth/8+80+ screenWidth/4*3, screenHeight/2 + 30,
+                0, 0, 64/4, 96/4, null);
+
 
         // Draw arrow if selected
         for (CharacterButton button : buttons) {
