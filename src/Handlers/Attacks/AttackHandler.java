@@ -3,6 +3,7 @@ package Handlers.Attacks;
 
 import Attacks.Melee.Stab;
 import Attacks.Melee.Swing;
+import Attacks.Melee.Swipe;
 import Attacks.Ranged.Arrow;
 import Attacks.Attack;
 import Attacks.Melee.Melee;
@@ -25,7 +26,6 @@ public class AttackHandler {
     // Variables for handling attacks
     public ArrayList<Attack> playerAttacks = new ArrayList<Attack>();
     ArrayList<Attack> playerToRemove = new ArrayList<Attack>();
-
     public ArrayList<Attack> enemyAttacks = new ArrayList<Attack>();
     ArrayList<Attack> enemyToRemove = new ArrayList<Attack>();
     KeyHandler keyHandler;
@@ -65,6 +65,10 @@ public class AttackHandler {
         playerAttacks.add(new Stab(range, width, direction, entity, xOffset, yOffset, duration));
     }
 
+    void createMelee(double damage, int range, int width, char direction, Entity entity, int xOffset, int yOffset, int duration) {
+        playerAttacks.add(new Melee(damage, range, width, direction, entity, xOffset, yOffset, duration));
+    }
+
     /**
      * Create melee attack
      * @param range attack range
@@ -92,6 +96,10 @@ public class AttackHandler {
      */
     void createPlayerArrow(int range, int width, char direction, Entity entity, int xOffset, int yOffset, int duration, int speed, double angle) {
         playerAttacks.add(new Arrow(range, width, direction, entity, xOffset, yOffset, duration, speed, angle));
+    }
+
+    void createPlayerSwipe(int range, int width, char direction, Entity entity, int xOffset, int yOffset, int duration) {
+        playerAttacks.add(new Swipe(range, width, direction, entity, xOffset, yOffset, duration));
     }
 
 
@@ -132,7 +140,7 @@ public class AttackHandler {
         } else if (p.type == 'z') {
             createPlayerSwing(15 * Tile.tileRatio, 20 * Tile.tileRatio, p.direction, p, 0, 0, 36);
         } else if (p.type == 'v') {
-            playerAttacks.add(new Melee(1.0, (10 * Tile.tileRatio), 10 * Tile.tileRatio, p.direction, p, 0, 0, 15));
+            createPlayerSwipe(16 * Tile.tileRatio, 20 * Tile.tileRatio, p.direction, p, 0, 0, 15);
         }
     }
 
@@ -145,7 +153,6 @@ public class AttackHandler {
         if (player.toCreateAttack()) createPlayerAttacks(player);
         if (!playerAttacks.isEmpty()) updateAttacks(player);
         for (Enemy enemy: level.unkillableEnemies) enemyAttacks.add(new Melee(0.5, (10 * Tile.tileRatio), 10 * Tile.tileRatio, enemy.direction, enemy, 0, 0, 15));
-
 
         removeAttacks();
     }
