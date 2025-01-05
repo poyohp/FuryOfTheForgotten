@@ -138,6 +138,21 @@ public class EternalSnail extends Enemy{
             } else {
                 worldY = nextWorldY; // Snap to tile
             }
+        } else {
+            if (worldX > entityToFollow.worldX) {
+                direction = 'l'; // left
+                worldX -= getSpeed();
+            } else if (worldX < entityToFollow.worldX) {
+                direction = 'r'; // right
+                worldX += getSpeed();
+            }
+            if (worldY > entityToFollow.worldY) {
+                direction = 'u'; // up
+                worldY -= getSpeed();
+            } else if (worldY < entityToFollow.worldY) {
+                direction = 'd'; // down
+                worldY += getSpeed();
+            }
         }
     }
 

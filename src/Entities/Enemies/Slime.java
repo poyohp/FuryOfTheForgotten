@@ -19,7 +19,6 @@ public class Slime extends Enemy{
 
     // Variables for drawing
     private int updateFrames = 7;
-    final private int column1 = 0, column2 = 16, column3 = 32, column4 = 48, row1 = 0, row2 = 16, row3 = 32, row4 = 48, width = 16, height = 16;
     BufferedImage slimes;
     BufferedImage slimesHit;
     BufferedImage slimesDead;
@@ -111,6 +110,7 @@ public class Slime extends Enemy{
 
         // If a path is found, move towards the player
         if (pathFinder.findPath()) {
+            System.out.println("Found path");
             ArrayList<Node> path = pathFinder.shortestPath; // List of tiles to go to
 
             // Next tile to go to
@@ -121,30 +121,49 @@ public class Slime extends Enemy{
             double nextWorldX = nextCol * Tile.tileSize;
             double nextWorldY = nextRow * Tile.tileSize;
 
-            if (Math.abs(nextWorldX - worldX) > getSpeed()) { // Moving will not put the enemy into the middle of the wrong tile
-                if (worldX > nextWorldX) {
-                    direction = 'l'; // left
-                    worldX -= getSpeed();
-                }
-                else if (worldX < nextWorldX) {
-                    direction = 'r'; // right
-                    worldX += getSpeed();
-                }
-            } else {
-                worldX = nextWorldX; // Snap directly to next tile
-            }
 
-            if (Math.abs(nextWorldY - worldY) > getSpeed()) {
-                if (worldY > nextWorldY) {
-                    direction = 'u'; // up
-                    worldY -= getSpeed();
+                if (Math.abs(nextWorldX - worldX) > getSpeed()) { // Moving will not put the enemy into the middle of the wrong tile
+                    System.out.println("6");
+                    if (worldX > nextWorldX) {
+                        direction = 'l'; // left
+                        worldX -= getSpeed();
+                    } else if (worldX < nextWorldX) {
+                        direction = 'r'; // right
+                        worldX += getSpeed();
+                    }
+                } else {
+                    System.out.println("7");
+                    worldX = nextWorldX; // Snap directly to next tile
                 }
-                else if (worldY < nextWorldY) {
-                    direction = 'd'; // down
-                    worldY += getSpeed();
+
+                if (Math.abs(nextWorldY - worldY) > getSpeed()) {
+                    System.out.println("8");
+                    if (worldY > nextWorldY) {
+                        direction = 'u'; // up
+                        worldY -= getSpeed();
+                    } else if (worldY < nextWorldY) {
+                        direction = 'd'; // down
+                        worldY += getSpeed();
+                    }
+                } else {
+                    System.out.println("9");
+                    worldY = nextWorldY; // Snap to tile
                 }
-            } else {
-                worldY = nextWorldY; // Snap to tile
+
+        } else {
+            if (worldX > entityToFollow.worldX) {
+                direction = 'l'; // left
+                worldX -= getSpeed();
+            } else if (worldX < entityToFollow.worldX) {
+                direction = 'r'; // right
+                worldX += getSpeed();
+            }
+            if (worldY > entityToFollow.worldY) {
+                direction = 'u'; // up
+                worldY -= getSpeed();
+            } else if (worldY < entityToFollow.worldY) {
+                direction = 'd'; // down
+                worldY += getSpeed();
             }
         }
     }
@@ -165,6 +184,8 @@ public class Slime extends Enemy{
     @Override
     public void draw(Graphics2D g2) {
         drawHealth(g2);
+
+        int column1 = 0, column2 = 16, column3 = 32, column4 = 48, row1 = 0, row2 = 16, row3 = 32, row4 = 48, width = 16, height = 16;
 
         if (direction == 'd') {
             if(isHit) {

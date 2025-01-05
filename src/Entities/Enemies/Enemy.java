@@ -85,7 +85,6 @@ public abstract class Enemy extends Entity {
         screenY = worldY - entityToFollow.worldY + entityToFollow.screenY;
     }
 
-
     /**
      * Draws the enemy and its health bar
      * @param g2 Graphics2D object to draw on
