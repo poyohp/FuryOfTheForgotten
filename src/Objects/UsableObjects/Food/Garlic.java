@@ -20,7 +20,7 @@ public class Garlic extends UsableObject {
 
     @Override
     public void isUsed(Player player) {
-        player.healthHandler.isHit(1);
+        player.healthHandler.isHit(1, true);
         player.damageBoostUsed();
 
         if(player.getName().equalsIgnoreCase("Vampire")) {

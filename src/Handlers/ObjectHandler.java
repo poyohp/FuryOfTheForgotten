@@ -154,6 +154,11 @@ public class ObjectHandler {
         int index = GamePanel.random.nextInt(allGameItems.size());
         double vy = Tile.tileRatio*0.25;
         String name = allGameItems.get(index);
+
+        if(GamePanel.random.nextInt(2) == 0) {
+            name = "Cheese";
+        } else name = "ShieldPotion";
+
         //thank u intellij for return switch
         return switch (name) {
             case "DamagePotion" ->

@@ -29,6 +29,7 @@ public class HealthHandler {
     private double lostHeart;
     boolean lostFullHeart;
     boolean lostHalfHeart;
+    boolean shieldTransition;
 
     private double transitionTimer;
     private final double transitionDrawSeconds = 0.5;
@@ -103,7 +104,7 @@ public class HealthHandler {
     Timer poisonDamageTimer = new Timer(5000, new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            isHit(0.5);
+            isHit(0.5, true);
         }
     });
 
@@ -170,15 +171,21 @@ public class HealthHandler {
         }
     }
 
-    public void isHit(double damage) {
+    public void isHit(double damage, boolean onlyHearts) {
 
         if(enhancedHealth) {
             damage /= 2.0;
         }
 
+        if (hasShields) {
+            shieldTransition = true;
+        }
+        if(onlyHearts) {
+            shieldTransition = false;
+        }
 
         double previousHearts;
-        if(hasShields && shieldHearts > 0 && !poisonedHealth) {
+        if(!onlyHearts && hasShields && shieldHearts > 0) {
             previousHearts = shieldHearts;
             shieldHearts -= damage;
         } else {
@@ -203,7 +210,7 @@ public class HealthHandler {
         }
 
         //DETERMINE IF FULL-->HALF
-        if(hasShields && shieldHearts > 0 && !poisonedHealth) {
+        if(!onlyHearts && hasShields && shieldHearts > 0) {
             if (previousHearts % 1 == 0.5 && shieldHearts % 1 == 0) {
                 //HALF TO NONE
                 lostFullHeart = true;
@@ -308,7 +315,7 @@ public class HealthHandler {
                     g2.drawImage(heartSprite, x, y, x + heartFinalDrawSize, y + heartFinalDrawSize, 0, 0, spriteSize, spriteSize, null);
                 }
 
-                if (i == lostHeart && (!hasShields || poisonedHealth)) {
+                if (i == lostHeart && !shieldTransition) {
                     double transitionDrawHalfway = transitionDrawFrames / 2.0;
 
                     double scaleFactor = 1.5;
@@ -412,7 +419,7 @@ public class HealthHandler {
                     g2.drawImage(heartSprite, x, y, x + heartFinalDrawSize, y + heartFinalDrawSize, 0, 0, spriteSize, spriteSize, null);
                 }
 
-                if (i == lostHeart && !poisonedHealth) {
+                if (i == lostHeart && shieldTransition) {
                     double transitionDrawHalfway = transitionDrawFrames / 2.0;
 
                     double scaleFactor = 1.5;

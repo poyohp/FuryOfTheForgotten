@@ -73,7 +73,7 @@ public class Mushroom extends UsableObject {
                         player.healthHandler.activatedPoison();
                         break;
                     case 1:
-                        player.isHit(2);
+                        player.healthHandler.isHit(2, false);
                         break;
                     default:
                         break;

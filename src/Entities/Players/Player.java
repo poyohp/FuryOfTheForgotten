@@ -121,8 +121,8 @@ public abstract class Player extends Entity {
         damageBoostCounter = damageBoostTimerFrames;
     }
 
-    public void isHit(double damage) {
-        healthHandler.isHit(damage);
+    public void isHit(double damage, boolean onlyHearts) {
+        healthHandler.isHit(damage, onlyHearts);
         isHit = true;
         iFramesCounter = iFramesTimerFrames;
     }

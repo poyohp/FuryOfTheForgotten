@@ -25,7 +25,7 @@ public class DamageDealer {
         if (collisionHandler.enemyPlayerCollision(enemy, player) && !enemy.hitPlayer && !player.isHit) {
             // WHAT HAPPENS WHEN PLAYER IS HIT! (COMPLETED)
             enemy.hitPlayer();
-            player.isHit(enemy.damage);
+            player.isHit(enemy.damage, false);
         }
     }
 
@@ -35,7 +35,7 @@ public class DamageDealer {
         for (int i = 0; i < attackHandler.enemyAttacks.size(); i++) {
             Attack enemyAttack = attackHandler.enemyAttacks.get(i);
                 if (collisionHandler.playerWithAttackCollision(player, enemyAttack) && !player.isHit && enemyAttack.isActive) {
-                    player.isHit(enemyAttack.damage);
+                    player.isHit(enemyAttack.damage, false);
                     indicesToRemove.add(i);
                     break;
                 }
