@@ -55,12 +55,6 @@ public class LevelHandler {
      */
     public void goToNextLevel(SpawnHandler spawnHandler, Player player, AttackHandler attackHandler, InventoryHandler inventoryHandler) {
         if(currentLevelIndex < numLevels - 1 ) {
-            //REMOVES KEY FROM INVENTORY!!
-            for(int i = 0; i < inventoryHandler.inventory.length; i++) {
-                if(inventoryHandler.inventory[i] != null && inventoryHandler.inventory[i].name.equalsIgnoreCase("Key")) {
-                    inventoryHandler.inventory[i] = null;
-                }
-            }
 
             //CLEAR OUT UNKILLABLE ENEMIES
             this.currentLevel.unkillableEnemies.clear();

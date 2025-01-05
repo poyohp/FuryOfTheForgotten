@@ -43,7 +43,6 @@ public abstract class UsableObject extends Object {
         worldX = player.worldX;
         worldY = player.worldY;
 
-        System.out.println("Dropped: " + name);
         level.objects.add(this);
 
     }

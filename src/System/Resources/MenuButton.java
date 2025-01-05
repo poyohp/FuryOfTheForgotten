@@ -6,8 +6,8 @@ import java.awt.image.BufferedImage;
 import static Handlers.ImageHandler.loadImage;
 
 public class MenuButton {
-    int x, y;
-    int width, height;
+    public int x, y;
+    public int width, height;
     String buttonFilename;
     public boolean isSelected;
     BufferedImage image;

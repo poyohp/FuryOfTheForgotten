@@ -18,7 +18,7 @@ public class InventoryHandler {
     public Object[] inventory = new Object[inventoryCapacity];
 
     private final int inventoryDrawSize = Tile.normalTileSize;
-    private final int inventoryFinalDrawSize = Tile.tileMultipler*inventoryDrawSize;
+    public int inventoryFinalDrawSize = Tile.tileMultipler*inventoryDrawSize;
     private final int innerGap = inventoryFinalDrawSize/6;
     private final int outerGap = inventoryFinalDrawSize/4;
 
@@ -78,20 +78,66 @@ public class InventoryHandler {
         }
     }
 
-    public void draw(Graphics2D g2) {
+    public void draw(Graphics2D g2, int drawSize) {
         drawOutline(g2);
-        drawInventorySquares(g2, outlineX, outlineY);
+        drawInventorySquares(g2, outlineX, outlineY, drawSize);
         if(keyHandler.toggleInventory) {
-            drawSelectedOutlne(g2);
+            drawSelectedOutline(g2,drawSize);
         }
     }
 
-    private void drawSelectedOutlne(Graphics2D g2) {
-        int boxX = outlineX + innerGap + (indexSelected * (innerGap + inventoryFinalDrawSize));
+    public void drawWithContraints(int x, int y, int width, int height, Graphics2D g2) {
+        // Calculate the scale factor based on the width and height constraints
+        double scaleX = (double) width / outlineWidth;
+        double scaleY = (double) height / outlineHeight;
+        double scale = Math.min(scaleX, scaleY);
+
+        // Calculate new dimensions and gaps based on the scale
+        int scaledDrawSize = (int) (inventoryFinalDrawSize * scale);
+        int scaledInnerGap = (int) (innerGap * scale);
+        int scaledOuterGap = (int) (outerGap * scale);
+
+        // Calculate the new outline dimensions
+        int scaledOutlineWidth = (int) (outlineWidth * scale);
+        int scaledOutlineHeight = (int) (outlineHeight * scale);
+        int scaledOutlineX = x; // Use the provided x position
+        int scaledOutlineY = y; // Use the provided y position
+
+        // Draw the scaled outline
+        g2.setColor(Color.BLACK);
+        g2.setStroke(new BasicStroke((float) (5 * scale)));
+        g2.drawRoundRect(scaledOutlineX, scaledOutlineY, scaledOutlineWidth, scaledOutlineHeight, (int) (10 * scale), (int) (10 * scale));
+
+        // Draw the scaled inventory squares
+        int boxX = scaledOutlineX + scaledInnerGap;
+        int boxY = scaledOutlineY + scaledInnerGap;
+
+        g2.setColor(innerSquare);
+        for (int i = 0; i < inventoryCapacity; i++) {
+            if (inventory[i] == null) {
+                g2.fillRoundRect(boxX, boxY, scaledDrawSize, scaledDrawSize, (int) (10 * scale), (int) (10 * scale));
+            } else {
+                inventory[i].drawHUD(g2, boxX, boxY, scaledDrawSize);
+            }
+            boxX += scaledInnerGap + scaledDrawSize;
+        }
+
+        // Draw the selected outline if inventory is toggled
+        if (keyHandler.toggleInventory) {
+            int selectedBoxX = scaledOutlineX + scaledInnerGap + (indexSelected * (scaledInnerGap + scaledDrawSize));
+            int selectedBoxY = scaledOutlineY + scaledInnerGap;
+            g2.setColor(Color.RED);
+            g2.setStroke(new BasicStroke((float) (5 * scale)));
+            g2.drawRoundRect(selectedBoxX, selectedBoxY, scaledDrawSize, scaledDrawSize, (int) (10 * scale), (int) (10 * scale));
+        }
+    }
+
+    private void drawSelectedOutline(Graphics2D g2, int drawSize) {
+        int boxX = outlineX + innerGap + (indexSelected * (innerGap + drawSize));
         int boxY = outlineY + innerGap;
         g2.setColor(Color.RED);
         g2.setStroke(new BasicStroke(5));
-        g2.drawRoundRect(boxX, boxY, inventoryFinalDrawSize, inventoryFinalDrawSize, 10, 10);
+        g2.drawRoundRect(boxX, boxY, drawSize, drawSize, 10, 10);
     }
 
     private void drawOutline(Graphics2D g2) {
@@ -100,17 +146,17 @@ public class InventoryHandler {
         g2.drawRoundRect(outlineX, outlineY,  outlineWidth, outlineHeight, 10, 10);
     }
 
-    private void drawInventorySquares(Graphics2D g2, int outlineX, int outlineY) {
+    private void drawInventorySquares(Graphics2D g2, int outlineX, int outlineY, int drawSize) {
         int boxX = outlineX + innerGap;
         int boxY = outlineY+ innerGap;
         g2.setColor(innerSquare);
         for(int i = 0; i < inventoryCapacity; i++) {
             if(inventory[i] == null) {
-                g2.fillRoundRect(boxX, boxY, inventoryFinalDrawSize, inventoryFinalDrawSize, 10, 10);
+                g2.fillRoundRect(boxX, boxY, drawSize, drawSize, 10, 10);
             } else {
-                inventory[i].drawHUD(g2, boxX, boxY, inventoryFinalDrawSize);
+                inventory[i].drawHUD(g2, boxX, boxY, drawSize);
             }
-            boxX += innerGap + inventoryFinalDrawSize;
+            boxX += innerGap + drawSize;
         }
     }
 

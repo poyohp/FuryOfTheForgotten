@@ -83,16 +83,16 @@ public class Coin extends Object {
         // high (pink) - 3
         switch(rarity) {
             case 0:
-                value = GamePanel.random.nextInt(11);
+                value = GamePanel.random.nextInt(1, 6);
                 break;
             case 1:
-                value = GamePanel.random.nextInt(11, 21);
+                value = GamePanel.random.nextInt(6, 11);
                 break;
             case 2:
-                value = GamePanel.random.nextInt(21, 31);
+                value = GamePanel.random.nextInt(11, 16);
                 break;
             case 3:
-                value = GamePanel.random.nextInt(31, 41);
+                value = GamePanel.random.nextInt(16, 21);
                 break;
             default:
                 value = 0;

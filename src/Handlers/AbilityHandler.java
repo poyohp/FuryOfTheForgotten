@@ -93,7 +93,9 @@ public class AbilityHandler {
 
     public void cancelAbility() {
         if (player.type == 's') {
-            player.setSpeed(player.getSpeed() / 2);
+            if(player.isSpeedBoost) {
+                player.setSpeed(player.boostedSpeed);
+            } else player.setSpeed(player.origSpeed);
             player.maxAnimationState = 3;
             player.animationState = 1;
             player.updateFrames = 12;

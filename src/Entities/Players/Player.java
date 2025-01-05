@@ -92,7 +92,9 @@ public abstract class Player extends Entity {
     //SPEED BOOST OBJECT
     public void updateSpeedBoost() {
         if(isSpeedBoost) {
-            this.setSpeed(boostedSpeed);
+            if(!(getSpeed() > boostedSpeed)) {
+                this.setSpeed(boostedSpeed);
+            }
             if(speedBoostCounter > 0) {
                 speedBoostCounter--;
             } else {
@@ -222,10 +224,6 @@ public abstract class Player extends Entity {
      */
     public void update(Tile[][] baseLayerTiles, Level level) {
         this.currentLevel = level;
-
-        System.out.println("UNLOCKABLE: " + currentLevel.doorUnlockable);
-        System.out.println();
-        System.out.println("UNLOCKED: " + currentLevel.doorUnlocked);
 
         checkHit();
         updateSpeedBoost();

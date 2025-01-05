@@ -81,7 +81,7 @@ public class Main {
                 shopPanel.requestFocusInWindow();
                 break;
             case 8:
-                buyPanel = new BuyPanel();
+                buyPanel = new BuyPanel(gamePanel);
                 window.add(buyPanel);
                 buyPanel.requestFocusInWindow();
                 break;

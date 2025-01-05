@@ -25,7 +25,6 @@ public class Key extends UsableObject {
 
     @Override
     public void isUsed(Player player) {
-        System.out.println("DISTANCE:                  " + CollisionHandler.getDistance(player, player.currentLevel.getMap().door));
         if(CollisionHandler.getDistance(player, player.currentLevel.getMap().door) <= distanceToUnlock && player.currentLevel.doorUnlockable) {
             player.currentLevel.doorUnlocked = true;
         }

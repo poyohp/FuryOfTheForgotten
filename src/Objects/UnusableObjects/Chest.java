@@ -73,8 +73,8 @@ public class Chest extends Objects.Object {
         double centerY = worldY + height/2;
         itemsContained.add(new Coin(this.rarity, "Coin", Tile.tileSize, Tile.tileSize, centerX, centerY, screenX, screenY, 0, Tile.tileRatio*0.25));
         if(chestSize == 1) {
-            itemsContained.add(ObjectHandler.getRandomObject(Tile.tileSize, Tile.tileSize, centerX, centerY, screenX, screenY, Tile.tileRatio*0.25));
-            itemsContained.add(ObjectHandler.getRandomObject(Tile.tileSize, Tile.tileSize, centerX, centerY, screenX, screenY, -Tile.tileRatio*0.25));
+            itemsContained.add(ObjectHandler.getRandomObject(Tile.tileSize, Tile.tileSize, centerX, centerY, screenX, screenY, Tile.tileRatio*0.25, false));
+            itemsContained.add(ObjectHandler.getRandomObject(Tile.tileSize, Tile.tileSize, centerX, centerY, screenX, screenY, -Tile.tileRatio*0.25, false));
         }
     }
 

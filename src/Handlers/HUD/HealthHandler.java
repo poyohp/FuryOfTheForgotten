@@ -104,7 +104,9 @@ public class HealthHandler {
     Timer poisonDamageTimer = new Timer(5000, new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            isHit(0.5, true);
+            if(poisonedHealth) {
+                isHit(0.5, true);
+            }
         }
     });
 
@@ -180,12 +182,13 @@ public class HealthHandler {
         if (hasShields) {
             shieldTransition = true;
         }
+
         if(onlyHearts) {
             shieldTransition = false;
         }
 
         double previousHearts;
-        if(!onlyHearts && hasShields && shieldHearts > 0) {
+        if(shieldTransition && hasShields && shieldHearts > 0) {
             previousHearts = shieldHearts;
             shieldHearts -= damage;
         } else {
@@ -194,7 +197,6 @@ public class HealthHandler {
         }
 
         transitionTimer = transitionDrawFrames;
-        lostHeart = Math.ceil(previousHearts) - 1;
 
         //RESET LOST VALUE IF SHIELDS GO BYEBYE
         if (hasShields && shieldHearts <= 0) {
@@ -210,7 +212,7 @@ public class HealthHandler {
         }
 
         //DETERMINE IF FULL-->HALF
-        if(!onlyHearts && hasShields && shieldHearts > 0) {
+        if(hasShields && shieldHearts > 0) {
             if (previousHearts % 1 == 0.5 && shieldHearts % 1 == 0) {
                 //HALF TO NONE
                 lostFullHeart = true;
@@ -219,13 +221,16 @@ public class HealthHandler {
                 lostHalfHeart = true;
             }
         } else {
-            if ((previousHearts % 1 == 0.5 && currentHearts % 1 == 0) || (previousHearts % 1 == 0.5 && currentHearts % 1 == 0.25)) {
-                //HALF TO NONE OR QUARTER TO NONE
-                lostFullHeart = true;
-            } else if ((previousHearts % 1 == 0 && currentHearts % 1 == 0.5) || (previousHearts % 1 == 0 && currentHearts % 1 == 0.75)) {
-                //FULL TO HALF OR FULL TO 0.75
-                lostHalfHeart = true;
+            if(shieldTransition) {
+                if ((previousHearts % 1 == 0.5 && currentHearts % 1 == 0) || (previousHearts % 1 == 0.5 && currentHearts % 1 == 0.25)) {
+                    //HALF TO NONE OR QUARTER TO NONE
+                    lostFullHeart = true;
+                } else if ((previousHearts % 1 == 0 && currentHearts % 1 == 0.5) || (previousHearts % 1 == 0 && currentHearts % 1 == 0.75)) {
+                    //FULL TO HALF OR FULL TO 0.75
+                    lostHalfHeart = true;
+                }
             }
+
         }
     }
 

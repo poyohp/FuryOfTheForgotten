@@ -66,6 +66,7 @@ public class ObjectHandler {
 
         //FOOD
         allGameItems.add("Cheese");
+        allGameItems.add("Cherry");
         allGameItems.add("Garlic");
         allGameItems.add("Milk");
         allGameItems.add("Mushroom");
@@ -118,7 +119,6 @@ public class ObjectHandler {
                         canPickUp = false;
                         if (!timer.isRunning()) timer.start();
                         object.isPickedUp(player, level);
-                        System.out.println(object.name);
                         if(object.isEquippable) {
                             if(inventoryHandler.indexFree >= 0) {
                                 // PUT ITEM INTO FREE SLOT
@@ -150,14 +150,12 @@ public class ObjectHandler {
         player.collisionWithChest = collisionOccurs;
     }
 
-    public static Object getRandomObject(double width, double height, double worldX, double worldY, double screenX, double screenY, double vx) {
+    public static Object getRandomObject(double width, double height, double worldX, double worldY, double screenX, double screenY, double vx, boolean forShop) {
         int index = GamePanel.random.nextInt(allGameItems.size());
-        double vy = Tile.tileRatio*0.25;
+        double vy;
+        if(forShop) vy = 0;
+        else vy = Tile.tileRatio*0.25;
         String name = allGameItems.get(index);
-
-        if(GamePanel.random.nextInt(2) == 0) {
-            name = "Cheese";
-        } else name = "ShieldPotion";
 
         //thank u intellij for return switch
         return switch (name) {
@@ -169,12 +167,10 @@ public class ObjectHandler {
                     new SpeedPotion(name, width, height, worldX, worldY, screenX, screenY, vx, vy);
             case "ShieldPotion" ->
                     new ShieldPotion(name, width, height, worldX, worldY, screenX, screenY, vx, vy);
-
             case "Bandage" ->
                     new Bandage(name, width, height, worldX, worldY, screenX, screenY, vx, vy);
             case "Pills" ->
                     new Pills(name, width, height, worldX, worldY, screenX, screenY, vx, vy);
-
             case "Cheese" ->
                     new Cheese(name, width, height, worldX, worldY, screenX, screenY, vx, vy);
             case "Garlic" ->
@@ -187,7 +183,19 @@ public class ObjectHandler {
                     new Onion(name, width, height, worldX, worldY, screenX, screenY, vx, vy);
             case "Strawberry" ->
                     new Strawberry(name, width, height, worldX, worldY, screenX, screenY, vx, vy);
-
+            case "Cherry" -> {
+                if(forShop) yield new Cherry(name, width, height, worldX, worldY, screenX, screenY, vx, vy);
+                else {
+                    int num = GamePanel.random.nextInt(3);
+                    if(num == 0) {
+                        yield new Garlic(name, width, height, worldX, worldY, screenX, screenY, vx, vy);
+                    } else if (num == 1) {
+                        yield new ShieldPotion(name, width, height, worldX, worldY, screenX, screenY, vx, vy);
+                    } else {
+                        yield new Onion(name, width, height, worldX, worldY, screenX, screenY, vx, vy);
+                    }
+                }
+            }
             default -> new Coin(0, "Coin", Tile.tileSize, Tile.tileSize, worldX, worldY, screenX, screenY, vx, vy);
         };
     }

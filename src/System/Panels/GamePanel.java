@@ -113,6 +113,12 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     public void pauseGame() {
+        //REMOVES KEY FROM INVENTORY!!
+        for(int i = 0; i < inventory.inventory.length; i++) {
+            if(inventory.inventory[i] != null && inventory.inventory[i].name.equalsIgnoreCase("Key")) {
+                inventory.inventory[i] = null;
+            }
+        }
         gameThread.interrupt();
     }
 
@@ -192,7 +198,7 @@ public class GamePanel extends JPanel implements Runnable{
         g2.drawString("Active Spawns Remaining: " + spawnHandler.numActiveSpawns, (int)(screenWidth - 300), (int)(100));
 
         //HUD DRAWING
-        inventory.draw(g2);
+        inventory.draw(g2, inventory.inventoryFinalDrawSize);
         player.healthHandler.drawHealth(g2);
         g2.setFont(coinFont);
         objectHandler.draw(g2, player);
