@@ -19,7 +19,7 @@ public class Slime extends Enemy{
 
     // Variables for drawing
     private int updateFrames = 7;
-    private int column1 = 0, column2 = 16, column3 = 32, column4 = 48, row1 = 0, row2 = 16, row3 = 32, row4 = 48, width = 16, height = 16;
+    final private int column1 = 0, column2 = 16, column3 = 32, column4 = 48, row1 = 0, row2 = 16, row3 = 32, row4 = 48, width = 16, height = 16;
     BufferedImage slimes;
     BufferedImage slimesHit;
     BufferedImage slimesDead;
@@ -120,6 +120,12 @@ public class Slime extends Enemy{
             // Next x and y position to go to (calculated with tile size)
             double nextWorldX = nextCol * Tile.tileSize;
             double nextWorldY = nextRow * Tile.tileSize;
+
+            // Checks if the next row & col is the player's row & col
+            if (goalCol == nextCol && goalRow == nextRow) {
+                nextWorldX = entityToFollow.worldX + entityToFollow.getWidth()/2.0;
+                nextWorldY = entityToFollow.worldY + entityToFollow.getHeight()/2.0;
+            }
 
             if (Math.abs(nextWorldX - worldX) > getSpeed()) { // Moving will not put the enemy into the middle of the wrong tile
                 if (worldX > nextWorldX) {
