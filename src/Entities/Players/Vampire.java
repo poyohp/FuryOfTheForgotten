@@ -2,11 +2,12 @@ package Entities.Players;
 
 import Handlers.ImageHandler;
 import Handlers.KeyHandler;
-import World.Level;
 import World.Tile;
+import World.Level;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.nio.Buffer;
 
 public class Vampire extends Player{
 
@@ -14,16 +15,17 @@ public class Vampire extends Player{
     BufferedImage movingSprites = ImageHandler.loadImage("Assets/Entities/Players/Vampire/Vampire_walk.png");
     BufferedImage idleSprites = ImageHandler.loadImage("Assets/Entities/Players/Vampire/Vampire_idle.png");
     BufferedImage attackSprites = ImageHandler.loadImage("Assets/Entities/Players/Vampire/Vampire_attack_hitbox.png");
-    final int spriteW1 = 64/4, spriteH1 = 96/4; // Sizes for the vampire sprites
-    final int spriteW2 = 192/4, spriteH2 = 224/4;
-    final int maxCol = 4;
+    BufferedImage attacks = ImageHandler.loadImage("Assets/Entities/Players/Vampire/Vampire_attack.png");
+    int spriteW1 = 64/4, spriteH1 = 96/4; // Sizes for the vampire sprites
+    int spriteW2 = 192/4, spriteH2 = 224/4;
+    int maxCol = 4;
     int currentRow = 0, currentCol = 0;
 
 
     void setCharacterState(){
         type = 'v';
         characterAttackFrames = 36;
-        characterAttackCooldown = 30;
+        characterAttackCooldown = 48;
         attackFrames = characterAttackFrames;
         attackCooldown = characterAttackCooldown;
         maxAnimationState = 3;
@@ -52,31 +54,27 @@ public class Vampire extends Player{
 
     @Override
     public void draw(Graphics2D g2) {
-        int xNeeded = (int)this.screenX;
-        int yNeeded = (int)this.screenY;
+
         if (direction == 'd') {
             currentRow = 0;
-            yNeeded = (int)(this.screenY + this.getHeight());
         } else if (direction == 'l') {
             currentRow = 1;
-            xNeeded = (int)(this.screenX - this.getWidth());
         } else if (direction == 'r') {
             currentRow = 2;
-            xNeeded = (int)(this.screenX + this.getWidth());
         } else {
             currentRow = 3;
-            yNeeded = (int)(this.screenY - this.getHeight());
         }
 
         currentCol = animationState;
         if (currentCol > maxCol) currentCol = 0;
-        if (checkMoving()) {
+
+        if (checkMoving() && !attacking) {
             g2.drawImage(movingSprites,
                     (int) this.screenX, (int) this.screenY - Tile.tileRatio * 8, (int) (this.screenX + this.getWidth()), (int) (this.screenY) + this.getHeight(),
                     currentCol * spriteW1, currentRow * spriteH1, (currentCol + 1) * spriteW1, (currentRow + 1) * spriteH1,
                     null);
 
-        } else {
+        } else if (!checkMoving() && !attacking) {
             g2.drawImage(idleSprites,
                     (int) this.screenX, (int) this.screenY - Tile.tileRatio * 8, (int) (this.screenX + this.getWidth()), (int) (this.screenY) + this.getHeight(),
                     currentCol * spriteW1, currentRow * spriteH1, (currentCol + 1) * spriteW1, (currentRow + 1) * spriteH1,
@@ -84,10 +82,73 @@ public class Vampire extends Player{
         }
 
         if (attacking) {
-            g2.drawImage(attackSprites,
-                    xNeeded, yNeeded, xNeeded + Tile.tileSize, yNeeded + Tile.tileSize,
-                    currentCol * spriteW2, currentRow * spriteH2, (currentCol + 1) * spriteW2, (currentRow + 1) * spriteH2,
-                    null);
+            if (direction == 'd') {
+                switch (animationState) {
+                    case 0:
+                        g2.drawImage(attacks, (int) screenX, (int) screenY - Tile.tileRatio, (int) screenX + getWidth(), (int) screenY + getHeight(), 16, 14, 32, 32, transparent, null);
+                        break;
+                    case 1:
+                        g2.drawImage(attacks, (int) screenX, (int) screenY, (int) screenX + getWidth() + Tile.tileRatio, (int) screenY + getHeight() + 16 * Tile.tileRatio, 64, 16, 81, 48, transparent, null);
+                        break;
+                    case 2:
+                        g2.drawImage(attacks, (int) screenX - 4 * Tile.tileRatio, (int) screenY, (int) screenX + getWidth() + 4 * Tile.tileRatio, (int) screenY + getHeight() + 16 * Tile.tileRatio, 108, 16, 132, 48, transparent, null);
+                        break;
+                    case 3:
+                        g2.drawImage(attacks, (int) screenX - 6 * Tile.tileRatio, (int) screenY, (int) screenX + getWidth() + 6 * Tile.tileRatio, (int) screenY + getHeight() + 16 * Tile.tileRatio, 154, 16, 182, 48, transparent, null);
+                        break;
+                    /*
+                    case 4:
+                        g2.drawImage(attacks, (int) screenX - 6*Tile.tileRatio, (int) screenY, (int) screenX + getWidth() + 6*Tile.tileRatio, (int) screenY + getHeight() + 16 * Tile.tileRatio, 202, 16, 230, 48, transparent, null);
+                        break;
+
+                     */
+                }
+            } else if (direction == 'l') {
+                switch (animationState) {
+                    case 0:
+                        g2.drawImage(attacks, (int) screenX, (int) screenY - 2*Tile.tileRatio, (int) screenX + getWidth(), (int) screenY + getHeight(), 18, 70, 34, 88, transparent, null);
+                        break;
+                    case 1:
+                        g2.drawImage(attacks, (int) screenX - 17*Tile.tileRatio, (int) screenY - Tile.tileRatio, (int) screenX + getWidth() - 3 * Tile.tileRatio, (int) screenY + getHeight() + Tile.tileRatio, 48, 71, 77, 89, transparent, null);
+                        break;
+                    case 2:
+                        g2.drawImage(attacks, (int) screenX - 17*Tile.tileRatio, (int) screenY - Tile.tileRatio, (int) screenX + getWidth() - 3 * Tile.tileRatio, (int) screenY + getHeight() + 4 * Tile.tileRatio, 96, 71, 125, 92, transparent, null);
+                        break;
+                    case 3:
+                        g2.drawImage(attacks, (int) screenX - 14*Tile.tileRatio, (int) screenY - Tile.tileRatio, (int) screenX + getWidth() - 3 * Tile.tileRatio, (int) screenY + getHeight() + 4 * Tile.tileRatio, 147, 71, 173, 92, transparent, null);
+                        break;
+                }
+            } else if (direction == 'r') {
+                switch (animationState) {
+                    case 0:
+                        g2.drawImage(attacks, (int) screenX, (int) screenY - 2*Tile.tileRatio, (int) screenX + getWidth(), (int) screenY + getHeight(), 34, 70, 18, 88, transparent, null);
+                        break;
+                    case 1:
+                        g2.drawImage(attacks, (int) screenX + 3*Tile.tileRatio, (int) screenY - Tile.tileRatio, (int) screenX + getWidth() + 17 * Tile.tileRatio, (int) screenY + getHeight() + Tile.tileRatio, 77, 71, 48, 89, transparent, null);
+                        break;
+                    case 2:
+                        g2.drawImage(attacks, (int) screenX + 3*Tile.tileRatio, (int) screenY - Tile.tileRatio, (int) screenX + getWidth() + 17 * Tile.tileRatio, (int) screenY + getHeight() + 4 * Tile.tileRatio, 125, 71, 96, 92, transparent, null);
+                        break;
+                    case 3:
+                        g2.drawImage(attacks, (int) screenX + 3*Tile.tileRatio, (int) screenY - Tile.tileRatio, (int) screenX + getWidth() + 14 * Tile.tileRatio, (int) screenY + getHeight() + 4 * Tile.tileRatio, 173, 71, 147, 92, transparent, null);
+                        break;
+                }
+            } else {
+                switch (animationState) {
+                    case 0:
+                        g2.drawImage(attacks, (int) screenX, (int) screenY - Tile.tileRatio, (int) screenX + getWidth(), (int) screenY + getHeight(), 16, 182, 32, 200, transparent, null);
+                        break;
+                    case 1:
+                        g2.drawImage(attacks, (int) screenX, (int) screenY - 16 * Tile.tileRatio, (int) screenX + getWidth() + Tile.tileRatio, (int) screenY + getHeight(), 64, 168, 81, 199, transparent, null);
+                        break;
+                    case 2:
+                        g2.drawImage(attacks, (int) screenX - 4 * Tile.tileRatio, (int) screenY - 16 * Tile.tileRatio, (int) screenX + getWidth() + 4 * Tile.tileRatio, (int) screenY + getHeight(), 108, 168, 132, 199, transparent, null);
+                        break;
+                    case 3:
+                        g2.drawImage(attacks, (int) screenX - 6 * Tile.tileRatio, (int) screenY - 16 * Tile.tileRatio, (int) screenX + getWidth() + 6 * Tile.tileRatio, (int) screenY + getHeight(), 154, 168, 182, 199, transparent, null);
+                        break;
+                }
+            }
         }
     }
 
@@ -99,6 +160,7 @@ public class Vampire extends Player{
         if (keyHandler.attackPress && canAttack) {
             attacking = true;
             animationState = 0;
+            //maxAnimationState = 4;
             canAttack = false;
             attack = true;
         }
@@ -107,6 +169,7 @@ public class Vampire extends Player{
         if (attacking) {
             if (attackFrames == 0) {
                 attackFrames = characterAttackFrames;
+                //maxAnimationState = 3;
                 attacking = false;
             } else {
                 attackFrames--;

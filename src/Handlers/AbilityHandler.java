@@ -72,21 +72,21 @@ public class AbilityHandler {
             }
         } else if (player.type == 'v') {
             if (player.direction == 'r') {
-                attackHandler.createPlayerBloodOrb(8 * Tile.tileRatio, 3 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, 0, level.enemies);
-                attackHandler.createPlayerBloodOrb(8 * Tile.tileRatio, 3 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, 15 * Math.PI / 8, level.enemies);
-                attackHandler.createPlayerBloodOrb(8 * Tile.tileRatio, 3 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, Math.PI / 8, level.enemies);
+                attackHandler.createPlayerBloodOrb(7 * Tile.tileRatio, 4 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, 0, level.enemies);
+                attackHandler.createPlayerBloodOrb(7 * Tile.tileRatio, 4 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, 15 * Math.PI / 8, level.enemies);
+                attackHandler.createPlayerBloodOrb(7 * Tile.tileRatio, 4 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, Math.PI / 8, level.enemies);
             } else if (player.direction == 'u') {
-                attackHandler.createPlayerBloodOrb(8 * Tile.tileRatio, 3 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, Math.PI / 2, level.enemies);
-                attackHandler.createPlayerBloodOrb(8 * Tile.tileRatio, 3 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, 3 * Math.PI / 8, level.enemies);
-                attackHandler.createPlayerBloodOrb(8 * Tile.tileRatio, 3 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, 5 * Math.PI / 8, level.enemies);
+                attackHandler.createPlayerBloodOrb(7 * Tile.tileRatio, 4 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, Math.PI / 2, level.enemies);
+                attackHandler.createPlayerBloodOrb(7 * Tile.tileRatio, 4 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, 3 * Math.PI / 8, level.enemies);
+                attackHandler.createPlayerBloodOrb(7 * Tile.tileRatio, 4 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, 5 * Math.PI / 8, level.enemies);
             } else if (player.direction == 'l') {
-                attackHandler.createPlayerBloodOrb(8 * Tile.tileRatio, 3 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, Math.PI, level.enemies);
-                attackHandler.createPlayerBloodOrb(8 * Tile.tileRatio, 3 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, 7 * Math.PI / 8, level.enemies);
-                attackHandler.createPlayerBloodOrb(8 * Tile.tileRatio, 3 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, 9 * Math.PI / 8, level.enemies);
+                attackHandler.createPlayerBloodOrb(7 * Tile.tileRatio, 4 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, Math.PI, level.enemies);
+                attackHandler.createPlayerBloodOrb(7 * Tile.tileRatio, 4 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, 7 * Math.PI / 8, level.enemies);
+                attackHandler.createPlayerBloodOrb(7 * Tile.tileRatio, 4 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, 9 * Math.PI / 8, level.enemies);
             } else {
-                attackHandler.createPlayerBloodOrb(8 * Tile.tileRatio, 3 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, 3 * Math.PI / 2, level.enemies);
-                attackHandler.createPlayerBloodOrb(8 * Tile.tileRatio, 3 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, 11 * Math.PI / 8, level.enemies);
-                attackHandler.createPlayerBloodOrb(8 * Tile.tileRatio, 3 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, 13 * Math.PI / 8, level.enemies);
+                attackHandler.createPlayerBloodOrb(7 * Tile.tileRatio, 4 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, 3 * Math.PI / 2, level.enemies);
+                attackHandler.createPlayerBloodOrb(7 * Tile.tileRatio, 4 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, 11 * Math.PI / 8, level.enemies);
+                attackHandler.createPlayerBloodOrb(7 * Tile.tileRatio, 4 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, 13 * Math.PI / 8, level.enemies);
             }
         }
     }

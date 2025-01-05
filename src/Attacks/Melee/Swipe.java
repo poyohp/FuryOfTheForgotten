@@ -22,4 +22,9 @@ public class Swipe extends Melee {
     public Swipe(int range, int width, char direction, Entity entity, int xOffset, int yOffset, int duration) {
         super(2.0, range, width, direction, entity, xOffset, yOffset, duration);
     }
+
+    @Override
+    public void draw(Graphics2D g2) {
+
+    }
 }
