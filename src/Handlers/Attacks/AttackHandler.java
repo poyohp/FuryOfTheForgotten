@@ -152,7 +152,11 @@ public class AttackHandler {
 
         if (player.toCreateAttack()) createPlayerAttacks(player);
         if (!playerAttacks.isEmpty()) updateAttacks(player);
-        for (Enemy enemy: level.unkillableEnemies) enemyAttacks.add(new Melee(0.5, (10 * Tile.tileRatio), 10 * Tile.tileRatio, enemy.direction, enemy, 0, 0, 15));
+        for (Enemy enemy: level.unkillableEnemies)  {
+            if (enemy.attacking) {
+                enemyAttacks.add(new Melee(1, (10 * Tile.tileRatio), 10 * Tile.tileRatio, enemy.direction, enemy, 0, 0, 3));
+            }
+        }
 
         removeAttacks();
     }

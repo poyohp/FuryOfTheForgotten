@@ -14,7 +14,7 @@ public class Garlic extends UsableObject {
 
     @Override
     public void getImageCoords() {
-        imageX = 16*3;
+        imageX = 16*2;
         imageY = 16*2;
     }
 

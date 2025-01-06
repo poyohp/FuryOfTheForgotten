@@ -75,7 +75,7 @@ public class SpawnHandler implements ActionListener {
                 }
 
                 // For adding Dragon enemies
-                if (value == -3) {
+                if (value == -3 || value == -4 || value == -5 || value == -6) {
                     String idlePngName = "";
                     String attackPngName = "";
 
@@ -93,7 +93,7 @@ public class SpawnHandler implements ActionListener {
                             break;
                         case 4:
                             idlePngName = "FaerieDragon_idle.png";
-                            attackPngName = "FaerieDragon_attack_hitbox.png";
+                            attackPngName = "AdultRedDragon_attack_hitbox.png";
                             break;
                         default:
                             idlePngName = "AdultRedDragon_idle.png";
@@ -101,8 +101,11 @@ public class SpawnHandler implements ActionListener {
                             break;
 
                     }
-
-                    level.unkillableEnemies.add(new Dragon(100, 0.0, Tile.tileSize, Tile.tileSize, "Dragon", (int) level.getMap().spawnLayerTiles[i][j].getWorldXPos(), (int) level.getMap().spawnLayerTiles[i][j].getWorldYPos(), 0, 0, 0, 0, player, false, idlePngName, attackPngName, 'd'));
+                    char direct = 'd';
+                    if (value == -4) direct = 'r'; // right
+                    else if (value == -5) direct = 'u'; // up
+                    else if (value == -6) direct = 'l'; // left
+                    level.unkillableEnemies.add(new Dragon(100, 0.0, Tile.tileSize, Tile.tileSize, "Dragon", (int) level.getMap().spawnLayerTiles[i][j].getWorldXPos(), (int) level.getMap().spawnLayerTiles[i][j].getWorldYPos(), 0, 0, 0, 0, player, false, idlePngName, attackPngName, direct));
                 }
             }
         }
