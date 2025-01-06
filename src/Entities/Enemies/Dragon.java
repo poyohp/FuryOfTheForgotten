@@ -2,12 +2,16 @@ package Entities.Enemies;
 
 import Entities.Players.Player;
 import Handlers.ImageHandler;
+import System.Panels.GamePanel;
 import World.Tile;
 
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
-public class Dragon extends Enemy{
+public class Dragon extends Enemy {
 
     // Variables for drawing
     private int updateFrames = 7;
@@ -19,6 +23,11 @@ public class Dragon extends Enemy{
     final int maxCol1 = 4;
     final int maxCol2 = 5;
     int currentRow = 0, currentCol1 = 0, currentCol2 = 0;
+
+    // For attacking and timing
+    int counter;
+    int numSeconds = 2;
+    int numFrames = (int)GamePanel.FPS * numSeconds;
 
     /**
      * Enemy that follows player
@@ -47,12 +56,21 @@ public class Dragon extends Enemy{
         idleSprites = ImageHandler.loadImage("Assets/Entities/Enemies/Dragons/" + idlePngName);
         attackSprites = ImageHandler.loadImage("Assets/Entities/Enemies/Dragons/" + attackPngName);
         this.direction = direction;
+
+        attacking = false;
+        counter = numFrames;
     }
 
     public void update() {
         updateEntityPosition();
         setScreenPosition();
         hitbox.update(this);
+
+        if (counter < 0) {
+            attacking = !attacking;
+            counter = numFrames;
+        }
+        counter--;
     }
 
 
@@ -112,7 +130,7 @@ public class Dragon extends Enemy{
                 null);
         updateFrames();
 
-        g2.drawImage(attackSprites,
+        if (attacking) g2.drawImage(attackSprites,
                 xNeeded, yNeeded, xNeeded + this.getWidth(), yNeeded + this.getHeight(),
                 currentCol2 * spriteW2, currentRow * spriteH2, (currentCol2 + 1) * spriteW2, (currentRow + 1) * spriteH2,
                 null);
