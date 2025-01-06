@@ -19,6 +19,7 @@ import java.util.ArrayList;
 public class BuyPanel extends AbstractPanel {
 
     GamePanel gamePanel;
+    InventoryHandler inventory;
 
     final double SW = GamePanel.screenWidth;
     final double SH = GamePanel.screenHeight;
@@ -64,6 +65,7 @@ public class BuyPanel extends AbstractPanel {
         super("shop2.png");
 
         this.gamePanel = gamePanel;
+        this.inventory = gamePanel.inventory;
 
         setButtons();
         addButtonsToArrayList();
