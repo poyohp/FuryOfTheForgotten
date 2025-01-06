@@ -135,8 +135,8 @@ public class ObjectHandler {
         }
 
         if(replaceObject) {
-            inventoryHandler.inventory[0].isDropped(player, level);
-            inventoryHandler.inventory[0] = objectToReplace;
+            inventoryHandler.inventory[inventoryHandler.indexSelected].isDropped(player, level);
+            inventoryHandler.inventory[inventoryHandler.indexSelected] = objectToReplace;
         }
 
     }

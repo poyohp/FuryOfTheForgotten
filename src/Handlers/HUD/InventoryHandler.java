@@ -30,7 +30,7 @@ public class InventoryHandler {
 
     private final Color innerSquare = new Color(190,190,190, 220);
 
-    private int indexSelected;
+    public int indexSelected;
     public int indexFree;
 
     public InventoryHandler(KeyHandler keyHandler, Player player) {
@@ -91,6 +91,8 @@ public class InventoryHandler {
         double scaleX = (double) width / outlineWidth;
         double scaleY = (double) height / outlineHeight;
         double scale = Math.min(scaleX, scaleY);
+
+        System.out.println("WHATAWE");
 
         // Calculate new dimensions and gaps based on the scale
         int scaledDrawSize = (int) (inventoryFinalDrawSize * scale);

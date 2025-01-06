@@ -25,6 +25,7 @@ public class ShopPanel extends AbstractPanel {
     public void handleChoice() {
         if (keyHandler.choicePress) {
             timer.stop();
+            Main.gamePanel.keyHandler.toggleInventory = false; //also sets inventory to not be toggled
             if (selectedButton == continueButton) {
                 // Return to game, go to next level
                 GamePanel currentGamePanel = Main.gamePanel;
@@ -32,7 +33,6 @@ public class ShopPanel extends AbstractPanel {
                 currentGamePanel.resumeGame();
                 currentGamePanel.levelHandler.goToNextLevel(currentGamePanel.spawnHandler, currentGamePanel.player, currentGamePanel.attackHandler, currentGamePanel.inventory);
                 currentGamePanel.levelHandler.levelComplete = false;
-                Main.gamePanel.keyHandler.toggleInventory = false;
             } else {
                 Main.updateGameState(8); // continue on to shop
             }

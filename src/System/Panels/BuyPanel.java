@@ -1,5 +1,6 @@
 package System.Panels;
 
+import Handlers.HUD.InventoryHandler;
 import Handlers.ImageHandler;
 import Handlers.KeyHandler;
 import Handlers.ObjectHandler;
@@ -16,6 +17,8 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class BuyPanel extends AbstractPanel {
+
+    GamePanel gamePanel;
 
     final double SW = GamePanel.screenWidth;
     final double SH = GamePanel.screenHeight;
@@ -42,9 +45,12 @@ public class BuyPanel extends AbstractPanel {
     MenuButton item4;
     MenuButton item5;
     MenuButton item6;
-
     MenuButton selectedButton;
-    GamePanel gamePanel;
+
+    int currentButtonX;
+    int currentButtonY;
+    int[][] buttonIndexes = {{0, 1, 2},
+                            {3, 4, 5}};
 
     ArrayList<Object> shopItems = new ArrayList<>();
 
@@ -64,8 +70,8 @@ public class BuyPanel extends AbstractPanel {
 
         addObjectsToList();
 
-        // select a button to start with
-        item1.isSelected = true; // Begins with one button pre-selected
+        item1.isSelected = true;
+        currentButtonX = currentButtonY = 0;
         selectedButton = item1;
     }
 
@@ -127,16 +133,18 @@ public class BuyPanel extends AbstractPanel {
 
     @Override
     public void setSelected() {
-        // Get index of selected button
-        int oldIndex = buttons.indexOf(selectedButton);
-
-        int newIndex = 0;
         if (keyHandler.upPress) {
-            newIndex = oldIndex - 1; // Get the button above the old button
-            if (newIndex < 0) newIndex = buttons.size() - 1; // Makes sure that array access does not go out of bounds
+            currentButtonY --;
+            if (currentButtonY < 0) currentButtonY = buttonIndexes.length-1;
         } else if (keyHandler.downPress) {
-            newIndex = oldIndex + 1;
-            if (newIndex > buttons.size() - 1) newIndex = 0;
+            currentButtonY ++;
+            if (currentButtonY > buttonIndexes.length-1) currentButtonY = 0;
+        } else if(keyHandler.leftPress) {
+            currentButtonX --;
+            if (currentButtonX < 0) currentButtonX = buttonIndexes[0].length-1;
+        } else if(keyHandler.rightPress) {
+            currentButtonX ++;
+            if (currentButtonX > buttonIndexes[0].length-1) currentButtonX = 0;
         }
 
         // Reset all selected values
@@ -145,8 +153,8 @@ public class BuyPanel extends AbstractPanel {
         }
 
         // Select the new button
-        selectedButton = buttons.get(newIndex);
-        buttons.get(newIndex).isSelected = true;
+        selectedButton = buttons.get(buttonIndexes[currentButtonY][currentButtonX]);
+       selectedButton.isSelected = true;
     }
 
     @Override
@@ -158,14 +166,14 @@ public class BuyPanel extends AbstractPanel {
 
         // If key is ready to be processed, process it
         // ALSO - PLAYER CANNOT BE IN THEIR INVENTORY AT THE SAME TIME AS BUTTONS
-        if (!gamePanel.keyHandler.toggleInventory && !keyProcessed && (keyHandler.upPress || keyHandler.downPress)) {
+        if (!keyHandler.toggleInventory && !keyProcessed && (keyHandler.upPress || keyHandler.downPress || keyHandler.leftPress || keyHandler.rightPress)) {
             setSelected();
             keyProcessed = true;
             cooldownCounter = cooldownTime;
         }
 
         // Means that key was released, and new key press can be processed
-        if (!keyHandler.upPress && !keyHandler.downPress) {
+        if (!keyHandler.upPress && !keyHandler.downPress && !keyHandler.leftPress && !keyHandler.rightPress) {
             keyProcessed = false;
         }
     }

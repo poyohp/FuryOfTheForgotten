@@ -1,5 +1,6 @@
 package Handlers;
 
+import System.Main;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -22,6 +23,11 @@ public class KeyHandler implements KeyListener {
                 toggleInventory = !toggleInventory;
                 inventoryHandled = true;
             }
+        }
+
+        if(e.getKeyCode() == KeyEvent.VK_V) {
+            Main.gamePanel.pauseGame();
+            Main.updateGameState(8);
         }
 
         if(e.getKeyCode() == KeyEvent.VK_J && !choiceTriggered) {

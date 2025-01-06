@@ -30,6 +30,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     //Create objects for GAME RUNNING
     Thread gameThread;
+    boolean isPaused;
 
     //Pathfinding object
     APathfinding pathfinding;
@@ -58,6 +59,8 @@ public class GamePanel extends JPanel implements Runnable{
      * Constructor for the GamePanel - initializes all objects and starts the game
      */
     public GamePanel() {
+        isPaused = false;
+
         this.setDoubleBuffered(true);
         this.setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
         setFocusable(true);
@@ -119,6 +122,7 @@ public class GamePanel extends JPanel implements Runnable{
                 inventory.inventory[i] = null;
             }
         }
+        isPaused = true;
         gameThread.interrupt();
     }
 
@@ -126,6 +130,7 @@ public class GamePanel extends JPanel implements Runnable{
         gameThread = new Thread(this);
         gameThread.start();
         this.requestFocusInWindow();
+        isPaused = false;
     }
 
 
@@ -157,20 +162,23 @@ public class GamePanel extends JPanel implements Runnable{
      * Updates all the objects in the game
      */
     void update() {
-        player.update(levelHandler.getCurrentLevel().getMap().baseLayerTiles, levelHandler.getCurrentLevel());
-        objectHandler.update(collisionHandler, player, inventory, levelHandler.getCurrentLevel());
-        levelHandler.update(player, spawnHandler, damageDealer, collisionHandler, attackHandler, ghost, snail);
-        attackHandler.update(player, levelHandler.getCurrentLevel().getMap().baseLayerTiles);
-        abilityHandler.update();
-        damageDealer.dealDamageToEnemies(attackHandler, levelHandler.getCurrentLevel(), player);
-        damageDealer.dealMeleeDamageToPlayer(attackHandler, levelHandler.getCurrentLevel(), player);
+        if(!isPaused) {
+            player.update(levelHandler.getCurrentLevel().getMap().baseLayerTiles, levelHandler.getCurrentLevel());
+            objectHandler.update(collisionHandler, player, inventory, levelHandler.getCurrentLevel());
+            levelHandler.update(player, spawnHandler, damageDealer, collisionHandler, attackHandler, ghost, snail);
+            attackHandler.update(player, levelHandler.getCurrentLevel().getMap().baseLayerTiles);
+            abilityHandler.update();
+            damageDealer.dealDamageToEnemies(attackHandler, levelHandler.getCurrentLevel(), player);
+            damageDealer.dealMeleeDamageToPlayer(attackHandler, levelHandler.getCurrentLevel(), player);
 
-
+            ghost.update();
+            snail.update(levelHandler.getCurrentLevel().getMap().baseLayerTiles);
+        } else {
+            player.healthHandler.poisonedHealth = false;
+        }
 
         inventory.update();
 
-        ghost.update();
-        snail.update(levelHandler.getCurrentLevel().getMap().baseLayerTiles);
     }
 
 

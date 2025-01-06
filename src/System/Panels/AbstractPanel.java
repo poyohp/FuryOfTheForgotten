@@ -20,10 +20,11 @@ public abstract class AbstractPanel extends JPanel {
     KeyHandler keyHandler;
 
     Timer timer;
-    final int TIMERSPEED = 10;
+    final int TIMERSPEED = (int) (1000/GamePanel.FPS);
 
     int cooldownCounter = 0;
-    int cooldownTime = 200;
+    private final double cooldownSeconds = 0.5;
+    int cooldownTime = (int) (GamePanel.FPS*cooldownSeconds) ;
     boolean keyProcessed = false;
 
     // Get screen width and height
