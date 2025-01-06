@@ -158,13 +158,25 @@ public class AttackHandler {
             }
         }
 
-        removeAttacks();
+        removeAttacks(player);
     }
 
     /**
      * Remove player attacks after duration ends and after collisions
      */
-    private void removeAttacks() {
+    private void removeAttacks(Player player) {
+        if (!player.attacking && !playerAttacks.isEmpty()) {
+            playerAttacks.clear();
+        }
+
+        if(player.type == 'z' && playerAttacks.size() > 1) {
+            for (int i = 0; i < playerAttacks.size(); i++) {
+                if (i != 0) {
+                    playerAttacks.remove(i);
+                }
+            }
+        }
+
         if (!playerAttacks.isEmpty()) {
             for (int i = 0; i < playerAttacks.size(); i++) {
                 if (collisionHandler.attackWithTileCollision(playerAttacks.get(i), tileset)) {

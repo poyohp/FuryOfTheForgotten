@@ -42,7 +42,7 @@ public class AbilityHandler {
             abilityIcon = ImageHandler.loadImage("Assets/Entities/Players/Goblin/ability_icon.png");
         } else if (player.type == 'z') {
             maxCooldown = 600;
-            abilityLength = 47;
+            abilityLength = 46;
             abilityIcon = ImageHandler.loadImage("Assets/Entities/Players/Zombie/ability_icon.png");
         } else if (player.type == 'v') {
             maxCooldown = 300;

@@ -73,7 +73,9 @@ public class Swing extends Melee {
                     g2.drawImage(swing, (int) getScreenX(), (int) getScreenY(), (int) (getScreenX() + getWidth()), (int) (getScreenY() + getRange()), 11 + 55 + 55 + 49, 17, 32 + 55 + 55 + 49, 45, null);
                 }
                 break;
+
         }
+        hitbox.draw(g2);
 
     }
 

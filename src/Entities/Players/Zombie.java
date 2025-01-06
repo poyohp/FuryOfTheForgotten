@@ -2,6 +2,7 @@ package Entities.Players;
 
 import Handlers.ImageHandler;
 import Handlers.KeyHandler;
+import World.Level;
 import World.Tile;
 
 import java.awt.*;
@@ -279,5 +280,6 @@ public class Zombie extends Player{
         }
         //hitbox.draw(g2);
     }
+
 
 }
