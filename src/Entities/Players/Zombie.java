@@ -277,7 +277,7 @@ public class Zombie extends Player{
                     break;
             }
         }
-        hitbox.draw(g2);
+        //hitbox.draw(g2);
     }
 
 }

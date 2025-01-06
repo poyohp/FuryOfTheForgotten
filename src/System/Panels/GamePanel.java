@@ -10,7 +10,6 @@ import Entities.Enemies.InstantKill;
 import Handlers.Attacks.DamageDealer;
 import Handlers.Attacks.AttackHandler;
 import Handlers.Spawners.SpawnHandler;
-import Handlers.Spawners.SpawnPoint;
 import Pathfinding.APathfinding;
 import World.Map;
 import World.Tile;
@@ -196,7 +195,7 @@ public class GamePanel extends JPanel implements Runnable{
         levelHandler.draw(g2, player);
         player.draw(g2);
         levelHandler.getCurrentLevel().drawItems(g2);
-        abilityHandler.drawDecoy(g2);
+
         attackHandler.draw(g2, player);
         ghost.draw(g2);
         snail.draw(g2);
@@ -210,5 +209,6 @@ public class GamePanel extends JPanel implements Runnable{
         player.healthHandler.drawHealth(g2);
         g2.setFont(coinFont);
         objectHandler.draw(g2, player);
+        abilityHandler.draw(g2);
     }
 }

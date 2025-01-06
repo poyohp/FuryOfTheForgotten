@@ -9,6 +9,7 @@ import World.Level;
 import World.Tile;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class AbilityHandler {
@@ -19,9 +20,10 @@ public class AbilityHandler {
     CollisionHandler collisionHandler;
     HealthHandler healthHandler;
     AttackHandler attackHandler;
-    int cooldown, abilityLength;
+    int cooldown, abilityLength, maxCooldown;
     boolean canAbility = true;
     ArrayList<Decoy> decoys = new ArrayList<Decoy>();
+    BufferedImage abilityIcon;
 
     public AbilityHandler (Player player, KeyHandler keyHandler, CollisionHandler collisionHandler, Level level, HealthHandler healthHandler, AttackHandler attackHandler) {
         this.player = player;
@@ -31,18 +33,23 @@ public class AbilityHandler {
         this.attackHandler = attackHandler;
         this.level = level;
         if (player.type == 's') {
-            cooldown = 120;
+            maxCooldown = 120;
             abilityLength = 35;
+            abilityIcon = ImageHandler.loadImage("Assets/Entities/Players/Skeleton/ability_icon.png");
         } else if (player.type == 'g') {
-            cooldown = 600;
+            maxCooldown = 600;
             abilityLength = 300;
+            abilityIcon = ImageHandler.loadImage("Assets/Entities/Players/Goblin/ability_icon.png");
         } else if (player.type == 'z') {
-            cooldown = 600;
+            maxCooldown = 600;
             abilityLength = 47;
+            abilityIcon = ImageHandler.loadImage("Assets/Entities/Players/Zombie/ability_icon.png");
         } else if (player.type == 'v') {
-            cooldown = 300;
+            maxCooldown = 300;
             abilityLength = 1;
+            abilityIcon = ImageHandler.loadImage("Assets/Entities/Players/Vampire/ability_icon.png");
         }
+        cooldown = maxCooldown;
     }
 
     public boolean checkAbility() {
@@ -168,10 +175,25 @@ public class AbilityHandler {
 
     }
 
-    public void drawDecoy(Graphics2D g2) {
+    public void draw(Graphics2D g2) {
+        g2.setColor(new Color(0,0,0,0));
+
         if (!decoys.isEmpty()) {
             decoys.getFirst().draw(g2);
         }
+
+        g2.setColor(Color.WHITE);
+
+        g2.fillRect((int)player.screenX + Tile.tileRatio * 113, Tile.tileRatio * 100, Tile.tileSize, Tile.tileSize);
+
+        if (cooldown != maxCooldown) {
+            double cooldownRatio = (double) cooldown / (double) maxCooldown;
+            g2.setColor(Color.GRAY);
+            g2.fillRect((int)player.screenX + Tile.tileRatio * 113, Tile.tileRatio * 100 + (Tile.tileSize - ((int) (cooldownRatio * (Tile.tileSize)))), Tile.tileSize, (int) (cooldownRatio * Tile.tileSize));
+        }
+
+        g2.drawImage(abilityIcon, (int)player.screenX + Tile.tileRatio * 115, Tile.tileRatio * 102, Tile.tileSize - Tile.tileRatio * 4, Tile.tileSize - Tile.tileRatio * 4, new Color(0,0,0,0), null);
+
     }
 
 }
