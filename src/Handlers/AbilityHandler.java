@@ -12,6 +12,9 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import static System.Panels.HelpPanel.screenHeight;
+import static System.Panels.HelpPanel.screenWidth;
+
 public class AbilityHandler {
 
     Player player;
@@ -24,6 +27,7 @@ public class AbilityHandler {
     boolean canAbility = true;
     ArrayList<Decoy> decoys = new ArrayList<Decoy>();
     BufferedImage abilityIcon;
+    int abilityIconSize = Tile.tileMultipler * Tile.normalTileSize;
 
     public AbilityHandler (Player player, KeyHandler keyHandler, CollisionHandler collisionHandler, Level level, HealthHandler healthHandler, AttackHandler attackHandler) {
         this.player = player;
@@ -184,15 +188,15 @@ public class AbilityHandler {
 
         g2.setColor(Color.WHITE);
 
-        g2.fillRect((int)player.screenX + Tile.tileRatio * 113, Tile.tileRatio * 100, Tile.tileSize, Tile.tileSize);
+        g2.fillRect((int) (screenWidth - abilityIconSize * 1.4), (int) (screenHeight - abilityIconSize * 2.7), abilityIconSize, abilityIconSize);
 
         if (cooldown != maxCooldown) {
             double cooldownRatio = (double) cooldown / (double) maxCooldown;
             g2.setColor(Color.GRAY);
-            g2.fillRect((int)player.screenX + Tile.tileRatio * 113, Tile.tileRatio * 100 + (Tile.tileSize - ((int) (cooldownRatio * (Tile.tileSize)))), Tile.tileSize, (int) (cooldownRatio * Tile.tileSize));
+            g2.fillRect((int) (screenWidth - abilityIconSize * 1.4),  (int) (screenHeight - abilityIconSize * 2.7) + (abilityIconSize - ((int) (cooldownRatio * (abilityIconSize)))), abilityIconSize, (int) (cooldownRatio * abilityIconSize));
         }
 
-        g2.drawImage(abilityIcon, (int)player.screenX + Tile.tileRatio * 115, Tile.tileRatio * 102, Tile.tileSize - Tile.tileRatio * 4, Tile.tileSize - Tile.tileRatio * 4, new Color(0,0,0,0), null);
+        g2.drawImage(abilityIcon, (int) (screenWidth - abilityIconSize * 1.3), (int) (screenHeight - abilityIconSize * 2.6), (int)(abilityIconSize * 0.8), (int)(abilityIconSize * 0.8), new Color(0,0,0,0), null);
 
     }
 
