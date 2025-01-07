@@ -163,13 +163,13 @@ public class Vampire extends Player{
 
     public void updateBloodBar() {
 
-        if (bloodBarState == 0) {
+        if (bloodBarState != 4) {
             bloodTimer--;
         }
 
         if (bloodTimer == 0) {
-            bloodBarState = 4;
-            bloodTimer = 120;
+            bloodBarState++;
+            bloodTimer = 240;
         }
 
     }
