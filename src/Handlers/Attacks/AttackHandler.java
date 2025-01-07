@@ -165,17 +165,23 @@ public class AttackHandler {
      * Remove player attacks after duration ends and after collisions
      */
     private void removeAttacks(Player player) {
+        /*
         if (!player.attacking && !playerAttacks.isEmpty()) {
             playerAttacks.clear();
         }
+        */
 
-        if(player.type == 'z' && playerAttacks.size() > 1) {
+
+
+        if((player.type != 's' && player.type != 'v')&& playerAttacks.size() > 1) {
             for (int i = 0; i < playerAttacks.size(); i++) {
                 if (i != 0) {
                     playerAttacks.remove(i);
                 }
             }
         }
+
+
 
         if (!playerAttacks.isEmpty()) {
             for (int i = 0; i < playerAttacks.size(); i++) {
