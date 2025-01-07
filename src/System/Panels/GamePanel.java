@@ -99,9 +99,9 @@ public class GamePanel extends JPanel implements Runnable{
 
     void initiatePlayerType() {
         if (CharacterSelectionPanel.selectedCharacter.equals("zombie")) player = new Zombie(8, 4, Tile.tileSize, Tile.tileSize, "Zombie", 0, 0, 4*Tile.tileSize/Tile.normalTileSize, 6*Tile.tileSize/Tile.normalTileSize-1, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
-        else if (CharacterSelectionPanel.selectedCharacter.equals("skeleton")) player = new Skeleton(8, 4, Tile.tileSize, Tile.tileSize, "Skeleton", 0, 0, 4*Tile.tileSize/Tile.normalTileSize, 6*Tile.tileSize/Tile.normalTileSize-1, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
+        else if (CharacterSelectionPanel.selectedCharacter.equals("skeleton")) player = new Skeleton(8, 5, Tile.tileSize, Tile.tileSize, "Skeleton", 0, 0, 4*Tile.tileSize/Tile.normalTileSize, 6*Tile.tileSize/Tile.normalTileSize-1, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
         else if (CharacterSelectionPanel.selectedCharacter.equals("goblin")) player = new Goblin(8, 4, Tile.tileSize, Tile.tileSize, "Goblin", 0, 0, 4*Tile.tileSize/Tile.normalTileSize, 6*Tile.tileSize/Tile.normalTileSize-1, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
-        else if (CharacterSelectionPanel.selectedCharacter.equals("vampire")) player = new Vampire(8, 20, Tile.tileSize, Tile.tileSize, "Vampire", 0, 0, 4*Tile.tileSize/Tile.normalTileSize, 6*Tile.tileSize/Tile.normalTileSize-1, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
+        else if (CharacterSelectionPanel.selectedCharacter.equals("vampire")) player = new Vampire(8, 4, Tile.tileSize, Tile.tileSize, "Vampire", 0, 0, 4*Tile.tileSize/Tile.normalTileSize, 6*Tile.tileSize/Tile.normalTileSize-1, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
         else System.out.println("Invalid character");
     }
 
@@ -193,7 +193,7 @@ public class GamePanel extends JPanel implements Runnable{
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         levelHandler.draw(g2, player);
-        player.draw(g2);
+        //player.draw(g2);
         levelHandler.getCurrentLevel().drawItems(g2);
 
         attackHandler.draw(g2, player);
@@ -203,6 +203,8 @@ public class GamePanel extends JPanel implements Runnable{
         spawnHandler.drawSpawns(g2, player);
         g2.setFont(spawnsRemaining);
         g2.drawString("Active Spawns Remaining: " + spawnHandler.numActiveSpawns, (int)(screenWidth - 300), (int)(100));
+
+        player.draw(g2);
 
         //HUD DRAWING
         inventory.draw(g2, inventory.inventoryFinalDrawSize);

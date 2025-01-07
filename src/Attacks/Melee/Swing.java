@@ -75,7 +75,6 @@ public class Swing extends Melee {
                 break;
 
         }
-        hitbox.draw(g2);
 
     }
 

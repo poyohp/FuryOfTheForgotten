@@ -98,8 +98,8 @@ public class AttackHandler {
         playerAttacks.add(new Arrow(range, width, direction, entity, xOffset, yOffset, duration, speed, angle));
     }
 
-    void createPlayerSwipe(int range, int width, char direction, Entity entity, int xOffset, int yOffset, int duration) {
-        playerAttacks.add(new Swipe(range, width, direction, entity, xOffset, yOffset, duration));
+    void createPlayerSwipe(int damage, int range, int width, char direction, Entity entity, int xOffset, int yOffset, int duration) {
+        playerAttacks.add(new Swipe(damage, range, width, direction, entity, xOffset, yOffset, duration));
     }
 
 
@@ -140,7 +140,7 @@ public class AttackHandler {
         } else if (p.type == 'z') {
             createPlayerSwing(15 * Tile.tileRatio, 20 * Tile.tileRatio, p.direction, p, 0, 0, 36);
         } else if (p.type == 'v') {
-            createPlayerSwipe(16 * Tile.tileRatio, 20 * Tile.tileRatio, p.direction, p, 0, 0, 15);
+            createPlayerSwipe(1 + 4 - p.bloodBarState, 16 * Tile.tileRatio, 20 * Tile.tileRatio, p.direction, p, 0, 0, 15);
         }
     }
 

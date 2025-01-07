@@ -9,6 +9,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.nio.Buffer;
 
+import static System.Panels.GamePanel.screenHeight;
+
 public class Vampire extends Player{
 
     boolean attack;
@@ -19,7 +21,7 @@ public class Vampire extends Player{
     int spriteW1 = 64/4, spriteH1 = 96/4; // Sizes for the vampire sprites
     int spriteW2 = 192/4, spriteH2 = 224/4;
     int maxCol = 4;
-    int currentRow = 0, currentCol = 0;
+    int currentRow = 0, currentCol = 0;;
 
 
     void setCharacterState(){
@@ -29,6 +31,8 @@ public class Vampire extends Player{
         attackFrames = characterAttackFrames;
         attackCooldown = characterAttackCooldown;
         maxAnimationState = 3;
+        bloodBarState = 4;
+        bloodTimer = 120;
     }
 
     /**
@@ -150,6 +154,24 @@ public class Vampire extends Player{
                 }
             }
         }
+
+        g2.setColor(Color.BLACK);
+        g2.fillRect(Tile.tileRatio * 9, (int)(screenHeight - 2*Tile.tileSize), Tile.tileSize*6, Tile.tileSize/2);
+        g2.setColor(new Color(220, 20, 60));
+        g2.fillRect(Tile.tileRatio * 9, (int)(screenHeight - 2*Tile.tileSize), (int)((Tile.tileSize*6) * bloodBarState/4), Tile.tileSize/2);
+    }
+
+    public void updateBloodBar() {
+
+        if (bloodBarState == 0) {
+            bloodTimer--;
+        }
+
+        if (bloodTimer == 0) {
+            bloodBarState = 4;
+            bloodTimer = 120;
+        }
+
     }
 
 
@@ -189,6 +211,7 @@ public class Vampire extends Player{
     @Override
     public void update(Tile[][] baseLayerTiles, Level level) {
         this.currentLevel = level;
+        updateBloodBar();
         checkHit();
         updateSpeedBoost();
         updateDamageBoost();

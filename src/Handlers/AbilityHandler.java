@@ -3,6 +3,7 @@ package Handlers;
 import Entities.Enemies.Enemy;
 import Entities.Players.Decoy;
 import Entities.Players.Player;
+import Entities.Players.Vampire;
 import Handlers.Attacks.AttackHandler;
 import Handlers.HUD.HealthHandler;
 import World.Level;
@@ -49,7 +50,7 @@ public class AbilityHandler {
             abilityLength = 46;
             abilityIcon = ImageHandler.loadImage("Assets/Entities/Players/Zombie/ability_icon.png");
         } else if (player.type == 'v') {
-            maxCooldown = 300;
+            maxCooldown = 20;
             abilityLength = 1;
             abilityIcon = ImageHandler.loadImage("Assets/Entities/Players/Vampire/ability_icon.png");
         }
@@ -124,7 +125,14 @@ public class AbilityHandler {
 
     public void update() {
         if (checkAbility()) {
-            ability();
+            if (player.type != 'v') {
+                ability();
+            } else {
+                if (player.bloodBarState != 0) {
+                    ability();
+                    player.bloodBarState--;
+                }
+            }
         }
 
         if (player.inAbility) {
@@ -164,13 +172,7 @@ public class AbilityHandler {
 
         if (!canAbility) {
             if (cooldown == 0) {
-                if (player.type == 's') {
-                    cooldown = 120;
-                } else if (player.type == 'g' || player.type == 'z') {
-                    cooldown = 600;
-                } else if (player.type == 'v') {
-                    cooldown = 300;
-                }
+                cooldown = maxCooldown;
                 canAbility = true;
             } else {
                 cooldown--;

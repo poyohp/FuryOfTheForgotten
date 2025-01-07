@@ -18,6 +18,7 @@ public abstract class Player extends Entity {
     Boolean canAttack = true;
     public char type;
     public boolean inAbility = false;
+    public int bloodBarState, bloodTimer;
 
     public boolean collisionWithChest;
     public int coinValue;

@@ -19,8 +19,8 @@ public class Swipe extends Melee {
      * @param yOffset   attack y offset
      * @param duration  attack duration
      */
-    public Swipe(int range, int width, char direction, Entity entity, int xOffset, int yOffset, int duration) {
-        super(2.0, range, width, direction, entity, xOffset, yOffset, duration);
+    public Swipe(int damage, int range, int width, char direction, Entity entity, int xOffset, int yOffset, int duration) {
+        super(damage, range, width, direction, entity, xOffset, yOffset, duration);
     }
 
     @Override

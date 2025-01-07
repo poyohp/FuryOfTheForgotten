@@ -25,6 +25,9 @@ public class DamageDealer {
         if (collisionHandler.enemyPlayerCollision(enemy, player) && !enemy.hitPlayer && !player.isHit) {
             // WHAT HAPPENS WHEN PLAYER IS HIT! (COMPLETED)
             enemy.hitPlayer();
+            if (player.type == 'z') {
+                enemy.isHit(0.5);
+            }
             player.isHit(enemy.damage, false);
         }
     }
@@ -63,6 +66,8 @@ public class DamageDealer {
                 if (collisionHandler.enemyWithAttackCollision(enemy, playerAttack) && !enemy.isHit && playerAttack.isActive) {
                     if(player.isDamageBoost) {
                         enemy.isHit(playerAttack.damage+player.boostedDamage);
+                    } else if (player.type == 'g' && player.direction == enemy.direction) {
+                        enemy.isHit(playerAttack.damage*4);
                     } else enemy.isHit(playerAttack.damage);
                     indicesToRemove.add(i);
                     break;
