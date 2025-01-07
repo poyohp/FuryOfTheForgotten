@@ -200,8 +200,8 @@ public class LevelHandler {
     private void addLevels() {
         levels[0] = new Level("Assets/Maps/Level1Map.json", "Assets/Tilesets/universalTileset.png", nonWalkableValues1(), 16, 0);
         levels[1] = new Level("Maps/Level2Map.json", "Assets/Tilesets/dungeonTileset.png", nonWalkableValues2(), 16, 1);
-        levels[2] = new Level("Maps/Level3Map.json", "Assets/Tilesets/facilityTileset.png", nonWalkableValues3(), 16, 2);
-        levels[0] = new Level("Maps/Level4Map.json", "Assets/Tilesets/catacombTileset.png", nonWalkableValues4(), 16, 3);
+        levels[0] = new Level("Maps/Level3Map.json", "Assets/Tilesets/facilityTileset.png", nonWalkableValues3(), 16, 2);
+        levels[3] = new Level("Maps/Level4Map.json", "Assets/Tilesets/catacombTileset.png", nonWalkableValues4(), 16, 3);
         levels[4] = new Level("Maps/Level5Map.json", "Assets/Tilesets/cuteTileset.png", nonWalkableValues5(), 16, 4);
     }
 
@@ -236,7 +236,7 @@ public class LevelHandler {
      */
     private ArrayList<Integer> nonWalkableValues3() {
         ArrayList<Integer> nonWalkableValues = new ArrayList<>();
-        int[] values = {126, 27};
+        int[] values = {114};
 
         for (int value: values) {
             nonWalkableValues.add(value);

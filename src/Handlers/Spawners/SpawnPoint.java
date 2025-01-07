@@ -67,7 +67,7 @@ public class SpawnPoint {
 
         setNumEnemies();
 
-        if (level != 3 && level != 4) this.image = ImageHandler.loadImage("Assets/Objects/ores&ingots&gems.png");
+        if (level != 2 && level != 3 && level != 4) this.image = ImageHandler.loadImage("Assets/Objects/ores&ingots&gems.png");
 
     }
 
