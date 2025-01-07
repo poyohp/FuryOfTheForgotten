@@ -249,7 +249,7 @@ public class LevelHandler {
      */
     private ArrayList<Integer> nonWalkableValues4() {
         ArrayList<Integer> nonWalkableValues = new ArrayList<>();
-        int[] values = {454, 518};
+        int[] values = {454, 518, 56};
 
         for (int value: values) {
             nonWalkableValues.add(value);
