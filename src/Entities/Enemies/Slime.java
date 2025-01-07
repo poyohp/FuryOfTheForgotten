@@ -23,6 +23,7 @@ public class Slime extends Enemy{
     BufferedImage slimesHit;
     BufferedImage slimesDead;
 
+
     /**
      * Enemy that follows player
      *
@@ -71,6 +72,8 @@ public class Slime extends Enemy{
             }
         }
 
+
+
         // If enemy is going to follow player
         if (onPath && !hitPlayer) {
             int goalRow = (int) (entityToFollow.entityTop/ Tile.tileSize); //top row of the player
@@ -110,8 +113,9 @@ public class Slime extends Enemy{
 
         // If a path is found, move towards the player
         if (pathFinder.findPath()) {
-            System.out.println("Found path");
             ArrayList<Node> path = pathFinder.shortestPath; // List of tiles to go to
+
+            if (path.size() > 10) return; // Follows when player is in range
 
             // Next tile to go to
             double nextCol = path.get(0).col;
@@ -121,9 +125,7 @@ public class Slime extends Enemy{
             double nextWorldX = nextCol * Tile.tileSize;
             double nextWorldY = nextRow * Tile.tileSize;
 
-
                 if (Math.abs(nextWorldX - worldX) > getSpeed()) { // Moving will not put the enemy into the middle of the wrong tile
-                    System.out.println("6");
                     if (worldX > nextWorldX) {
                         direction = 'l'; // left
                         worldX -= getSpeed();
@@ -132,12 +134,10 @@ public class Slime extends Enemy{
                         worldX += getSpeed();
                     }
                 } else {
-                    System.out.println("7");
                     worldX = nextWorldX; // Snap directly to next tile
                 }
 
                 if (Math.abs(nextWorldY - worldY) > getSpeed()) {
-                    System.out.println("8");
                     if (worldY > nextWorldY) {
                         direction = 'u'; // up
                         worldY -= getSpeed();
@@ -146,7 +146,6 @@ public class Slime extends Enemy{
                         worldY += getSpeed();
                     }
                 } else {
-                    System.out.println("9");
                     worldY = nextWorldY; // Snap to tile
                 }
 
