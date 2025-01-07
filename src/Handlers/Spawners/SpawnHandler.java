@@ -82,14 +82,14 @@ public class SpawnHandler implements ActionListener {
                     // Assigning dragons for specific levels
                     switch (level.levelNum) {
                         case 0:
+                        case 1:
                             idlePngName = "AdultRedDragon_idle.png";
                             attackPngName = "AdultRedDragon_attack_hitbox.png";
-                        case 1:
                             break;
                         case 2:
+                        case 3:
                             idlePngName = "YoungGreenDragon_idle.png";
                             attackPngName = "YoungGreenDragon_attack_hitbox.png";
-                        case 3:
                             break;
                         case 4:
                             idlePngName = "FaerieDragon_idle.png";
