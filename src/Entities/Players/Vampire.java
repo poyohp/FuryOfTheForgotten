@@ -16,10 +16,8 @@ public class Vampire extends Player{
     boolean attack;
     BufferedImage movingSprites = ImageHandler.loadImage("Assets/Entities/Players/Vampire/Vampire_walk.png");
     BufferedImage idleSprites = ImageHandler.loadImage("Assets/Entities/Players/Vampire/Vampire_idle.png");
-    BufferedImage attackSprites = ImageHandler.loadImage("Assets/Entities/Players/Vampire/Vampire_attack_hitbox.png");
     BufferedImage attacks = ImageHandler.loadImage("Assets/Entities/Players/Vampire/Vampire_attack.png");
     int spriteW1 = 64/4, spriteH1 = 96/4; // Sizes for the vampire sprites
-    int spriteW2 = 192/4, spriteH2 = 224/4;
     int maxCol = 4;
     int currentRow = 0, currentCol = 0;;
 
