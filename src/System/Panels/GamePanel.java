@@ -158,10 +158,10 @@ public class GamePanel extends JPanel implements Runnable{
             player.update(levelHandler.getCurrentLevel().getMap().baseLayerTiles, levelHandler.getCurrentLevel());
             objectHandler.update(collisionHandler, player, inventory, levelHandler.getCurrentLevel());
             levelHandler.update(player, spawnHandler, damageDealer, collisionHandler, attackHandler, ghost, snail);
-            attackHandler.update(player, levelHandler.getCurrentLevel().getMap().baseLayerTiles);
+            attackHandler.update(player, levelHandler.getCurrentLevel());
             abilityHandler.update();
             damageDealer.dealDamageToEnemies(attackHandler, levelHandler.getCurrentLevel(), player);
-            damageDealer.dealMeleeDamageToPlayer(attackHandler, levelHandler.getCurrentLevel(), player);
+            damageDealer.dealMeleeDamageToPlayer(attackHandler, player);
             inventory.update(keyHandler);
             ghost.update();
             snail.update(levelHandler.getCurrentLevel().getMap().baseLayerTiles);

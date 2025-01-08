@@ -110,6 +110,11 @@ public class AttackHandler {
         for (Attack a : playerAttacks) {
             a.update(player);
         }
+
+        for(Attack a : enemyAttacks) {
+            a.update(player);
+        }
+
     }
 
     public void createPlayerBloodOrb(int range, int width, char direction, Entity entity, int xOffset, int yOffset, int duration, int speed, double angle, ArrayList<Enemy> enemies) {
@@ -145,13 +150,15 @@ public class AttackHandler {
     }
 
     // Must be updated when other entities are included to take an arraylist of all entities as a parameter, not just a player)
-    public void update(Player player, Tile[][] currentTileset) {
-        this.tileset = currentTileset;
+    public void update(Player player, Level level) {
+        this.level = level;
+        this.tileset = level.getMap().baseLayerTiles;
         player.checkAttack();
         player.setAttackCooldown();
 
         if (player.toCreateAttack()) createPlayerAttacks(player);
         if (!playerAttacks.isEmpty()) updateAttacks(player);
+
         for (Enemy enemy: level.unkillableEnemies)  {
             if (enemy.attacking) {
                 enemyAttacks.add(new Melee(1, (10 * Tile.tileRatio), 10 * Tile.tileRatio, enemy.direction, enemy, 0, 0, 3));
@@ -202,9 +209,11 @@ public class AttackHandler {
         if (!enemyAttacks.isEmpty()) {
             for (int i = 0; i < enemyAttacks.size(); i++) {
                 if (collisionHandler.attackWithTileCollision(enemyAttacks.get(i), tileset)) {
+                    System.out.println("Removing attack due to tile collision");
                     enemyToRemove.add(enemyAttacks.get(i));
                 }
                 if (enemyAttacks.get(i).getDuration() <= 0) {
+                    System.out.println("Removing attack due to duration");
                     enemyToRemove.add(enemyAttacks.get(i));
                 }
                 enemyAttacks.get(i).setDuration((enemyAttacks.get(i).getDuration() - 1));
