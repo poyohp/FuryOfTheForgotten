@@ -34,11 +34,8 @@ public class DamageDealer {
 
     public void dealMeleeDamageToPlayer(AttackHandler attackHandler, Player player) {
         ArrayList<Integer> indicesToRemove = new ArrayList<>();
-        System.out.println("HIHIHIHI");
-        System.out.println(attackHandler.enemyAttacks.size());
         for (int i = 0; i < attackHandler.enemyAttacks.size(); i++) {
             Attack enemyAttack = attackHandler.enemyAttacks.get(i);
-            System.out.println("dawUIHDKAWD");
                 if (collisionHandler.playerWithAttackCollision(player, enemyAttack) && !player.isHit && enemyAttack.isActive) {
                     player.isHit(enemyAttack.damage, false);
                     indicesToRemove.add(i);
