@@ -20,7 +20,12 @@ public class EternalSnail extends Enemy{
 
     // Variables for drawing
     private int updateFrames = 7;
-    BufferedImage snail;
+
+    BufferedImage idleSprites = ImageHandler.loadImage("Assets/Entities/Enemies/Medieval Manuscripts/ElderSnail_idle.png");
+    int spriteW = 64/4, spriteH = 64/4; // Sizes for the vampire sprites
+    int maxCol = 4, maxRow = 4;
+    int currentCol = 0, currentRow = 0;
+
 
     /**
      * Enemy that follows player
@@ -42,17 +47,12 @@ public class EternalSnail extends Enemy{
      */
     public EternalSnail(int health, double speed, int width, int height, String name, int worldX, int worldY, int xOffset, int yOffset, int hitBoxWidth, int hitBoxHeight, Player player, Tile[][] tileset, boolean isFollowing) {
         super(health, speed, width, height, name, worldX, worldY, xOffset, yOffset, hitBoxWidth, hitBoxHeight, player, isFollowing);
-        loadSnail();
         this.tileset = tileset;
         pathFinder = new APathfinding(tileset);
         this.onPath = true;
 
         this.worldX = entityToFollow.worldX - Tile.tileSize;
         this.worldY = entityToFollow.worldY - Tile.tileSize;
-    }
-
-    void loadSnail() {
-        snail = ImageHandler.loadImage("Assets/Entities/Enemies/Snail/snail1.png");
     }
 
     public void update(Tile[][] tileset) {
@@ -171,7 +171,23 @@ public class EternalSnail extends Enemy{
 
     @Override
     public void draw(Graphics2D g2) {
-        g2.drawImage(snail, (int)this.screenX, (int)this.screenY, this.getWidth(), this.getHeight(), null);
+        if (direction == 'd') {
+            currentRow = 0;
+        } else if (direction == 'l') {
+            currentRow = 1;
+        } else if (direction == 'r') {
+            currentRow = 2;
+        } else {
+            currentRow = 3;
+        }
+
+        currentCol = animationState;
+        if (currentCol > maxCol) currentCol = 0;
+
+        g2.drawImage(idleSprites, (int)this.screenX, (int)this.screenY, (int)this.screenX + this.getWidth(), (int)this.screenY + this.getHeight(),
+                currentCol * spriteW, currentRow * spriteH, (currentCol + 1) * spriteW, (currentRow + 1) * spriteW,
+                null);
+
         updateFrames();
     }
 
