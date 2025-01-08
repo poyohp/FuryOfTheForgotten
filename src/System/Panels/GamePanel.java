@@ -50,10 +50,6 @@ public class GamePanel extends JPanel implements Runnable{
 
     public static Random random = new Random();
 
-    Font spawnsRemaining = new Font("Arial", Font.PLAIN, 20);
-    Font coinFont = new Font("Arial", Font.PLAIN, 50);
-
-
     /**
      * Constructor for the GamePanel - initializes all objects and starts the game
      */
@@ -122,12 +118,9 @@ public class GamePanel extends JPanel implements Runnable{
             }
         }
         isPaused = true;
-        gameThread.interrupt();
     }
 
     public void resumeGame() {
-        gameThread = new Thread(this);
-        gameThread.start();
         this.requestFocusInWindow();
         isPaused = false;
     }
@@ -169,14 +162,12 @@ public class GamePanel extends JPanel implements Runnable{
             abilityHandler.update();
             damageDealer.dealDamageToEnemies(attackHandler, levelHandler.getCurrentLevel(), player);
             damageDealer.dealMeleeDamageToPlayer(attackHandler, levelHandler.getCurrentLevel(), player);
-
+            inventory.update(keyHandler);
             ghost.update();
             snail.update(levelHandler.getCurrentLevel().getMap().baseLayerTiles);
         } else {
             player.healthHandler.poisonedHealth = false;
         }
-
-        inventory.update();
 
     }
 
@@ -192,8 +183,7 @@ public class GamePanel extends JPanel implements Runnable{
         Graphics2D g2 = (Graphics2D)g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        levelHandler.draw(g2, player);
-        //player.draw(g2);
+        levelHandler.draw(g2, player, spawnHandler, keyHandler);
         levelHandler.getCurrentLevel().drawItems(g2);
 
         attackHandler.draw(g2, player);
@@ -201,16 +191,13 @@ public class GamePanel extends JPanel implements Runnable{
         snail.draw(g2);
 
         spawnHandler.drawSpawns(g2, player);
-        g2.setFont(spawnsRemaining);
-        g2.drawString("Active Spawns Remaining: " + spawnHandler.numActiveSpawns, (int)(screenWidth - 300), (int)(100));
 
         player.draw(g2);
 
         //HUD DRAWING
         inventory.draw(g2, inventory.inventoryFinalDrawSize);
         player.healthHandler.drawHealth(g2);
-        g2.setFont(coinFont);
-        objectHandler.draw(g2, player);
+        objectHandler.draw(g2, player, keyHandler);
         abilityHandler.draw(g2);
     }
 }

@@ -37,6 +37,7 @@ public class DamageDealer {
 
         for (int i = 0; i < attackHandler.enemyAttacks.size(); i++) {
             Attack enemyAttack = attackHandler.enemyAttacks.get(i);
+            System.out.println();
                 if (collisionHandler.playerWithAttackCollision(player, enemyAttack) && !player.isHit && enemyAttack.isActive) {
                     player.isHit(enemyAttack.damage, false);
                     indicesToRemove.add(i);

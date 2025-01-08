@@ -30,7 +30,8 @@ public class ObjectHandler {
 
     //FOR COIN DRAWING
     BufferedImage coinImage = ImageHandler.loadImage("Assets/Objects/coins.png");
-    private final int coinDrawSize = Tile.tileSize*Tile.tileMultipler/4;
+    private final int coinDrawSize = (int) (Tile.tileSize*Tile.tileMultipler/4.0);
+    Font coinFont = new Font("Arial", Font.PLAIN, 50);
 
     public ObjectHandler() {
         addAllObjects();
@@ -200,11 +201,23 @@ public class ObjectHandler {
         };
     }
 
-    public void draw(Graphics2D g2, Player player) {
+    public void draw(Graphics2D g2, Player player, KeyHandler keyHandler) {
         //COIN DRAWING
-        g2.drawImage(coinImage, Tile.tileSize/2, Tile.tileSize/2, Tile.tileSize/2 + coinDrawSize, Tile.tileSize/2 + coinDrawSize, 16*6, 16, 16*7, 32, null);
+        if(keyHandler.toggleInventory) {
+            g2.setFont(coinFont);
+            g2.drawImage(coinImage, Tile.tileSize/2, Tile.tileSize/2, Tile.tileSize/2 + (int) coinDrawSize, Tile.tileSize/2 + (int) coinDrawSize, 16*6, 16, 16*7, 32, null);
+            g2.setColor(Color.MAGENTA);
+            g2.drawString(String.valueOf(player.coinValue), Tile.tileSize/2 + coinDrawSize, coinDrawSize);
+        }
+    }
+
+    public void drawForShop(Graphics2D g2, Player player, KeyHandler keyHandler) {
+        //COIN DRAWING
+        int xPos = (int) (GamePanel.screenWidth - coinDrawSize - Tile.tileSize/4.0);
+        g2.setFont(coinFont);
+        g2.drawImage(coinImage, xPos, Tile.tileSize/4, xPos + coinDrawSize, Tile.tileSize/4 + coinDrawSize, 16*6, 16, 16*7, 32, null);
         g2.setColor(Color.MAGENTA);
-        g2.drawString(String.valueOf(player.coinValue), Tile.tileSize/2 + coinDrawSize, coinDrawSize);
+        g2.drawString(String.valueOf(player.coinValue), xPos - Tile.tileSize/4, coinDrawSize/2 + 35);
     }
 
 }

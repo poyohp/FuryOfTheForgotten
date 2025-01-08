@@ -39,31 +39,31 @@ public class InventoryHandler {
         Arrays.fill(inventory, null);
     }
 
-    public void update() {
-        if (keyHandler.toggleInventory) {
-            if (keyHandler.rightPress) {
+    public void update(KeyHandler kH) {
+        if (kH.toggleInventory) {
+            if (kH.rightPress) {
                 indexSelected++;
                 if (indexSelected >= inventoryCapacity) {
                     indexSelected = 0;
                 }
-                keyHandler.rightPress = false;
+                kH.rightPress = false;
             }
-            if (keyHandler.leftPress) {
+            if (kH.leftPress) {
                 indexSelected--;
                 if (indexSelected < 0) {
                     indexSelected = inventoryCapacity - 1;
                 }
-                keyHandler.leftPress = false;
+                kH.leftPress = false;
             }
-            if(keyHandler.choicePress) {
+            if(kH.choicePress) {
                 if(inventory[indexSelected] != null) {
                     if(inventory[indexSelected].name.equalsIgnoreCase("Key")) {
                         inventory[indexSelected].isUsed(player);
-                        keyHandler.toggleInventory = false;
+                        kH.toggleInventory = false;
                     } else {
                         inventory[indexSelected].isUsed(player);
                         inventory[indexSelected] = null;
-                        keyHandler.toggleInventory = false;
+                        kH.toggleInventory = false;
                     }
                 }
             }
@@ -79,6 +79,7 @@ public class InventoryHandler {
     }
 
     public void draw(Graphics2D g2, int drawSize) {
+
         drawOutline(g2);
         drawInventorySquares(g2, outlineX, outlineY, drawSize);
         if(keyHandler.toggleInventory) {
@@ -86,13 +87,11 @@ public class InventoryHandler {
         }
     }
 
-    public void drawWithContraints(int x, int y, int width, int height, Graphics2D g2) {
+    public void drawWithContraints(int x, int y, int width, int height, Graphics2D g2, boolean drawSelected) {
         // Calculate the scale factor based on the width and height constraints
         double scaleX = (double) width / outlineWidth;
         double scaleY = (double) height / outlineHeight;
         double scale = Math.min(scaleX, scaleY);
-
-        System.out.println("WHATAWE");
 
         // Calculate new dimensions and gaps based on the scale
         int scaledDrawSize = (int) (inventoryFinalDrawSize * scale);
@@ -124,8 +123,10 @@ public class InventoryHandler {
             boxX += scaledInnerGap + scaledDrawSize;
         }
 
+        System.out.println(keyHandler.toggleInventory);
+
         // Draw the selected outline if inventory is toggled
-        if (keyHandler.toggleInventory) {
+        if (drawSelected) {
             int selectedBoxX = scaledOutlineX + scaledInnerGap + (indexSelected * (scaledInnerGap + scaledDrawSize));
             int selectedBoxY = scaledOutlineY + scaledInnerGap;
             g2.setColor(Color.RED);

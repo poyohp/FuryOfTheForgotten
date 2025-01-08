@@ -8,6 +8,7 @@ import Handlers.Attacks.AttackHandler;
 import Handlers.HUD.InventoryHandler;
 import Handlers.Spawners.SpawnHandler;
 import Handlers.Spawners.SpawnPoint;
+import System.Panels.GamePanel;
 import World.Level;
 import Handlers.Attacks.DamageDealer;
 import System.Main;
@@ -26,6 +27,7 @@ public class LevelHandler {
 
     int numLevels;
 
+    Font spawnsRemaining = new Font("Arial", Font.PLAIN, 20);
 
     /**
      * Constructor for LevelHandler - initializes all levels and enemies
@@ -148,7 +150,6 @@ public class LevelHandler {
                 }
             }
 
-
             if (!spawnPointsActive && currentLevel.enemies.isEmpty()) {
                 currentLevel.doorUnlockable = true;
                 if(!levelComplete && currentLevel.doorUnlocked) {
@@ -178,8 +179,15 @@ public class LevelHandler {
      * @param g2
      * @param player
      */
-    public void draw(Graphics2D g2, Player player) {
+    public void draw(Graphics2D g2, Player player, SpawnHandler spawnHandler, KeyHandler keyHandler) {
         this.getCurrentLevel().drawLevel(g2, player);
+
+        g2.setFont(spawnsRemaining);
+        g2.setColor(Color.GREEN);
+        if(keyHandler.toggleInventory) {
+            g2.drawString("Active Spawns Remaining: " + spawnHandler.numActiveSpawns, (int)(GamePanel.screenWidth - 300), (100));
+            g2.drawString("Enemies Remaining: " + currentLevel.enemies.size(), (int)(GamePanel.screenWidth - 300), (150));
+        }
 
         for (Enemy enemy : currentLevel.enemies) {
             enemy.draw(g2);
@@ -188,6 +196,7 @@ public class LevelHandler {
         for (Enemy enemy : currentLevel.unkillableEnemies) {
             enemy.draw(g2);
         }
+
     }
 
     public Level getCurrentLevel() {

@@ -19,7 +19,6 @@ import java.util.ArrayList;
 public class BuyPanel extends AbstractPanel {
 
     GamePanel gamePanel;
-    InventoryHandler inventory;
 
     final double SW = GamePanel.screenWidth;
     final double SH = GamePanel.screenHeight;
@@ -65,7 +64,6 @@ public class BuyPanel extends AbstractPanel {
         super("shop2.png");
 
         this.gamePanel = gamePanel;
-        this.inventory = gamePanel.inventory;
 
         setButtons();
         addButtonsToArrayList();
@@ -75,6 +73,21 @@ public class BuyPanel extends AbstractPanel {
         item1.isSelected = true;
         currentButtonX = currentButtonY = 0;
         selectedButton = item1;
+
+        //"OVERRIDE"
+        //TO ADD INVENTORY UPDATE!
+        timer = new Timer(TIMERSPEED, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                handleSelection();
+                gamePanel.inventory.update(keyHandler);
+                repaint();
+                handleChoice();
+            }
+        });
+
+        timer.start();
+
     }
 
     public void setButtons() {
@@ -109,15 +122,20 @@ public class BuyPanel extends AbstractPanel {
      * Gets the user's choice from the buttons
      */
     public void handleChoice() {
-        //use this to handle any button choices
-//        if (keyHandler.choicePress) {
-//            timer.stop();
-//            if (selectedButton == continueButton) {
-//                Main.updateGameState(2); // Go to character selection screen
-//            } else {
-//                System.exit(0);
-//            }
-//        }
+        //"BUY BUTTON"
+        if(keyHandler.toggleInventory) {
+            if(gamePanel.inventory.indexFree != -1) {
+                //FREE SLOT
+                gamePanel.inventory.inventory[gamePanel.inventory.indexFree] = shopItems.get(buttonIndexes[currentButtonY][currentButtonX]);
+                keyHandler.toggleInventory = false;
+            } else {
+                //ALLOW USER TO REPLACE ITEM!
+                if(keyHandler.choicePress) {
+                    gamePanel.inventory.inventory[gamePanel.inventory.indexSelected] = shopItems.get(buttonIndexes[currentButtonY][currentButtonX]);
+                    keyHandler.toggleInventory = false;
+                }
+            }
+        }
     }
 
     /**
@@ -156,7 +174,7 @@ public class BuyPanel extends AbstractPanel {
 
         // Select the new button
         selectedButton = buttons.get(buttonIndexes[currentButtonY][currentButtonX]);
-       selectedButton.isSelected = true;
+        selectedButton.isSelected = true;
     }
 
     @Override
@@ -200,7 +218,8 @@ public class BuyPanel extends AbstractPanel {
             if (button.isSelected) button.renderCurrentChoice(g2);
         }
 
-        gamePanel.inventory.drawWithContraints(inventoryX, inventoryY, inventoryWidth, inventoryHeight, g2);
+        gamePanel.inventory.drawWithContraints(inventoryX, inventoryY, inventoryWidth, inventoryHeight, g2, keyHandler.toggleInventory);
+        gamePanel.objectHandler.draw(g2, gamePanel.player, keyHandler);
 
     }
 
