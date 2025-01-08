@@ -23,6 +23,8 @@ public class Slime extends Enemy{
     BufferedImage slimesHit;
     BufferedImage slimesDead;
 
+    int spriteW = 16, spriteH = 16;
+
 
     /**
      * Enemy that follows player
@@ -125,45 +127,10 @@ public class Slime extends Enemy{
             double nextWorldX = nextCol * Tile.tileSize;
             double nextWorldY = nextRow * Tile.tileSize;
 
-                if (Math.abs(nextWorldX - worldX) > getSpeed()) { // Moving will not put the enemy into the middle of the wrong tile
-                    if (worldX > nextWorldX) {
-                        direction = 'l'; // left
-                        worldX -= getSpeed();
-                    } else if (worldX < nextWorldX) {
-                        direction = 'r'; // right
-                        worldX += getSpeed();
-                    }
-                } else {
-                    worldX = nextWorldX; // Snap directly to next tile
-                }
-
-                if (Math.abs(nextWorldY - worldY) > getSpeed()) {
-                    if (worldY > nextWorldY) {
-                        direction = 'u'; // up
-                        worldY -= getSpeed();
-                    } else if (worldY < nextWorldY) {
-                        direction = 'd'; // down
-                        worldY += getSpeed();
-                    }
-                } else {
-                    worldY = nextWorldY; // Snap to tile
-                }
+            getNewPosition(nextWorldX, nextWorldY);
 
         } else {
-            if (worldX > entityToFollow.worldX) {
-                direction = 'l'; // left
-                worldX -= getSpeed();
-            } else if (worldX < entityToFollow.worldX) {
-                direction = 'r'; // right
-                worldX += getSpeed();
-            }
-            if (worldY > entityToFollow.worldY) {
-                direction = 'u'; // up
-                worldY -= getSpeed();
-            } else if (worldY < entityToFollow.worldY) {
-                direction = 'd'; // down
-                worldY += getSpeed();
-            }
+            moveTowardPlayer();
         }
     }
 
@@ -184,134 +151,46 @@ public class Slime extends Enemy{
     public void draw(Graphics2D g2) {
         drawHealth(g2);
 
-        int column1 = 0, column2 = 16, column3 = 32, column4 = 48, row1 = 0, row2 = 16, row3 = 32, row4 = 48, width = 16, height = 16;
+        int currentRow = getRow();
+        int currentCol = animationState;
 
-        if (direction == 'd') {
-            if(isHit) {
-                // DOWN HIT
-                if(freezeTimer < freezeTimerFramesHalfway) {
-                    if(getHealth() > 0) {
-                        //DRAW GREEN HIT
-                        g2.drawImage(slimesHit, (int) screenX, (int) screenY, (int) (screenX + getWidth()), (int) (screenY + getHeight()), column2, row1, column2 + width, row1 + height, null);
-                    } else {
-                        //DRAW PURPLE (DEAD)
-                        g2.drawImage(slimesDead, (int) screenX, (int) screenY, (int) (screenX + getWidth()), (int) (screenY + getHeight()), column1, row1, column1 + width, row1 + height, null);
-                    }
-                } else {
-                    // DRAW RED HIT
-                    g2.drawImage(slimesHit, (int) screenX, (int) screenY, (int) (screenX + getWidth()), (int) (screenY + getHeight()), column1, row1, column1 + width, row1 + height, null);
-                }
-            } else {
-                switch (animationState) {
-                    case 0:
-                        g2.drawImage(slimes, (int) screenX, (int) screenY, (int) (screenX + getWidth()), (int) (screenY + getHeight()), column1, row1, column1 + width, row1 + height, null);
-                        break;
-                    case 1:
-                        g2.drawImage(slimes, (int) screenX, (int) screenY, (int) (screenX + getWidth()), (int) (screenY + getHeight()), column2, row1, column2 + width, row1 + height, null);
-                        break;
-                    case 2:
-                        g2.drawImage(slimes, (int) screenX, (int) screenY, (int) (screenX + getWidth()), (int) (screenY + getHeight()), column3, row1, column3 + width, row1 + height, null);
-                        break;
-                    case 3:
-                        g2.drawImage(slimes, (int) screenX, (int) screenY, (int) (screenX + getWidth()), (int) (screenY + getHeight()), column4, row1, column4 + width, row1 + height, null);
-                        break;
-                }
+        int maxCol = 4;
+        if (currentCol > maxCol) currentCol = 0;
+
+
+        // Getting the right sprite sheet
+        BufferedImage spriteSheet;
+
+        if (isHit) {
+            if (getHealth() <= 0) {
+                spriteSheet = slimesDead;
+                currentCol = 0;
             }
-        } else if (direction == 'l') {
-            if(isHit) {
-                //DRAW LEFT HIT
-                if(freezeTimer < freezeTimerFramesHalfway) {
-                    if(getHealth() > 0) {
-                        //DRAW GREEN HIT
-                        g2.drawImage(slimesHit, (int) screenX, (int) screenY, (int) (screenX + getWidth()), (int) (screenY + getHeight()), column2, row2, column2 + width, row2 + height, null);
-                    } else {
-                        //DRAW PURPLE (DEAD)
-                        g2.drawImage(slimesDead, (int) screenX, (int) screenY, (int) (screenX + getWidth()), (int) (screenY + getHeight()), column1, row2, column1 + width, row2 + height, null);
-                    }
-                } else {
-                    // DRAW RED HIT
-                    g2.drawImage(slimesHit, (int) screenX, (int) screenY, (int) (screenX + getWidth()), (int) (screenY + getHeight()), column1, row2, column1 + width, row2 + height, null);
-                }
-            } else {
-                switch (animationState) {
-                    case 0:
-                        g2.drawImage(slimes, (int) screenX, (int) screenY, (int) (screenX + getWidth()), (int) (screenY + getHeight()), column1, row2, column1 + width, row2 + height, null);
-                        break;
-                    case 1:
-                        g2.drawImage(slimes, (int) screenX, (int) screenY, (int) (screenX + getWidth()), (int) (screenY + getHeight()), column2, row2, column2 + width, row2 + height, null);
-                        break;
-                    case 2:
-                        g2.drawImage(slimes, (int) screenX, (int) screenY, (int) (screenX + getWidth()), (int) (screenY + getHeight()), column3, row2, column3 + width, row2 + height, null);
-                        break;
-                    case 3:
-                        g2.drawImage(slimes, (int) screenX, (int) screenY, (int) (screenX + getWidth()), (int) (screenY + getHeight()), column4, row2, column4 + width, row2 + height, null);
-                        break;
-                }
+            else {
+                if (freezeTimer < freezeTimerFramesHalfway) currentCol = 0;
+                else currentCol = 1;
+                spriteSheet = slimesHit;
             }
-        } else if (direction == 'r') {
-            if(isHit) {
-                //DRAW RIGHT HIT
-                //DRAW LEFT HIT
-                if(freezeTimer < freezeTimerFramesHalfway) {
-                    if(getHealth() > 0) {
-                        //DRAW GREEN HIT
-                        g2.drawImage(slimesHit, (int) screenX, (int) screenY, (int) (screenX + getWidth()), (int) (screenY + getHeight()), column2, row3, column2 + width, row3 + height, null);
-                    } else {
-                        //DRAW PURPLE (DEAD)
-                        g2.drawImage(slimesDead, (int) screenX, (int) screenY, (int) (screenX + getWidth()), (int) (screenY + getHeight()), column1, row3, column1 + width, row3 + height, null);
-                    }
-                } else {
-                    // DRAW RED HIT
-                    g2.drawImage(slimesHit, (int) screenX, (int) screenY, (int) (screenX + getWidth()), (int) (screenY + getHeight()), column1, row3, column1 + width, row3 + height, null);
-                }
-            } else {
-                switch (animationState) {
-                    case 0:
-                        g2.drawImage(slimes, (int) screenX, (int) screenY, (int) (screenX + getWidth()), (int) (screenY + getHeight()), column1, row3, column1 + width, row3 + height, null);
-                        break;
-                    case 1:
-                        g2.drawImage(slimes, (int) screenX, (int) screenY, (int) (screenX + getWidth()), (int) (screenY + getHeight()), column2, row3, column2 + width, row3 + height, null);
-                        break;
-                    case 2:
-                        g2.drawImage(slimes, (int) screenX, (int) screenY, (int) (screenX + getWidth()), (int) (screenY + getHeight()), column3, row3, column3 + width, row3 + height, null);
-                        break;
-                    case 3:
-                        g2.drawImage(slimes, (int) screenX, (int) screenY, (int) (screenX + getWidth()), (int) (screenY + getHeight()), column4, row3, column4 + width, row3 + height, null);
-                        break;
-                }
-            }
-        } else if (direction == 'u') {
-            if(isHit) {
-                //DRAW UP HIT
-                if(freezeTimer < freezeTimerFramesHalfway) {
-                    if(getHealth() > 0) {
-                        //DRAW GREEN HIT
-                        g2.drawImage(slimesHit, (int) screenX, (int) screenY, (int) (screenX + getWidth()), (int) (screenY + getHeight()), column2, row4, column2 + width, row4 + height, null);
-                    } else {
-                        //DRAW PURPLE (DEAD)
-                        g2.drawImage(slimesDead, (int) screenX, (int) screenY, (int) (screenX + getWidth()), (int) (screenY + getHeight()), column1, row4, column1 + width, row4 + height, null);
-                    }
-                } else {
-                    // DRAW RED HIT
-                    g2.drawImage(slimesHit, (int) screenX, (int) screenY, (int) (screenX + getWidth()), (int) (screenY + getHeight()), column1, row4, column1 + width, row4 + height, null);
-                }
-            } else {
-                switch (animationState) {
-                    case 0:
-                        g2.drawImage(slimes, (int) screenX, (int) screenY, (int) (screenX + getWidth()), (int) (screenY + getHeight()), column1, row4, column1 + width, row4 + height, null);
-                        break;
-                    case 1:
-                        g2.drawImage(slimes, (int) screenX, (int) screenY, (int) (screenX + getWidth()), (int) (screenY + getHeight()), column2, row4, column2 + width, row4 + height, null);
-                        break;
-                    case 2:
-                        g2.drawImage(slimes, (int) screenX, (int) screenY, (int) (screenX + getWidth()), (int) (screenY + getHeight()), column3, row4, column3 + width, row4 + height, null);
-                        break;
-                    case 3:
-                        g2.drawImage(slimes, (int) screenX, (int) screenY, (int) (screenX + getWidth()), (int) (screenY + getHeight()), column4, row4, column4 + width, row4 + height, null);
-                        break;
-                }
-            }
-        }
+        } else spriteSheet = slimes;
+
+        g2.drawImage(spriteSheet, (int)this.screenX, (int)this.screenY, (int)this.screenX + this.getWidth(), (int)this.screenY + this.getHeight(),
+                currentCol * spriteW, currentRow * spriteH, (currentCol + 1) * spriteW, (currentRow + 1) * spriteW,
+                null);
+
         updateFrames();
+    }
+
+    private int getRow() {
+        int currentRow;
+        if (direction == 'd') {
+            currentRow = 0;
+        } else if (direction == 'l') {
+            currentRow = 1;
+        } else if (direction == 'r') {
+            currentRow = 2;
+        } else {
+            currentRow = 3;
+        }
+        return currentRow;
     }
 }
