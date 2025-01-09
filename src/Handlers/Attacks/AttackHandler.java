@@ -8,7 +8,6 @@ import Attacks.Ranged.Arrow;
 import Attacks.Attack;
 import Attacks.Melee.Melee;
 import Attacks.Ranged.BloodOrb;
-import Attacks.Ranged.Ranged;
 import Entities.Enemies.Enemy;
 import Entities.Entity;
 import Entities.Players.Player;
@@ -241,7 +240,9 @@ public class AttackHandler {
 
     /**
      * Draw all attacks
-     * @param g2 Graphics 2D object for drawing
+     *
+     * @param g2     Graphics 2D object for drawing
+     * @param player
      */
     public void draw(Graphics2D g2) {
         for (Attack playerAttack : playerAttacks) {

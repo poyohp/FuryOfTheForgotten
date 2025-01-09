@@ -186,7 +186,7 @@ public class GamePanel extends JPanel implements Runnable{
         levelHandler.draw(g2, player, spawnHandler, keyHandler);
         levelHandler.getCurrentLevel().drawItems(g2);
 
-        attackHandler.draw(g2, player);
+        attackHandler.draw(g2);
         ghost.draw(g2);
         snail.draw(g2);
 
