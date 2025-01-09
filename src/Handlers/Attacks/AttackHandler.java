@@ -105,15 +105,16 @@ public class AttackHandler {
     /**
      * Determine the player's ranged attack's velocities
      */
-    void updateAttacks(Player player) {
+    void updatePlayerAttacks(Player player) {
         for (Attack a : playerAttacks) {
             a.update(player);
         }
+    }
 
+    void updateEnemyAttacks(Player player) {
         for(Attack a : enemyAttacks) {
             a.update(player);
         }
-
     }
 
     public void createPlayerBloodOrb(int range, int width, char direction, Entity entity, int xOffset, int yOffset, int duration, int speed, double angle, ArrayList<Enemy> enemies) {
@@ -123,21 +124,21 @@ public class AttackHandler {
     void createPlayerAttacks(Player p) {
         if (p.type == 's') {
             if (p.direction == 'r') {
-                createPlayerArrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 0);
-                createPlayerArrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 15 * Math.PI / 8);
-                createPlayerArrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, Math.PI / 8);
+                createPlayerArrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 0); //RIGHT
+                createPlayerArrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 15 * Math.PI / 8); // RIGHT DOWN
+                createPlayerArrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, Math.PI / 8); // RIGHT UP
             } else if (p.direction == 'u') {
-                createPlayerArrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, Math.PI / 2);
-                createPlayerArrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 3 * Math.PI / 8);
-                createPlayerArrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 5 * Math.PI / 8);
+                createPlayerArrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, Math.PI / 2); // UP
+                createPlayerArrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 3 * Math.PI / 8); //UP RIGHT
+                createPlayerArrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 5 * Math.PI / 8); //UP LEFT
             } else if (p.direction == 'l') {
-                createPlayerArrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, Math.PI);
-                createPlayerArrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 7 * Math.PI / 8);
-                createPlayerArrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 9 * Math.PI / 8);
+                createPlayerArrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, Math.PI); //LEFT
+                createPlayerArrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 7 * Math.PI / 8); //LEFT UP
+                createPlayerArrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 9 * Math.PI / 8); //LEFT DOWN
             } else {
-                createPlayerArrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 3 * Math.PI / 2);
-                createPlayerArrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 11 * Math.PI / 8);
-                createPlayerArrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 13 * Math.PI / 8);
+                createPlayerArrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 3 * Math.PI / 2); //DOWN
+                createPlayerArrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 11 * Math.PI / 8); //DOWN LEFT
+                createPlayerArrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, p.direction, p, 0, 0, 150, playerRangedSpeed, 13 * Math.PI / 8); //DOWN RIGHT
             }
         } else if (p.type == 'g') {
             createPlayerStab(20 * Tile.tileRatio, 10 * Tile.tileRatio, p.direction, p, 0, 0, 30);
@@ -156,7 +157,8 @@ public class AttackHandler {
         player.setAttackCooldown();
 
         if (player.toCreateAttack()) createPlayerAttacks(player);
-        if (!playerAttacks.isEmpty()) updateAttacks(player);
+        if (!playerAttacks.isEmpty()) updatePlayerAttacks(player);
+        if(!enemyAttacks.isEmpty()) updateEnemyAttacks(player);
 
         for (Enemy enemy: level.unkillableEnemies)  {
             if (enemy.attacking) {
@@ -167,14 +169,15 @@ public class AttackHandler {
         for (Enemy enemy: level.archerEnemies)  {
             if (enemy.attacking) {
                 if (enemy.direction == 'r') {
-                    enemyAttacks.add(new Arrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, enemy.direction, enemy, 0, 0, 150, playerRangedSpeed, 15 * Math.PI / 8));
+                    enemyAttacks.add(new Arrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, enemy.direction, enemy, 0, 0, 150, playerRangedSpeed, 0));
                 } else if (enemy.direction == 'u') {
-                    enemyAttacks.add(new Arrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, enemy.direction, enemy, 0, 0, 150, playerRangedSpeed, 3 * Math.PI / 8));
+                    enemyAttacks.add(new Arrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, enemy.direction, enemy, 0, 0, 150, playerRangedSpeed, Math.PI/2));
                 } else if (enemy.direction == 'l') {
-                    enemyAttacks.add(new Arrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, enemy.direction, enemy, 0, 0, 150, playerRangedSpeed, 7 * Math.PI / 8));
+                    enemyAttacks.add(new Arrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, enemy.direction, enemy, 0, 0, 150, playerRangedSpeed, Math.PI));
                 } else {
-                    enemyAttacks.add(new Arrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, enemy.direction, enemy, 0, 0, 150, playerRangedSpeed, 11 * Math.PI / 8));
+                    enemyAttacks.add(new Arrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, enemy.direction, enemy, 0, 0, 150, playerRangedSpeed, 3 * Math.PI / 2));
                 }
+                enemy.attacking = false;
             }
         }
 
@@ -242,7 +245,6 @@ public class AttackHandler {
      * Draw all attacks
      *
      * @param g2     Graphics 2D object for drawing
-     * @param player
      */
     public void draw(Graphics2D g2) {
         for (Attack playerAttack : playerAttacks) {

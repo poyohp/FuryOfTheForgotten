@@ -24,11 +24,13 @@ public class Rabbit extends Enemy{
 
     boolean moving;
 
+    boolean shotFired;
+
     int spriteW = 16, spriteH = 16;
 
     // For attacking and timing
     int counter;
-    int numSeconds = 1;
+    int numSeconds = 5;
     int numFrames = (int) GamePanel.FPS * numSeconds;
 
 
@@ -67,7 +69,7 @@ public class Rabbit extends Enemy{
         hitbox.update(this);
 
         if (counter < 0) {
-            attacking = !attacking;
+            attacking = true;
             counter = numFrames;
         }
         counter--;
