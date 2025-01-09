@@ -6,8 +6,9 @@ import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener {
 
-    public boolean upPress, downPress, leftPress, rightPress, attackPress, choicePress, abilityPress;
+    public boolean upPress, downPress, leftPress, rightPress, attackPress, choicePress, abilityPress, shopExit;
     public boolean toggleInventory, inventoryHandled, inventoryIndexMoved, choiceTriggered;
+    public boolean allowInventoryToggle = true;
 
     @Override
     public void keyTyped(KeyEvent e) {}
@@ -19,15 +20,14 @@ public class KeyHandler implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_K) {
-            if (!inventoryHandled) {
+            if (!inventoryHandled && allowInventoryToggle) {
                 toggleInventory = !toggleInventory;
                 inventoryHandled = true;
             }
         }
 
-        if(e.getKeyCode() == KeyEvent.VK_V) {
-            Main.gamePanel.pauseGame();
-            Main.updateGameState(8);
+        if(e.getKeyCode() == KeyEvent.VK_L) {
+            shopExit = true;
         }
 
         if(e.getKeyCode() == KeyEvent.VK_J && !choiceTriggered) {
@@ -68,6 +68,7 @@ public class KeyHandler implements KeyListener {
                 abilityPress = true;
             }
         } else {
+            // IN INVENTORY!
             if (e.getKeyCode() == KeyEvent.VK_A && !inventoryIndexMoved) {
                 leftPress = true;
                 inventoryIndexMoved = true;
@@ -121,5 +122,10 @@ public class KeyHandler implements KeyListener {
         if (e.getKeyCode() == KeyEvent.VK_K) {
             inventoryHandled = false;
         }
+
+        if(e.getKeyCode() == KeyEvent.VK_L) {
+            shopExit = false;
+        }
+
     }
 }

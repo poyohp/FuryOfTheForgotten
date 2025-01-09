@@ -1,17 +1,26 @@
 package Objects.UsableObjects;
 
 import Entities.Players.Player;
+import Handlers.ImageHandler;
 import Objects.Object;
 import System.Panels.GamePanel;
 import World.Level;
 import World.Tile;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public abstract class UsableObject extends Object {
 
+    public BufferedImage itemDescription;
+
     public UsableObject(String name, double width, double height, double worldX, double worldY, double screenX, double screenY, double vx, double vy) {
         super(name, width, height, worldX, worldY, screenX, screenY, vx, vy);
+
+        if(!name.equalsIgnoreCase("Key")) {
+            String descriptionPath = "Assets/Objects/Descriptions/" + name + ".png";
+            itemDescription = ImageHandler.loadImage(descriptionPath);
+        }
     }
 
     @Override
@@ -56,5 +65,11 @@ public abstract class UsableObject extends Object {
     public void drawHUD(Graphics2D g2, int x, int y, int size) {
         g2.drawImage(image, x, y, x + size, y + size, imageX, imageY, imageX+imageWidth, imageY+imageWidth, null);
     }
+
+    @Override
+    public void drawDescription(Graphics2D g2, int x, int y, int width, int height) {
+        g2.drawImage(itemDescription, x, y, width, height, null);
+    }
+
 
 }

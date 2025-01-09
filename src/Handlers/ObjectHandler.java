@@ -204,20 +204,16 @@ public class ObjectHandler {
     public void draw(Graphics2D g2, Player player, KeyHandler keyHandler) {
         //COIN DRAWING
         if(keyHandler.toggleInventory) {
-            g2.setFont(coinFont);
-            g2.drawImage(coinImage, Tile.tileSize/2, Tile.tileSize/2, Tile.tileSize/2 + (int) coinDrawSize, Tile.tileSize/2 + (int) coinDrawSize, 16*6, 16, 16*7, 32, null);
-            g2.setColor(Color.MAGENTA);
-            g2.drawString(String.valueOf(player.coinValue), Tile.tileSize/2 + coinDrawSize, coinDrawSize);
+            drawCoin(g2, player);
         }
     }
 
-    public void drawForShop(Graphics2D g2, Player player, KeyHandler keyHandler) {
+    public void drawCoin(Graphics2D g2, Player player) {
         //COIN DRAWING
-        int xPos = (int) (GamePanel.screenWidth - coinDrawSize - Tile.tileSize/4.0);
         g2.setFont(coinFont);
-        g2.drawImage(coinImage, xPos, Tile.tileSize/4, xPos + coinDrawSize, Tile.tileSize/4 + coinDrawSize, 16*6, 16, 16*7, 32, null);
+        g2.drawImage(coinImage, Tile.tileSize/3, Tile.tileSize/3, Tile.tileSize/3 + coinDrawSize, Tile.tileSize/3 + (int) coinDrawSize, 16*6, 16, 16*7, 32, null);
         g2.setColor(Color.MAGENTA);
-        g2.drawString(String.valueOf(player.coinValue), xPos - Tile.tileSize/4, coinDrawSize/2 + 35);
+        g2.drawString(String.valueOf(player.coinValue), Tile.tileSize/3 + coinDrawSize, coinDrawSize - 20);
     }
 
 }

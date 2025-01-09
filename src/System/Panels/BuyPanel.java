@@ -34,11 +34,14 @@ public class BuyPanel extends AbstractPanel {
     int itemSize = (int) HXOuter;
     int inventoryWidth = (int) (itemSize*3 + HXInner*2);
     int inventoryHeight = itemSize;
+    int descriptionWidth = (int) (SW*0.3);
+    int descriptionHeight = (int) (SH*0.7);
 
-    //INVENTORY POSITIONS
+    //POSITIONS
+    int descriptionX, descriptionY;
     int inventoryX, inventoryY;
+    int itemX, itemY;
 
-    MenuButton itemDescription;
     MenuButton item1;
     MenuButton item2;
     MenuButton item3;
@@ -54,16 +57,11 @@ public class BuyPanel extends AbstractPanel {
 
     ArrayList<Object> shopItems = new ArrayList<>();
 
-    public void addObjectsToList() {
-        for(int i = 0; i < buttons.size(); i++) {
-            shopItems.add(ObjectHandler.getRandomObject(itemSize, itemSize, 0, 0,0, 0, 0, true));
-        }
-    }
-
     public BuyPanel(GamePanel gamePanel) {
         super("shop2.png");
 
         this.gamePanel = gamePanel;
+        keyHandler.allowInventoryToggle = false;
 
         setButtons();
         addButtonsToArrayList();
@@ -90,11 +88,36 @@ public class BuyPanel extends AbstractPanel {
 
     }
 
+    public void addObjectsToList() {
+        //MAKES EVERY ITEM UNIQUE
+        for(int i = 0; i < buttons.size(); i++) {
+            Object objectToAdd = ObjectHandler.getRandomObject(itemSize, itemSize, 0, 0,0, 0, 0, true);
+            boolean addItem = true;
+
+            for (int j = 0; j < shopItems.size(); j++) {
+                if (objectToAdd.equals(shopItems.get(j))) {
+                    addItem = false;
+                    break;
+                }
+            }
+
+            if(addItem) {
+                shopItems.add(objectToAdd);
+            } else {
+                i--;
+            }
+        }
+    }
+
     public void setButtons() {
         int x = (int)HXOuter;
         int y = (int)VXOuter;
 
-        itemDescription = new MenuButton("outline.png", x, y, (int) (SW*0.3), (int)(SH*0.7));
+        descriptionX = x;
+        descriptionY = y;
+
+        itemX = descriptionX + (int) ((descriptionWidth-itemSize)/2.0);
+        itemY = descriptionY + (int) (itemSize * (3.0/4.0));
 
         x += (int) ((SW*0.3) + HXOuter);
 
@@ -123,19 +146,36 @@ public class BuyPanel extends AbstractPanel {
      */
     public void handleChoice() {
         //"BUY BUTTON"
-        if(keyHandler.toggleInventory) {
+
+        Object item = shopItems.get(buttonIndexes[currentButtonY][currentButtonX]);
+
+        if(keyHandler.choicePress) {
             if(gamePanel.inventory.indexFree != -1) {
                 //FREE SLOT
-                gamePanel.inventory.inventory[gamePanel.inventory.indexFree] = shopItems.get(buttonIndexes[currentButtonY][currentButtonX]);
-                keyHandler.toggleInventory = false;
-            } else {
-                //ALLOW USER TO REPLACE ITEM!
-                if(keyHandler.choicePress) {
-                    gamePanel.inventory.inventory[gamePanel.inventory.indexSelected] = shopItems.get(buttonIndexes[currentButtonY][currentButtonX]);
-                    keyHandler.toggleInventory = false;
+                if(item.value <= gamePanel.player.coinValue) {
+                    gamePanel.inventory.inventory[gamePanel.inventory.indexFree] = item;
+                    gamePanel.player.coinValue -= item.value;
+                } else {
+                    System.out.println("NOT ENOUGH COINS!");
                 }
+                keyHandler.choicePress = false;
+            } else if(keyHandler.toggleInventory)  {
+                //REPLACING ITEM
+                gamePanel.inventory.inventory[gamePanel.inventory.indexSelected] = item;
+                gamePanel.player.coinValue -= item.value;
+                keyHandler.toggleInventory = false;
+                keyHandler.choicePress = false;
+            } else {
+                //ALLOW FOR REPLACING
+                if(item.value <= gamePanel.player.coinValue) {
+                    keyHandler.toggleInventory = true;
+                } else {
+                    System.out.println("NOT ENOUGH COINS!");
+                }
+                keyHandler.choicePress = false;
             }
         }
+
     }
 
     /**
@@ -196,6 +236,13 @@ public class BuyPanel extends AbstractPanel {
         if (!keyHandler.upPress && !keyHandler.downPress && !keyHandler.leftPress && !keyHandler.rightPress) {
             keyProcessed = false;
         }
+
+        if(keyHandler.shopExit) {
+            //GO BACK TO CONTINUE/SHOP PAGE!
+            Main.updateGameState(7);
+            keyHandler.shopExit = false;
+        }
+
     }
 
     @Override
@@ -206,9 +253,7 @@ public class BuyPanel extends AbstractPanel {
         Graphics2D g2 = (Graphics2D) g;
         g2.drawImage(bgImage, 0, 0, screenWidth, screenHeight, null);
 
-        //DRAW BUTTONS AND CORRESPONDING ITEM!
-        itemDescription.drawButton(g2);
-
+        //DRAW BUTTONS AND CORRESPONDING ITEM AND DESCRIPTION!
         for(int i = 0; i < buttons.size(); i++) {
             MenuButton button = buttons.get(i);
             Object item = shopItems.get(i);
@@ -218,8 +263,24 @@ public class BuyPanel extends AbstractPanel {
             if (button.isSelected) button.renderCurrentChoice(g2);
         }
 
+        //DESCRIPTION
+        shopItems.get(buttonIndexes[currentButtonY][currentButtonX]).drawDescription(g2, descriptionX, descriptionY, descriptionWidth, descriptionHeight);
+
+        //ITEM IMAGE
+        shopItems.get(buttonIndexes[currentButtonY][currentButtonX]).drawHUD(g2, itemX, itemY, itemSize);
+
         gamePanel.inventory.drawWithContraints(inventoryX, inventoryY, inventoryWidth, inventoryHeight, g2, keyHandler.toggleInventory);
-        gamePanel.objectHandler.draw(g2, gamePanel.player, keyHandler);
+        gamePanel.objectHandler.drawCoin(g2, gamePanel.player);
+
+        if(keyHandler.toggleInventory) {
+            //EXPLAIN HOW TO REPLACE
+            String instructions = "SELECT AN ITEM TO REPLACE ('J')";
+            g2.drawString(instructions, inventoryX, inventoryY - 50);
+        }
+
+        String instructions = "'J' TO PURCHASE | 'L' TO EXIT";
+        g2.setColor(Color.WHITE);
+        g2.drawString(instructions, inventoryX + 25, (int) (GamePanel.screenHeight - 50));
 
     }
 
