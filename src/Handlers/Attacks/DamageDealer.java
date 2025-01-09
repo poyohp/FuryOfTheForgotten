@@ -73,17 +73,17 @@ public class DamageDealer {
                 }
             }
 
-//            for (Enemy enemy : level.archerEnemies) {
-//                if (collisionHandler.enemyWithAttackCollision(enemy, playerAttack) && !enemy.isHit && playerAttack.isActive) {
-//                    if(player.isDamageBoost) {
-//                        enemy.isHit(playerAttack.damage+player.boostedDamage);
-//                    } else if (player.type == 'g' && player.direction == enemy.direction) {
-//                        enemy.isHit(playerAttack.damage*4);
-//                    } else enemy.isHit(playerAttack.damage);
-//                    indicesToRemove.add(i);
-//                    break;
-//                }
-//            }
+            for (Enemy enemy : level.archerEnemies) {
+                if (collisionHandler.enemyWithAttackCollision(enemy, playerAttack) && !enemy.isHit && playerAttack.isActive) {
+                    if(player.isDamageBoost) {
+                        enemy.isHit(playerAttack.damage+player.boostedDamage);
+                    } else if (player.type == 'g' && player.direction == enemy.direction) {
+                        enemy.isHit(playerAttack.damage*4);
+                    } else enemy.isHit(playerAttack.damage);
+                    indicesToRemove.add(i);
+                    break;
+                }
+            }
         }
 
         //REMOVE IN REVERSE ORDER!!

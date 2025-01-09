@@ -136,11 +136,6 @@ public class Rabbit extends Enemy{
         if (pathFinder.findPath()) {
             ArrayList<Node> path = pathFinder.shortestPath; // List of tiles to go to
 
-            if (path.size() < 4) {
-                moving = false;
-                return; // Doesn't go too close to the player
-            }
-
             // Next tile to go to
             double nextCol = path.get(0).col;
             double nextRow = path.get(0).row;
@@ -148,6 +143,19 @@ public class Rabbit extends Enemy{
             // Next x and y position to go to (calculated with tile size)
             double nextWorldX = nextCol * Tile.tileSize;
             double nextWorldY = nextRow * Tile.tileSize;
+
+            // Ensures that enemy does not move when it is too close or too far from player
+            if (path.size() < 5 || path.size() > 40) {
+                moving = false;
+
+                // Turn in direction of player, even if not moving toward them
+                if (worldX > nextWorldX) direction = 'l'; // left
+                else if (worldX < nextWorldX) direction = 'r'; // right
+                if (worldY > nextWorldY) direction = 'u';
+                else if (worldY < nextWorldY) direction = 'd'; // down
+                return; // Does not move to player
+            }
+
             getNewPosition(nextWorldX, nextWorldY);
 
         } else {

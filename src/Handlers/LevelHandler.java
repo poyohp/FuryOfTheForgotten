@@ -194,7 +194,7 @@ public class LevelHandler {
         g2.setColor(Color.GREEN);
         if(keyHandler.toggleInventory) {
             g2.drawString("Active Spawns Remaining: " + spawnHandler.numActiveSpawns, (int)(GamePanel.screenWidth - 300), (100));
-            int totalEnemies = currentLevel.contactEnemies.size() + currentLevel.contactEnemies.size();
+            int totalEnemies = currentLevel.contactEnemies.size() + currentLevel.archerEnemies.size();
             g2.drawString("Enemies Remaining: " + totalEnemies, (int)(GamePanel.screenWidth - 300), (150));
         }
 
