@@ -2,6 +2,8 @@ package Handlers.Spawners;
 
 
 import Entities.Enemies.Dragon;
+import Entities.Enemies.Rabbit;
+import Entities.Enemies.Slime;
 import Entities.Players.Player;
 import World.Level;
 import World.Tile;
@@ -76,39 +78,47 @@ public class SpawnHandler implements ActionListener {
 
                 // For adding Dragon enemies
                 if (value == -3 || value == -4 || value == -5 || value == -6) {
-                    String idlePngName = "";
-                    String attackPngName = "";
+                    addDragons(value, level, player, i, j);
+                }
 
-                    // Assigning dragons for specific levels
-                    switch (level.levelNum) {
-                        case 0:
-                        case 1:
-                            idlePngName = "AdultRedDragon_idle.png";
-                            attackPngName = "AdultRedDragon_attack_hitbox.png";
-                            break;
-                        case 2:
-                        case 3:
-                            idlePngName = "YoungGreenDragon_idle.png";
-                            attackPngName = "YoungGreenDragon_attack_hitbox.png";
-                            break;
-                        case 4:
-                            idlePngName = "FaerieDragon_idle.png";
-                            attackPngName = "AdultRedDragon_attack_hitbox.png";
-                            break;
-                        default:
-                            idlePngName = "AdultRedDragon_idle.png";
-                            attackPngName = "AdultRedDragon_attack_hitbox.png";
-                            break;
-
-                    }
-                    char direct = 'd';
-                    if (value == -4) direct = 'r'; // right
-                    else if (value == -5) direct = 'u'; // up
-                    else if (value == -6) direct = 'l'; // left
-                    level.unkillableEnemies.add(new Dragon(100, 0.0, Tile.tileSize, Tile.tileSize, "Dragon", (int) level.getMap().spawnLayerTiles[i][j].getWorldXPos(), (int) level.getMap().spawnLayerTiles[i][j].getWorldYPos(), 0, 0, 0, 0, player, false, idlePngName, attackPngName, direct));
+                if (value == -10) {
+                    System.out.println("Added");
+                    level.archerEnemies.add(new Rabbit(20, 1.5, Tile.tileSize, Tile.tileSize, "Rabbit", (int) level.getMap().spawnLayerTiles[i][j].getWorldXPos(), (int) level.getMap().spawnLayerTiles[i][j].getWorldYPos(), 0, 0, Tile.tileSize, Tile.tileSize, player, level.getMap().baseLayerTiles, true));
                 }
             }
         }
+    }
+
+    private void addDragons(int value, Level level, Player player, int i, int j) {
+        String idlePngName;
+        String attackPngName;
+
+        // Assigning dragons for specific levels
+        switch (level.levelNum) {
+            case 0:
+            case 1:
+                idlePngName = "AdultRedDragon_idle.png";
+                attackPngName = "AdultRedDragon_attack_hitbox.png";
+                break;
+            case 2:
+            case 3:
+                idlePngName = "YoungGreenDragon_idle.png";
+                attackPngName = "YoungGreenDragon_attack_hitbox.png";
+                break;
+            case 4:
+                idlePngName = "FaerieDragon_idle.png";
+                attackPngName = "AdultRedDragon_attack_hitbox.png";
+                break;
+            default:
+                idlePngName = "AdultRedDragon_idle.png";
+                attackPngName = "AdultRedDragon_attack_hitbox.png";
+                break;
+        }
+        char direct = 'd';
+        if (value == -4) direct = 'r'; // right
+        else if (value == -5) direct = 'u'; // up
+        else if (value == -6) direct = 'l'; // left
+        level.unkillableEnemies.add(new Dragon(100, 0.0, Tile.tileSize, Tile.tileSize, "Dragon", (int) level.getMap().spawnLayerTiles[i][j].getWorldXPos(), (int) level.getMap().spawnLayerTiles[i][j].getWorldYPos(), 0, 0, 0, 0, player, false, idlePngName, attackPngName, direct));
     }
 
     /**
@@ -131,13 +141,10 @@ public class SpawnHandler implements ActionListener {
      */
     private void spawnEnemies(SpawnPoint spawnPoint, Player player, Level level) {
         if (spawnPoint.spawnEnemy) {
-            level.enemies.add(spawnPoint.spawnEnemy(player, level));
+            level.contactEnemies.add(spawnPoint.spawnEnemy(player, level));
             spawnPoint.spawnEnemy = false;
         }
     }
-
-
-
 
     /**
      * Checks if the player is within range of the spawn point
@@ -152,7 +159,6 @@ public class SpawnHandler implements ActionListener {
             }
         }
     }
-
 
     /**
      * Updates the spawn points and spawns enemies if the player is within range

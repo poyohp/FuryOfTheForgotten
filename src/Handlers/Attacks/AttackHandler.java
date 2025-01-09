@@ -165,6 +165,20 @@ public class AttackHandler {
             }
         }
 
+        for (Enemy enemy: level.archerEnemies)  {
+            if (enemy.attacking) {
+                if (enemy.direction == 'r') {
+                    enemyAttacks.add(new Arrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, enemy.direction, enemy, 0, 0, 150, playerRangedSpeed, 15 * Math.PI / 8));
+                } else if (enemy.direction == 'u') {
+                    enemyAttacks.add(new Arrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, enemy.direction, enemy, 0, 0, 150, playerRangedSpeed, 3 * Math.PI / 8));
+                } else if (enemy.direction == 'l') {
+                    enemyAttacks.add(new Arrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, enemy.direction, enemy, 0, 0, 150, playerRangedSpeed, 7 * Math.PI / 8));
+                } else {
+                    enemyAttacks.add(new Arrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, enemy.direction, enemy, 0, 0, 150, playerRangedSpeed, 11 * Math.PI / 8));
+                }
+            }
+        }
+
         removeAttacks(player);
     }
 
@@ -209,16 +223,19 @@ public class AttackHandler {
         if (!enemyAttacks.isEmpty()) {
             for (int i = 0; i < enemyAttacks.size(); i++) {
                 if (collisionHandler.attackWithTileCollision(enemyAttacks.get(i), tileset)) {
-                    System.out.println("Removing attack due to tile collision");
                     enemyToRemove.add(enemyAttacks.get(i));
                 }
                 if (enemyAttacks.get(i).getDuration() <= 0) {
-                    System.out.println("Removing attack due to duration");
                     enemyToRemove.add(enemyAttacks.get(i));
+                } else {
+                    enemyAttacks.get(i).setDuration((enemyAttacks.get(i).getDuration() - 1));
                 }
-                enemyAttacks.get(i).setDuration((enemyAttacks.get(i).getDuration() - 1));
+
             }
+
             enemyAttacks.removeAll(enemyToRemove);
+            enemyToRemove.clear();
+
         }
     }
 
@@ -226,9 +243,13 @@ public class AttackHandler {
      * Draw all attacks
      * @param g2 Graphics 2D object for drawing
      */
-    public void draw(Graphics2D g2, Player player) {
-        for (int i = 0; i < playerAttacks.size(); i++) {
-            playerAttacks.get(i).draw(g2);
+    public void draw(Graphics2D g2) {
+        for (Attack playerAttack : playerAttacks) {
+            playerAttack.draw(g2);
+        }
+
+        for (Attack enemyAttack: enemyAttacks) {
+            enemyAttack.draw(g2);
         }
     }
 

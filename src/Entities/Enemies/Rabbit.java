@@ -4,6 +4,7 @@ import Entities.Players.Player;
 import Handlers.ImageHandler;
 import Pathfinding.APathfinding;
 import Pathfinding.Node;
+import System.Panels.GamePanel;
 import World.Tile;
 
 import java.awt.*;
@@ -25,6 +26,11 @@ public class Rabbit extends Enemy{
 
     int spriteW = 16, spriteH = 16;
 
+    // For attacking and timing
+    int counter;
+    int numSeconds = 1;
+    int numFrames = (int) GamePanel.FPS * numSeconds;
+
 
     /**
      * Enemy that follows player
@@ -44,17 +50,32 @@ public class Rabbit extends Enemy{
      * @param tileset      tileset to use for pathfinding
      * @param isFollowing  whether enemy is following player or not
      */
-    public Rabbit(int health, int speed, int width, int height, String name, int worldX, int worldY, int xOffset, int yOffset, int hitBoxWidth, int hitBoxHeight, Player player, Tile[][] tileset, boolean isFollowing) {
+    public Rabbit(int health, double speed, int width, int height, String name, int worldX, int worldY, int xOffset, int yOffset, int hitBoxWidth, int hitBoxHeight, Player player, Tile[][] tileset, boolean isFollowing) {
         super(health, speed, width, height, name, worldX, worldY, xOffset, yOffset, hitBoxWidth, hitBoxHeight, player, isFollowing);
-        loadSlime();
+        loadRabbit();
         this.tileset = tileset;
         pathFinder = new APathfinding(tileset);
         this.onPath = true;
 
-        hitPlayer = false;
+        attacking = false;
+        counter = numFrames;
     }
 
-    void loadSlime() {
+    public void update() {
+        updateEntityPosition();
+        setScreenPosition();
+        hitbox.update(this);
+
+        if (counter < 0) {
+            attacking = !attacking;
+            counter = numFrames;
+        }
+        counter--;
+
+        move();
+    }
+
+    void loadRabbit() {
         rabbitMove = ImageHandler.loadImage("Assets/Entities/Enemies/Medieval Manuscripts/RabbitSoldier_walk.png");
         rabbitHit = ImageHandler.loadImage("Assets/Entities/Enemies/Medieval Manuscripts/RabbitSoldier_hit.png");
         rabbitDead = ImageHandler.loadImage("Assets/Entities/Enemies/Medieval Manuscripts/RabbitSoldier_die.png");
@@ -67,36 +88,30 @@ public class Rabbit extends Enemy{
      */
     public void move() {
 
-        if(hitPlayer || isHit) {
+        if(isHit) {
             if(freezeTimer > 0) {
                 freezeTimer--;
             } else {
-                hitPlayer = false;
                 isHit = false;
             }
         }
 
         // If enemy is going to follow player
-        if (onPath && !hitPlayer) {
+        if (onPath) {
             int goalRow = (int) (entityToFollow.entityTop/ Tile.tileSize); //top row of the player
             int goalCol = (int) (entityToFollow.entityLeft/Tile.tileSize); //left row of the player
 
             searchPath(goalRow, goalCol);
-
         } //else: different random actions if the player is not in enemy vision
     }
 
     @Override
-    public void hitPlayer() {
-        hitPlayer = true;
-        freezeTimer = freezeTimerFrames;
-    }
+    public void hitPlayer() {}
 
     @Override
     public void isHit(double damage) {
         if(!isHit) {
             this.setHealth(this.getHealth() - damage);
-            hitPlayer = !hitPlayer;
             isHit = true;
             freezeTimer = freezeTimerFrames;
         }
@@ -119,7 +134,7 @@ public class Rabbit extends Enemy{
         if (pathFinder.findPath()) {
             ArrayList<Node> path = pathFinder.shortestPath; // List of tiles to go to
 
-            if (path.size() < 3) {
+            if (path.size() < 4) {
                 moving = false;
                 return; // Doesn't go too close to the player
             }

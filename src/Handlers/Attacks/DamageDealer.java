@@ -61,7 +61,7 @@ public class DamageDealer {
         for (int i = 0; i < attackHandler.playerAttacks.size(); i++) {
             Attack playerAttack = attackHandler.playerAttacks.get(i);
 
-            for (Enemy enemy : level.enemies) {
+            for (Enemy enemy : level.contactEnemies) {
                 if (collisionHandler.enemyWithAttackCollision(enemy, playerAttack) && !enemy.isHit && playerAttack.isActive) {
                     if(player.isDamageBoost) {
                         enemy.isHit(playerAttack.damage+player.boostedDamage);
@@ -72,6 +72,18 @@ public class DamageDealer {
                     break;
                 }
             }
+
+//            for (Enemy enemy : level.archerEnemies) {
+//                if (collisionHandler.enemyWithAttackCollision(enemy, playerAttack) && !enemy.isHit && playerAttack.isActive) {
+//                    if(player.isDamageBoost) {
+//                        enemy.isHit(playerAttack.damage+player.boostedDamage);
+//                    } else if (player.type == 'g' && player.direction == enemy.direction) {
+//                        enemy.isHit(playerAttack.damage*4);
+//                    } else enemy.isHit(playerAttack.damage);
+//                    indicesToRemove.add(i);
+//                    break;
+//                }
+//            }
         }
 
         //REMOVE IN REVERSE ORDER!!

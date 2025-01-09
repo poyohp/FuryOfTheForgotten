@@ -100,7 +100,8 @@ public class LevelHandler {
         // ENEMY HANDLING
         updateEnemies(player, damageDealer);
         removeEnemies();
-        currentLevel.enemies.removeAll(currentLevel.enemiesToRemove);
+        currentLevel.contactEnemies.removeAll(currentLevel.enemiesToRemove);
+        currentLevel.archerEnemies.removeAll(currentLevel.archerEnemiesToRemove);
 
         // SPAWN HANDLING
         spawnHandler.update(player, currentLevel);
@@ -123,7 +124,7 @@ public class LevelHandler {
      * @param damageDealer to deal damage to the player
      */
     public void updateEnemies(Player player, DamageDealer damageDealer) {
-        for (Enemy enemy : currentLevel.enemies) {
+        for (Enemy enemy : currentLevel.contactEnemies) {
             enemy.update();
             damageDealer.dealDamageToPlayer(enemy, player);
         }
@@ -132,6 +133,8 @@ public class LevelHandler {
             enemy.update();
             damageDealer.dealDamageToPlayer(enemy, player);
         }
+
+        for (Enemy enemy: currentLevel.archerEnemies) enemy.update();
     }
 
     /**
@@ -150,7 +153,7 @@ public class LevelHandler {
                 }
             }
 
-            if (!spawnPointsActive && currentLevel.enemies.isEmpty()) {
+            if (!spawnPointsActive && currentLevel.contactEnemies.isEmpty() && currentLevel.archerEnemies.isEmpty()) {
                 currentLevel.doorUnlockable = true;
                 if(!levelComplete && currentLevel.doorUnlocked) {
                     levelComplete = true;
@@ -167,10 +170,15 @@ public class LevelHandler {
     public void removeEnemies() {
 
         // Removes enemies if they die
-        for (Enemy enemy: currentLevel.enemies) {
+        for (Enemy enemy: currentLevel.contactEnemies) {
             if (enemy.getHealth() <= 0 && enemy.freezeTimer <= 0) currentLevel.enemiesToRemove.add(enemy);
         }
-        currentLevel.enemies.removeAll(currentLevel.enemiesToRemove);
+        currentLevel.contactEnemies.removeAll(currentLevel.enemiesToRemove);
+
+        for (Enemy enemy: currentLevel.archerEnemies) {
+            if (enemy.getHealth() <= 0 && enemy.freezeTimer <= 0) currentLevel.archerEnemiesToRemove.add(enemy);
+        }
+        currentLevel.archerEnemies.removeAll(currentLevel.enemiesToRemove);
     }
 
     /**
@@ -186,14 +194,19 @@ public class LevelHandler {
         g2.setColor(Color.GREEN);
         if(keyHandler.toggleInventory) {
             g2.drawString("Active Spawns Remaining: " + spawnHandler.numActiveSpawns, (int)(GamePanel.screenWidth - 300), (100));
-            g2.drawString("Enemies Remaining: " + currentLevel.enemies.size(), (int)(GamePanel.screenWidth - 300), (150));
+            int totalEnemies = currentLevel.contactEnemies.size() + currentLevel.contactEnemies.size();
+            g2.drawString("Enemies Remaining: " + totalEnemies, (int)(GamePanel.screenWidth - 300), (150));
         }
 
-        for (Enemy enemy : currentLevel.enemies) {
+        for (Enemy enemy : currentLevel.contactEnemies) {
             enemy.draw(g2);
         }
 
         for (Enemy enemy : currentLevel.unkillableEnemies) {
+            enemy.draw(g2);
+        }
+
+        for (Enemy enemy : currentLevel.archerEnemies) {
             enemy.draw(g2);
         }
 
@@ -208,7 +221,7 @@ public class LevelHandler {
      */
     private void addLevels() {
         levels[0] = new Level("Assets/Maps/Level1Map.json", "Assets/Tilesets/universalTileset.png", nonWalkableValues1(), 16, 0);
-        levels[1] = new Level("Maps/Level2Map.json", "Assets/Tilesets/dungeonTileset.png", nonWalkableValues2(), 16, 1);
+        levels[0] = new Level("Maps/Level2Map.json", "Assets/Tilesets/dungeonTileset.png", nonWalkableValues2(), 16, 1);
         levels[2] = new Level("Maps/Level3Map.json", "Assets/Tilesets/facilityTileset.png", nonWalkableValues3(), 16, 2);
         levels[3] = new Level("Maps/Level4Map.json", "Assets/Tilesets/catacombTileset.png", nonWalkableValues4(), 16, 3);
         levels[4] = new Level("Maps/Level5Map.json", "Assets/Tilesets/cuteTileset.png", nonWalkableValues5(), 16, 4);

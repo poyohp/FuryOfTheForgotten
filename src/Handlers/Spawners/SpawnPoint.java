@@ -89,7 +89,7 @@ public class SpawnPoint {
      */
     public Enemy spawnEnemy(Player player, Level level) {
         numEnemies--;
-        return new Rabbit(enemyHealth, enemySpeed, enemySize, enemySize, "Enemy", (int)worldX, (int)worldY, 3*Tile.tileSize/Tile.normalTileSize, 4*Tile.tileSize/Tile.normalTileSize, 11*Tile.tileSize/Tile.normalTileSize, 11*Tile.tileSize/Tile.normalTileSize, player, level.getMap().baseLayerTiles, true);
+        return new Slime(enemyHealth, enemySpeed, enemySize, enemySize, "Enemy", (int)worldX, (int)worldY, 3*Tile.tileSize/Tile.normalTileSize, 4*Tile.tileSize/Tile.normalTileSize, 11*Tile.tileSize/Tile.normalTileSize, 11*Tile.tileSize/Tile.normalTileSize, player, level.getMap().baseLayerTiles, true);
     }
 
 

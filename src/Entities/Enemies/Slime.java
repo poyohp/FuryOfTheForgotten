@@ -44,7 +44,7 @@ public class Slime extends Enemy{
      * @param tileset      tileset to use for pathfinding
      * @param isFollowing  whether enemy is following player or not
      */
-    public Slime(int health, int speed, int width, int height, String name, int worldX, int worldY, int xOffset, int yOffset, int hitBoxWidth, int hitBoxHeight, Player player, Tile[][] tileset, boolean isFollowing) {
+    public Slime(int health, double speed, int width, int height, String name, int worldX, int worldY, int xOffset, int yOffset, int hitBoxWidth, int hitBoxHeight, Player player, Tile[][] tileset, boolean isFollowing) {
         super(health, speed, width, height, name, worldX, worldY, xOffset, yOffset, hitBoxWidth, hitBoxHeight, player, isFollowing);
         loadSlime();
         this.tileset = tileset;
