@@ -11,7 +11,7 @@ public class Milk extends UsableObject {
         getImageCoords();
         image = ImageHandler.loadImage("Assets/Objects/food.png");
 
-        value = 20;
+        value = 15;
 
     }
 
