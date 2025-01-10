@@ -12,13 +12,13 @@ public class MusicHandler {
 
     Clip currentClip;
     Level lastLevel;
-    URL[] soundList = new URL[5];
+    URL[] soundList = new URL[6];
     //LevelHandler levelHandler;
 
     public MusicHandler() {
         soundList[0] = getClass().getResource("/Assets/Sound/Soundtrack1.wav");
         soundList[3] = getClass().getResource("/Assets/Sound/Soundtrack4.wav");
-        soundList[4] = getClass().getResource("/Assets/Sound/BossSoundtrack2.wav");
+        soundList[5] = getClass().getResource("/Assets/Sound/BossSoundtrack2.wav");
 
         /*
 
