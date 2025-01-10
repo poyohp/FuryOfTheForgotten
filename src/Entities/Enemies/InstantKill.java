@@ -29,6 +29,8 @@ public class InstantKill extends Enemy {
     boolean setOnDirection;
     int timesMovedInDirection;
 
+    public boolean active;
+
     public InstantKill(int health, int speed, int width, int height, String name, int worldX, int worldY, int xOffset, int yOffset, int hitBoxWidth, int hitBoxHeight, Player player, boolean isFollowing) {
         super(health, speed, width, height, name, worldX, worldY, xOffset, yOffset, hitBoxWidth, hitBoxHeight, player, isFollowing);
 
@@ -42,11 +44,13 @@ public class InstantKill extends Enemy {
 
     @Override
     public void draw(Graphics2D g2) {
-        updateRowsAndCols();
-        g2.drawImage(pancakeBunnySprite,
-                (int)this.screenX, (int)this.screenY, (int)this.screenX + this.getWidth(), (int)this.screenY + this.getHeight(),  //destination
-                currentCol * spriteW, currentRow * spriteH, (currentCol+1) * spriteW, (currentRow+1) * spriteH,
-                null);
+        if(active) {
+            updateRowsAndCols();
+            g2.drawImage(pancakeBunnySprite,
+                    (int)this.screenX, (int)this.screenY, (int)this.screenX + this.getWidth(), (int)this.screenY + this.getHeight(),  //destination
+                    currentCol * spriteW, currentRow * spriteH, (currentCol+1) * spriteW, (currentRow+1) * spriteH,
+                    null);
+        }
     }
 
     /**
@@ -109,12 +113,16 @@ public class InstantKill extends Enemy {
 
     @Override
     public void hitPlayer() {
-        Main.updateGameState(3);
+        if(active) {
+            Main.updateGameState(3);
+        }
     }
 
     @Override
     public void isHit(double damage) {
-        Main.updateGameState(3);
+        if(active) {
+            Main.updateGameState(3);
+        }
     }
 
     public void setBounds(double upBound, double downBound, double leftBound, double rightBound, int mapCols, int mapRows) {
