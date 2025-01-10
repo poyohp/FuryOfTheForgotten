@@ -140,7 +140,7 @@ public class AttackHandler {
         } else if (p.type == 'z') {
             createPlayerSwing(15 * Tile.tileRatio, 20 * Tile.tileRatio, p.direction, p, 0, 0, 36);
         } else if (p.type == 'v') {
-            createPlayerSwipe(1 + 4 - p.bloodBarState, 16 * Tile.tileRatio, 20 * Tile.tileRatio, p.direction, p, 0, 0, 15);
+            createPlayerSwipe(1 + 2 - p.bloodBarState, 16 * Tile.tileRatio, 20 * Tile.tileRatio, p.direction, p, 0, 0, 15);
         }
     }
 

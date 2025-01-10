@@ -31,7 +31,7 @@ public class Vampire extends Player{
         attackFrames = characterAttackFrames;
         attackCooldown = characterAttackCooldown;
         maxAnimationState = 3;
-        bloodBarState = 4;
+        bloodBarState = 2;
         bloodTimer = 120;
     }
 
@@ -156,14 +156,14 @@ public class Vampire extends Player{
         }
 
         g2.setColor(Color.BLACK);
-        g2.fillRect(Tile.tileRatio * 9, (int)(screenHeight - 2*Tile.tileSize), Tile.tileSize*6, Tile.tileSize/2);
+        g2.fillRoundRect(Tile.tileRatio * 9, (int)(screenHeight - 2*Tile.tileSize), Tile.tileSize*6, Tile.tileSize/2, 10, 10);
         g2.setColor(new Color(220, 20, 60));
-        g2.fillRect(Tile.tileRatio * 9, (int)(screenHeight - 2*Tile.tileSize), (int)((Tile.tileSize*6) * bloodBarState/4), Tile.tileSize/2);
+        g2.fillRoundRect(Tile.tileRatio * 9, (int)(screenHeight - 2*Tile.tileSize), (int)((Tile.tileSize*6) * bloodBarState/2), Tile.tileSize/2, 10, 10);
     }
 
     public void updateBloodBar() {
 
-        if (bloodBarState != 4) {
+        if (bloodBarState != 2) {
             bloodTimer--;
         }
 

@@ -44,6 +44,7 @@ public class GamePanel extends JPanel implements Runnable{
     CollisionHandler collisionHandler;
     SpawnHandler spawnHandler;
     DamageDealer damageDealer;
+    MusicHandler musicHandler;
     InventoryHandler inventory;
     InstantKill ghost;
     EternalSnail snail;
@@ -72,11 +73,13 @@ public class GamePanel extends JPanel implements Runnable{
         initiatePlayerType();
 
         objectHandler = new ObjectHandler();
-        levelHandler = new LevelHandler(5, spawnHandler, player);
+        musicHandler = new MusicHandler();
+        levelHandler = new LevelHandler(5, spawnHandler, player, musicHandler);
         collisionHandler = new CollisionHandler();
         damageDealer = new DamageDealer(collisionHandler);
         attackHandler = new AttackHandler(keyHandler, levelHandler.getCurrentLevel().getMap().baseLayerTiles, levelHandler.getCurrentLevel());
         abilityHandler = new AbilityHandler(player, keyHandler, collisionHandler, levelHandler.getCurrentLevel(), player.healthHandler, attackHandler);
+
 
         inventory = new InventoryHandler(keyHandler, player);
 
@@ -111,6 +114,8 @@ public class GamePanel extends JPanel implements Runnable{
     public void initiateGamePanel() {
         this.setFocusable(true);
         this.requestFocusInWindow();
+        musicHandler.getClip(0);
+        musicHandler.play();
         gameThread.start();
     }
 
