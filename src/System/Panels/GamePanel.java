@@ -68,7 +68,7 @@ public class GamePanel extends JPanel implements Runnable{
         initiatePlayerType();
 
         objectHandler = new ObjectHandler();
-        levelHandler = new LevelHandler(5, spawnHandler, player);
+        levelHandler = new LevelHandler(6, spawnHandler, player);
         collisionHandler = new CollisionHandler();
         damageDealer = new DamageDealer(collisionHandler);
         attackHandler = new AttackHandler(keyHandler, levelHandler.getCurrentLevel().getMap().baseLayerTiles, levelHandler.getCurrentLevel());

@@ -134,7 +134,10 @@ public class LevelHandler {
             damageDealer.dealDamageToPlayer(enemy, player);
         }
 
-        for (Enemy enemy: currentLevel.archerEnemies) enemy.update();
+        for (Enemy enemy: currentLevel.archerEnemies) {
+            enemy.update();
+            damageDealer.dealDamageToPlayer(enemy, player);
+        }
     }
 
     /**
@@ -225,6 +228,8 @@ public class LevelHandler {
         levels[2] = new Level("Maps/Level3Map.json", "Assets/Tilesets/facilityTileset.png", nonWalkableValues3(), 16, 2);
         levels[3] = new Level("Maps/Level4Map.json", "Assets/Tilesets/catacombTileset.png", nonWalkableValues4(), 16, 3);
         levels[4] = new Level("Maps/Level5Map.json", "Assets/Tilesets/cuteTileset.png", nonWalkableValues5(), 16, 4);
+        levels[0] = new Level("Maps/Level6Map.json", "Assets/Tilesets/catacombTileset.png", nonWalkableValues6(), 16, 5);
+
     }
 
     /**
@@ -285,6 +290,21 @@ public class LevelHandler {
     private ArrayList<Integer> nonWalkableValues5() {
         ArrayList<Integer> nonWalkableValues = new ArrayList<>();
         nonWalkableValues.add(92);
+        return nonWalkableValues;
+    }
+
+    /**
+     * Add all non-walkable tile values to the nonWalkableValues ArrayList
+     */
+    private ArrayList<Integer> nonWalkableValues6() {
+        ArrayList<Integer> nonWalkableValues = new ArrayList<>();
+
+        int[] values = {197, 206, 208, 261, 453, 454, 464, 272};
+
+        for (int value: values) {
+            nonWalkableValues.add(value);
+        }
+
         return nonWalkableValues;
     }
 
