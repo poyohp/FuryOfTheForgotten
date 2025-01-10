@@ -8,6 +8,7 @@ import Handlers.Attacks.AttackHandler;
 import Handlers.HUD.InventoryHandler;
 import Handlers.Spawners.SpawnHandler;
 import Handlers.Spawners.SpawnPoint;
+import System.Panels.GamePanel;
 import World.Level;
 import Handlers.Attacks.DamageDealer;
 import System.Main;
@@ -27,6 +28,7 @@ public class LevelHandler {
 
     int numLevels;
 
+    Font spawnsRemaining = new Font("Arial", Font.PLAIN, 20);
 
     /**
      * Constructor for LevelHandler - initializes all levels and enemies
@@ -104,7 +106,8 @@ public class LevelHandler {
         // ENEMY HANDLING
         updateEnemies(player, damageDealer);
         removeEnemies();
-        currentLevel.enemies.removeAll(currentLevel.enemiesToRemove);
+        currentLevel.contactEnemies.removeAll(currentLevel.enemiesToRemove);
+        currentLevel.archerEnemies.removeAll(currentLevel.archerEnemiesToRemove);
 
         // SPAWN HANDLING
         spawnHandler.update(player, currentLevel);
@@ -127,7 +130,7 @@ public class LevelHandler {
      * @param damageDealer to deal damage to the player
      */
     public void updateEnemies(Player player, DamageDealer damageDealer) {
-        for (Enemy enemy : currentLevel.enemies) {
+        for (Enemy enemy : currentLevel.contactEnemies) {
             enemy.update();
             damageDealer.dealDamageToPlayer(enemy, player);
         }
@@ -136,6 +139,8 @@ public class LevelHandler {
             enemy.update();
             damageDealer.dealDamageToPlayer(enemy, player);
         }
+
+        for (Enemy enemy: currentLevel.archerEnemies) enemy.update();
     }
 
     /**
@@ -154,8 +159,7 @@ public class LevelHandler {
                 }
             }
 
-
-            if (!spawnPointsActive && currentLevel.enemies.isEmpty()) {
+            if (!spawnPointsActive && currentLevel.contactEnemies.isEmpty() && currentLevel.archerEnemies.isEmpty()) {
                 currentLevel.doorUnlockable = true;
                 if(!levelComplete && currentLevel.doorUnlocked) {
                     levelComplete = true;
@@ -172,10 +176,15 @@ public class LevelHandler {
     public void removeEnemies() {
 
         // Removes enemies if they die
-        for (Enemy enemy: currentLevel.enemies) {
+        for (Enemy enemy: currentLevel.contactEnemies) {
             if (enemy.getHealth() <= 0 && enemy.freezeTimer <= 0) currentLevel.enemiesToRemove.add(enemy);
         }
-        currentLevel.enemies.removeAll(currentLevel.enemiesToRemove);
+        currentLevel.contactEnemies.removeAll(currentLevel.enemiesToRemove);
+
+        for (Enemy enemy: currentLevel.archerEnemies) {
+            if (enemy.getHealth() <= 0 && enemy.freezeTimer <= 0) currentLevel.archerEnemiesToRemove.add(enemy);
+        }
+        currentLevel.archerEnemies.removeAll(currentLevel.enemiesToRemove);
     }
 
     /**
@@ -184,16 +193,29 @@ public class LevelHandler {
      * @param g2
      * @param player
      */
-    public void draw(Graphics2D g2, Player player) {
+    public void draw(Graphics2D g2, Player player, SpawnHandler spawnHandler, KeyHandler keyHandler) {
         this.getCurrentLevel().drawLevel(g2, player);
 
-        for (Enemy enemy : currentLevel.enemies) {
+        g2.setFont(spawnsRemaining);
+        g2.setColor(Color.GREEN);
+        if(keyHandler.toggleInventory) {
+            g2.drawString("Active Spawns Remaining: " + spawnHandler.numActiveSpawns, (int)(GamePanel.screenWidth - 300), (100));
+            int totalEnemies = currentLevel.contactEnemies.size() + currentLevel.archerEnemies.size();
+            g2.drawString("Enemies Remaining: " + totalEnemies, (int)(GamePanel.screenWidth - 300), (150));
+        }
+
+        for (Enemy enemy : currentLevel.contactEnemies) {
             enemy.draw(g2);
         }
 
         for (Enemy enemy : currentLevel.unkillableEnemies) {
             enemy.draw(g2);
         }
+
+        for (Enemy enemy : currentLevel.archerEnemies) {
+            enemy.draw(g2);
+        }
+
     }
 
     public Level getCurrentLevel() {

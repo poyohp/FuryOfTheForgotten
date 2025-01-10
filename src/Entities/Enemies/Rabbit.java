@@ -1,17 +1,17 @@
 package Entities.Enemies;
 
 import Entities.Players.Player;
-import System.Main;
 import Handlers.ImageHandler;
 import Pathfinding.APathfinding;
 import Pathfinding.Node;
+import System.Panels.GamePanel;
 import World.Tile;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-public class EternalSnail extends Enemy{
+public class Rabbit extends Enemy{
 
     // Variables used for pathfinding
     public boolean onPath;
@@ -20,11 +20,18 @@ public class EternalSnail extends Enemy{
 
     // Variables for drawing
     private int updateFrames = 7;
+    BufferedImage rabbitMove, rabbitHit, rabbitDead, rabbitIdle;
 
-    BufferedImage idleSprites = ImageHandler.loadImage("Assets/Entities/Enemies/Medieval Manuscripts/ElderSnail_idle.png");
-    int spriteW = 64/4, spriteH = 64/4; // Sizes for the vampire sprites
-    int maxCol;
-    int currentCol = 0, currentRow = 0;
+    boolean moving;
+
+    boolean shotFired;
+
+    int spriteW = 16, spriteH = 16;
+
+    // For attacking and timing
+    int counter;
+    int numSeconds = 5;
+    int numFrames = (int) GamePanel.FPS * numSeconds;
 
 
     /**
@@ -45,30 +52,51 @@ public class EternalSnail extends Enemy{
      * @param tileset      tileset to use for pathfinding
      * @param isFollowing  whether enemy is following player or not
      */
-    public EternalSnail(int health, double speed, int width, int height, String name, int worldX, int worldY, int xOffset, int yOffset, int hitBoxWidth, int hitBoxHeight, Player player, Tile[][] tileset, boolean isFollowing) {
+    public Rabbit(int health, double speed, int width, int height, String name, int worldX, int worldY, int xOffset, int yOffset, int hitBoxWidth, int hitBoxHeight, Player player, Tile[][] tileset, boolean isFollowing) {
         super(health, speed, width, height, name, worldX, worldY, xOffset, yOffset, hitBoxWidth, hitBoxHeight, player, isFollowing);
+        loadRabbit();
         this.tileset = tileset;
         pathFinder = new APathfinding(tileset);
         this.onPath = true;
 
-        this.worldX = entityToFollow.worldX - Tile.tileSize;
-        this.worldY = entityToFollow.worldY - Tile.tileSize;
+        attacking = false;
+        counter = numFrames;
     }
 
-    public void update(Tile[][] tileset) {
-        pathFinder = new APathfinding(tileset);
-        this.tileset = tileset;
+    public void update() {
         updateEntityPosition();
         setScreenPosition();
         hitbox.update(this);
+
+        if (counter < 0) {
+            attacking = true;
+            counter = numFrames;
+        }
+        counter--;
+
         move();
     }
 
+    void loadRabbit() {
+        rabbitMove = ImageHandler.loadImage("Assets/Entities/Enemies/Medieval Manuscripts/RabbitSoldier_walk.png");
+        rabbitHit = ImageHandler.loadImage("Assets/Entities/Enemies/Medieval Manuscripts/RabbitSoldier_hit.png");
+        rabbitDead = ImageHandler.loadImage("Assets/Entities/Enemies/Medieval Manuscripts/RabbitSoldier_die.png");
+        rabbitIdle = ImageHandler.loadImage("Assets/Entities/Enemies/Medieval Manuscripts/RabbitSoldier_idle.png");
+
+    }
 
     /**
      * Moves enemy
      */
     public void move() {
+
+        if(isHit) {
+            if(freezeTimer > 0) {
+                freezeTimer--;
+            } else {
+                isHit = false;
+            }
+        }
 
         // If enemy is going to follow player
         if (onPath) {
@@ -76,18 +104,19 @@ public class EternalSnail extends Enemy{
             int goalCol = (int) (entityToFollow.entityLeft/Tile.tileSize); //left row of the player
 
             searchPath(goalRow, goalCol);
-
         } //else: different random actions if the player is not in enemy vision
     }
 
     @Override
-    public void hitPlayer() {
-        Main.updateGameState(3);
-    }
+    public void hitPlayer() {}
 
     @Override
     public void isHit(double damage) {
-        Main.updateGameState(3);
+        if(!isHit) {
+            this.setHealth(this.getHealth() - damage);
+            isHit = true;
+            freezeTimer = freezeTimerFrames;
+        }
     }
 
     /**
@@ -96,6 +125,8 @@ public class EternalSnail extends Enemy{
      * @param goalCol Player's column
      */
     public void searchPath(int goalRow, int goalCol) {
+        moving = true;
+
         int startRow = (int) (this.entityTop/Tile.tileSize); //top row of the enemy
         int startCol = (int) (this.entityLeft/Tile.tileSize); //left row of the enemy
 
@@ -112,6 +143,18 @@ public class EternalSnail extends Enemy{
             // Next x and y position to go to (calculated with tile size)
             double nextWorldX = nextCol * Tile.tileSize;
             double nextWorldY = nextRow * Tile.tileSize;
+
+            // Ensures that enemy does not move when it is too close or too far from player
+            if (path.size() < 5 || path.size() > 40) {
+                moving = false;
+
+                // Turn in direction of player, even if not moving toward them
+                if (worldX > nextWorldX) direction = 'l'; // left
+                else if (worldX < nextWorldX) direction = 'r'; // right
+                if (worldY > nextWorldY) direction = 'u';
+                else if (worldY < nextWorldY) direction = 'd'; // down
+                return; // Does not move to player
+            }
 
             getNewPosition(nextWorldX, nextWorldY);
 
@@ -135,6 +178,41 @@ public class EternalSnail extends Enemy{
 
     @Override
     public void draw(Graphics2D g2) {
+        drawHealth(g2);
+
+        int currentRow = getRow();
+        int currentCol = animationState;
+
+        int maxCol = 4;
+        if (currentCol > maxCol) currentCol = 0;
+
+        // Getting the right sprite sheet
+        BufferedImage spriteSheet;
+
+        if (isHit) {
+            if (getHealth() <= 0) {
+                spriteSheet = rabbitDead;
+                currentCol = 0;
+            }
+            else {
+                if (freezeTimer < freezeTimerFramesHalfway) currentCol = 0;
+                else currentCol = 1;
+                spriteSheet = rabbitHit;
+            }
+        } else {
+            if (moving) spriteSheet = rabbitMove;
+            else spriteSheet = rabbitIdle;
+        }
+
+        g2.drawImage(spriteSheet, (int)this.screenX, (int)this.screenY, (int)this.screenX + this.getWidth(), (int)this.screenY + this.getHeight(),
+                currentCol * spriteW, currentRow * spriteH, (currentCol + 1) * spriteW, (currentRow + 1) * spriteW,
+                null);
+
+        updateFrames();
+    }
+
+    private int getRow() {
+        int currentRow;
         if (direction == 'd') {
             currentRow = 0;
         } else if (direction == 'l') {
@@ -144,15 +222,6 @@ public class EternalSnail extends Enemy{
         } else {
             currentRow = 3;
         }
-
-        currentCol = animationState;
-        if (currentCol > maxCol) currentCol = 0;
-
-        g2.drawImage(idleSprites, (int)this.screenX, (int)this.screenY, (int)this.screenX + this.getWidth(), (int)this.screenY + this.getHeight(),
-                currentCol * spriteW, currentRow * spriteH, (currentCol + 1) * spriteW, (currentRow + 1) * spriteW,
-                null);
-
-        updateFrames();
+        return currentRow;
     }
-
 }

@@ -1,6 +1,7 @@
 package Handlers.Spawners;
 
 
+import Entities.Enemies.Rabbit;
 import Entities.Enemies.Slime;
 import Handlers.ImageHandler;
 import System.Panels.GamePanel;

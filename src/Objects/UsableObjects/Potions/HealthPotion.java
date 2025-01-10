@@ -11,6 +11,8 @@ public class HealthPotion extends UsableObject {
         super(name, width, height, worldX, worldY, screenX, screenY, vx, vy);
         getImageCoords();
         image = ImageHandler.loadImage("Assets/Objects/potions.png");
+        value = 25;
+
     }
 
     @Override

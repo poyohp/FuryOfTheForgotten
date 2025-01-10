@@ -10,6 +10,9 @@ public class Milk extends UsableObject {
         super(name, width, height, worldX, worldY, screenX, screenY, vx, vy);
         getImageCoords();
         image = ImageHandler.loadImage("Assets/Objects/food.png");
+
+        value = 15;
+
     }
 
     @Override

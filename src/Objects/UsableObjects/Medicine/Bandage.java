@@ -10,6 +10,9 @@ public class Bandage extends UsableObject {
         super(name, width, height, worldX, worldY, screenX, screenY, vx, vy);
         getImageCoords();
         image = ImageHandler.loadImage("Assets/Objects/flowers&medicine.png");
+
+        value = 5;
+
     }
 
     @Override

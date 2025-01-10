@@ -20,7 +20,6 @@ public class Main {
     public static ShopPanel shopPanel;
     public static BuyPanel buyPanel;
 
-
     public static JFrame window = new JFrame();
 
 

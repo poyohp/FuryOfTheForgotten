@@ -2,13 +2,11 @@ package World;
 
 import Entities.Enemies.Enemy;
 import Entities.Players.Player;
-import Handlers.ImageHandler;
 import Objects.UnusableObjects.Chest;
 import Objects.Object;
 import org.json.simple.parser.ParseException;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -17,9 +15,11 @@ public class Level {
     private final Map map;
 
     // Holds all enemy data in the current level
-    public ArrayList<Enemy> enemies = new ArrayList<>();
+    public ArrayList<Enemy> contactEnemies = new ArrayList<>();
     public ArrayList<Enemy> unkillableEnemies = new ArrayList<>();
+    public ArrayList<Enemy> archerEnemies = new ArrayList<>();
     public ArrayList<Enemy> enemiesToRemove = new ArrayList<>();
+    public ArrayList<Enemy> archerEnemiesToRemove = new ArrayList<>();
     public ArrayList<Chest> chests = new ArrayList<>();
 
     public ArrayList<Object> objects = new ArrayList<>();

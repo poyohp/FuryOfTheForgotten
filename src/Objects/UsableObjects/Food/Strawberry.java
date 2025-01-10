@@ -3,6 +3,7 @@ package Objects.UsableObjects.Food;
 import Entities.Players.Player;
 import Handlers.ImageHandler;
 import Objects.UsableObjects.UsableObject;
+import System.Panels.GamePanel;
 
 public class Strawberry extends UsableObject {
 
@@ -10,6 +11,9 @@ public class Strawberry extends UsableObject {
         super(name, width, height, worldX, worldY, screenX, screenY, vx, vy);
         getImageCoords();
         image = ImageHandler.loadImage("Assets/Objects/food.png");
+
+        value = 5;
+
     }
 
     @Override
@@ -21,5 +25,9 @@ public class Strawberry extends UsableObject {
     @Override
     public void isUsed(Player player) {
         player.healthHandler.heal(0.5);
+        if(GamePanel.random.nextInt(100) == 1) {
+            player.speedBoostUsed();
+            player.damageBoostUsed();
+        }
     }
 }

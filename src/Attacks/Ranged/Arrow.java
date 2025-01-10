@@ -1,5 +1,6 @@
 package Attacks.Ranged;
 
+import Entities.Enemies.Enemy;
 import Entities.Entity;
 import Entities.Hitbox;
 import Entities.Players.Player;
@@ -86,5 +87,4 @@ public class Arrow extends Ranged {
         setScreenPosition(player);
         hitbox.update(this);
     }
-
 }

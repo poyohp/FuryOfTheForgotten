@@ -114,7 +114,7 @@ public class HealthHandler {
         this.maxHearts = hearts;
         this.currentHearts = hearts;
 
-        maxShields = maxHearts/2;
+        maxShields = 4.0;
 
         lostHeart = -1;
         lostFullHeart = false;

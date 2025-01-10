@@ -75,6 +75,49 @@ public abstract class Enemy extends Entity {
         else return false;
     }
 
+    public void getNewPosition(double nextWorldX, double nextWorldY) {
+        if (Math.abs(nextWorldX - worldX) > getSpeed()) { // Moving will not put the enemy into the middle of the wrong tile
+            if (worldX > nextWorldX) {
+                direction = 'l'; // left
+                worldX -= getSpeed();
+            } else if (worldX < nextWorldX) {
+                direction = 'r'; // right
+                worldX += getSpeed();
+            }
+        } else {
+            worldX = nextWorldX; // Snap directly to next tile
+        }
+
+        if (Math.abs(nextWorldY - worldY) > getSpeed()) {
+            if (worldY > nextWorldY) {
+                direction = 'u'; // up
+                worldY -= getSpeed();
+            } else if (worldY < nextWorldY) {
+                direction = 'd'; // down
+                worldY += getSpeed();
+            }
+        } else {
+            worldY = nextWorldY; // Snap to tile
+        }
+    }
+
+    public void moveTowardPlayer () {
+        if (worldX > entityToFollow.worldX) {
+            direction = 'l'; // left
+            worldX -= getSpeed();
+        } else if (worldX < entityToFollow.worldX) {
+            direction = 'r'; // right
+            worldX += getSpeed();
+        }
+        if (worldY > entityToFollow.worldY) {
+            direction = 'u'; // up
+            worldY -= getSpeed();
+        } else if (worldY < entityToFollow.worldY) {
+            direction = 'd'; // down
+            worldY += getSpeed();
+        }
+    }
+
     /**
      * Sets enemy's position on the screen
      */

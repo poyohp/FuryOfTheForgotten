@@ -23,7 +23,7 @@ public abstract class Player extends Entity {
     public boolean collisionWithChest;
     public int coinValue;
 
-    public final int initNumHearts = 8;
+    public final int initNumHearts = 6;
 
     public int updateFrames;
     int attackFrames;

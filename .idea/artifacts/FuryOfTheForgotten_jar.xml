@@ -3,8 +3,8 @@
     <output-path>$PROJECT_DIR$/out/artifacts/FuryOfTheForgotten_jar</output-path>
     <root id="archive" name="FuryOfTheForgotten.jar">
       <element id="module-output" name="FuryOfTheForgotten" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/../../../json-simple-1.1.1.jar" path-in-jar="/" />
-      <element id="file-copy" path="$PROJECT_DIR$/../../../json-simple-1.1.1.jar" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../json-simple-1.1.1.jar" path-in-jar="/" />
+      <element id="file-copy" path="$PROJECT_DIR$/../../json-simple-1.1.1.jar" />
     </root>
   </artifact>
 </component>

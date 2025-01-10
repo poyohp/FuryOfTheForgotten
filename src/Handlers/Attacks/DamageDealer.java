@@ -32,9 +32,8 @@ public class DamageDealer {
         }
     }
 
-    public void dealMeleeDamageToPlayer(AttackHandler attackHandler, Level level, Player player) {
+    public void dealMeleeDamageToPlayer(AttackHandler attackHandler, Player player) {
         ArrayList<Integer> indicesToRemove = new ArrayList<>();
-
         for (int i = 0; i < attackHandler.enemyAttacks.size(); i++) {
             Attack enemyAttack = attackHandler.enemyAttacks.get(i);
                 if (collisionHandler.playerWithAttackCollision(player, enemyAttack) && !player.isHit && enemyAttack.isActive) {
@@ -62,7 +61,19 @@ public class DamageDealer {
         for (int i = 0; i < attackHandler.playerAttacks.size(); i++) {
             Attack playerAttack = attackHandler.playerAttacks.get(i);
 
-            for (Enemy enemy : level.enemies) {
+            for (Enemy enemy : level.contactEnemies) {
+                if (collisionHandler.enemyWithAttackCollision(enemy, playerAttack) && !enemy.isHit && playerAttack.isActive) {
+                    if(player.isDamageBoost) {
+                        enemy.isHit(playerAttack.damage+player.boostedDamage);
+                    } else if (player.type == 'g' && player.direction == enemy.direction) {
+                        enemy.isHit(playerAttack.damage*4);
+                    } else enemy.isHit(playerAttack.damage);
+                    indicesToRemove.add(i);
+                    break;
+                }
+            }
+
+            for (Enemy enemy : level.archerEnemies) {
                 if (collisionHandler.enemyWithAttackCollision(enemy, playerAttack) && !enemy.isHit && playerAttack.isActive) {
                     if(player.isDamageBoost) {
                         enemy.isHit(playerAttack.damage+player.boostedDamage);

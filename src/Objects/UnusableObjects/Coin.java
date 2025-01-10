@@ -130,4 +130,10 @@ public class Coin extends Object {
         //NEVER DRAW COIN HERE
     }
 
+    @Override
+    public void drawDescription(Graphics2D g2, int x1, int y1, int x2, int y2) {
+        //NO DESCRIPTION
+    }
+
+
 }

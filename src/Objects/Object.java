@@ -13,6 +13,7 @@ public abstract class Object {
     public BufferedImage image;
 
     public String name;
+    public int value;
 
     // equippable meaning you can have it in your INVENTORY
     // pickedUp meaning you have picked it up (and its IN your inventory)
@@ -80,11 +81,16 @@ public abstract class Object {
         this.screenY = worldY - player.worldY + player.screenY;
     }
 
+    public boolean equals(Object object) {
+        return this.name.equalsIgnoreCase(object.name);
+    }
+
     public abstract void getImageCoords();
     public abstract void isPickedUp(Player player, Level level);
     public abstract void isUsed(Player player);
     public abstract void isDropped(Player player, Level level);
     public abstract void draw(Graphics2D g2);
     public abstract void drawHUD(Graphics2D g2, int x, int y, int size);
+    public abstract void drawDescription(Graphics2D g2, int x1, int y1, int x2, int y2);
 
 }

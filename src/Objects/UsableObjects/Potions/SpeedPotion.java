@@ -11,6 +11,9 @@ public class SpeedPotion extends UsableObject {
         super(name, width, height, worldX, worldY, screenX, screenY, vx, vy);
         getImageCoords();
         image = ImageHandler.loadImage("Assets/Objects/potions.png");
+
+        value = 30;
+
     }
 
     @Override
