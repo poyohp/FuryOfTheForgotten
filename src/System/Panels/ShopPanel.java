@@ -34,7 +34,7 @@ public class ShopPanel extends AbstractPanel {
                 GamePanel currentGamePanel = Main.gamePanel;
                 Main.updateGameState(2);
                 currentGamePanel.resumeGame();
-                currentGamePanel.levelHandler.goToNextLevel(currentGamePanel.spawnHandler, currentGamePanel.player, currentGamePanel.attackHandler, currentGamePanel.inventory);
+                currentGamePanel.levelHandler.goToNextLevel(currentGamePanel.spawnHandler, currentGamePanel.player, currentGamePanel.attackHandler, currentGamePanel);
                 currentGamePanel.levelHandler.levelComplete = false;
             } else {
                 keyHandler.choicePress = false;
