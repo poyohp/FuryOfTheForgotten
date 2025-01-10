@@ -145,10 +145,11 @@ public class BuyPanel extends AbstractPanel {
      * Gets the user's choice from the buttons
      */
     public void handleChoice() {
-        //"BUY BUTTON"
-
         Object item = shopItems.get(buttonIndexes[currentButtonY][currentButtonX]);
+        item.origHeight = Tile.tileSize;
+        item.origWidth = Tile.tileSize;
 
+        //"BUY BUTTON"
         if(keyHandler.choicePress) {
             if(gamePanel.inventory.indexFree != -1) {
                 //FREE SLOT

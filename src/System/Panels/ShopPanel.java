@@ -18,6 +18,8 @@ public class ShopPanel extends AbstractPanel {
 
         addButtonsToArrayList();
 
+        keyHandler.allowInventoryToggle = false;
+
     }
 
     /**

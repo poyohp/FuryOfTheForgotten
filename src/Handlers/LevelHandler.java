@@ -22,6 +22,7 @@ public class LevelHandler {
     private final Level[] levels;
     private Level currentLevel;
     int currentLevelIndex;
+    MusicHandler musicHandler;
 
     public boolean levelComplete = false;
 
@@ -35,9 +36,10 @@ public class LevelHandler {
      * @param spawnHandler handles the initial enemy spawn point creation
      * @param player the game player
      */
-    public LevelHandler(int numLevels, SpawnHandler spawnHandler, Player player) {
+    public LevelHandler(int numLevels, SpawnHandler spawnHandler, Player player, MusicHandler musicHandler) {
         this.numLevels = numLevels;
         levels = new Level[numLevels];
+        this.musicHandler = musicHandler;
 
         addLevels();
 
@@ -65,6 +67,10 @@ public class LevelHandler {
             currentLevel = levels[currentLevelIndex];
             attackHandler.levelChanged(currentLevel);
             spawnHandler.levelChanged(player, currentLevel);
+
+            musicHandler.stop();
+            musicHandler.getClip(currentLevelIndex);
+            musicHandler.play();
         }
     }
 
