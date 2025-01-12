@@ -140,20 +140,21 @@ public class LevelHandler {
      * @param damageDealer to deal damage to the player
      */
     public void updateEnemies(Player player, DamageDealer damageDealer) {
-        for (Enemy enemy : currentLevel.contactEnemies) {
-            enemy.update();
-            damageDealer.dealDamageToPlayer(enemy, player);
+        for(int i = 0; i < currentLevel.contactEnemies.size(); i++) {
+            currentLevel.contactEnemies.get(i).update();
+            damageDealer.dealDamageToPlayer(currentLevel.contactEnemies.get(i), player);
         }
 
-        for (Enemy enemy: currentLevel.unkillableEnemies) {
-            enemy.update();
-            damageDealer.dealDamageToPlayer(enemy, player);
+        for(int i = 0; i < currentLevel.unkillableEnemies.size(); i++) {
+            currentLevel.unkillableEnemies.get(i).update();
+            damageDealer.dealDamageToPlayer(currentLevel.unkillableEnemies.get(i), player);
         }
 
-        for (Enemy enemy: currentLevel.archerEnemies) {
-            enemy.update();
-            damageDealer.dealDamageToPlayer(enemy, player);
+        for(int i = 0; i < currentLevel.archerEnemies.size(); i++) {
+            currentLevel.archerEnemies.get(i).update();
+            damageDealer.dealDamageToPlayer(currentLevel.archerEnemies.get(i), player);
         }
+
     }
 
     /**

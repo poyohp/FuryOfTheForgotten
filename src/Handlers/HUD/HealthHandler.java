@@ -177,8 +177,8 @@ public class HealthHandler {
 
         heartsDamaged = 0;
         shieldsDamaged = 0;
-        lastHeartIndex = (int) Math.ceil(currentHearts);
-        lastShieldIndex = (int) Math.ceil(shieldHearts);
+        lastHeartIndex = (int) currentHearts;
+        lastShieldIndex = (int) shieldHearts;
 
         if (enhancedHealth) {
             damage /= 2.0;
