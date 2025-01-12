@@ -35,7 +35,7 @@ public abstract class Player extends Entity {
     //Hit timers
     public boolean isHit;
     public double iFramesCounter;
-    public final double iFramesTimerSeconds = 0.5;
+    public final double iFramesTimerSeconds = 0.75;
     public final double iFramesTimerFrames = GamePanel.FPS*iFramesTimerSeconds;
 
     //EFFECT TIMERS

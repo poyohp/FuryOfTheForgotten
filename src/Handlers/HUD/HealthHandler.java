@@ -26,12 +26,16 @@ public class HealthHandler {
     private final int heartsY = (int)(GamePanel.screenHeight - outerGap - heartFinalDrawSize);
     private final int shieldY = heartsY - heartFinalDrawSize;
 
-    private double lostHeart;
-    boolean lostFullHeart;
-    boolean lostHalfHeart;
-    boolean shieldTransition;
+    private int heartsDamaged;
+    private int lastHeartIndex;
+    private boolean isTransitioningForHearts;
+    private double transitionTimerForHearts;
 
-    private double transitionTimer;
+    private int shieldsDamaged;
+    private int lastShieldIndex;
+    private boolean isTransitionForShields;
+    private double transitionTimerForShields;
+
     private final double transitionDrawSeconds = 0.5;
     private final double transitionDrawFrames = GamePanel.FPS * transitionDrawSeconds;
 
@@ -116,10 +120,6 @@ public class HealthHandler {
 
         maxShields = 4.0;
 
-        lostHeart = -1;
-        lostFullHeart = false;
-        lostHalfHeart = false;
-
         shieldHearts = 0;
         hasShields = false;
 
@@ -175,62 +175,64 @@ public class HealthHandler {
 
     public void isHit(double damage, boolean onlyHearts) {
 
-        if(enhancedHealth) {
+        heartsDamaged = 0;
+        shieldsDamaged = 0;
+        lastHeartIndex = (int) Math.ceil(currentHearts);
+        lastShieldIndex = (int) Math.ceil(shieldHearts);
+
+        if (enhancedHealth) {
             damage /= 2.0;
         }
 
-        if (hasShields) {
-            shieldTransition = true;
+        double remainingDamage = damage;
+
+        // Heart loss based on damage
+        while (remainingDamage >= 1.0) {
+            if (hasShields && !onlyHearts) {
+                shieldsDamaged += 1;
+                shieldHearts -= 1.0;
+                lastShieldIndex --;
+            } else {
+                currentHearts -= 1.0;
+                heartsDamaged += 1;
+                lastHeartIndex--;
+            }
+            remainingDamage -= 1.0;
         }
 
-        if(onlyHearts) {
-            shieldTransition = false;
+        // Partial damage
+        if (remainingDamage > 0) {
+            if (hasShields && !onlyHearts) {
+                shieldsDamaged += 1;
+                shieldHearts -= remainingDamage;
+                lastShieldIndex --;
+            } else {
+                currentHearts -= remainingDamage;
+                heartsDamaged += 1;
+                lastHeartIndex--;
+            }
         }
 
-        double previousHearts;
-        if(shieldTransition && hasShields && shieldHearts > 0) {
-            previousHearts = shieldHearts;
-            shieldHearts -= damage;
-        } else {
-            previousHearts = currentHearts;
-            currentHearts -= damage;
+        // RESETTING HEART TRANSITION
+        if(!isTransitioningForHearts && heartsDamaged > 0) {
+            isTransitioningForHearts = true;
+            transitionTimerForHearts = transitionDrawFrames;
         }
 
-        transitionTimer = transitionDrawFrames;
+        //RESETTING SHIELD TRANSITION
+        if(!isTransitionForShields) {
+            isTransitionForShields = true;
+            transitionTimerForShields = transitionDrawFrames;
+        }
 
-        //RESET LOST VALUE IF SHIELDS GO BYEBYE
+        // RESET LOST VALUE IF SHIELDS GO BYEBYE
         if (hasShields && shieldHearts <= 0) {
             hasShields = false;
-            lostHeart = -1;
-            lostFullHeart = false;
-            lostHalfHeart = false;
         }
 
-        //CHECK DEAD
-        if(currentHearts <= 0) {
-            Main.updateGameState(4);
-        }
-
-        //DETERMINE IF FULL-->HALF
-        if(hasShields && shieldHearts > 0) {
-            if (previousHearts % 1 == 0.5 && shieldHearts % 1 == 0) {
-                //HALF TO NONE
-                lostFullHeart = true;
-            } else if (previousHearts % 1 == 0 && shieldHearts % 1 == 0.5) {
-                //FULL TO HALF
-                lostHalfHeart = true;
-            }
-        } else {
-            if(shieldTransition) {
-                if ((previousHearts % 1 == 0.5 && currentHearts % 1 == 0) || (previousHearts % 1 == 0.5 && currentHearts % 1 == 0.25)) {
-                    //HALF TO NONE OR QUARTER TO NONE
-                    lostFullHeart = true;
-                } else if ((previousHearts % 1 == 0 && currentHearts % 1 == 0.5) || (previousHearts % 1 == 0 && currentHearts % 1 == 0.75)) {
-                    //FULL TO HALF OR FULL TO 0.75
-                    lostHalfHeart = true;
-                }
-            }
-
+        // CHECK DEAD
+        if (currentHearts <= 0) {
+            Main.updateGameState(4); // Game over or dead state
         }
     }
 
@@ -320,62 +322,24 @@ public class HealthHandler {
                     g2.drawImage(heartSprite, x, y, x + heartFinalDrawSize, y + heartFinalDrawSize, 0, 0, spriteSize, spriteSize, null);
                 }
 
-                if (i == lostHeart && !shieldTransition) {
-                    double transitionDrawHalfway = transitionDrawFrames / 2.0;
-
-                    double scaleFactor = 1.5;
-                    if (transitionTimer < transitionDrawHalfway) {
-                        scaleFactor = 1.2;
-                    }
-                    int scaledDrawSize = (int) (heartFinalDrawSize * scaleFactor);
-                    int offset = (scaledDrawSize - heartFinalDrawSize) / 2;
-
-                    if (lostFullHeart) {
-                        drawTransition(g2, x, y, transitionDrawHalfway, scaledDrawSize, offset);
-                    } else if (lostHalfHeart) {
-                        if (transitionTimer < transitionDrawHalfway) {
-                            //HALF
-                            if(enhancedHealth) {
-                                g2.drawImage(heartSprite,
-                                        x - offset, y - offset,
-                                        x + scaledDrawSize - offset, y + scaledDrawSize - offset, 0, spriteSize * 12, spriteSize, spriteSize * 12 + spriteSize, null);
-                            } else if(poisonedHealth) {
-                                g2.drawImage(heartSprite,
-                                        x - offset, y - offset,
-                                        x + scaledDrawSize - offset, y + scaledDrawSize - offset, 0, spriteSize * 17, spriteSize, spriteSize * 17 + spriteSize, null);
-                            } else {
-                                g2.drawImage(
-                                        heartSprite,
-                                        x - offset, y - offset,
-                                        x + scaledDrawSize - offset, y + scaledDrawSize - offset,
-                                        spriteSize * 2, spriteSize * 3, spriteSize * 2 + spriteSize, spriteSize * 3 + spriteSize,
-                                        null
-                                );
-                            }
-                        } else {
-                            //BLINKING
-                            g2.drawImage(
-                                    heartSprite,
-                                    x - offset, y - offset,
-                                    x + scaledDrawSize - offset, y + scaledDrawSize - offset,
-                                    spriteSize, 0, spriteSize * 2, spriteSize,
-                                    null
-                            );
-                        }
-                    }
-                    transitionTimer--;
-                }
-
-                if(transitionTimer < 0) {
-                    transitionTimer = 0;
-                    lostHeart = -1;
-                    lostFullHeart = false;
-                    lostHalfHeart = false;
-                }
-
                 numDrawn++;
                 x += heartFinalDrawSize - innerGap;
             }
+
+            // IF LOST HEART, DRAW TRANSITION
+            if(heartsDamaged > 0 && isTransitioningForHearts) {
+                int drawX = (lastHeartIndex*(heartFinalDrawSize - innerGap)) + outerGap;
+                for(int j = 0; j < heartsDamaged; j++) {
+                    drawTransition(g2, drawX, heartsY, transitionDrawFrames/2, transitionTimerForHearts);
+                    drawX += heartFinalDrawSize - innerGap;
+                }
+
+                transitionTimerForHearts--;
+                if(transitionTimerForHearts < 0) {
+                    isTransitioningForHearts = false;
+                }
+            }
+
         }
     }
 
@@ -424,68 +388,45 @@ public class HealthHandler {
                     g2.drawImage(heartSprite, x, y, x + heartFinalDrawSize, y + heartFinalDrawSize, 0, 0, spriteSize, spriteSize, null);
                 }
 
-                if (i == lostHeart && shieldTransition) {
-                    double transitionDrawHalfway = transitionDrawFrames / 2.0;
-
-                    double scaleFactor = 1.5;
-                    if (transitionTimer < transitionDrawHalfway) {
-                        scaleFactor = 1.2;
-                    }
-                    int scaledDrawSize = (int) (heartFinalDrawSize * scaleFactor);
-                    int offset = (scaledDrawSize - heartFinalDrawSize) / 2;
-
-                    if (lostFullHeart) {
-                        drawTransition(g2, x, y, transitionDrawHalfway, scaledDrawSize, offset);
-                    } else if (lostHalfHeart) {
-                        if (transitionTimer < transitionDrawHalfway) {
-                            g2.drawImage(heartSprite, x, y, x + heartFinalDrawSize, y + heartFinalDrawSize, spriteSize * 2, spriteSize * 8,spriteSize * 2 + spriteSize, spriteSize * 8 + spriteSize, null);
-                        } else {
-                            g2.drawImage(
-                                    heartSprite,
-                                    x - offset, y - offset,
-                                    x + scaledDrawSize - offset, y + scaledDrawSize - offset,
-                                    spriteSize, 0, spriteSize * 2, spriteSize,
-                                    null
-                            );
-                        }
-                    }
-                    transitionTimer--;
-                }
-
-                if(transitionTimer < 0) {
-                    transitionTimer = 0;
-                    lostHeart = -1;
-                    lostFullHeart = false;
-                    lostHalfHeart = false;
-                }
-
                 numDrawn++;
                 x += heartFinalDrawSize - innerGap;
             }
+
+            // IF LOST HEART, DRAW TRANSITION
+            if(shieldsDamaged > 0 && isTransitionForShields) {
+                int drawX = (lastShieldIndex*(heartFinalDrawSize - innerGap)) + outerGap;
+                for(int j = 0; j < shieldsDamaged; j++) {
+                    drawTransition(g2, drawX, shieldY, transitionDrawFrames/2, transitionTimerForShields);
+                    drawX += heartFinalDrawSize - innerGap;
+                }
+
+                transitionTimerForShields--;
+                if(transitionTimerForShields < 0) {
+                    isTransitionForShields = false;
+                }
+            }
+
             hasShields = shieldHearts > 0;
         }
     }
 
-    private void drawTransition(Graphics2D g2, int x, int y, double transitionDrawHalfway, int scaledDrawSize, int offset) {
-        if (transitionTimer < transitionDrawHalfway) {
-            //EMPTY
-            g2.drawImage(
-                    heartSprite,
-                    x - offset, y - offset,
-                    x + scaledDrawSize - offset, y + scaledDrawSize - offset,
-                    0, 0, spriteSize, spriteSize,
-                    null
-            );
-        } else {
-            // BLINKING HEART
-            g2.drawImage(
-                    heartSprite,
-                    x - offset, y - offset,
-                    x + scaledDrawSize - offset, y + scaledDrawSize - offset,
-                    spriteSize, 0, spriteSize * 2, spriteSize,
-                    null
-            );
+    private void drawTransition(Graphics2D g2, int x, int y, double transitionDrawHalfway, double timer) {
+        // BLINKING HEART
+        double scaleFactor = 1.5;
+        if (timer < transitionDrawHalfway) {
+            scaleFactor = 1.2;
         }
+
+        int scaledDrawSize = (int) (heartFinalDrawSize * scaleFactor);
+        int offset = (scaledDrawSize - heartFinalDrawSize) / 2;
+
+        g2.drawImage(
+                heartSprite,
+                x - offset, y - offset,
+                x + scaledDrawSize - offset, y + scaledDrawSize - offset,
+                spriteSize, 0, spriteSize * 2, spriteSize,
+                null
+        );
     }
 
     public void drawHealth(Graphics2D g2) {
