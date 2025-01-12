@@ -13,6 +13,8 @@ import Handlers.Spawners.SpawnHandler;
 import Pathfinding.APathfinding;
 import World.Map;
 import World.Tile;
+import java.util.Random;
+
 
 
 import javax.swing.JPanel;
@@ -46,8 +48,11 @@ public class GamePanel extends JPanel implements Runnable{
     MusicHandler musicHandler;
     InventoryHandler inventory;
 
+
     public InstantKill ghost;
     public EternalSnail snail;
+
+    public static Random random = new Random();
 
     /**
      * Constructor for the GamePanel - initializes all objects and starts the game
