@@ -33,6 +33,9 @@ public class StatsPanel extends AbstractPanel {
     public void addButtonsToArrayList() {}
 
     @Override
+    public void setSelected() {}
+
+    @Override
     public void paintComponent(Graphics g) {
 
         // Draws the fullscreen menu image
@@ -46,6 +49,5 @@ public class StatsPanel extends AbstractPanel {
         g2.drawString(String.valueOf(LevelHandler.levelsCompleted), screenWidth/2, screenHeight/4 + screenHeight/8 * 2);
         g2.drawString(String.format("%.2f", GamePanel.totalTimePlayed) + " seconds", screenWidth/2, screenHeight/4 + screenHeight/8 * 3);
         g2.drawString(String.valueOf(ObjectHandler.determineMostUsed()), screenWidth/2, screenHeight/4 + screenHeight/8 * 4);
-
     }
 }

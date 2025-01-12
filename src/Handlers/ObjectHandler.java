@@ -210,7 +210,7 @@ public class ObjectHandler {
 
             if (timesUsed > maxUsage) {
                 maxUsage = timesUsed;
-                mostUsedItem = item + " | Num Times Used: " + timesUsed;
+                mostUsedItem = item + " | Usage: " + timesUsed;
             }
         }
 
