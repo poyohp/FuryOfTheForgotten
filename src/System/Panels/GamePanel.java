@@ -19,6 +19,7 @@ import java.util.Random;
 
 import javax.swing.JPanel;
 import java.awt.*;
+import java.util.Random;
 
 
 public class GamePanel extends JPanel implements Runnable{
