@@ -50,7 +50,7 @@ public class GamePanel extends JPanel implements Runnable{
     public InstantKill ghost;
     public EternalSnail snail;
 
-    Random random = new Random();
+    public static Random random = new Random();
 
     /**
      * Constructor for the GamePanel - initializes all objects and starts the game
