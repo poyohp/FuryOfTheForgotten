@@ -46,8 +46,9 @@ public class GamePanel extends JPanel implements Runnable{
     DamageDealer damageDealer;
     MusicHandler musicHandler;
     InventoryHandler inventory;
-    InstantKill ghost;
-    EternalSnail snail;
+
+    public InstantKill ghost;
+    public EternalSnail snail;
 
     public static Random random = new Random();
 
@@ -70,7 +71,7 @@ public class GamePanel extends JPanel implements Runnable{
 
         objectHandler = new ObjectHandler();
         musicHandler = new MusicHandler();
-        levelHandler = new LevelHandler(5, spawnHandler, player, musicHandler);
+        levelHandler = new LevelHandler(6, spawnHandler, player, musicHandler);
         collisionHandler = new CollisionHandler();
         damageDealer = new DamageDealer(collisionHandler);
         attackHandler = new AttackHandler(keyHandler, levelHandler.getCurrentLevel().getMap().baseLayerTiles, levelHandler.getCurrentLevel());

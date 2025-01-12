@@ -57,8 +57,8 @@ public class LevelHandler {
      * @param spawnHandler to update spawns in the new level
      * @param player the game player
      */
-    public void goToNextLevel(SpawnHandler spawnHandler, Player player, AttackHandler attackHandler, InventoryHandler inventoryHandler) {
-        if(currentLevelIndex < numLevels - 1 ) {
+    public void goToNextLevel(SpawnHandler spawnHandler, Player player, AttackHandler attackHandler, GamePanel panel) {
+        if(currentLevelIndex < numLevels) {
 
             //CLEAR OUT UNKILLABLE ENEMIES
             this.currentLevel.unkillableEnemies.clear();
@@ -67,6 +67,12 @@ public class LevelHandler {
             currentLevel = levels[currentLevelIndex];
             attackHandler.levelChanged(currentLevel);
             spawnHandler.levelChanged(player, currentLevel);
+
+            //REMOVING IMMORTAL ENEMIES FOR THE LAST LEVEL
+            if(currentLevelIndex == numLevels - 1) {
+                panel.snail.active = false;
+                panel.ghost.active = false;
+            }
 
             musicHandler.stop();
             musicHandler.getClip(currentLevelIndex);

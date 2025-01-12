@@ -18,6 +18,7 @@ public class EternalSnail extends Enemy{
     APathfinding pathFinder;
     Tile[][] tileset;
 
+    public boolean active;
     // Variables for drawing
     private int updateFrames = 7;
 
@@ -56,12 +57,14 @@ public class EternalSnail extends Enemy{
     }
 
     public void update(Tile[][] tileset) {
-        pathFinder = new APathfinding(tileset);
-        this.tileset = tileset;
-        updateEntityPosition();
-        setScreenPosition();
-        hitbox.update(this);
-        move();
+        if(active) {
+            pathFinder = new APathfinding(tileset);
+            this.tileset = tileset;
+            updateEntityPosition();
+            setScreenPosition();
+            hitbox.update(this);
+            move();
+        }
     }
 
 
@@ -82,12 +85,16 @@ public class EternalSnail extends Enemy{
 
     @Override
     public void hitPlayer() {
-        Main.updateGameState(3);
+        if(active) {
+            Main.updateGameState(3);
+        }
     }
 
     @Override
     public void isHit(double damage) {
-        Main.updateGameState(3);
+        if(active) {
+            Main.updateGameState(3);
+        }
     }
 
     /**
@@ -135,24 +142,26 @@ public class EternalSnail extends Enemy{
 
     @Override
     public void draw(Graphics2D g2) {
-        if (direction == 'd') {
-            currentRow = 0;
-        } else if (direction == 'l') {
-            currentRow = 1;
-        } else if (direction == 'r') {
-            currentRow = 2;
-        } else {
-            currentRow = 3;
+        if(active) {
+            if (direction == 'd') {
+                currentRow = 0;
+            } else if (direction == 'l') {
+                currentRow = 1;
+            } else if (direction == 'r') {
+                currentRow = 2;
+            } else {
+                currentRow = 3;
+            }
+
+            currentCol = animationState;
+            if (currentCol > maxCol) currentCol = 0;
+
+            g2.drawImage(idleSprites, (int)this.screenX, (int)this.screenY, (int)this.screenX + this.getWidth(), (int)this.screenY + this.getHeight(),
+                    currentCol * spriteW, currentRow * spriteH, (currentCol + 1) * spriteW, (currentRow + 1) * spriteW,
+                    null);
+
+            updateFrames();
         }
-
-        currentCol = animationState;
-        if (currentCol > maxCol) currentCol = 0;
-
-        g2.drawImage(idleSprites, (int)this.screenX, (int)this.screenY, (int)this.screenX + this.getWidth(), (int)this.screenY + this.getHeight(),
-                currentCol * spriteW, currentRow * spriteH, (currentCol + 1) * spriteW, (currentRow + 1) * spriteW,
-                null);
-
-        updateFrames();
     }
 
 }
