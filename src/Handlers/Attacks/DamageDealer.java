@@ -4,6 +4,7 @@ import Attacks.Attack;
 import Entities.Enemies.Enemy;
 import Entities.Players.Player;
 import Handlers.CollisionHandler;
+import Handlers.LevelHandler;
 import World.Level;
 
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ public class DamageDealer {
             if (player.type == 'z') {
                 enemy.isHit(0.5);
             }
+            LevelHandler.heartsLost += enemy.damage;
             player.isHit(enemy.damage, false);
         }
     }
@@ -37,6 +39,7 @@ public class DamageDealer {
         for (int i = 0; i < attackHandler.enemyAttacks.size(); i++) {
             Attack enemyAttack = attackHandler.enemyAttacks.get(i);
                 if (collisionHandler.playerWithAttackCollision(player, enemyAttack) && !player.isHit && enemyAttack.isActive) {
+                    LevelHandler.heartsLost += enemyAttack.damage;
                     player.isHit(enemyAttack.damage, false);
                     indicesToRemove.add(i);
                     break;
@@ -88,7 +91,7 @@ public class DamageDealer {
 
         //REMOVE IN REVERSE ORDER!!
         for (int i = indicesToRemove.size() - 1; i >= 0; i--) {
-            attackHandler.playerAttacks.get((int) indicesToRemove.get(i)).isActive = false;
+            attackHandler.playerAttacks.get(indicesToRemove.get(i)).isActive = false;
         }
 
     }

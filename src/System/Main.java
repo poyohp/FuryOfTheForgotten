@@ -13,12 +13,14 @@ public class Main {
      */
     public static GamePanel gamePanel;
     public static MenuPanel menuPanel;
-    public static GameOverPanel gameOverPanel = new GameOverPanel();
-    public static WinPanel winPanel = new WinPanel();
+    public static GameEndPanel gameEndPanel;
     public static HelpPanel helpPanel;
     public static CharacterSelectionPanel characterSelectionPanel;
     public static ShopPanel shopPanel;
     public static BuyPanel buyPanel;
+    public static StatsPanel statsPanel;
+
+    public static boolean gameWon = false;
 
     public static JFrame window = new JFrame();
 
@@ -59,10 +61,20 @@ public class Main {
                 if (start) gamePanel.initiateGamePanel();
                 break;
             case 3:
-                window.add(gameOverPanel);
+                statsPanel = new StatsPanel();
+                window.add(statsPanel);
+                statsPanel.requestFocusInWindow();
                 break;
             case 4:
-                window.add(winPanel);
+                Main.gamePanel.pauseGame(); // Pause game
+
+                // Display image based on win or lose
+                String img;
+                if (gameWon) img = "gameWon.png";
+                else img = "gameOver.png";
+                gameEndPanel = new GameEndPanel(img);
+                window.add(gameEndPanel);
+                gameEndPanel.requestFocusInWindow();
                 break;
             case 5:
                 helpPanel = new HelpPanel();

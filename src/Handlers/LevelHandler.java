@@ -24,6 +24,11 @@ public class LevelHandler {
     int currentLevelIndex;
     MusicHandler musicHandler;
 
+    // Game stats
+    public static int enemiesKilled = 0;
+    public static double heartsLost = 0.0;
+    public static int levelsCompleted = 0;
+
     public boolean levelComplete = false;
 
     int numLevels;
@@ -123,10 +128,10 @@ public class LevelHandler {
 
     public void checkForDeath(Player player, CollisionHandler collisionHandler, InstantKill ghost, EternalSnail snail) {
         if(player.getHealth() <= 0) {
-            Main.updateGameState(3);
+            Main.updateGameState(4);
         }
         if(collisionHandler.enemyPlayerCollision(ghost, player) || collisionHandler.enemyPlayerCollision(snail, player) ) {
-            Main.updateGameState(3);
+            Main.updateGameState(4);
         }
     }
 
@@ -173,6 +178,7 @@ public class LevelHandler {
                 if(!levelComplete && currentLevel.doorUnlocked) {
                     levelComplete = true;
                     Main.gamePanel.pauseGame();
+                    LevelHandler.levelsCompleted++;
                     Main.updateGameState(7);
                 }
             }
@@ -186,12 +192,18 @@ public class LevelHandler {
 
         // Removes enemies if they die
         for (Enemy enemy: currentLevel.contactEnemies) {
-            if (enemy.getHealth() <= 0 && enemy.freezeTimer <= 0) currentLevel.enemiesToRemove.add(enemy);
+            if (enemy.getHealth() <= 0 && enemy.freezeTimer <= 0) {
+                currentLevel.enemiesToRemove.add(enemy);
+                enemiesKilled++;
+            }
         }
         currentLevel.contactEnemies.removeAll(currentLevel.enemiesToRemove);
 
         for (Enemy enemy: currentLevel.archerEnemies) {
-            if (enemy.getHealth() <= 0 && enemy.freezeTimer <= 0) currentLevel.archerEnemiesToRemove.add(enemy);
+            if (enemy.getHealth() <= 0 && enemy.freezeTimer <= 0) {
+                currentLevel.archerEnemiesToRemove.add(enemy);
+                enemiesKilled++;
+            }
         }
         currentLevel.archerEnemies.removeAll(currentLevel.enemiesToRemove);
     }
@@ -240,7 +252,7 @@ public class LevelHandler {
         levels[2] = new Level("Maps/Level3Map.json", "Assets/Tilesets/facilityTileset.png", nonWalkableValues3(), 16, 2);
         levels[3] = new Level("Maps/Level4Map.json", "Assets/Tilesets/catacombTileset.png", nonWalkableValues4(), 16, 3);
         levels[4] = new Level("Maps/Level5Map.json", "Assets/Tilesets/cuteTileset.png", nonWalkableValues5(), 16, 4);
-        levels[0] = new Level("Maps/Level6Map.json", "Assets/Tilesets/catacombTileset.png", nonWalkableValues6(), 16, 5);
+        levels[5] = new Level("Maps/Level6Map.json", "Assets/Tilesets/catacombTileset.png", nonWalkableValues6(), 16, 5);
 
     }
 

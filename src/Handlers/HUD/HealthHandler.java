@@ -208,7 +208,7 @@ public class HealthHandler {
 
         //CHECK DEAD
         if(currentHearts <= 0) {
-            Main.updateGameState(3);
+            Main.updateGameState(4);
         }
 
         //DETERMINE IF FULL-->HALF
