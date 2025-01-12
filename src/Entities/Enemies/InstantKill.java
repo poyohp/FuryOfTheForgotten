@@ -29,7 +29,7 @@ public class InstantKill extends Enemy {
     boolean setOnDirection;
     int timesMovedInDirection;
 
-    public boolean active;
+    public boolean active = true;
 
     public InstantKill(int health, int speed, int width, int height, String name, int worldX, int worldY, int xOffset, int yOffset, int hitBoxWidth, int hitBoxHeight, Player player, boolean isFollowing) {
         super(health, speed, width, height, name, worldX, worldY, xOffset, yOffset, hitBoxWidth, hitBoxHeight, player, isFollowing);
@@ -114,14 +114,14 @@ public class InstantKill extends Enemy {
     @Override
     public void hitPlayer() {
         if(active) {
-            Main.updateGameState(3);
+            Main.updateGameState(4);
         }
     }
 
     @Override
     public void isHit(double damage) {
         if(active) {
-            Main.updateGameState(3);
+            Main.updateGameState(4);
         }
     }
 

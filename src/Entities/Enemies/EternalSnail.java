@@ -18,7 +18,7 @@ public class EternalSnail extends Enemy{
     APathfinding pathFinder;
     Tile[][] tileset;
 
-    public boolean active;
+    public boolean active = true;
     // Variables for drawing
     private int updateFrames = 7;
 
@@ -86,14 +86,14 @@ public class EternalSnail extends Enemy{
     @Override
     public void hitPlayer() {
         if(active) {
-            Main.updateGameState(3);
+            Main.updateGameState(4);
         }
     }
 
     @Override
     public void isHit(double damage) {
         if(active) {
-            Main.updateGameState(3);
+            Main.updateGameState(4);
         }
     }
 
