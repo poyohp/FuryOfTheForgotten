@@ -6,6 +6,8 @@ import Objects.UsableObjects.UsableObject;
 
 public class Cheese extends UsableObject {
 
+    public static int timesUsed = 0;
+
     public Cheese(String name, double width, double height, double worldX, double worldY, double screenX, double screenY, double vx, double vy) {
         super(name, width, height, worldX, worldY, screenX, screenY, vx, vy);
         getImageCoords();
@@ -22,6 +24,8 @@ public class Cheese extends UsableObject {
 
     @Override
     public void isUsed(Player player) {
+        Cheese.timesUsed++;
+
         player.speedBoostUsed();
         player.damageBoostUsed();
 

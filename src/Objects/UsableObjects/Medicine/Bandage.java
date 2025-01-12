@@ -6,6 +6,8 @@ import Objects.UsableObjects.UsableObject;
 
 public class Bandage extends UsableObject {
 
+    public static int timesUsed = 0;
+
     public Bandage(String name, double width, double height, double worldX, double worldY, double screenX, double screenY, double vx, double vy) {
         super(name, width, height, worldX, worldY, screenX, screenY, vx, vy);
         getImageCoords();
@@ -23,6 +25,7 @@ public class Bandage extends UsableObject {
 
     @Override
     public void isUsed(Player player) {
+        Bandage.timesUsed++;
         player.healthHandler.heal(1);
     }
 }

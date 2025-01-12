@@ -7,6 +7,8 @@ import System.Panels.GamePanel;
 
 public class ShieldPotion extends UsableObject {
 
+    public static int timesUsed = 0;
+
     public ShieldPotion(String name, double width, double height, double worldX, double worldY, double screenX, double screenY, double vx, double vy) {
         super(name, width, height, worldX, worldY, screenX, screenY, vx, vy);
         getImageCoords();
@@ -24,6 +26,7 @@ public class ShieldPotion extends UsableObject {
 
     @Override
     public void isUsed(Player player) {
+        ShieldPotion.timesUsed++;
         player.healthHandler.activatedShields(player.healthHandler.maxShields);
     }
 }

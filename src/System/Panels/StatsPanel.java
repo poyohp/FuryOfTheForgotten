@@ -1,6 +1,7 @@
 package System.Panels;
 
 import Handlers.LevelHandler;
+import Handlers.ObjectHandler;
 
 import java.awt.*;
 
@@ -43,7 +44,8 @@ public class StatsPanel extends AbstractPanel {
         g2.drawString(String.valueOf(LevelHandler.enemiesKilled), screenWidth/2, screenHeight/4);
         g2.drawString(String.valueOf(LevelHandler.heartsLost), screenWidth/2, screenHeight/4 + screenHeight/8);
         g2.drawString(String.valueOf(LevelHandler.levelsCompleted), screenWidth/2, screenHeight/4 + screenHeight/8 * 2);
-        // TOTAL TIME
-        // FAV ITEM
+        g2.drawString(String.format("%.2f", GamePanel.totalTimePlayed) + " seconds", screenWidth/2, screenHeight/4 + screenHeight/8 * 3);
+        g2.drawString(String.valueOf(ObjectHandler.determineMostUsed()), screenWidth/2, screenHeight/4 + screenHeight/8 * 4);
+
     }
 }

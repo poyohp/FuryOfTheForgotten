@@ -58,7 +58,12 @@ public class Main {
                 if (gamePanel == null) start = true;
                 if (start) gamePanel = new GamePanel();
                 window.add(gamePanel);
-                if (start) gamePanel.initiateGamePanel();
+                if (start) {
+                    gamePanel.initiateGamePanel();
+                    gamePanel.startTime = System.nanoTime();
+                    gamePanel.totalPauseTime = 0;
+                    gamePanel.isPaused = false;
+                }
                 break;
             case 3:
                 statsPanel = new StatsPanel();
@@ -67,6 +72,8 @@ public class Main {
                 break;
             case 4:
                 Main.gamePanel.pauseGame(); // Pause game
+
+                GamePanel.totalTimePlayed = (gamePanel.pauseTime - gamePanel.startTime - gamePanel.totalPauseTime) / 1_000_000_000.0;
 
                 // Display image based on win or lose
                 String img;

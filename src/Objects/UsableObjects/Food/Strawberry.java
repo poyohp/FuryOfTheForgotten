@@ -7,6 +7,8 @@ import System.Panels.GamePanel;
 
 public class Strawberry extends UsableObject {
 
+    public static int timesUsed = 0;
+
     public Strawberry(String name, double width, double height, double worldX, double worldY, double screenX, double screenY, double vx, double vy) {
         super(name, width, height, worldX, worldY, screenX, screenY, vx, vy);
         getImageCoords();
@@ -24,6 +26,7 @@ public class Strawberry extends UsableObject {
 
     @Override
     public void isUsed(Player player) {
+        Strawberry.timesUsed++;
         player.healthHandler.heal(0.5);
         if(GamePanel.random.nextInt(100) == 1) {
             player.speedBoostUsed();

@@ -13,7 +13,6 @@ public class GameEndPanel extends AbstractPanel {
         if (keyHandler.shopExit) {
             timer.stop();
             Main.updateGameState(3); // Go to statistics screen
-            System.out.println("DONE!");
         }
     }
 

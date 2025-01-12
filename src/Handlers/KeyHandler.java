@@ -26,6 +26,10 @@ public class KeyHandler implements KeyListener {
             }
         }
 
+        if(e.getKeyCode() == KeyEvent.VK_SPACE) {
+            Main.updateGameState(4);
+        }
+
         if(e.getKeyCode() == KeyEvent.VK_L) {
             shopExit = true;
         }

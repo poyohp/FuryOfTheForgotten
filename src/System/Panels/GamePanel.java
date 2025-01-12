@@ -20,6 +20,7 @@ import java.util.Random;
 import javax.swing.JPanel;
 import java.awt.*;
 import java.util.Random;
+import java.util.Timer;
 
 
 public class GamePanel extends JPanel implements Runnable{
@@ -31,7 +32,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     //Create objects for GAME RUNNING
     Thread gameThread;
-    boolean isPaused;
+    public boolean isPaused;
 
     //Pathfinding object
     APathfinding pathfinding;
@@ -54,6 +55,12 @@ public class GamePanel extends JPanel implements Runnable{
     public EternalSnail snail;
 
     public static Random random = new Random();
+
+    public Timer timer = new Timer();
+    public long startTime;
+    public long pauseTime;
+    public long totalPauseTime;
+    public static double totalTimePlayed;
 
     /**
      * Constructor for the GamePanel - initializes all objects and starts the game
@@ -127,10 +134,12 @@ public class GamePanel extends JPanel implements Runnable{
             }
         }
         isPaused = true;
+        pauseTime = System.nanoTime();
     }
 
     public void resumeGame() {
         this.requestFocusInWindow();
+        totalPauseTime += System.nanoTime() - pauseTime;
         isPaused = false;
     }
 

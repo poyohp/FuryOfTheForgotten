@@ -201,6 +201,45 @@ public class ObjectHandler {
         };
     }
 
+    public static String determineMostUsed() {
+        String mostUsedItem = null;
+        int maxUsage = -1;
+
+        for (String item : allGameItems) {
+            int timesUsed = getItemUsage(item);
+
+            if (timesUsed > maxUsage) {
+                maxUsage = timesUsed;
+                mostUsedItem = item + " | Num Times Used: " + timesUsed;
+            }
+        }
+
+        if(maxUsage == 0) {
+            return "NO ITEMS WERE USED";
+        }
+
+        return mostUsedItem;
+    }
+
+    private static int getItemUsage(String itemName) {
+        return switch (itemName) {
+            case "DamagePotion" -> DamagePotion.timesUsed;
+            case "HealthPotion" -> HealthPotion.timesUsed;
+            case "SpeedPotion" -> SpeedPotion.timesUsed;
+            case "ShieldPotion" -> ShieldPotion.timesUsed;
+            case "Bandage" -> Bandage.timesUsed;
+            case "Pills" -> Pills.timesUsed;
+            case "Cheese" -> Cheese.timesUsed;
+            case "Cherry" -> Cherry.timesUsed;
+            case "Garlic" -> Garlic.timesUsed;
+            case "Milk" -> Milk.timesUsed;
+            case "Mushroom" -> Mushroom.timesUsed;
+            case "Onion" -> Onion.timesUsed;
+            case "Strawberry" -> Strawberry.timesUsed;
+            default -> 0;
+        };
+    }
+
     public void draw(Graphics2D g2, Player player, KeyHandler keyHandler) {
         //COIN DRAWING
         if(keyHandler.toggleInventory) {
