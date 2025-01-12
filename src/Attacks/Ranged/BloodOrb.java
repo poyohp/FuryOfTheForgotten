@@ -5,7 +5,6 @@ import Entities.Entity;
 import Entities.Hitbox;
 import Entities.Players.Player;
 import Handlers.ImageHandler;
-import World.Tile;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

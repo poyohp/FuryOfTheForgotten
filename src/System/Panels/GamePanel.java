@@ -17,7 +17,6 @@ import World.Tile;
 
 import javax.swing.JPanel;
 import java.awt.*;
-import java.util.Random;
 
 
 public class GamePanel extends JPanel implements Runnable{
@@ -49,8 +48,6 @@ public class GamePanel extends JPanel implements Runnable{
 
     public InstantKill ghost;
     public EternalSnail snail;
-
-    public static Random random = new Random();
 
     /**
      * Constructor for the GamePanel - initializes all objects and starts the game

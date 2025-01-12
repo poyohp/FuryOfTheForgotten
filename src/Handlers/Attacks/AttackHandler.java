@@ -65,10 +65,6 @@ public class AttackHandler {
         playerAttacks.add(new Stab(range, width, direction, entity, xOffset, yOffset, duration));
     }
 
-    void createMelee(double damage, int range, int width, char direction, Entity entity, int xOffset, int yOffset, int duration) {
-        playerAttacks.add(new Melee(damage, range, width, direction, entity, xOffset, yOffset, duration));
-    }
-
     /**
      * Create melee attack
      * @param range attack range
@@ -150,7 +146,6 @@ public class AttackHandler {
         }
     }
 
-    // Must be updated when other entities are included to take an arraylist of all entities as a parameter, not just a player)
     public void update(Player player, Level level) {
         this.level = level;
         this.tileset = level.getMap().baseLayerTiles;
@@ -198,13 +193,6 @@ public class AttackHandler {
      * Remove player attacks after duration ends and after collisions
      */
     private void removeAttacks(Player player) {
-        /*
-        if (!player.attacking && !playerAttacks.isEmpty()) {
-            playerAttacks.clear();
-        }
-        */
-
-
 
         if((player.type != 's' && player.type != 'v')&& playerAttacks.size() > 1) {
             for (int i = 0; i < playerAttacks.size(); i++) {

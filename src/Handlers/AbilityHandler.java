@@ -3,7 +3,6 @@ package Handlers;
 import Entities.Enemies.Enemy;
 import Entities.Players.Decoy;
 import Entities.Players.Player;
-import Entities.Players.Vampire;
 import Handlers.Attacks.AttackHandler;
 import Handlers.HUD.HealthHandler;
 import World.Level;

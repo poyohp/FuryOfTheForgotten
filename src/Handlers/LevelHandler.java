@@ -5,7 +5,6 @@ import Entities.Enemies.EternalSnail;
 import Entities.Enemies.InstantKill;
 import Entities.Players.Player;
 import Handlers.Attacks.AttackHandler;
-import Handlers.HUD.InventoryHandler;
 import Handlers.Spawners.SpawnHandler;
 import Handlers.Spawners.SpawnPoint;
 import System.Panels.GamePanel;
