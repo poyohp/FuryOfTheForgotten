@@ -5,7 +5,7 @@ import java.awt.*;
 public abstract class Entity {
 
     // Various entity attributes
-    private double originalHealth;
+    public double originalHealth;
     private double health;
     private double speed;
     private int width, height;

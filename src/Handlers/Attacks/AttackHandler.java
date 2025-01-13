@@ -65,6 +65,10 @@ public class AttackHandler {
         playerAttacks.add(new Stab(range, width, direction, entity, xOffset, yOffset, duration));
     }
 
+    public void createBossAttack(int damage, int range, int width, char direction, Entity entity, int xOffset, int yOffset, int duration) {
+        enemyAttacks.add(new Swipe(damage, range, width, direction, entity, xOffset, yOffset, duration));
+    }
+
     /**
      * Create melee attack
      * @param range attack range

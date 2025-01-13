@@ -3,6 +3,7 @@ package Entities.Enemies;
 import Entities.Entity;
 import Entities.Players.Player;
 import System.Panels.GamePanel;
+import World.Tile;
 
 import java.awt.*;
 
@@ -62,6 +63,10 @@ public abstract class Enemy extends Entity {
         setScreenPosition();
         hitbox.update(this);
         move();
+    }
+
+    public void update(Tile[][] tileset) {
+
     }
 
     /**

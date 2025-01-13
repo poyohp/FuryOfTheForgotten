@@ -29,6 +29,7 @@ public class Level {
 
     public boolean doorUnlockable;
     public boolean doorUnlocked;
+    public boolean lastLevel;
 
     /**
      * Constructor for Level (generates map)
@@ -49,6 +50,8 @@ public class Level {
         } catch (IOException | ParseException e) {
             System.out.println("Error reading map file");
         }
+
+        lastLevel = false;
     }
 
     public void update(Player player) {

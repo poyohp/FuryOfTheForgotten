@@ -3,8 +3,10 @@ package Handlers.Spawners;
 
 import Entities.Enemies.Dragon;
 import Entities.Enemies.Rabbit;
+import Entities.Enemies.RoyalKnight;
 import Entities.Enemies.Slime;
 import Entities.Players.Player;
+import Handlers.Attacks.AttackHandler;
 import World.Level;
 import World.Tile;
 import System.Panels.GamePanel;
@@ -33,6 +35,9 @@ public class SpawnHandler implements ActionListener {
 
 
     public int numActiveSpawns = 0;
+
+    RoyalKnight royalKnight;
+    boolean bossSpawned = false;
 
 
     /**
@@ -63,6 +68,10 @@ public class SpawnHandler implements ActionListener {
         started = true;
     }
 
+    public void spawnBoss(Player player, Level level, AttackHandler a) {
+        royalKnight = new RoyalKnight(100, 3, Tile.tileSize*2, Tile.tileSize*2, "RoyalKnight", (int) (player.worldX * Tile.tileSize) - 2 * Tile.tileSize, (int) (player.worldY * Tile.tileSize) + Tile.tileSize, Tile.tileRatio,5*Tile.tileRatio, 70, 50, player, level.getMap().baseLayerTiles, true, a);
+        level.contactEnemies.add(royalKnight);
+    }
 
     /**
      * Sets the enemy spawn points based on the level
@@ -165,7 +174,7 @@ public class SpawnHandler implements ActionListener {
      * @param player the game player
      * @param level the current level
      */
-    public void update(Player player, Level level) {
+    public void update(Player player, Level level, AttackHandler a) {
         for (SpawnPoint spawnPoint : enemySpawnPoints) {
             if (spawnPoint.activeSpawn) {
                 numActiveSpawns++;
@@ -175,6 +184,11 @@ public class SpawnHandler implements ActionListener {
                     spawnEnemies(spawnPoint, player, level);
                 }
             }
+        }
+
+        if (level.lastLevel && !bossSpawned) {
+            spawnBoss(player, level, a);
+            bossSpawned = true;
         }
     }
 

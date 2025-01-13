@@ -1,6 +1,7 @@
 package System.Panels;
 
 import Entities.Enemies.EternalSnail;
+import Entities.Enemies.RoyalKnight;
 import Entities.Players.*;
 import Handlers.*;
 import Handlers.HUD.InventoryHandler;
@@ -53,6 +54,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     public InstantKill ghost;
     public EternalSnail snail;
+    RoyalKnight royalKnight;
 
     public static Random random = new Random();
 
@@ -87,7 +89,6 @@ public class GamePanel extends JPanel implements Runnable{
         attackHandler = new AttackHandler(keyHandler, levelHandler.getCurrentLevel().getMap().baseLayerTiles, levelHandler.getCurrentLevel());
         abilityHandler = new AbilityHandler(player, keyHandler, collisionHandler, levelHandler.getCurrentLevel(), player.healthHandler, attackHandler);
 
-
         inventory = new InventoryHandler(keyHandler, player);
 
         pathfinding = new APathfinding(levelHandler.getCurrentLevel().getMap().baseLayerTiles);
@@ -102,16 +103,20 @@ public class GamePanel extends JPanel implements Runnable{
 
         snail = new EternalSnail(100, 0.4, Tile.tileSize, Tile.tileSize, "Snail", (int) (player.worldX * Tile.tileSize) - 2 * Tile.tileSize, (int) (player.worldY * Tile.tileSize) + Tile.tileSize, Tile.tileRatio,5*Tile.tileRatio, 70, 50, player, levelHandler.getCurrentLevel().getMap().baseLayerTiles, true);
 
+        //royalKnight = new RoyalKnight(100, 1, Tile.tileSize*2, Tile.tileSize*2, "RoyalKnight", (int) (player.worldX * Tile.tileSize) - 2 * Tile.tileSize, (int) (player.worldY * Tile.tileSize) + Tile.tileSize, Tile.tileRatio,5*Tile.tileRatio, 70, 50, player, levelHandler.getCurrentLevel().getMap().baseLayerTiles, true);
+
+        //levelHandler.getCurrentLevel().contactEnemies.add(royalKnight);
+
         //Start game after loading all objects
         gameThread = new Thread(this);
         spawnHandler.startSpawning();
     }
 
     void initiatePlayerType() {
-        if (CharacterSelectionPanel.selectedCharacter.equals("zombie")) player = new Zombie(8, 4, Tile.tileSize, Tile.tileSize, "Zombie", 0, 0, 4*Tile.tileSize/Tile.normalTileSize, 6*Tile.tileSize/Tile.normalTileSize-1, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
-        else if (CharacterSelectionPanel.selectedCharacter.equals("skeleton")) player = new Skeleton(8, 6, Tile.tileSize, Tile.tileSize, "Skeleton", 0, 0, 4*Tile.tileSize/Tile.normalTileSize, 6*Tile.tileSize/Tile.normalTileSize-1, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
-        else if (CharacterSelectionPanel.selectedCharacter.equals("goblin")) player = new Goblin(8, 4, Tile.tileSize, Tile.tileSize, "Goblin", 0, 0, 4*Tile.tileSize/Tile.normalTileSize, 6*Tile.tileSize/Tile.normalTileSize-1, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
-        else if (CharacterSelectionPanel.selectedCharacter.equals("vampire")) player = new Vampire(8, 5, Tile.tileSize, Tile.tileSize, "Vampire", 0, 0, 4*Tile.tileSize/Tile.normalTileSize, 6*Tile.tileSize/Tile.normalTileSize-1, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
+        if (CharacterSelectionPanel.selectedCharacter.equals("zombie")) player = new Zombie(6, 4, Tile.tileSize, Tile.tileSize, "Zombie", 0, 0, 4*Tile.tileSize/Tile.normalTileSize, 6*Tile.tileSize/Tile.normalTileSize-1, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
+        else if (CharacterSelectionPanel.selectedCharacter.equals("skeleton")) player = new Skeleton(5, 6, Tile.tileSize, Tile.tileSize, "Skeleton", 0, 0, 4*Tile.tileSize/Tile.normalTileSize, 6*Tile.tileSize/Tile.normalTileSize-1, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
+        else if (CharacterSelectionPanel.selectedCharacter.equals("goblin")) player = new Goblin(6, 4, Tile.tileSize, Tile.tileSize, "Goblin", 0, 0, 4*Tile.tileSize/Tile.normalTileSize, 6*Tile.tileSize/Tile.normalTileSize-1, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
+        else if (CharacterSelectionPanel.selectedCharacter.equals("vampire")) player = new Vampire(6, 4, Tile.tileSize, Tile.tileSize, "Vampire", 0, 0, 4*Tile.tileSize/Tile.normalTileSize, 6*Tile.tileSize/Tile.normalTileSize-1, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
         else System.out.println("Invalid character");
     }
 
@@ -183,6 +188,7 @@ public class GamePanel extends JPanel implements Runnable{
             inventory.update(keyHandler);
             ghost.update();
             snail.update(levelHandler.getCurrentLevel().getMap().baseLayerTiles);
+            //royalKnight.update(levelHandler.getCurrentLevel().getMap().baseLayerTiles);
         } else {
             player.healthHandler.poisonedHealth = false;
         }
@@ -207,6 +213,7 @@ public class GamePanel extends JPanel implements Runnable{
         attackHandler.draw(g2);
         ghost.draw(g2);
         snail.draw(g2);
+        //royalKnight.draw(g2);
 
         spawnHandler.drawSpawns(g2, player);
 
