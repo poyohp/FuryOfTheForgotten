@@ -66,10 +66,21 @@ public class RoyalKnight extends Enemy{
     public void update() {
         updateEntityPosition();
         setScreenPosition();
-
-
         hitbox.update(this);
+
+        unHitPlayer();
         if (!attacking) move();
+    }
+
+    private void unHitPlayer() {
+        if(hitPlayer) {
+            if(freezeTimer > 0) {
+                freezeTimer--;
+            } else {
+                hitPlayer = false;
+                isHit = false;
+            }
+        }
     }
 
 
