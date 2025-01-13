@@ -27,6 +27,7 @@ public class Melee extends Attack {
         super(damage, range, width, direction, entity, xOffset, yOffset, duration);
         setSpeed(0);
         setInitialHitbox();
+        type = 'm';
     }
 
     /**

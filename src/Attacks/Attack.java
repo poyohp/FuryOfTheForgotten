@@ -12,6 +12,7 @@ import java.awt.*;
 public abstract class Attack {
 
     // Attack attributes
+    public char type;
     public double damage;
     private int range, width, duration, speed;
     private double worldX, worldY, screenX, screenY;
