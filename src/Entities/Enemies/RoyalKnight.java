@@ -4,19 +4,17 @@ import Entities.Players.Player;
 import Handlers.Attacks.AttackHandler;
 import Handlers.ImageHandler;
 import Pathfinding.APathfinding;
-import Pathfinding.Node;
 import System.Panels.GamePanel;
 import World.Tile;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 
 public class RoyalKnight extends Enemy{
 
     public boolean onPath;
     APathfinding pathFinder;
-    private int updateFrames = 7, attackFrames = 87;
+    private int updateFrames = 7, attackFrames = 87, attackAnimationState = 0;
     Tile[][] tileset;
     boolean inRange;
     AttackHandler a;
@@ -49,8 +47,6 @@ public class RoyalKnight extends Enemy{
         this.onPath = true;
         inRange = false;
         this.a = a;
-        hitbox.worldX += Tile.tileRatio;
-        hitbox.worldY += 3 * Tile.tileRatio;
         hitbox.height += 10 * Tile.tileRatio;
 
         this.worldX = entityToFollow.worldX + 5*Tile.tileSize;
@@ -62,6 +58,7 @@ public class RoyalKnight extends Enemy{
     public void update() {
         updateEntityPosition();
         setScreenPosition();
+
         hitbox.update(this);
         if (!attacking) {
             move();
@@ -114,6 +111,7 @@ public class RoyalKnight extends Enemy{
                 attacking = false;
                 //System.out.println("hi");
                 attackFrames = 87;
+                attackAnimationState = 0;
             }
 
             if (attackFrames == 87) {
@@ -121,7 +119,7 @@ public class RoyalKnight extends Enemy{
                 attackFrames--;
             } else {
                 if (attackFrames % 4 == 0) {
-                    animationState++;
+                    attackAnimationState++;
                 }
                 attackFrames--;
             }
@@ -165,9 +163,9 @@ public class RoyalKnight extends Enemy{
             }
         } else {
             if(entityToFollow.worldX >= worldX) {
-                g2.drawImage(swing, (int) screenX - 20*Tile.tileRatio, (int) screenY - Tile.tileSize - Tile.tileRatio, (int) (screenX + getWidth() + 69*Tile.tileRatio), (int) (screenY + getHeight() + Tile.tileSize - Tile.tileRatio), 95, animationState * 96, 265, animationState * 96 + 96, new Color(0, 0, 0, 0), null);
+                g2.drawImage(swing, (int) screenX - 20*Tile.tileRatio, (int) screenY - Tile.tileSize - Tile.tileRatio, (int) (screenX + getWidth() + 69*Tile.tileRatio), (int) (screenY + getHeight() + Tile.tileSize - Tile.tileRatio), 95, attackAnimationState * 96, 265, attackAnimationState * 96 + 96, new Color(0, 0, 0, 0), null);
             } else {
-                g2.drawImage(swing, (int) screenX - 69*Tile.tileRatio, (int) screenY - Tile.tileSize - Tile.tileRatio, (int) (screenX + getWidth() + 28*Tile.tileRatio - Tile.tileSize), (int) (screenY + getHeight() + Tile.tileSize - Tile.tileRatio), 265, animationState * 96, 95, animationState * 96 + 96, new Color(0, 0, 0, 0), null);
+                g2.drawImage(swing, (int) screenX - 64*Tile.tileRatio, (int) screenY - Tile.tileSize - Tile.tileRatio, (int) (screenX + getWidth() + 32*Tile.tileRatio - Tile.tileSize), (int) (screenY + getHeight() + Tile.tileSize - Tile.tileRatio), 265, attackAnimationState * 96, 95, attackAnimationState * 96 + 96, new Color(0, 0, 0, 0), null);
             }
         }
 
