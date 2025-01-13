@@ -69,7 +69,7 @@ public class SpawnHandler implements ActionListener {
     }
 
     public void spawnBoss(Player player, Level level, AttackHandler a) {
-        royalKnight = new RoyalKnight(100, 3, Tile.tileSize*2, Tile.tileSize*2, "RoyalKnight", (int) (player.worldX * Tile.tileSize) - 2 * Tile.tileSize, (int) (player.worldY * Tile.tileSize) + Tile.tileSize, Tile.tileRatio,5*Tile.tileRatio, 70, 50, player, level.getMap().baseLayerTiles, true, a);
+        royalKnight = new RoyalKnight(100, 3, Tile.tileSize*2, Tile.tileSize*2, "RoyalKnight", (int) (player.worldX * Tile.tileSize) - 2 * Tile.tileSize, (int) (player.worldY * Tile.tileSize) + Tile.tileSize, Tile.tileRatio,5*Tile.tileRatio, 30*Tile.tileRatio, 10*Tile.tileRatio, player, level.getMap().baseLayerTiles, true, a);
         level.contactEnemies.add(royalKnight);
     }
 
