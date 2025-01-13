@@ -16,13 +16,14 @@ public class RoyalKnight extends Enemy{
 
     public boolean onPath;
     APathfinding pathFinder;
-    private int updateFrames = 7, attackFrames = 87, attackAnimationState = 0;
+    private int updateFrames = 7, attackFrames = 87;
     Tile[][] tileset;
     boolean inRange;
     AttackHandler a;
     final int columnWidth = 96, rowHeight = 97;
     BufferedImage knight = ImageHandler.loadImage("Assets/Entities/Enemies/Boss/Elite Knight Sprite Sheet.png");
     BufferedImage swing = ImageHandler.loadImage("Assets/Entities/Enemies/Boss/Attack Sprite Sheet.png");
+
 
     /**
      * Enemy that follows player
@@ -48,6 +49,8 @@ public class RoyalKnight extends Enemy{
         this.onPath = true;
         inRange = false;
         this.a = a;
+        hitbox.worldX += Tile.tileRatio;
+        hitbox.worldY += 3 * Tile.tileRatio;
         hitbox.height += 10 * Tile.tileRatio;
 
         this.worldX = entityToFollow.worldX + 5*Tile.tileSize;
@@ -59,34 +62,11 @@ public class RoyalKnight extends Enemy{
     public void update() {
         updateEntityPosition();
         setScreenPosition();
-
         hitbox.update(this);
-        if (!attacking) move();
-    }
 
-    @Override
-    public void update(Tile[][] tileset) {
-        //pathFinder = new APathfinding(tileset);
-        //this.tileset = tileset;
-        updateEntityPosition();
-        setScreenPosition();
-        hitbox.update(this);
-        /*
         if (!attacking) {
             move();
         }
-
-         */
-        move();
-        //checkInRange();
-        //System.out.println(inRange);
-        /*
-        if (inRange) {
-            attack(a);
-        }
-
-         */
-
     }
 
     public void updateFrames() {
@@ -106,7 +86,6 @@ public class RoyalKnight extends Enemy{
                 attacking = false;
                 //System.out.println("hi");
                 attackFrames = 87;
-                attackAnimationState = 0;
             }
 
             if (attackFrames == 87) {
@@ -114,20 +93,12 @@ public class RoyalKnight extends Enemy{
                 attackFrames--;
             } else {
                 if (attackFrames % 4 == 0) {
-                    attackAnimationState++;
+                    animationState++;
                 }
                 attackFrames--;
             }
         }
 
-    }
-
-    public void checkInRange() {
-        if ((entityToFollow.worldX - worldX <= 60 * Tile.tileRatio && entityToFollow.worldX - worldX >= - 60 * Tile.tileRatio) && (entityToFollow.worldY - worldY <= 60 * Tile.tileRatio && entityToFollow.worldY - worldY >= - 60 * Tile.tileRatio) && !attacking) {
-            inRange = true;
-        } else {
-            inRange = false;
-        }
     }
 
     public void attack(AttackHandler a) {
@@ -158,9 +129,9 @@ public class RoyalKnight extends Enemy{
             }
         } else {
             if(entityToFollow.worldX >= worldX) {
-                g2.drawImage(swing, (int) screenX - 20*Tile.tileRatio, (int) screenY - Tile.tileSize - Tile.tileRatio, (int) (screenX + getWidth() + 69*Tile.tileRatio), (int) (screenY + getHeight() + Tile.tileSize - Tile.tileRatio), 95, attackAnimationState * 96, 265, attackAnimationState * 96 + 96, new Color(0, 0, 0, 0), null);
+                g2.drawImage(swing, (int) screenX - 20*Tile.tileRatio, (int) screenY - Tile.tileSize - Tile.tileRatio, (int) (screenX + getWidth() + 69*Tile.tileRatio), (int) (screenY + getHeight() + Tile.tileSize - Tile.tileRatio), 95, animationState * 96, 265, animationState * 96 + 96, new Color(0, 0, 0, 0), null);
             } else {
-                g2.drawImage(swing, (int) screenX - 64*Tile.tileRatio, (int) screenY - Tile.tileSize - Tile.tileRatio, (int) (screenX + getWidth() + 32*Tile.tileRatio - Tile.tileSize), (int) (screenY + getHeight() + Tile.tileSize - Tile.tileRatio), 265, attackAnimationState * 96, 95, attackAnimationState * 96 + 96, new Color(0, 0, 0, 0), null);
+                g2.drawImage(swing, (int) screenX - 69*Tile.tileRatio, (int) screenY - Tile.tileSize - Tile.tileRatio, (int) (screenX + getWidth() + 28*Tile.tileRatio - Tile.tileSize), (int) (screenY + getHeight() + Tile.tileSize - Tile.tileRatio), 265, animationState * 96, 95, animationState * 96 + 96, new Color(0, 0, 0, 0), null);
             }
         }
 
@@ -171,70 +142,26 @@ public class RoyalKnight extends Enemy{
 
     @Override
     public void move() {
+        double centerX = worldX + (double) getWidth() /2;
+        double centerY = worldY + (double) getHeight() /2;
+        double entityX = entityToFollow.worldX + (double) entityToFollow.getWidth() /2;
+        double entityY = entityToFollow.worldY + (double) entityToFollow.getHeight() /2;
+        double angle;
 
-        // If enemy is going to follow player
-        if (onPath) {
-
-            // Checks whether the knight is closer to the right side or left side of the player
-            double xLeftDistance = Math.abs(this.screenX - entityToFollow.entityLeft);
-            double xRightDistance = Math.abs(this.screenX - entityToFollow.entityRight);
-
-            int goalRow;
-            int goalCol;
-
-            if (xLeftDistance > xRightDistance) { // Go to right side of player
-                goalRow = (int) (entityToFollow.entityTop/ Tile.tileSize); //top row of the player
-                goalCol = (int) (entityToFollow.entityRight/Tile.tileSize); //right side of the player
-            } else { // Go to the left side of player
-                goalRow = (int) (entityToFollow.entityTop/ Tile.tileSize); //top row of the player
-                goalCol = (int) (entityToFollow.entityLeft/Tile.tileSize); //left side of the player
-            }
-
-            searchPath(goalRow, goalCol);
-        }
-    }
-
-    /**
-     * Searches for a path to the player
-     * @param goalRow Player's row
-     * @param goalCol Player's column
-     */
-    public void searchPath(int goalRow, int goalCol) {
-
-        int startRow = (int) (this.entityTop/Tile.tileSize); //top row of the enemy
-        int startCol = (int) (this.entityLeft/Tile.tileSize); //left row of the enemy
-
-        pathFinder.setNodes(tileset[startRow][startCol], tileset[goalRow][goalCol]);
-
-        // If a path is found, move towards the player
-        if (pathFinder.findPath()) {
-            ArrayList<Node> path = pathFinder.shortestPath; // List of tiles to go to
-
-            // Next tile to go to
-            double nextCol = path.get(0).col;
-            double nextRow = path.get(0).row;
-
-            // Next x and y position to go to (calculated with tile size)
-            double nextWorldX = nextCol * Tile.tileSize;
-            double nextWorldY = nextRow * Tile.tileSize;
-
-            // Ensures that enemy does not move when it is too close or too far from player
-            if (path.size() < 4 && startRow == goalRow) {
-
-
-                // Turn in direction of player, even if not moving toward them
-                if (worldX > nextWorldX) direction = 'l'; // left
-                else if (worldX < nextWorldX) direction = 'r'; // right
-
-                attack(a);
-                return; // Does not move to player
-            }
-
-            getNewPosition(nextWorldX, nextWorldY);
-
+        if (entityX > centerX && entityY > centerY) {
+            angle = (2*Math.PI) - Math.atan(((entityY - centerY) / (entityX - centerX)));
+        } else if (entityX > centerX && entityY < centerY) {
+            angle = Math.atan((centerY - entityY) / (entityX - centerX));
+        } else if (entityX < centerX && entityY > centerY) {
+            angle = Math.PI + Math.atan(((entityY - centerY) / (centerX - entityX)));
         } else {
-            moveTowardPlayer();
+            angle = Math.PI - Math.atan(((centerY - entityY) / (centerX - entityX)));
         }
+
+        System.out.println(angle);
+
+        worldX += (int)(getSpeed() * Math.cos(angle));
+        worldY += (int)(-getSpeed() * Math.sin(angle));
     }
 
     @Override
@@ -249,7 +176,7 @@ public class RoyalKnight extends Enemy{
             this.setHealth(this.getHealth() - damage);
             hitPlayer = !hitPlayer;
             isHit = true;
-            freezeTimer = freezeTimerFrames;
+            freezeTimer = (int)freezeTimerFrames;
         }
     }
 

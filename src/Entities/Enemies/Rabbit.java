@@ -115,7 +115,7 @@ public class Rabbit extends Enemy{
         if(!isHit) {
             this.setHealth(this.getHealth() - damage);
             isHit = true;
-            freezeTimer = freezeTimerFrames;
+            freezeTimer = (int) freezeTimerFrames;
         }
     }
 

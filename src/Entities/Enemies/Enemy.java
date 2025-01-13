@@ -18,7 +18,7 @@ public abstract class Enemy extends Entity {
 
     //Used for player attack pause...
     public boolean hitPlayer;
-    public double freezeTimer;
+    public int freezeTimer;
     private final double freezeTimerSeconds = 0.5;
     public final double freezeTimerFrames = (int) GamePanel.FPS*freezeTimerSeconds;
     public final double freezeTimerFramesHalfway = freezeTimerFrames/2.0;

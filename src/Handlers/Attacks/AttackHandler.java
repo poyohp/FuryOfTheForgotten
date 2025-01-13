@@ -198,6 +198,12 @@ public class AttackHandler {
      */
     private void removeAttacks(Player player) {
 
+//        for (int i = 0; i < playerAttacks.size(); i++) {
+//            if (playerAttacks.get(i)) {
+//                playerAttacks.remove(i);
+//            }
+//        }
+
         if((player.type != 's' && player.type != 'v')&& playerAttacks.size() > 1) {
             for (int i = 0; i < playerAttacks.size(); i++) {
                 if (i != 0) {

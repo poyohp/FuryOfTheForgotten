@@ -89,7 +89,7 @@ public class Slime extends Enemy{
     @Override
     public void hitPlayer() {
         hitPlayer = true;
-        freezeTimer = freezeTimerFrames;
+        freezeTimer = (int) freezeTimerFrames;
     }
 
     @Override
@@ -98,7 +98,7 @@ public class Slime extends Enemy{
             this.setHealth(this.getHealth() - damage);
             hitPlayer = !hitPlayer;
             isHit = true;
-            freezeTimer = freezeTimerFrames;
+            freezeTimer = (int) freezeTimerFrames;
         }
     }
 
