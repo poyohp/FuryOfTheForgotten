@@ -170,21 +170,12 @@ public class AttackHandler {
             if (enemy.attacking) {
                 if (enemy.direction == 'r') {
                     enemyAttacks.add(new Arrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, enemy.direction, enemy, 0, 0, 150, enemyRangedSpeed, 0));
-                    enemyAttacks.add(new Arrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, enemy.direction, enemy, 0, 0, 150, enemyRangedSpeed, 15 * Math.PI / 8));
-                    enemyAttacks.add(new Arrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, enemy.direction, enemy, 0, 0, 150, enemyRangedSpeed, Math.PI / 8));
                 } else if (enemy.direction == 'u') {
                     enemyAttacks.add(new Arrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, enemy.direction, enemy, 0, 0, 150, enemyRangedSpeed, Math.PI/2));
-                    enemyAttacks.add(new Arrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, enemy.direction, enemy, 0, 0, 150, enemyRangedSpeed, 3 * Math.PI / 8));
-                    enemyAttacks.add(new Arrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, enemy.direction, enemy, 0, 0, 150, enemyRangedSpeed, 5 * Math.PI / 8));
                 } else if (enemy.direction == 'l') {
                     enemyAttacks.add(new Arrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, enemy.direction, enemy, 0, 0, 150, enemyRangedSpeed, Math.PI));
-                    enemyAttacks.add(new Arrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, enemy.direction, enemy, 0, 0, 150, enemyRangedSpeed, 7 * Math.PI / 8));
-                    enemyAttacks.add(new Arrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, enemy.direction, enemy, 0, 0, 150, enemyRangedSpeed, 9 * Math.PI / 8));
                 } else {
                     enemyAttacks.add(new Arrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, enemy.direction, enemy, 0, 0, 150, enemyRangedSpeed, 3 * Math.PI / 2));
-                    enemyAttacks.add(new Arrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, enemy.direction, enemy, 0, 0, 150, enemyRangedSpeed, 11 * Math.PI / 8));
-                    enemyAttacks.add(new Arrow(8 * Tile.tileRatio, 3 * Tile.tileRatio, enemy.direction, enemy, 0, 0, 150, enemyRangedSpeed, 13 * Math.PI / 8));
-
                 }
                 enemy.attacking = false;
             }
