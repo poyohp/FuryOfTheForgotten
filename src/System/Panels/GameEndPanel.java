@@ -17,5 +17,8 @@ public class GameEndPanel extends AbstractPanel {
     }
 
     @Override
+    public void setSelected() {}
+
+    @Override
     public void addButtonsToArrayList() {}
 }
