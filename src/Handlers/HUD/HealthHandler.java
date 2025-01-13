@@ -177,10 +177,10 @@ public class HealthHandler {
 
         heartsDamaged = 0;
         shieldsDamaged = 0;
-        lastHeartIndex = (int) currentHearts;
-        lastShieldIndex = (int) shieldHearts;
+        lastHeartIndex = (int) Math.floor(currentHearts);
+        lastShieldIndex = (int) Math.floor(shieldHearts);
 
-        if (enhancedHealth) {
+        if (enhancedHealth && !hasShields ) {
             damage /= 2.0;
         }
 
@@ -328,7 +328,7 @@ public class HealthHandler {
 
             // IF LOST HEART, DRAW TRANSITION
             if(heartsDamaged > 0 && isTransitioningForHearts) {
-                int drawX = (lastHeartIndex*(heartFinalDrawSize - innerGap)) + outerGap;
+                int drawX = ((lastHeartIndex)*(heartFinalDrawSize - innerGap)) + outerGap;
                 for(int j = 0; j < heartsDamaged; j++) {
                     drawTransition(g2, drawX, heartsY, transitionDrawFrames/2, transitionTimerForHearts);
                     drawX += heartFinalDrawSize - innerGap;

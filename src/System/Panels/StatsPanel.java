@@ -47,7 +47,11 @@ public class StatsPanel extends AbstractPanel {
         g2.drawString(String.valueOf(LevelHandler.enemiesKilled), screenWidth/2, screenHeight/4);
         g2.drawString(String.valueOf(LevelHandler.heartsLost), screenWidth/2, screenHeight/4 + screenHeight/8);
         g2.drawString(String.valueOf(LevelHandler.levelsCompleted), screenWidth/2, screenHeight/4 + screenHeight/8 * 2);
-        g2.drawString(String.format("%.2f", GamePanel.totalTimePlayed) + " seconds", screenWidth/2, screenHeight/4 + screenHeight/8 * 3);
+
+        //Total time played
+        int minutes = (int) (GamePanel.totalTimePlayed/60);
+        int seconds = (int) (GamePanel.totalTimePlayed%60);
+        g2.drawString(minutes + " minutes and " + seconds + " seconds", screenWidth/2, screenHeight/4 + screenHeight/8 * 3);
         g2.drawString(String.valueOf(ObjectHandler.determineMostUsed()), screenWidth/2, screenHeight/4 + screenHeight/8 * 4);
     }
 }

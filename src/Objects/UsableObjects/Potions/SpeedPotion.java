@@ -14,7 +14,7 @@ public class SpeedPotion extends UsableObject {
         getImageCoords();
         image = ImageHandler.loadImage("Assets/Objects/potions.png");
 
-        value = 30;
+        value = 15;
 
     }
 
