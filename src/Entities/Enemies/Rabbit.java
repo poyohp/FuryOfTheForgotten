@@ -145,14 +145,12 @@ public class Rabbit extends Enemy{
             double nextWorldY = nextRow * Tile.tileSize;
 
             // Ensures that enemy does not move when it is too close or too far from player
-            if (path.size() < 5 || path.size() > 40) {
+            if (path.size() < 5 && startRow == goalRow || path.size() > 40) {
                 moving = false;
 
                 // Turn in direction of player, even if not moving toward them
                 if (worldX > nextWorldX) direction = 'l'; // left
                 else if (worldX < nextWorldX) direction = 'r'; // right
-                if (worldY > nextWorldY) direction = 'u';
-                else if (worldY < nextWorldY) direction = 'd'; // down
                 return; // Does not move to player
             }
 
