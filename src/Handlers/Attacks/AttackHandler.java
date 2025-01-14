@@ -248,12 +248,12 @@ public class AttackHandler {
      * @param g2     Graphics 2D object for drawing
      */
     public void draw(Graphics2D g2) {
-        for (Attack playerAttack : playerAttacks) {
-            playerAttack.draw(g2);
+        for (int i = 0; i < playerAttacks.size(); i++) {
+            playerAttacks.get(i).draw(g2);
         }
 
-        for (Attack enemyAttack: enemyAttacks) {
-            enemyAttack.draw(g2);
+        for (int i = 0; i < enemyAttacks.size(); i++) {
+            enemyAttacks.get(i).draw(g2);
         }
     }
 

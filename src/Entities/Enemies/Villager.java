@@ -2,7 +2,6 @@ package Entities.Enemies;
 
 import Entities.Players.Player;
 import Handlers.ImageHandler;
-import Pathfinding.APathfinding;
 import Pathfinding.Node;
 import World.Tile;
 
@@ -10,21 +9,11 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-public class Slime extends Enemy{
+public class Villager extends Slime{
 
-    // Variables used for pathfinding
-    public boolean onPath;
-    APathfinding pathFinder;
-    Tile[][] tileset;
-
-    // Variables for drawing
-    int updateFrames = 7;
-    BufferedImage slimes;
-    BufferedImage slimesHit;
-    BufferedImage slimesDead;
-
-    int spriteW = 16, spriteH = 16;
-
+    BufferedImage walk = ImageHandler.loadImage("Assets/Entities/Enemies/Loyalists/Peasant_walk.png");
+    BufferedImage hit = ImageHandler.loadImage("Assets/Entities/Enemies/Loyalists/Peasant_hit.png");
+    BufferedImage die = ImageHandler.loadImage("Assets/Entities/Enemies/Loyalists/Peasant_die.png");
 
     /**
      * Enemy that follows player
@@ -44,25 +33,10 @@ public class Slime extends Enemy{
      * @param tileset      tileset to use for pathfinding
      * @param isFollowing  whether enemy is following player or not
      */
-    public Slime(int health, double speed, int width, int height, String name, int worldX, int worldY, int xOffset, int yOffset, int hitBoxWidth, int hitBoxHeight, Player player, Tile[][] tileset, boolean isFollowing) {
-        super(health, speed, width, height, name, worldX, worldY, xOffset, yOffset, hitBoxWidth, hitBoxHeight, player, isFollowing);
-        loadSlime();
-        this.tileset = tileset;
-        pathFinder = new APathfinding(tileset);
-        this.onPath = true;
-
-        hitPlayer = false;
+    public Villager(int health, double speed, int width, int height, String name, int worldX, int worldY, int xOffset, int yOffset, int hitBoxWidth, int hitBoxHeight, Player player, Tile[][] tileset, boolean isFollowing) {
+        super(health, speed, width, height, name, worldX, worldY, xOffset, yOffset, hitBoxWidth, hitBoxHeight, player, tileset, isFollowing);
     }
 
-    void loadSlime() {
-        slimes = ImageHandler.loadImage("Assets/Entities/Enemies/Bog Dwellers/Slime_move.png");
-        slimesHit = ImageHandler.loadImage("Assets/Entities/Enemies/Bog Dwellers/Slime_hit.png");
-        slimesDead = ImageHandler.loadImage("Assets/Entities/Enemies/Bog Dwellers/Slime_die.png");
-    }
-
-    /**
-     * Moves enemy
-     */
     public void move() {
 
         if(hitPlayer || isHit) {
@@ -134,6 +108,7 @@ public class Slime extends Enemy{
         }
     }
 
+
     public void updateFrames() {
         if (updateFrames <= 0) {
             if (animationState >= 3) {
@@ -146,6 +121,8 @@ public class Slime extends Enemy{
             updateFrames--;
         }
     }
+
+
 
     @Override
     public void draw(Graphics2D g2) {
@@ -163,15 +140,15 @@ public class Slime extends Enemy{
 
         if (isHit) {
             if (getHealth() <= 0) {
-                spriteSheet = slimesDead;
+                spriteSheet = die;
                 currentCol = 0;
             }
             else {
                 if (freezeTimer < freezeTimerFramesHalfway) currentCol = 0;
                 else currentCol = 1;
-                spriteSheet = slimesHit;
+                spriteSheet = hit;
             }
-        } else spriteSheet = slimes;
+        } else spriteSheet = walk;
 
         g2.drawImage(spriteSheet, (int)this.screenX, (int)this.screenY, (int)this.screenX + this.getWidth(), (int)this.screenY + this.getHeight(),
                 currentCol * spriteW, currentRow * spriteH, (currentCol + 1) * spriteW, (currentRow + 1) * spriteW,

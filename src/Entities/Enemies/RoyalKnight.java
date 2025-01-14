@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class RoyalKnight extends Enemy{
 
 
-    public boolean onPath;
+    public boolean onPath, phase2 = false;
     APathfinding pathFinder;
     private int updateFrames = 7, attackFrames = 87, attackAnimationState = 0;
     Tile[][] tileset;
@@ -64,6 +64,10 @@ public class RoyalKnight extends Enemy{
 
     @Override
     public void update() {
+        if (getHealth() <= originalHealth/2) {
+            phase2 = true;
+            setSpeed(4);
+        }
         updateEntityPosition();
         setScreenPosition();
         hitbox.update(this);
