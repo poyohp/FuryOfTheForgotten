@@ -1,6 +1,7 @@
 package Entities.Enemies;
 
 import Entities.Players.Player;
+import Handlers.LevelHandler;
 import System.Main;
 import Handlers.ImageHandler;
 import Pathfinding.APathfinding;
@@ -18,7 +19,7 @@ public class EternalSnail extends Enemy{
     APathfinding pathFinder;
     Tile[][] tileset;
 
-    public boolean active = true;
+    public boolean active;
     // Variables for drawing
     private int updateFrames = 7;
 
@@ -51,15 +52,20 @@ public class EternalSnail extends Enemy{
         this.tileset = tileset;
         pathFinder = new APathfinding(tileset);
         this.onPath = true;
+        active = true;
 
         this.worldX = entityToFollow.worldX - Tile.tileSize;
         this.worldY = entityToFollow.worldY - Tile.tileSize;
     }
 
-    public void update(Tile[][] tileset) {
+    public void update(LevelHandler levelHandler) {
+        if(levelHandler.getCurrentLevel().levelNum == 5) {
+            this.active = false;
+        }
+
         if(active) {
             pathFinder = new APathfinding(tileset);
-            this.tileset = tileset;
+            this.tileset = levelHandler.getCurrentLevel().getMap().baseLayerTiles;
             updateEntityPosition();
             setScreenPosition();
             hitbox.update(this);

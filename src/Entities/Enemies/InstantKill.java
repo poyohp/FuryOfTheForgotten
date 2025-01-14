@@ -1,5 +1,6 @@
 package Entities.Enemies;
 
+import Handlers.LevelHandler;
 import System.Main;
 import Entities.Players.Player;
 import Handlers.ImageHandler;
@@ -40,6 +41,12 @@ public class InstantKill extends Enemy {
 
         movesPerTile = speed;
         setSpeed((double) Tile.tileSize / movesPerTile);
+    }
+
+    public void update(LevelHandler levelHandler) {
+        if(levelHandler.getCurrentLevel().levelNum == 5) {
+            this.active = false;
+        }
     }
 
     @Override

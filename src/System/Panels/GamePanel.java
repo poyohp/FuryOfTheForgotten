@@ -101,7 +101,7 @@ public class GamePanel extends JPanel implements Runnable{
         ghost = new InstantKill(100, 6, Tile.tileSize, Tile.tileSize, "Invincible!", Tile.tileSize * 2, Tile.tileSize * 4, Tile.tileRatio,5*Tile.tileRatio, 70, 50, player, false);
         ghost.setBounds(1, 23, 1, 23, currentMap.getMapWidth(), currentMap.getMapHeight());
 
-        snail = new EternalSnail(100, 0.4, Tile.tileSize, Tile.tileSize, "Snail", (int) (player.worldX * Tile.tileSize) - 2 * Tile.tileSize, (int) (player.worldY * Tile.tileSize) + Tile.tileSize, Tile.tileRatio,5*Tile.tileRatio, 70, 50, player, levelHandler.getCurrentLevel().getMap().baseLayerTiles, true);
+        snail = new EternalSnail(100, 0, Tile.tileSize, Tile.tileSize, "Snail", (int) (player.worldX * Tile.tileSize) - 2 * Tile.tileSize, (int) (player.worldY * Tile.tileSize) + Tile.tileSize, Tile.tileRatio,5*Tile.tileRatio, 70, 50, player, levelHandler.getCurrentLevel().getMap().baseLayerTiles, true);
 
         //royalKnight = new RoyalKnight(100, 1, Tile.tileSize*2, Tile.tileSize*2, "RoyalKnight", (int) (player.worldX * Tile.tileSize) - 2 * Tile.tileSize, (int) (player.worldY * Tile.tileSize) + Tile.tileSize, Tile.tileRatio,5*Tile.tileRatio, 70, 50, player, levelHandler.getCurrentLevel().getMap().baseLayerTiles, true);
 
@@ -186,9 +186,8 @@ public class GamePanel extends JPanel implements Runnable{
             damageDealer.dealDamageToEnemies(attackHandler, levelHandler.getCurrentLevel(), player);
             damageDealer.dealMeleeDamageToPlayer(attackHandler, player);
             inventory.update(keyHandler);
-            ghost.update();
-            snail.update(levelHandler.getCurrentLevel().getMap().baseLayerTiles);
-            //royalKnight.update(levelHandler.getCurrentLevel().getMap().baseLayerTiles);
+            ghost.update(levelHandler);
+            snail.update(levelHandler);
         } else {
             player.healthHandler.poisonedHealth = false;
         }
