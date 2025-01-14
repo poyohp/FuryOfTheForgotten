@@ -28,6 +28,7 @@ public class Melee extends Attack {
         setSpeed(0);
         setInitialHitbox();
         type = 'm';
+        canHitTile = true;
     }
 
     /**

@@ -22,6 +22,8 @@ public abstract class Attack {
     public Entity entity;
     public boolean isActive = true;
 
+    // Whether attack disappears after hitting tile
+    public boolean canHitTile;
 
     /**
      * Create attack
@@ -42,6 +44,7 @@ public abstract class Attack {
         this.direction[1] = direction;
         this.entity = entity;
         this.duration = duration;
+        this.canHitTile = false;
     }
 
     /**

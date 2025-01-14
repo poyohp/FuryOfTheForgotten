@@ -224,7 +224,8 @@ public class AttackHandler {
         if (!enemyAttacks.isEmpty()) {
             for (int i = 0; i < enemyAttacks.size(); i++) {
                 if (collisionHandler.attackWithTileCollision(enemyAttacks.get(i), tileset)) {
-                    enemyToRemove.add(enemyAttacks.get(i));
+                    // Remove attack if it cannot hit tiles
+                    if (!enemyAttacks.get(i).canHitTile) enemyToRemove.add(enemyAttacks.get(i));
                 }
                 if (enemyAttacks.get(i).getDuration() <= 0) {
                     enemyToRemove.add(enemyAttacks.get(i));
