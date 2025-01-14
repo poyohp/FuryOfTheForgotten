@@ -90,10 +90,7 @@ public class SpawnHandler implements ActionListener {
                     addDragons(value, level, player, i, j);
                 }
 
-                if (value == -10) {
-                    System.out.println("Added");
-                    level.archerEnemies.add(new Rabbit(20, 1.5, Tile.tileSize, Tile.tileSize, "Rabbit", (int) level.getMap().spawnLayerTiles[i][j].getWorldXPos(), (int) level.getMap().spawnLayerTiles[i][j].getWorldYPos(), 0, 0, Tile.tileSize, Tile.tileSize, player, level.getMap().baseLayerTiles, true));
-                }
+                if (value == -10) level.archerEnemies.add(new Rabbit(12, 1.5, Tile.tileSize, Tile.tileSize, "Rabbit", (int) level.getMap().spawnLayerTiles[i][j].getWorldXPos(), (int) level.getMap().spawnLayerTiles[i][j].getWorldYPos(), 0, 0, Tile.tileSize, Tile.tileSize, player, level.getMap().baseLayerTiles, true));
             }
         }
     }
