@@ -67,9 +67,9 @@ public class RoyalKnight extends Enemy{
         updateEntityPosition();
         setScreenPosition();
         hitbox.update(this);
-
         unHitPlayer();
         if (!attacking) move();
+        else System.out.println(attackFrames);
     }
 
     private void unHitPlayer() {
@@ -121,13 +121,13 @@ public class RoyalKnight extends Enemy{
 
 
     public void attack(AttackHandler a) {
-        if (attackFrames == 66) {
-            if (entityToFollow.worldX >= worldX) {
-                a.createBossAttack(4, 60 * Tile.tileRatio, 2 * Tile.tileRatio, 'r', this, 0, 0, 88);
-            } else {
-                a.createBossAttack(4, 60 * Tile.tileRatio, 2 * Tile.tileRatio, 'l', this, 0, 0, 88);
-            }
+        if (entityToFollow.worldX >= worldX) {
+            a.createBossAttack(2, 70 * Tile.tileRatio, 20 * Tile.tileRatio, 'r', this, 0, 0, 66);
+        } else {
+            a.createBossAttack(2, 70 * Tile.tileRatio, 20 * Tile.tileRatio, 'l', this, 0, 0, 66);
         }
+
+
         attacking = true;
     }
 
