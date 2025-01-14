@@ -208,7 +208,8 @@ public class AttackHandler {
         if (!playerAttacks.isEmpty()) {
             for (int i = 0; i < playerAttacks.size(); i++) {
                 if (collisionHandler.attackWithTileCollision(playerAttacks.get(i), tileset)) {
-                    playerToRemove.add(playerAttacks.get(i));
+                    if (!playerAttacks.get(i).canHitTile) playerToRemove.add(playerAttacks.get(i));
+
                 }
                 if (playerAttacks.get(i).getDuration() <= 0) {
                     playerToRemove.add(playerAttacks.get(i));
