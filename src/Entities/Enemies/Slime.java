@@ -83,7 +83,7 @@ public class Slime extends Enemy{
 
             searchPath(goalRow, goalCol);
 
-        } //else: different random actions if the player is not in enemy vision
+        }
     }
 
     @Override
