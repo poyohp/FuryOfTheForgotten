@@ -154,9 +154,9 @@ public class Vampire extends Player{
         }
 
         g2.setColor(Color.BLACK);
-        g2.fillRoundRect(Tile.tileRatio * 9, (int)(screenHeight - 2*Tile.tileSize), Tile.tileSize*6, Tile.tileSize/2, 10, 10);
+        g2.fillRoundRect(Tile.tileRatio * 9, (int)(screenHeight - 3*Tile.tileSize), Tile.tileSize*6, Tile.tileSize/2, 10, 10);
         g2.setColor(new Color(220, 20, 60));
-        g2.fillRoundRect(Tile.tileRatio * 9, (int)(screenHeight - 2*Tile.tileSize), (int)((Tile.tileSize*6) * bloodBarState/2), Tile.tileSize/2, 10, 10);
+        g2.fillRoundRect(Tile.tileRatio * 9, (int)(screenHeight - 3*Tile.tileSize), (int)((Tile.tileSize*6) * bloodBarState/2), Tile.tileSize/2, 10, 10);
     }
 
     public void updateBloodBar() {
