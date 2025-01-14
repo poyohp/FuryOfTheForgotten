@@ -69,7 +69,16 @@ public class RoyalKnight extends Enemy{
         hitbox.update(this);
         unHitPlayer();
         if (!attacking) move();
-        else System.out.println(attackFrames);
+        if (!a.enemyAttacks.isEmpty()) {
+            for (int i = 0; i < a.enemyAttacks.size(); i++) {
+                if (a.enemyAttacks.get(i).type == 's') {
+                    if (attackFrames == 66) {
+                        a.enemyAttacks.get(i).isActive = true;
+                    }
+                }
+            }
+        }
+        //else System.out.println(attackFrames);
     }
 
     private void unHitPlayer() {
@@ -127,6 +136,11 @@ public class RoyalKnight extends Enemy{
             a.createBossAttack(2, 70 * Tile.tileRatio, 20 * Tile.tileRatio, 'l', this, 0, 0, 66);
         }
 
+        for (int i = 0; i < a.enemyAttacks.size(); i++) {
+            if (a.enemyAttacks.get(i).type == 's') {
+                a.enemyAttacks.get(i).isActive = false;
+            }
+        }
 
         attacking = true;
     }
