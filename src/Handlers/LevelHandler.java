@@ -179,7 +179,11 @@ public class LevelHandler {
                     levelComplete = true;
                     Main.gamePanel.pauseGame();
                     LevelHandler.levelsCompleted++;
-                    Main.updateGameState(7);
+                    if (levelsCompleted == 1) {
+                        Main.gameWon = true;
+                        Main.updateGameState(4);
+                    }
+                    else Main.updateGameState(7);
                 }
             }
         }
