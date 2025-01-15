@@ -65,7 +65,7 @@ public class AttackHandler {
         playerAttacks.add(new Stab(range, width, direction, entity, xOffset, yOffset, duration));
     }
 
-    public void createBossAttack(int damage, int range, int width, char direction, Entity entity, int xOffset, int yOffset, int duration) {
+    public void createBossAttack(double damage, int range, int width, char direction, Entity entity, int xOffset, int yOffset, int duration) {
         enemyAttacks.add(new Swipe(damage, range, width, direction, entity, xOffset, yOffset, duration));
     }
 
@@ -248,12 +248,16 @@ public class AttackHandler {
      * @param g2     Graphics 2D object for drawing
      */
     public void draw(Graphics2D g2) {
-        for (int i = 0; i < playerAttacks.size(); i++) {
-            playerAttacks.get(i).draw(g2);
+        if (!playerAttacks.isEmpty()) {
+            for (int i = 0; i < playerAttacks.size(); i++) {
+                playerAttacks.get(i).draw(g2);
+            }
         }
 
-        for (int i = 0; i < enemyAttacks.size(); i++) {
-            enemyAttacks.get(i).draw(g2);
+        if (!enemyAttacks.isEmpty()) {
+            for (int i = 0; i < enemyAttacks.size(); i++) {
+                enemyAttacks.get(i).draw(g2);
+            }
         }
     }
 

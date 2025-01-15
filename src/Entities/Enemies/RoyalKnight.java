@@ -56,7 +56,7 @@ public class RoyalKnight extends Enemy{
         hitbox.height += 10 * Tile.tileRatio;
 
 
-        this.worldX = entityToFollow.worldX + 5*Tile.tileSize;
+        this.worldX = entityToFollow.worldX + 16*Tile.tileSize;
         this.worldY = entityToFollow.worldY;
         setScreenPosition();
     }
@@ -135,9 +135,9 @@ public class RoyalKnight extends Enemy{
 
     public void attack(AttackHandler a) {
         if (entityToFollow.worldX >= worldX) {
-            a.createBossAttack(2, 70 * Tile.tileRatio, 20 * Tile.tileRatio, 'r', this, 0, 0, 66);
+            a.createBossAttack(1.5, 70 * Tile.tileRatio, 20 * Tile.tileRatio, 'r', this, 0, 0, 66);
         } else {
-            a.createBossAttack(2, 70 * Tile.tileRatio, 20 * Tile.tileRatio, 'l', this, 0, 0, 66);
+            a.createBossAttack(1.5, 70 * Tile.tileRatio, 20 * Tile.tileRatio, 'l', this, 0, 0, 66);
         }
 
         for (int i = 0; i < a.enemyAttacks.size(); i++) {
