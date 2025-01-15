@@ -47,6 +47,12 @@ public class InstantKill extends Enemy {
         if(levelHandler.getCurrentLevel().levelNum == 5) {
             this.active = false;
         }
+
+        updateEntityPosition();
+        setScreenPosition();
+        hitbox.update(this);
+        if (active) move();
+
     }
 
     @Override
@@ -84,6 +90,9 @@ public class InstantKill extends Enemy {
 
     @Override
     public void move() {
+        System.out.println("Enemy col: " + currentCol);
+        System.out.println("Enemy row: " + currentRow);
+        System.out.println("Active: " + active);
 
         updateEntityPosition();
 
