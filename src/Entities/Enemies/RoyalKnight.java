@@ -199,11 +199,6 @@ public class RoyalKnight extends Enemy{
                 g2.drawImage(swing, (int) screenX - 64*Tile.tileRatio, (int) screenY - Tile.tileSize - Tile.tileRatio, (int) (screenX + getWidth() + 32*Tile.tileRatio - Tile.tileSize), (int) (screenY + getHeight() + Tile.tileSize - Tile.tileRatio), 265, attackAnimationState * 96, 95, attackAnimationState * 96 + 96, new Color(0, 0, 0, 0), null);
             }
         }
-
-
-        hitbox.draw(g2);
-
-
         updateFrames();
     }
 
