@@ -36,7 +36,7 @@ public class BloodOrb extends Ranged {
      * @param speed     attack speed
      */
     public BloodOrb(int range, int width, char direction, Entity entity, int xOffset, int yOffset, int duration, int speed, double angle, ArrayList<Enemy> enemies) {
-        super(2, range, width, direction, entity, xOffset, yOffset, duration, speed);
+        super(1, range, width, direction, entity, xOffset, yOffset, duration, speed);
         spawnDistance = 80;
         this.enemies = enemies;
         this.angle = angle;

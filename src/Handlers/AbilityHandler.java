@@ -158,7 +158,7 @@ public class AbilityHandler {
                     abilityLength = 300;
                 } else if (player.type == 'z') {
                     abilityLength = 48;
-                    healthHandler.heal(4.0);
+                    healthHandler.heal(2.0);
                 }
                 cancelAbility();
             } else {
