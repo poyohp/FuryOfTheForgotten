@@ -23,7 +23,7 @@ public class SpawnHandler implements ActionListener {
     public int playerSpawnX, playerSpawnY;
     public ArrayList<SpawnPoint> enemySpawnPoints = new ArrayList<SpawnPoint>();
     public boolean started = false;
-    public int numActiveSpawns = 0, bossSpawnTimer = 600;
+    public int numActiveSpawns = 0, bossSpawnTimer = 300;
 
     RoyalKnight royalKnight;
     boolean bossSpawned = false;
@@ -192,14 +192,15 @@ public class SpawnHandler implements ActionListener {
         }
 
         for (int i = 0; i < level.contactEnemies.size(); i++) {
-            if (level.contactEnemies.get(i).getName().equalsIgnoreCase("RoyalKnight")) {
+            if (level.contactEnemies.get(i).getName().equalsIgnoreCase("boss")) {
                 if (level.contactEnemies.get(i).phase2) {
-                    if (bossSpawnTimer == 0) {
+                    if (bossSpawnTimer <= 0) {
                         level.contactEnemies.add(new Villager(2, Tile.tileSize/20, Tile.tileSize, (int)(Tile.tileSize*1.5), "Villager", (int)level.contactEnemies.get(i).worldX, (int)level.contactEnemies.get(i).worldY, 3*Tile.tileSize/Tile.normalTileSize, 4*Tile.tileSize/Tile.normalTileSize, 11*Tile.tileSize/Tile.normalTileSize, 11*Tile.tileSize/Tile.normalTileSize, player, level.getMap().baseLayerTiles, true));
-                        bossSpawnTimer = 600;
+                        bossSpawnTimer = 300;
                     } else {
                         bossSpawnTimer--;
                     }
+                    System.out.println(bossSpawnTimer);
                 }
             }
         }
