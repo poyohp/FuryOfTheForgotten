@@ -293,11 +293,11 @@ public class BuyPanel extends AbstractPanel {
 
         if(keyHandler.toggleInventory) {
             //EXPLAIN HOW TO REPLACE
-            String instructions = "SELECT AN ITEM TO REPLACE ('J')";
+            String instructions = "SELECT AN ITEM TO REPLACE ('X')";
             g2.drawString(instructions, inventoryX, inventoryY - 50);
         }
 
-        String instructions = "'J' TO PURCHASE | 'L' TO EXIT";
+        String instructions = "'X' TO PURCHASE | 'Z' TO EXIT";
         g2.setColor(Color.WHITE);
         g2.drawString(instructions, inventoryX + 25, (int) (GamePanel.screenHeight - 50));
 
