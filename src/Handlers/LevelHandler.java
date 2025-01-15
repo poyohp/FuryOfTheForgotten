@@ -61,7 +61,7 @@ public class LevelHandler {
      * @param spawnHandler to update spawns in the new level
      * @param player the game player
      */
-    public void goToNextLevel(SpawnHandler spawnHandler, Player player, AttackHandler attackHandler, GamePanel panel) {
+    public void goToNextLevel(SpawnHandler spawnHandler, Player player, AttackHandler attackHandler, GamePanel panel, AbilityHandler abilityHandler) {
         if(currentLevelIndex < numLevels) {
 
             //CLEAR OUT UNKILLABLE ENEMIES
@@ -69,6 +69,7 @@ public class LevelHandler {
 
             currentLevelIndex++;
             currentLevel = levels[currentLevelIndex];
+            abilityHandler.level = currentLevel;
             attackHandler.levelChanged(currentLevel);
             spawnHandler.levelChanged(player, currentLevel);
 
