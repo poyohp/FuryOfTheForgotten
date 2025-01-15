@@ -103,10 +103,6 @@ public class GamePanel extends JPanel implements Runnable{
 
         snail = new EternalSnail(100, 0.4, Tile.tileSize, Tile.tileSize, "Snail", (int) (player.worldX * Tile.tileSize) - 2 * Tile.tileSize, (int) (player.worldY * Tile.tileSize) + Tile.tileSize, Tile.tileRatio,5*Tile.tileRatio, 70, 50, player, levelHandler.getCurrentLevel().getMap().baseLayerTiles, true);
 
-        //royalKnight = new RoyalKnight(100, 1, Tile.tileSize*2, Tile.tileSize*2, "RoyalKnight", (int) (player.worldX * Tile.tileSize) - 2 * Tile.tileSize, (int) (player.worldY * Tile.tileSize) + Tile.tileSize, Tile.tileRatio,5*Tile.tileRatio, 70, 50, player, levelHandler.getCurrentLevel().getMap().baseLayerTiles, true);
-
-        //levelHandler.getCurrentLevel().contactEnemies.add(royalKnight);
-
         //Start game after loading all objects
         gameThread = new Thread(this);
         spawnHandler.startSpawning();
