@@ -44,69 +44,72 @@ public class Main {
      * @param gameState num representing state of the game
      */
     static public void updateGameState(int gameState) {
-        window.getContentPane().removeAll(); // Remove current panel from JFrame
+        try {
+            window.getContentPane().removeAll(); // Remove current panel from JFrame
+            // Add panel based on game state
+            switch (gameState) {
+                case 1:
+                    menuPanel = new MenuPanel();
+                    window.add(menuPanel);
+                    menuPanel.requestFocusInWindow();
+                    break;
+                case 2:
+                    boolean start = false;
+                    if (gamePanel == null) start = true;
+                    if (start) gamePanel = new GamePanel();
+                    window.add(gamePanel);
+                    if (start) {
+                        gamePanel.initiateGamePanel();
+                        gamePanel.startTime = System.nanoTime();
+                        gamePanel.totalPauseTime = 0;
+                        gamePanel.isPaused = false;
+                    }
+                    break;
+                case 3:
+                    statsPanel = new StatsPanel();
+                    window.add(statsPanel);
+                    statsPanel.requestFocusInWindow();
+                    break;
+                case 4:
+                    Main.gamePanel.pauseGame(); // Pause game
 
-        // Add panel based on game state
-        switch (gameState) {
-            case 1:
-                menuPanel = new MenuPanel();
-                window.add(menuPanel);
-                menuPanel.requestFocusInWindow();
-                break;
-            case 2:
-                boolean start = false;
-                if (gamePanel == null) start = true;
-                if (start) gamePanel = new GamePanel();
-                window.add(gamePanel);
-                if (start) {
-                    gamePanel.initiateGamePanel();
-                    gamePanel.startTime = System.nanoTime();
-                    gamePanel.totalPauseTime = 0;
-                    gamePanel.isPaused = false;
-                }
-                break;
-            case 3:
-                statsPanel = new StatsPanel();
-                window.add(statsPanel);
-                statsPanel.requestFocusInWindow();
-                break;
-            case 4:
-                Main.gamePanel.pauseGame(); // Pause game
+                    GamePanel.totalTimePlayed = (gamePanel.pauseTime - gamePanel.startTime - gamePanel.totalPauseTime) / 1_000_000_000.0;
 
-                GamePanel.totalTimePlayed = (gamePanel.pauseTime - gamePanel.startTime - gamePanel.totalPauseTime) / 1_000_000_000.0;
+                    // Display image based on win or lose
+                    String img;
+                    if (gameWon) img = "gameWon.png";
+                    else img = "gameOver.png";
+                    gameEndPanel = new GameEndPanel(img);
+                    window.add(gameEndPanel);
+                    gameEndPanel.requestFocusInWindow();
+                    break;
+                case 5:
+                    helpPanel = new HelpPanel();
+                    window.add(helpPanel);
+                    helpPanel.requestFocusInWindow();
+                    break;
+                case 6:
+                    characterSelectionPanel = new CharacterSelectionPanel();
+                    window.add(characterSelectionPanel);
+                    characterSelectionPanel.requestFocusInWindow();
+                    break;
+                case 7:
+                    shopPanel = new ShopPanel();
+                    window.add(shopPanel);
+                    shopPanel.requestFocusInWindow();
+                    break;
+                case 8:
+                    buyPanel = new BuyPanel(gamePanel);
+                    window.add(buyPanel);
+                    buyPanel.requestFocusInWindow();
+                    break;
+            }
 
-                // Display image based on win or lose
-                String img;
-                if (gameWon) img = "gameWon.png";
-                else img = "gameOver.png";
-                gameEndPanel = new GameEndPanel(img);
-                window.add(gameEndPanel);
-                gameEndPanel.requestFocusInWindow();
-                break;
-            case 5:
-                helpPanel = new HelpPanel();
-                window.add(helpPanel);
-                helpPanel.requestFocusInWindow();
-                break;
-            case 6:
-                characterSelectionPanel = new CharacterSelectionPanel();
-                window.add(characterSelectionPanel);
-                characterSelectionPanel.requestFocusInWindow();
-                break;
-            case 7:
-                shopPanel = new ShopPanel();
-                window.add(shopPanel);
-                shopPanel.requestFocusInWindow();
-                break;
-            case 8:
-                buyPanel = new BuyPanel(gamePanel);
-                window.add(buyPanel);
-                buyPanel.requestFocusInWindow();
-                break;
+            window.pack();
+            window.setVisible(true);
+        } catch(Exception e) {
+            System.exit(0);
         }
-
-        window.pack();
-        window.setVisible(true);
     }
 
     /**
