@@ -156,16 +156,20 @@ public class GamePanel extends JPanel implements Runnable{
         long lastTime = System.nanoTime();
         long currentTime;
 
-        while(gameThread.isAlive()) {
-            currentTime = System.nanoTime();
-            delta += (currentTime - lastTime) / drawInterval;
-            lastTime = currentTime;
-            if(delta > 1) {
-                //Updates, then draws
-                update();
-                repaint();
-                delta--;
+        try {
+            while(gameThread.isAlive()) {
+                currentTime = System.nanoTime();
+                delta += (currentTime - lastTime) / drawInterval;
+                lastTime = currentTime;
+                if(delta > 1) {
+                    //Updates, then draws
+                    update();
+                    repaint();
+                    delta--;
+                }
             }
+        } catch(Exception e) {
+            System.exit(0);
         }
     }
 
