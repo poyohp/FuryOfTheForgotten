@@ -66,11 +66,19 @@ public class DamageDealer {
 
             for (Enemy enemy : level.contactEnemies) {
                 if (collisionHandler.enemyWithAttackCollision(enemy, playerAttack) && !enemy.isHit && playerAttack.isActive) {
+                    double damage = 0;
                     if(player.isDamageBoost) {
-                        enemy.isHit(playerAttack.damage+player.boostedDamage);
+                        damage += playerAttack.damage + player.boostedDamage;
                     } else if (player.type == 'g' && player.direction == enemy.direction) {
-                        enemy.isHit(playerAttack.damage*4);
-                    } else enemy.isHit(playerAttack.damage);
+                        damage = playerAttack.damage*4;
+                    } else damage = playerAttack.damage;
+
+                    enemy.isHit(damage);
+
+                    if(enemy.name != null && enemy.name.equalsIgnoreCase("boss")) {
+                        enemy.damageTaken += damage;
+                    }
+
                     indicesToRemove.add(i);
                     break;
                 }

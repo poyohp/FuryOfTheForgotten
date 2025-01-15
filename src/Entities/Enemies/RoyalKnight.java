@@ -17,7 +17,6 @@ import java.util.ArrayList;
 
 public class RoyalKnight extends Enemy{
 
-
     public boolean onPath;
     APathfinding pathFinder;
     private int updateFrames = 7, attackFrames = 87, attackAnimationState = 0;
@@ -28,6 +27,10 @@ public class RoyalKnight extends Enemy{
     BufferedImage knight = ImageHandler.loadImage("Assets/Entities/Enemies/Boss/Elite Knight Sprite Sheet.png");
     BufferedImage swing = ImageHandler.loadImage("Assets/Entities/Enemies/Boss/Attack Sprite Sheet.png");
 
+    //FOR BOSS PAUSES
+    public boolean paused;
+    public int pauseTime = (int) (3.0*GamePanel.FPS);
+    public int pauseCounter;
 
     /**
      * Enemy that follows player
@@ -55,6 +58,11 @@ public class RoyalKnight extends Enemy{
         this.a = a;
         hitbox.height += 10 * Tile.tileRatio;
 
+        this.name = "boss"; //used for damageCounter and pause!
+
+        paused = false;
+        pauseCounter = 0;
+        damageTaken = 0;
 
         this.worldX = entityToFollow.worldX + 16*Tile.tileSize;
         this.worldY = entityToFollow.worldY;
@@ -68,13 +76,15 @@ public class RoyalKnight extends Enemy{
             phase2 = true;
             setSpeed(4);
         }
+        pauseBoss();
         updateEntityPosition();
         setScreenPosition();
         hitbox.update(this);
         unHitPlayer();
-        if (!attacking) move();
+        if (!attacking && !paused) move();
         if (!a.enemyAttacks.isEmpty()) {
             for (int i = 0; i < a.enemyAttacks.size(); i++) {
+                // SWIPE
                 if (a.enemyAttacks.get(i).type == 's') {
                     if (attackFrames == 66) {
                         a.enemyAttacks.get(i).isActive = true;
@@ -82,7 +92,6 @@ public class RoyalKnight extends Enemy{
                 }
             }
         }
-        //else System.out.println(attackFrames);
     }
 
     private void unHitPlayer() {
@@ -96,6 +105,22 @@ public class RoyalKnight extends Enemy{
         }
     }
 
+    public void pauseBoss() {
+        if(damageTaken >= 10 && getHealth() > 10) {
+            paused = true;
+            pauseCounter =  pauseTime;
+            damageTaken = 0;
+        }
+
+        if(paused) {
+            if(pauseCounter < 0) {
+                paused = false;
+                pauseCounter = 0;
+            } else {
+                pauseCounter--;
+            }
+        }
+    }
 
     public void updateFrames() {
         if (!attacking) {

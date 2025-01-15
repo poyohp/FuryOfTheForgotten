@@ -9,7 +9,7 @@ public abstract class Entity {
     private double health;
     private double speed;
     private int width, height;
-    String name;
+    public String name;
 
     // entity position
     public double worldX, worldY;

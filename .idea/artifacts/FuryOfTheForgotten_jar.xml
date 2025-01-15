@@ -2,9 +2,11 @@
   <artifact type="jar" build-on-make="true" name="FuryOfTheForgotten:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/FuryOfTheForgotten_jar</output-path>
     <root id="archive" name="FuryOfTheForgotten.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/out/META-INF/MANIFEST.MF" />
+      </element>
       <element id="module-output" name="FuryOfTheForgotten" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/../../json-simple-1.1.1.jar" path-in-jar="/" />
-      <element id="file-copy" path="$PROJECT_DIR$/../../json-simple-1.1.1.jar" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../json-simple-1.1.1.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>
