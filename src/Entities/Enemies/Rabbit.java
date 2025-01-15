@@ -104,7 +104,7 @@ public class Rabbit extends Enemy{
             int goalCol = (int) (entityToFollow.entityLeft/Tile.tileSize); //left row of the player
 
             searchPath(goalRow, goalCol);
-        } //else: different random actions if the player is not in enemy vision
+        }
     }
 
     @Override

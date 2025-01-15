@@ -123,8 +123,6 @@ public class InventoryHandler {
             boxX += scaledInnerGap + scaledDrawSize;
         }
 
-        System.out.println(keyHandler.toggleInventory);
-
         // Draw the selected outline if inventory is toggled
         if (drawSelected) {
             int selectedBoxX = scaledOutlineX + scaledInnerGap + (indexSelected * (scaledInnerGap + scaledDrawSize));
