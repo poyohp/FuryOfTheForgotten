@@ -29,8 +29,10 @@ public class RoyalKnight extends Enemy{
 
     //FOR BOSS PAUSES
     public boolean paused;
+    public int minimumSecondsBetweenPause = 10;
     public int pauseTime = (int) (3.0*GamePanel.FPS);
     public int pauseCounter;
+    public int framesSinceLastPause;
 
     /**
      * Enemy that follows player
@@ -63,6 +65,7 @@ public class RoyalKnight extends Enemy{
         paused = false;
         pauseCounter = 0;
         damageTaken = 0;
+        framesSinceLastPause = 0;
 
         this.worldX = entityToFollow.worldX + 16*Tile.tileSize;
         this.worldY = entityToFollow.worldY;
@@ -106,7 +109,16 @@ public class RoyalKnight extends Enemy{
     }
 
     public void pauseBoss() {
-        if(damageTaken >= 10 && getHealth() > 10) {
+
+        int secondsSinceLastPause = (int) (framesSinceLastPause/GamePanel.FPS) ;
+
+        System.out.println("LAST PAUSE: " + secondsSinceLastPause);
+        System.out.println("MINIMUM REQUIRED: " + minimumSecondsBetweenPause);
+
+
+        boolean canPause = secondsSinceLastPause > minimumSecondsBetweenPause;
+
+        if(damageTaken >= 10 && getHealth() > 10 && canPause) {
             paused = true;
             pauseCounter =  pauseTime;
             damageTaken = 0;
@@ -115,11 +127,12 @@ public class RoyalKnight extends Enemy{
         if(paused) {
             if(pauseCounter < 0) {
                 paused = false;
+                framesSinceLastPause = 0;
                 pauseCounter = 0;
             } else {
                 pauseCounter--;
             }
-        }
+        } else framesSinceLastPause++;
     }
 
     public void updateFrames() {
@@ -177,15 +190,6 @@ public class RoyalKnight extends Enemy{
 
     @Override
     public void draw(Graphics2D g2) {
-        drawHealth(g2);
-       /*
-       g2.setColor(Color.BLACK);
-       g2.fillRect((int)screenX, (int)screenY, getWidth(), getHeight());
-
-
-        */
-
-
         if (!attacking) {
             if(entityToFollow.worldX >= worldX) {
                 g2.drawImage(knight, (int) screenX - Tile.tileSize, (int) screenY - Tile.tileSize, (int) (screenX + getWidth() + Tile.tileSize), (int) (screenY + getHeight() + Tile.tileSize), animationState * columnWidth, rowHeight, animationState * columnWidth + columnWidth, rowHeight * 2, new Color(0, 0, 0, 0), null);
@@ -199,6 +203,9 @@ public class RoyalKnight extends Enemy{
                 g2.drawImage(swing, (int) screenX - 64*Tile.tileRatio, (int) screenY - Tile.tileSize - Tile.tileRatio, (int) (screenX + getWidth() + 32*Tile.tileRatio - Tile.tileSize), (int) (screenY + getHeight() + Tile.tileSize - Tile.tileRatio), 265, attackAnimationState * 96, 95, attackAnimationState * 96 + 96, new Color(0, 0, 0, 0), null);
             }
         }
+
+        drawHealth(g2);
+
         updateFrames();
     }
 
