@@ -28,6 +28,7 @@ public class AbilityHandler {
     ArrayList<Decoy> decoys = new ArrayList<Decoy>();
     BufferedImage abilityIcon;
     int abilityIconSize = Tile.tileMultipler * Tile.normalTileSize;
+    ArrayList<Enemy> enemiesList;
 
     public AbilityHandler (Player player, KeyHandler keyHandler, CollisionHandler collisionHandler, Level level, HealthHandler healthHandler, AttackHandler attackHandler) {
         this.player = player;
@@ -92,43 +93,27 @@ public class AbilityHandler {
                 e.entityToFollow = decoys.getFirst();
             }
         } else if (player.type == 'v') {
-            if (!level.archerEnemies.isEmpty()) {
-                if (player.direction == 'r') {
-                    attackHandler.createPlayerBloodOrb(7 * Tile.tileRatio, 4 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, 0, level.archerEnemies);
-                    attackHandler.createPlayerBloodOrb(7 * Tile.tileRatio, 4 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, 15 * Math.PI / 8, level.archerEnemies);
-                    attackHandler.createPlayerBloodOrb(7 * Tile.tileRatio, 4 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, Math.PI / 8, level.archerEnemies);
-                } else if (player.direction == 'u') {
-                    attackHandler.createPlayerBloodOrb(7 * Tile.tileRatio, 4 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, Math.PI / 2, level.archerEnemies);
-                    attackHandler.createPlayerBloodOrb(7 * Tile.tileRatio, 4 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, 3 * Math.PI / 8, level.archerEnemies);
-                    attackHandler.createPlayerBloodOrb(7 * Tile.tileRatio, 4 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, 5 * Math.PI / 8, level.archerEnemies);
-                } else if (player.direction == 'l') {
-                    attackHandler.createPlayerBloodOrb(7 * Tile.tileRatio, 4 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, Math.PI, level.archerEnemies);
-                    attackHandler.createPlayerBloodOrb(7 * Tile.tileRatio, 4 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, 7 * Math.PI / 8, level.archerEnemies);
-                    attackHandler.createPlayerBloodOrb(7 * Tile.tileRatio, 4 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, 9 * Math.PI / 8, level.archerEnemies);
-                } else {
-                    attackHandler.createPlayerBloodOrb(7 * Tile.tileRatio, 4 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, 3 * Math.PI / 2, level.archerEnemies);
-                    attackHandler.createPlayerBloodOrb(7 * Tile.tileRatio, 4 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, 11 * Math.PI / 8, level.archerEnemies);
-                    attackHandler.createPlayerBloodOrb(7 * Tile.tileRatio, 4 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, 13 * Math.PI / 8, level.archerEnemies);
-                }
+            if (!level.contactEnemies.isEmpty()) enemiesList = level.contactEnemies; // If there are rabbits, focus on hitting those first
+            else enemiesList = level.archerEnemies;
+
+            if (player.direction == 'r') {
+                attackHandler.createPlayerBloodOrb(7 * Tile.tileRatio, 4 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, 0, enemiesList);
+                attackHandler.createPlayerBloodOrb(7 * Tile.tileRatio, 4 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, 15 * Math.PI / 8, enemiesList);
+                attackHandler.createPlayerBloodOrb(7 * Tile.tileRatio, 4 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, Math.PI / 8, enemiesList);
+            } else if (player.direction == 'u') {
+                attackHandler.createPlayerBloodOrb(7 * Tile.tileRatio, 4 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, Math.PI / 2, enemiesList);
+                attackHandler.createPlayerBloodOrb(7 * Tile.tileRatio, 4 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, 3 * Math.PI / 8, enemiesList);
+                attackHandler.createPlayerBloodOrb(7 * Tile.tileRatio, 4 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, 5 * Math.PI / 8, enemiesList);
+            } else if (player.direction == 'l') {
+                attackHandler.createPlayerBloodOrb(7 * Tile.tileRatio, 4 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, Math.PI, enemiesList);
+                attackHandler.createPlayerBloodOrb(7 * Tile.tileRatio, 4 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, 7 * Math.PI / 8, enemiesList);
+                attackHandler.createPlayerBloodOrb(7 * Tile.tileRatio, 4 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, 9 * Math.PI / 8, enemiesList);
             } else {
-                if (player.direction == 'r') {
-                    attackHandler.createPlayerBloodOrb(7 * Tile.tileRatio, 4 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, 0, level.contactEnemies);
-                    attackHandler.createPlayerBloodOrb(7 * Tile.tileRatio, 4 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, 15 * Math.PI / 8, level.contactEnemies);
-                    attackHandler.createPlayerBloodOrb(7 * Tile.tileRatio, 4 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, Math.PI / 8, level.contactEnemies);
-                } else if (player.direction == 'u') {
-                    attackHandler.createPlayerBloodOrb(7 * Tile.tileRatio, 4 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, Math.PI / 2, level.contactEnemies);
-                    attackHandler.createPlayerBloodOrb(7 * Tile.tileRatio, 4 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, 3 * Math.PI / 8, level.contactEnemies);
-                    attackHandler.createPlayerBloodOrb(7 * Tile.tileRatio, 4 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, 5 * Math.PI / 8, level.contactEnemies);
-                } else if (player.direction == 'l') {
-                    attackHandler.createPlayerBloodOrb(7 * Tile.tileRatio, 4 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, Math.PI, level.contactEnemies);
-                    attackHandler.createPlayerBloodOrb(7 * Tile.tileRatio, 4 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, 7 * Math.PI / 8, level.contactEnemies);
-                    attackHandler.createPlayerBloodOrb(7 * Tile.tileRatio, 4 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, 9 * Math.PI / 8, level.contactEnemies);
-                } else {
-                    attackHandler.createPlayerBloodOrb(7 * Tile.tileRatio, 4 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, 3 * Math.PI / 2, level.contactEnemies);
-                    attackHandler.createPlayerBloodOrb(7 * Tile.tileRatio, 4 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, 11 * Math.PI / 8, level.contactEnemies);
-                    attackHandler.createPlayerBloodOrb(7 * Tile.tileRatio, 4 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, 13 * Math.PI / 8, level.contactEnemies);
-                }
+                attackHandler.createPlayerBloodOrb(7 * Tile.tileRatio, 4 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, 3 * Math.PI / 2, enemiesList);
+                attackHandler.createPlayerBloodOrb(7 * Tile.tileRatio, 4 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, 11 * Math.PI / 8,enemiesList);
+                attackHandler.createPlayerBloodOrb(7 * Tile.tileRatio, 4 * Tile.tileRatio, player.direction, player, 0, 0, 150, 5, 13 * Math.PI / 8, enemiesList);
             }
+
         }
     }
 
