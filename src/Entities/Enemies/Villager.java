@@ -35,6 +35,7 @@ public class Villager extends Slime{
      */
     public Villager(int health, double speed, int width, int height, String name, int worldX, int worldY, int xOffset, int yOffset, int hitBoxWidth, int hitBoxHeight, Player player, Tile[][] tileset, boolean isFollowing) {
         super(health, speed, width, height, name, worldX, worldY, xOffset, yOffset, hitBoxWidth, hitBoxHeight, player, tileset, isFollowing);
+        spriteH = 24;
     }
 
     public void move() {
@@ -151,7 +152,7 @@ public class Villager extends Slime{
         } else spriteSheet = walk;
 
         g2.drawImage(spriteSheet, (int)this.screenX, (int)this.screenY, (int)this.screenX + this.getWidth(), (int)this.screenY + this.getHeight(),
-                currentCol * spriteW, currentRow * spriteH, (currentCol + 1) * spriteW, (currentRow + 1) * spriteW,
+                currentCol * spriteW, currentRow * spriteH, (currentCol + 1) * spriteW, (currentRow + 1) * spriteH,
                 null);
 
         updateFrames();

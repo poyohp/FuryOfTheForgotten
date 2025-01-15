@@ -12,6 +12,7 @@ public abstract class Enemy extends Entity {
     // Used for attacking
     int vision = 600;
     public double damage;
+    public boolean phase2 = false;
 
     //Used for if enemy is attacked
     public boolean isHit;

@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class RoyalKnight extends Enemy{
 
 
-    public boolean onPath, phase2 = false;
+    public boolean onPath;
     APathfinding pathFinder;
     private int updateFrames = 7, attackFrames = 87, attackAnimationState = 0;
     Tile[][] tileset;
