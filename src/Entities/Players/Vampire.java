@@ -22,17 +22,6 @@ public class Vampire extends Player{
     int currentRow = 0, currentCol = 0;;
 
 
-    void setCharacterState(){
-        type = 'v';
-        characterAttackFrames = 36;
-        characterAttackCooldown = 48;
-        attackFrames = characterAttackFrames;
-        attackCooldown = characterAttackCooldown;
-        maxAnimationState = 3;
-        bloodBarState = 2;
-        bloodTimer = 120;
-    }
-
     /**
      * Enemy that follows player
      *
@@ -52,6 +41,20 @@ public class Vampire extends Player{
     public Vampire(double health, double speed, int width, int height, String name, double worldX, double worldY, int xOffset, int yOffset, int hitBoxWidth, int hitBoxHeight, KeyHandler keyHandler) {
         super(health, speed, width, height, name, worldX, worldY, xOffset, yOffset, hitBoxWidth, hitBoxHeight, keyHandler);
         setCharacterState();
+    }
+
+    /**
+     * Initiating character
+     */
+    void setCharacterState(){
+        type = 'v';
+        characterAttackFrames = 36;
+        characterAttackCooldown = 48;
+        attackFrames = characterAttackFrames;
+        attackCooldown = characterAttackCooldown;
+        maxAnimationState = 3;
+        bloodBarState = 2;
+        bloodTimer = 120;
     }
 
     @Override
@@ -159,17 +162,17 @@ public class Vampire extends Player{
         g2.fillRoundRect(Tile.tileRatio * 9, (int)(screenHeight - 3*Tile.tileSize), (int)((Tile.tileSize*6) * bloodBarState/2), Tile.tileSize/2, 10, 10);
     }
 
+    /**
+     * Handles blood bar amounts
+     */
     public void updateBloodBar() {
-
         if (bloodBarState != 2) {
             bloodTimer--;
         }
-
         if (bloodTimer == 0) {
             bloodBarState++;
             bloodTimer = 240;
         }
-
     }
 
 
@@ -220,7 +223,5 @@ public class Vampire extends Player{
         hitbox.update(this); // Update hitbox
         updateFrames();
     }
-
-
 
 }

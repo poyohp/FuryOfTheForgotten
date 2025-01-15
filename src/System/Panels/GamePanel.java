@@ -188,6 +188,8 @@ public class GamePanel extends JPanel implements Runnable{
             inventory.update(keyHandler);
             ghost.update(levelHandler);
             snail.update(levelHandler);
+            System.out.println("DOOR UNLOCKED: " + levelHandler.getCurrentLevel().doorUnlocked);
+            System.out.println("DOOR UNLOCKABLE: " + levelHandler.getCurrentLevel().doorUnlockable);
         } else {
             player.healthHandler.poisonedHealth = false;
         }

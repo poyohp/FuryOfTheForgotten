@@ -72,7 +72,6 @@ public class RoyalKnight extends Enemy{
         setScreenPosition();
     }
 
-
     @Override
     public void update() {
         if (getHealth() <= originalHealth/2) {
@@ -85,6 +84,13 @@ public class RoyalKnight extends Enemy{
         hitbox.update(this);
         unHitPlayer();
         if (!attacking && !paused) move();
+        activateAttacks();
+    }
+
+    /**
+     * Activates the attacks in the right frames (for the swipe)
+     */
+    public void activateAttacks() {
         if (!a.enemyAttacks.isEmpty()) {
             for (int i = 0; i < a.enemyAttacks.size(); i++) {
                 // SWIPE
@@ -97,6 +103,9 @@ public class RoyalKnight extends Enemy{
         }
     }
 
+    /**
+     * Determine if player is hit/not hit, and change as needed
+     */
     private void unHitPlayer() {
         if(hitPlayer) {
             if(freezeTimer > 0) {
@@ -108,13 +117,12 @@ public class RoyalKnight extends Enemy{
         }
     }
 
+    /**
+     * Pause the boss for a certain amount of time every time it loses 10 health
+     */
     public void pauseBoss() {
 
         int secondsSinceLastPause = (int) (framesSinceLastPause/GamePanel.FPS) ;
-
-        System.out.println("LAST PAUSE: " + secondsSinceLastPause);
-        System.out.println("MINIMUM REQUIRED: " + minimumSecondsBetweenPause);
-
 
         boolean canPause = secondsSinceLastPause > minimumSecondsBetweenPause;
 
@@ -135,6 +143,9 @@ public class RoyalKnight extends Enemy{
         } else framesSinceLastPause++;
     }
 
+    /**
+     * Frames for animation
+     */
     public void updateFrames() {
         if (!attacking) {
             if (updateFrames <= 0) {
@@ -170,7 +181,10 @@ public class RoyalKnight extends Enemy{
 
     }
 
-
+    /**
+     * Attacks player and sets inactive (until certain frames within animation)
+     * @param a
+     */
     public void attack(AttackHandler a) {
         if (entityToFollow.worldX >= worldX) {
             a.createBossAttack(1.5, 70 * Tile.tileRatio, 20 * Tile.tileRatio, 'r', this, 0, 0, 66);
@@ -209,7 +223,9 @@ public class RoyalKnight extends Enemy{
         updateFrames();
     }
 
-
+    /**
+     * Moves the boss to left or right of player
+     */
     @Override
     public void move() {
 
@@ -299,10 +315,12 @@ public class RoyalKnight extends Enemy{
     @Override
     public void hitPlayer() {
         hitPlayer = true;
-        //freezeTimer = freezeTimerFrames;
     }
 
-
+    /**
+     * Deals damage if boss is not already hit
+     * @param damage the amount of damage to inflict
+     */
     @Override
     public void isHit(double damage) {
         if(!isHit) {

@@ -9,9 +9,8 @@ import java.awt.image.BufferedImage;
 
 public class Skeleton extends Player{
 
-
+    //IMAGES
     BufferedImage sprites = ImageHandler.loadImage("Assets/Entities/Players/Skeleton/Sprites.png");
-
     BufferedImage sideRoll1 = ImageHandler.loadImage("Assets/Entities/Players/Skeleton/SkeletonSideRoll1.png");
     BufferedImage sideRoll2 = ImageHandler.loadImage("Assets/Entities/Players/Skeleton/SkeletonSideRoll2.png");
     BufferedImage sideRoll3 = ImageHandler.loadImage("Assets/Entities/Players/Skeleton/SkeletonSideRoll3.png");
@@ -31,14 +30,6 @@ public class Skeleton extends Player{
 
     int column1 = 7, column2 = 39, column3 = 71, column4 = 103, row1 = 7, row2 = 39, row3 = 71, row4 = 103, row5 = 135, row6 = 167, row7 = 199, row8 = 231, row9 = 263, row10 = 295, row11 = 327, row12 = 359, row13 = 391, row14 = 423, row15 = 455;
 
-    void setCharacterState(){
-        type = 's';
-        characterAttackFrames = 36;
-        characterAttackCooldown = 30;
-        attackFrames = characterAttackFrames;
-        attackCooldown = characterAttackCooldown;
-        maxAnimationState = 3;
-    }
 
     /**
      * Enemy that follows player
@@ -60,6 +51,19 @@ public class Skeleton extends Player{
         super(health, speed, width, height, name, worldX, worldY, xOffset, yOffset, hitBoxWidth, hitBoxHeight, keyHandler);
         setCharacterState();
     }
+
+    /**
+     * Initiating character
+     */
+    void setCharacterState(){
+        type = 's';
+        characterAttackFrames = 36;
+        characterAttackCooldown = 30;
+        attackFrames = characterAttackFrames;
+        attackCooldown = characterAttackCooldown;
+        maxAnimationState = 3;
+    }
+
 
     /**
      * Draws player

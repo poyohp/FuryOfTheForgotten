@@ -26,5 +26,7 @@ public class Swipe extends Melee {
 
     @Override
     public void draw(Graphics2D g2) {
+        //NO ACTION NEEDED
+        //BOSS SWIPE DRAWN WITH BOSS CHARACTER!
     }
 }

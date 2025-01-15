@@ -87,6 +87,7 @@ public class HealthHandler {
     public boolean poisonedHealth;
     public boolean enhancedHealth;
 
+    //TIMER FOR ENCHANTED OR POISON HEALTH
     Timer diffHealthTimer = new Timer((int) (1000 / GamePanel.FPS), new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -105,6 +106,7 @@ public class HealthHandler {
         }
     });
 
+    //POISON TIMER (ticks every 5 seconds - poison damages every 5 seconds)
     Timer poisonDamageTimer = new Timer(5000, new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -125,6 +127,10 @@ public class HealthHandler {
 
     }
 
+    /**
+     * Activates shields and begins animation
+     * @param numShieldHearts number of shielded hearts to give play
+     */
     public void activatedShields(double numShieldHearts) {
 
         if(hasShields) {
@@ -142,6 +148,9 @@ public class HealthHandler {
         }
     }
 
+    /**
+     * Activates enhanced health and begins animation
+     */
     public void activatedEnhanced() {
         if(poisonedHealth) {
             poisonedHealth = false;
@@ -157,6 +166,9 @@ public class HealthHandler {
         }
     }
 
+    /**
+     * Activates poision and begins animation
+     */
     public void activatedPoison() {
         if(enhancedHealth) {
             enhancedHealth = false;
@@ -173,6 +185,11 @@ public class HealthHandler {
         }
     }
 
+    /**
+     * Handles damage accordingly when hit
+     * @param damage amount of damage that is SUPPOSED to be inflicted
+     * @param onlyHearts if only RED hearts should be damaged
+     */
     public void isHit(double damage, boolean onlyHearts) {
 
         heartsDamaged = 0;
@@ -236,6 +253,10 @@ public class HealthHandler {
         }
     }
 
+    /**
+     * Heal the player's hearts
+     * @param hearts number of hearts to heal
+     */
     public void heal(double hearts) {
         if (currentHearts + hearts <= maxHearts) {
             currentHearts += hearts;
@@ -244,6 +265,10 @@ public class HealthHandler {
         }
     }
 
+    /**
+     * Draws the RED hearts specifically (accounts for poison/enhanced)
+     * @param g2 graphics component to draw with
+     */
     private void drawHearts(Graphics2D g2) {
 
         int x = heartsX + outerGap - innerGap;
@@ -343,6 +368,10 @@ public class HealthHandler {
         }
     }
 
+    /**
+     * Draws the SHIELDS specifically
+     * @param g2 graphics component to draw with
+     */
     private void drawShields(Graphics2D g2) {
 
         int x = heartsX + outerGap - innerGap;
@@ -410,6 +439,14 @@ public class HealthHandler {
         }
     }
 
+    /**
+     * Draws a transition (when player takes damage)
+     * @param g2 graphics component to draw with
+     * @param x x value of the heart to transition
+     * @param y y value of hearts/shields
+     * @param transitionDrawHalfway halfway through the tranition time
+     * @param timer timer counting the point in transition
+     */
     private void drawTransition(Graphics2D g2, int x, int y, double transitionDrawHalfway, double timer) {
         // BLINKING HEART
         double scaleFactor = 1.5;
@@ -429,9 +466,12 @@ public class HealthHandler {
         );
     }
 
+    /**
+     * Draws the hearts and shields
+     * @param g2 graphcis component to use
+     */
     public void drawHealth(Graphics2D g2) {
         drawHearts(g2);
         drawShields(g2);
-
     }
 }

@@ -21,26 +21,21 @@ public class SpawnPoint {
 
     private Random random = new Random();
 
-
     // HANDLING ALL FINAL SPAWN POINT VALUES
-    public final int MIN_ENEMIES = 1;
-    public final int MAX_ENEMIES = 4;
-    private final int secondsBetweenSpawn = random.nextInt(3, 6);
+    public final int MIN_ENEMIES = 3;
+    public final int MAX_ENEMIES = 6;
+    private final int secondsBetweenSpawn = random.nextInt(2, 5);
     private final int framesBetweenSpawn = secondsBetweenSpawn * (int) GamePanel.FPS;
-
 
     final int enemyHealth = 2;
     final int enemySpeed = Tile.tileSize/40;
     final int enemySize = Tile.tileSize;
 
-
     public int numEnemies;
     public int framesSinceLastSpawn;
 
-
     public boolean activeSpawn;
     boolean spawnEnemy;
-
 
     public double worldX, worldY;
     public double screenX, screenY;

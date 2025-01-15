@@ -81,6 +81,11 @@ public abstract class Object {
         this.screenY = worldY - player.worldY + player.screenY;
     }
 
+    /**
+     * Compare name of this to object and see if equal
+     * @param object the other object to check
+     * @return
+     */
     public boolean equals(Object object) {
         return this.name.equalsIgnoreCase(object.name);
     }

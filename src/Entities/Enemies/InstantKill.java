@@ -79,6 +79,9 @@ public class InstantKill extends Enemy {
         }
     }
 
+    /**
+     * Updates row and column of the entity
+     */
     public void updateRowsAndCols() {
         if (updateFrames()) {
             currentCol++;
@@ -88,12 +91,11 @@ public class InstantKill extends Enemy {
         }
     }
 
+    /**
+     * Randomly move the entity as long as in bounds of map
+     */
     @Override
     public void move() {
-        System.out.println("Enemy col: " + currentCol);
-        System.out.println("Enemy row: " + currentRow);
-        System.out.println("Active: " + active);
-
         updateEntityPosition();
 
         if (rand.nextInt(50) > 10) return; // Don't move all the time
@@ -127,6 +129,9 @@ public class InstantKill extends Enemy {
         }
     }
 
+    /**
+     * End game if entity hits player
+     */
     @Override
     public void hitPlayer() {
         if(active) {
@@ -134,6 +139,10 @@ public class InstantKill extends Enemy {
         }
     }
 
+    /**
+     * End game if player hits entity
+     * @param damage NOT NEEDED
+     */
     @Override
     public void isHit(double damage) {
         if(active) {
@@ -141,6 +150,15 @@ public class InstantKill extends Enemy {
         }
     }
 
+    /**
+     * Set the bounds for the map
+     * @param upBound 0
+     * @param downBound Max y value
+     * @param leftBound 0
+     * @param rightBound Max x value
+     * @param mapCols Num cols in the map
+     * @param mapRows Num rows in the map
+     */
     public void setBounds(double upBound, double downBound, double leftBound, double rightBound, int mapCols, int mapRows) {
         while (true) {
             int randomY = rand.nextInt(1, mapRows-1);

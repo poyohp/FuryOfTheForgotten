@@ -10,6 +10,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+//UNFINISHED ENEMY!
+
 public class Wizard extends Enemy{
 
     public boolean onPath, inRange;

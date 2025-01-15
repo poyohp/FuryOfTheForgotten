@@ -8,6 +8,9 @@ public class GameEndPanel extends AbstractPanel {
         super(imgSource);
     }
 
+    /**
+     * End the game --> Go to statistics page
+     */
     @Override
     public void handleChoice() {
         if (keyHandler.shopExit) {

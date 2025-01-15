@@ -61,6 +61,7 @@ public class Dragon extends Enemy {
         counter = numFrames;
     }
 
+    @Override
     public void update() {
         updateEntityPosition();
         setScreenPosition();

@@ -34,6 +34,11 @@ public class DamageDealer {
         }
     }
 
+    /**
+     * Specifically for melee from enemies to damage player
+     * @param attackHandler the gamepanel's attackhandler
+     * @param player the player
+     */
     public void dealMeleeDamageToPlayer(AttackHandler attackHandler, Player player) {
         ArrayList<Integer> indicesToRemove = new ArrayList<>();
         for (int i = 0; i < attackHandler.enemyAttacks.size(); i++) {

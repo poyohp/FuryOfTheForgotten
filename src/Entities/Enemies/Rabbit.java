@@ -63,6 +63,7 @@ public class Rabbit extends Enemy{
         counter = numFrames;
     }
 
+    @Override
     public void update() {
         updateEntityPosition();
         setScreenPosition();
@@ -77,6 +78,9 @@ public class Rabbit extends Enemy{
         move();
     }
 
+    /**
+     * Loading images
+     */
     void loadRabbit() {
         rabbitMove = ImageHandler.loadImage("Assets/Entities/Enemies/Medieval Manuscripts/RabbitSoldier_walk.png");
         rabbitHit = ImageHandler.loadImage("Assets/Entities/Enemies/Medieval Manuscripts/RabbitSoldier_hit.png");
@@ -108,8 +112,14 @@ public class Rabbit extends Enemy{
     }
 
     @Override
-    public void hitPlayer() {}
+    public void hitPlayer() {
+        //NO ACTION NEEDED
+    }
 
+    /**
+     * Takes damage and freezes for a little bit if hit
+     * @param damage amount of damage taken
+     */
     @Override
     public void isHit(double damage) {
         if(!isHit) {
@@ -161,6 +171,9 @@ public class Rabbit extends Enemy{
         }
     }
 
+    /**
+     * Updating frames for animation
+     */
     public void updateFrames() {
         if (updateFrames <= 0) {
             if (animationState >= 3) {

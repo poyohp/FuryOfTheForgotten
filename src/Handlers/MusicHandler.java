@@ -11,7 +11,6 @@ import java.net.URL;
 public class MusicHandler {
 
     Clip currentClip;
-    Level lastLevel;
     URL[] soundList = new URL[6];
     //LevelHandler levelHandler;
 
@@ -31,6 +30,7 @@ public class MusicHandler {
          */
     }
 
+    //GETS THE CLIP
     public void getClip(int i){
         try {
             AudioInputStream ais = AudioSystem.getAudioInputStream(soundList[i]);
@@ -41,11 +41,13 @@ public class MusicHandler {
         }
     }
 
+    //PLAYS THE CLIP
     public void play() {
         currentClip.start();
         currentClip.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
+    //STOPS THE CLIP
     public void stop() {
         currentClip.stop();
     }

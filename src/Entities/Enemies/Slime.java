@@ -92,6 +92,10 @@ public class Slime extends Enemy{
         freezeTimer = (int) freezeTimerFrames;
     }
 
+    /**
+     * Inflict damage if not already hit
+     * @param damage amount of damage to inflict
+     */
     @Override
     public void isHit(double damage) {
         if(!isHit) {
@@ -134,6 +138,9 @@ public class Slime extends Enemy{
         }
     }
 
+    /**
+     * Updating frames for animation
+     */
     public void updateFrames() {
         if (updateFrames <= 0) {
             if (animationState >= 3) {

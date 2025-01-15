@@ -39,6 +39,10 @@ public class InventoryHandler {
         Arrays.fill(inventory, null);
     }
 
+    /**
+     * Updates inventory according to keypress
+     * @param kH keyhandler to use for changing inventory spaces
+     */
     public void update(KeyHandler kH) {
         if (kH.toggleInventory) {
             if (kH.rightPress) {
@@ -87,6 +91,7 @@ public class InventoryHandler {
         }
     }
 
+    //For shop drawing, when drawing in different sizes
     public void drawWithContraints(int x, int y, int width, int height, Graphics2D g2, boolean drawSelected) {
         // Calculate the scale factor based on the width and height constraints
         double scaleX = (double) width / outlineWidth;
@@ -133,6 +138,7 @@ public class InventoryHandler {
         }
     }
 
+    //OUTLINE FOR SELECTED ITEM
     private void drawSelectedOutline(Graphics2D g2, int drawSize) {
         int boxX = outlineX + innerGap + (indexSelected * (innerGap + drawSize));
         int boxY = outlineY + innerGap;
@@ -141,12 +147,14 @@ public class InventoryHandler {
         g2.drawRoundRect(boxX, boxY, drawSize, drawSize, 10, 10);
     }
 
+    //OUTLINE FOR ENTIRE INVENTORY
     private void drawOutline(Graphics2D g2) {
         g2.setColor(Color.BLACK);
         g2.setStroke(new BasicStroke(5));
         g2.drawRoundRect(outlineX, outlineY,  outlineWidth, outlineHeight, 10, 10);
     }
 
+    //INDIVIDUAL INVENTORY SQUARES
     private void drawInventorySquares(Graphics2D g2, int outlineX, int outlineY, int drawSize) {
         int boxX = outlineX + innerGap;
         int boxY = outlineY+ innerGap;

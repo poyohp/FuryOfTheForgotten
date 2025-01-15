@@ -23,6 +23,10 @@ public class Key extends UsableObject {
         imageY = 16*5;
     }
 
+    /**
+     * Unlocks the current level's door if key is used and door is unlockable
+     * @param player
+     */
     @Override
     public void isUsed(Player player) {
         if(CollisionHandler.getDistance(player, player.currentLevel.getMap().door) <= distanceToUnlock && player.currentLevel.doorUnlockable) {

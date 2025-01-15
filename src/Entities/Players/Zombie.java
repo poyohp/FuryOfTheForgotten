@@ -40,6 +40,9 @@ public class Zombie extends Player{
         setCharacterState();
     }
 
+    /**
+     * Initializes character
+     */
     void setCharacterState(){
         type = 'z';
         characterAttackFrames = 36;
@@ -49,6 +52,9 @@ public class Zombie extends Player{
         maxAnimationState = 3;
     }
 
+    /**
+     * Determine if attack should be queued
+     */
     @Override
     public void checkAttack() {
 
@@ -278,7 +284,6 @@ public class Zombie extends Player{
                     break;
             }
         }
-        //hitbox.draw(g2);
     }
 
 

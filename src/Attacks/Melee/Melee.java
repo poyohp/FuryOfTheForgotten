@@ -60,7 +60,6 @@ public class Melee extends Attack {
      */
     @Override
     public void move(int xSpeed, int ySpeed) {
-
     }
 
     @Override
@@ -68,7 +67,6 @@ public class Melee extends Attack {
         hitbox.update(this);
         setScreenPosition(player);
     }
-
 
     /**
      * Set intial screen postition of melee attack
@@ -105,7 +103,6 @@ public class Melee extends Attack {
     public void setInitialHitbox() {
 
         // Entity looks up
-
         if (getDirection()[0] == 'u') {
             setWorldX(entity.worldX + (double) entity.getWidth() / 2 - (double) getWidth() / 2);
             setWorldY(entity.worldY - getRange());
@@ -139,7 +136,6 @@ public class Melee extends Attack {
      */
     @Override
     public void draw(Graphics2D g2) {
-
-
+        // NO BASE MELEE DRAWING
     }
 }

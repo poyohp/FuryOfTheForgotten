@@ -20,17 +20,9 @@ public class SpawnHandler implements ActionListener {
 
 
     Timer spawnTimer = new Timer((int) (1000/GamePanel.FPS), this);
-
-
     public int playerSpawnX, playerSpawnY;
-
-
     public ArrayList<SpawnPoint> enemySpawnPoints = new ArrayList<SpawnPoint>();
-
-
     public boolean started = false;
-
-
     public int numActiveSpawns = 0, bossSpawnTimer = 600;
 
     RoyalKnight royalKnight;
@@ -65,6 +57,12 @@ public class SpawnHandler implements ActionListener {
         started = true;
     }
 
+    /**
+     * Spawns the boss around 10 tiles away from player
+     * @param player the player
+     * @param level the boss level
+     * @param a attackhandler
+     */
     public void spawnBoss(Player player, Level level, AttackHandler a) {
         royalKnight = new RoyalKnight(100, 3, Tile.tileSize*2, Tile.tileSize*2, "RoyalKnight", (int) (player.worldX * Tile.tileSize) - 10 * Tile.tileSize, (int) (player.worldY * Tile.tileSize) + Tile.tileSize, 8*Tile.tileRatio,5*Tile.tileRatio, 15*Tile.tileRatio, 10*Tile.tileRatio, player, level.getMap().baseLayerTiles, true, a);
         level.contactEnemies.add(royalKnight);
@@ -92,6 +90,14 @@ public class SpawnHandler implements ActionListener {
         }
     }
 
+    /**
+     * Adding dragons to certain levels
+     * @param value for direction
+     * @param level level in which to add dragons
+     * @param player the player
+     * @param i col of dragon
+     * @param j row of dragon
+     */
     private void addDragons(int value, Level level, Player player, int i, int j) {
         String idlePngName;
         String attackPngName;

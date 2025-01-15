@@ -21,11 +21,10 @@ import javax.swing.Timer;
 public class ObjectHandler {
 
     static ArrayList<String> allGameItems = new ArrayList<>();
-
     Object closestMarked;
 
     Timer timer;
-    private final double secondsBetweenPickup = 0.65;
+    private final double secondsBetweenPickup = 0.70;
     private boolean canPickUp;
 
     //FOR COIN DRAWING
@@ -40,6 +39,8 @@ public class ObjectHandler {
 
         canPickUp = true;
 
+        //PAUSE BETWEEN PICKING UP DIFFERENT ITEMS
+        //AVOID PLAYER MOVING ITEMS AS THEY MOVE AND PICK ITEMS UP
         timer = new Timer((int) (1000.0*secondsBetweenPickup), new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -82,6 +83,12 @@ public class ObjectHandler {
         playerObjectInteract(collisionHandler, player, inventoryHandler, level);
     }
 
+    /**
+     * Marks the closest object to the player
+     * @param collisionHandler the collision handler for the game
+     * @param level the level the player is in
+     * @param player the player
+     */
     public void markClosestObject(CollisionHandler collisionHandler, Level level, Player player) {
         if(level.objects.isEmpty()) {
             closestMarked = null;
@@ -96,7 +103,7 @@ public class ObjectHandler {
         }
     }
 
-    //checks for chest openings, and also for object collisions (if player picks up or not)
+    //Checks for chest openings, and also for object collisions (if player picks up or not)
     public void playerObjectInteract(CollisionHandler collisionHandler, Player player, InventoryHandler inventoryHandler, Level level) {
         for(Chest chest: level.chests) {
             if(!player.keyHandler.toggleInventory && collisionHandler.checkPlayerWithObjectCollision(player, chest)) {
@@ -135,6 +142,7 @@ public class ObjectHandler {
             }
         }
 
+        //Replace object if player needs to replcae
         if(replaceObject) {
             inventoryHandler.inventory[inventoryHandler.indexSelected].isDropped(player, level);
             inventoryHandler.inventory[inventoryHandler.indexSelected] = objectToReplace;
@@ -142,7 +150,7 @@ public class ObjectHandler {
 
     }
 
-    //player-chest collision
+    //Player-chest collision
     public void playerChestCollision(CollisionHandler collisionHandler, Player player, Level level) {
         boolean collisionOccurs = false;
         for(Chest chest : level.chests) {
@@ -151,6 +159,18 @@ public class ObjectHandler {
         player.collisionWithChest = collisionOccurs;
     }
 
+    /**
+     * Get a random object
+     * @param width the width
+     * @param height the height
+     * @param worldX x value in the map
+     * @param worldY y value in the map
+     * @param screenX screen x position
+     * @param screenY screen y position
+     * @param vx velocity in X direction
+     * @param forShop determine if it's an object for shop (then we can also return cherry)
+     * @return a random object
+     */
     public static Object getRandomObject(double width, double height, double worldX, double worldY, double screenX, double screenY, double vx, boolean forShop) {
         int index = GamePanel.random.nextInt(allGameItems.size());
         double vy;
@@ -201,6 +221,10 @@ public class ObjectHandler {
         };
     }
 
+    /**
+     * Determines the most used item in the game
+     * @return the most used item's name as a String
+     */
     public static String determineMostUsed() {
         String mostUsedItem = null;
         int maxUsage = -1;
@@ -221,6 +245,11 @@ public class ObjectHandler {
         return mostUsedItem;
     }
 
+    /**
+     * Determines the number of usages of a certain item
+     * @param itemName the item's name
+     * @return the number of usages, if valid. otherwise 0
+     */
     private static int getItemUsage(String itemName) {
         return switch (itemName) {
             case "DamagePotion" -> DamagePotion.timesUsed;
@@ -240,13 +269,24 @@ public class ObjectHandler {
         };
     }
 
+    /**
+     * Draws
+     * @param g2 the graphics component
+     * @param player the player
+     * @param keyHandler the keyhandler
+     */
     public void draw(Graphics2D g2, Player player, KeyHandler keyHandler) {
-        //COIN DRAWING
+        //COIN DRAWING (if in inventory)
         if(keyHandler.toggleInventory) {
             drawCoin(g2, player);
         }
     }
 
+    /**
+     * Draws the player's money value (+coin)
+     * @param g2 the graphics component
+     * @param player the player
+     */
     public void drawCoin(Graphics2D g2, Player player) {
         //COIN DRAWING
         g2.setFont(coinFont);

@@ -78,6 +78,7 @@ public class LevelHandler {
                 panel.ghost.active = false;
             }
 
+            //SWITCHING MUSIC
             musicHandler.stop();
             musicHandler.getClip(currentLevelIndex);
             musicHandler.play();
@@ -185,6 +186,8 @@ public class LevelHandler {
                     }
                     else Main.updateGameState(7);
                 }
+            } else {
+                currentLevel.doorUnlockable = false;
             }
         }
     }

@@ -31,7 +31,8 @@ public class AttackHandler {
     CollisionHandler collisionHandler = new CollisionHandler();
     Tile[][] tileset;
     Level level;
-    
+
+    //SPEED VALUES FOR RANGED ATTACKS
     final int playerRangedSpeed = (int) (Tile.tileRatio * 2.2);
     final int enemyRangedSpeed = Tile.tileRatio * 2;
 
@@ -45,6 +46,10 @@ public class AttackHandler {
         this.level = level;
     }
 
+    /**
+     * Handle level changes
+     * @param newLevel setting the correct tileset for attacks based on new level
+     */
     public void levelChanged(Level newLevel) {
         this.tileset = newLevel.getMap().baseLayerTiles;
         playerAttacks.clear();
@@ -65,6 +70,17 @@ public class AttackHandler {
         playerAttacks.add(new Stab(range, width, direction, entity, xOffset, yOffset, duration));
     }
 
+    /**
+     * Create booss swing
+     * @param damage amount of damage the swipe does
+     * @param range attack range
+     * @param width attack width, perpendicular to range
+     * @param direction second attack direction, first one is the direction of entity
+     * @param entity Entity attack corresponds to
+     * @param xOffset attack x offset
+     * @param yOffset attack y offset
+     * @param duration attack duration
+     */
     public void createBossAttack(double damage, int range, int width, char direction, Entity entity, int xOffset, int yOffset, int duration) {
         enemyAttacks.add(new Swipe(damage, range, width, direction, entity, xOffset, yOffset, duration));
     }
@@ -98,13 +114,14 @@ public class AttackHandler {
         playerAttacks.add(new Arrow(range, width, direction, entity, xOffset, yOffset, duration, speed, angle));
     }
 
+    //FOR VAMPIRE SPECIFICALLY
     void createPlayerSwipe(int damage, int range, int width, char direction, Entity entity, int xOffset, int yOffset, int duration) {
         playerAttacks.add(new Swipe(damage, range, width, direction, entity, xOffset, yOffset, duration));
     }
 
 
     /**
-     * Determine the player's ranged attack's velocities
+     * Determine the player's ranged attack's velocities and positions
      */
     void updatePlayerAttacks(Player player) {
         for (Attack a : playerAttacks) {
@@ -112,16 +129,24 @@ public class AttackHandler {
         }
     }
 
+    /**
+     * Determine the enemies ranged attack's velocities and positions
+     */
     void updateEnemyAttacks(Player player) {
         for(Attack a : enemyAttacks) {
             a.update(player);
         }
     }
 
+    //CREATING BLOOD ORBS
     public void createPlayerBloodOrb(int range, int width, char direction, Entity entity, int xOffset, int yOffset, int duration, int speed, double angle, ArrayList<Enemy> enemies) {
         playerAttacks.add(new BloodOrb(range, width, direction, entity, xOffset, yOffset, duration, speed, angle, enemies));
     }
 
+    /**
+     * Creating player attacks based on player type and ability
+     * @param p the player
+     */
     void createPlayerAttacks(Player p) {
         if (p.type == 's') {
             if (p.direction == 'r') {
@@ -160,6 +185,14 @@ public class AttackHandler {
         if (!playerAttacks.isEmpty()) updatePlayerAttacks(player);
         if(!enemyAttacks.isEmpty()) updateEnemyAttacks(player);
 
+        createEnemyAttacks();
+        removeAttacks(player);
+    }
+
+    /**
+     * Creates enemy attacks for dragons/rabbits
+     */
+    public void createEnemyAttacks() {
         for (Enemy enemy: level.unkillableEnemies)  {
             if (enemy.attacking) {
                 enemyAttacks.add(new Melee(1, (10 * Tile.tileRatio), 10 * Tile.tileRatio, enemy.direction, enemy, 0, 0, 3));
@@ -180,8 +213,6 @@ public class AttackHandler {
                 enemy.attacking = false;
             }
         }
-
-        removeAttacks(player);
     }
 
     /**

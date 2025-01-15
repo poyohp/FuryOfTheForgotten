@@ -13,6 +13,7 @@ public class Coin extends Object {
     private int rarity;
     public int value;
 
+    //FOR ANIMATION
     private int frameCounter;
     private final int animationFrames = 10;
 
@@ -33,6 +34,7 @@ public class Coin extends Object {
 
     }
 
+    //UPDATE FRAMES FOR ANIMATION
     private void updateFrames() {
         if(frameCounter < animationFrames) {
             frameCounter++;
@@ -50,6 +52,9 @@ public class Coin extends Object {
         }
     }
 
+    /**
+     * Gets the IMAGE coords from the sprite sheet
+     */
     @Override
     public void getImageCoords() {
         imageY = 0;
@@ -76,6 +81,9 @@ public class Coin extends Object {
         }
     }
 
+    /**
+     * Sets random value based on rarity
+     */
     private void determineValue() {
         //lowest rarity (brown) - 0
         //second lower (blue) - 1
@@ -100,6 +108,11 @@ public class Coin extends Object {
         }
     }
 
+    /**
+     * Adds coin value to player value if picked up
+     * @param player the player to add the value to
+     * @param level the level player is in
+     */
     @Override
     public void isPickedUp(Player player, Level level) {
         isPickedUp = true;

@@ -56,6 +56,10 @@ public class AbilityHandler {
         cooldown = maxCooldown;
     }
 
+    /**
+     * Determine type of ability for player
+     * @return returns true if player CAN use ability
+     */
     public boolean checkAbility() {
         if (keyHandler.abilityPress && canAbility) {
             canAbility = false;
@@ -73,6 +77,9 @@ public class AbilityHandler {
         }
     }
 
+    /**
+     * Using ability based on player type
+     */
     public void ability() {
         if (player.type == 's') {
             player.setSpeed(player.getSpeed() * 2);
@@ -105,6 +112,9 @@ public class AbilityHandler {
         }
     }
 
+    /**
+     * Cancel ability when finished
+     */
     public void cancelAbility() {
         if (player.type == 's') {
             if(player.isSpeedBoost) {
@@ -186,6 +196,10 @@ public class AbilityHandler {
 
     }
 
+    /**
+     * Draws
+     * @param g2 graphics component to draw with
+     */
     public void draw(Graphics2D g2) {
         g2.setColor(new Color(0,0,0,0));
 

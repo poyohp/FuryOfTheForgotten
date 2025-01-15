@@ -28,6 +28,9 @@ public class Decoy extends Player {
         this.tiles = player.tiles;
     }
 
+    /**
+     * Move decoy in a single direction
+     */
     public void move() {
         if (direction == 'u') {
             if (!collisionHandler.playerWithTileCollision(this, tiles)) worldY -= getSpeed();

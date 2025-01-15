@@ -9,6 +9,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+//THIS ENTIRE CLASS IS A COPY OF THE SLIME CLASS WITH DIFFERENT IMAGES!
+
 public class Villager extends Slime{
 
     BufferedImage walk = ImageHandler.loadImage("Assets/Entities/Enemies/Loyalists/Peasant_walk.png");
@@ -38,6 +40,9 @@ public class Villager extends Slime{
         spriteH = 24;
     }
 
+    /**
+     * Move entity similar to SLIME
+     */
     public void move() {
 
         if(hitPlayer || isHit) {
@@ -48,8 +53,6 @@ public class Villager extends Slime{
                 isHit = false;
             }
         }
-
-
 
         // If enemy is going to follow player
         if (onPath && !hitPlayer) {

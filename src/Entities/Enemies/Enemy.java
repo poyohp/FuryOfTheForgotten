@@ -67,10 +67,6 @@ public abstract class Enemy extends Entity {
         move();
     }
 
-    public void update(Tile[][] tileset) {
-
-    }
-
     /**
      * This method will be used later, to check whether player is in vision of the enemy
      * @return True if player is in vision, false if not
@@ -82,6 +78,11 @@ public abstract class Enemy extends Entity {
         else return false;
     }
 
+    /**
+     * Determine the next tile position for the enemy to move to
+     * @param nextWorldX the X position
+     * @param nextWorldY the Y position
+     */
     public void getNewPosition(double nextWorldX, double nextWorldY) {
         if (Math.abs(nextWorldX - worldX) > getSpeed()) { // Moving will not put the enemy into the middle of the wrong tile
             if (worldX > nextWorldX) {
@@ -108,6 +109,9 @@ public abstract class Enemy extends Entity {
         }
     }
 
+    /**
+     * Move enemy based on player next position value
+     */
     public void moveTowardPlayer () {
         if (worldX > entityToFollow.worldX) {
             direction = 'l'; // left

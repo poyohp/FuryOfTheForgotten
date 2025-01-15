@@ -54,6 +54,11 @@ public class Level {
         lastLevel = false;
     }
 
+    /**
+     * Update chests objects
+     * Removes objects if needed
+     * @param player the game's player
+     */
     public void update(Player player) {
         for(Chest chest: chests) {
             chest.update(player);
@@ -79,6 +84,10 @@ public class Level {
         map.drawMap(g2, player);
     }
 
+    /**
+     * Draw all items stored in the level
+     * @param g2
+     */
     public void drawItems(Graphics2D g2) {
         for(Chest chest: chests) {
             chest.draw(g2);

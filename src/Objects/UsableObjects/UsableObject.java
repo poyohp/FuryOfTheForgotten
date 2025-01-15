@@ -29,6 +29,11 @@ public abstract class UsableObject extends Object {
         level.objectsToRemove.add(this);
     }
 
+    /**
+     * Puts the item back into the map if dropped
+     * @param player the player (and its location)
+     * @param level the level we're in
+     */
     @Override
     public void isDropped(Player player, Level level) {
 

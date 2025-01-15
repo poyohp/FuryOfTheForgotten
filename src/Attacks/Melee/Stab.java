@@ -84,6 +84,5 @@ public class Stab extends Melee {
                 }
                 break;
         }
-        //hitbox.draw(g2);
     }
 }

@@ -90,7 +90,9 @@ public abstract class Player extends Entity {
 
     }
 
-    //SPEED BOOST OBJECT
+    /**
+     * Keeps track of speed boost duration and turns off as needed
+     */
     public void updateSpeedBoost() {
         if(isSpeedBoost) {
             if(!(getSpeed() > boostedSpeed)) {
@@ -104,12 +106,18 @@ public abstract class Player extends Entity {
             }
         }
     }
+
+    /**
+     * Activates speed boost if used
+     */
     public void speedBoostUsed() {
         isSpeedBoost = true;
         speedBoostCounter = speedBoostTimerFrames;
     }
 
-    //DAMAGE BOOST OBJECT
+    /**
+     * Keeps track of damage boost duration and turns off as needed
+     */
     public void updateDamageBoost() {
         if(isDamageBoost) {
             if(damageBoostCounter > 0) {
@@ -119,17 +127,29 @@ public abstract class Player extends Entity {
             }
         }
     }
+
+    /**
+     * Activates damage boost if used
+     */
     public void damageBoostUsed() {
         isDamageBoost = true;
         damageBoostCounter = damageBoostTimerFrames;
     }
 
+    /**
+     * Begins i-frames and inflicts damage when hit
+     * @param damage amount of damage to inflict
+     * @param onlyHearts if only RED hearts should be damaged
+     */
     public void isHit(double damage, boolean onlyHearts) {
         healthHandler.isHit(damage, onlyHearts);
         isHit = true;
         iFramesCounter = iFramesTimerFrames;
     }
 
+    /**
+     * Only hits if not i-frames
+     */
     public void checkHit() {
         if(isHit) {
             if(iFramesCounter > 0) {
@@ -210,6 +230,10 @@ public abstract class Player extends Entity {
         }
     }
 
+    /**
+     * Queues attack creation
+     * @return
+     */
     public boolean toCreateAttack() {
         if (attackFrames == 0){
             return true;

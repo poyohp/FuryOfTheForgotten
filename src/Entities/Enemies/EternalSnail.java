@@ -23,6 +23,7 @@ public class EternalSnail extends Enemy{
     // Variables for drawing
     private int updateFrames = 7;
 
+    //Drawing values
     BufferedImage idleSprites = ImageHandler.loadImage("Assets/Entities/Enemies/Medieval Manuscripts/ElderSnail_idle.png");
     int spriteW = 64/4, spriteH = 64/4; // Sizes for the vampire sprites
     int maxCol;
@@ -58,12 +59,16 @@ public class EternalSnail extends Enemy{
         this.worldY = entityToFollow.worldY - Tile.tileSize;
     }
 
+    /**
+     * Reset where the snail spawns each new level
+     */
     public void resetPosition() {
         this.worldX = entityToFollow.worldX - 2*Tile.tileSize;
         this.worldY = entityToFollow.worldY - Tile.tileSize;
     }
 
     public void update(LevelHandler levelHandler) {
+        //De-actives snail for the last level
         if(levelHandler.getCurrentLevel().levelNum == 5) {
             this.active = false;
         }
@@ -94,6 +99,9 @@ public class EternalSnail extends Enemy{
         } //else: different random actions if the player is not in enemy vision
     }
 
+    /**
+     * End game if snail hits player
+     */
     @Override
     public void hitPlayer() {
         if(active) {
@@ -101,6 +109,10 @@ public class EternalSnail extends Enemy{
         }
     }
 
+    /**
+     * End game if player hits snail
+     * @param damage
+     */
     @Override
     public void isHit(double damage) {
         if(active) {
@@ -138,6 +150,9 @@ public class EternalSnail extends Enemy{
         }
     }
 
+    /**
+     * Updates animation frames
+     */
     public void updateFrames() {
         if (updateFrames <= 0) {
             if (animationState >= 3) {

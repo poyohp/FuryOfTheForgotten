@@ -58,6 +58,9 @@ public class Chest extends Objects.Object {
         //CHEST CANNOT BE DROPPED!
     }
 
+    /**
+     * Replaces an item in chest with key
+     */
     public void addKeyToChest() {
         double centerX = (worldX + width/2) - ((double) Tile.tileSize /2)*0.75;
         double centerY = worldY + height/2;
@@ -68,6 +71,9 @@ public class Chest extends Objects.Object {
         }
     }
 
+    /**
+     * Fills the chest with random items
+     */
     private void fillItemsContained() {
         double centerX = (worldX + width/2) - ((double) Tile.tileSize /2)*0.75;
         double centerY = worldY + height/2;
@@ -78,6 +84,9 @@ public class Chest extends Objects.Object {
         }
     }
 
+    /**
+     * Determines a rarity and size for the chest
+     */
     private void determineSizeRarity() {
         if(Math.random() < 0.75) {
             chestSize = 1;
@@ -92,6 +101,9 @@ public class Chest extends Objects.Object {
         } else rarity = 3;
     }
 
+    /**
+     * Gets the IMAGE coords from the sprite sheet
+     */
     @Override
     public void getImageCoords() {
         switch(rarity) {

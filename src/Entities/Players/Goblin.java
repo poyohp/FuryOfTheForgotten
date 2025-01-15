@@ -14,14 +14,6 @@ public class Goblin extends Player{
     BufferedImage sprites = ImageHandler.loadImage("Assets/Entities/Players/Goblin/Goblin_Rogue.png");
     int column1 = 7, column2 = 39, column3 = 71, column4 = 103, row1 = 7, row2 = 39, row3 = 71, row4 = 103, row5 = 135, row6 = 167, row7 = 199, row8 = 231, row9 = 263, row10 = 295, row11 = 327, row12 = 359, row13 = 391, row14 = 423, row15 = 455;
 
-    void setCharacterState(){
-        type = 'g';
-        characterAttackFrames = 36;
-        characterAttackCooldown = 30;
-        attackFrames = characterAttackFrames;
-        attackCooldown = characterAttackCooldown;
-        maxAnimationState = 3;
-    }
 
     /**
      * Enemy that follows player
@@ -42,6 +34,18 @@ public class Goblin extends Player{
     public Goblin(double health, double speed, int width, int height, String name, double worldX, double worldY, int xOffset, int yOffset, int hitBoxWidth, int hitBoxHeight, KeyHandler keyHandler) {
         super(health, speed, width, height, name, worldX, worldY, xOffset, yOffset, hitBoxWidth, hitBoxHeight, keyHandler);
         setCharacterState();
+    }
+
+    /**
+     * Initializing type and frame values
+     */
+    void setCharacterState(){
+        type = 'g';
+        characterAttackFrames = 36;
+        characterAttackCooldown = 30;
+        attackFrames = characterAttackFrames;
+        attackCooldown = characterAttackCooldown;
+        maxAnimationState = 3;
     }
 
     @Override
@@ -206,7 +210,9 @@ public class Goblin extends Player{
         //hitbox.draw(g2);
     }
 
-
+    /**
+     * Determining if player can attack
+     */
     @Override
     public void checkAttack() {
 
@@ -229,6 +235,10 @@ public class Goblin extends Player{
         }
     }
 
+    /**
+     * Queues attack creation if attack is created
+     * @return
+     */
     @Override
     public boolean toCreateAttack() {
         if (keyHandler.attackPress && attack) {

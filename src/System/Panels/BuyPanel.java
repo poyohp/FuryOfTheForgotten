@@ -88,6 +88,9 @@ public class BuyPanel extends AbstractPanel {
 
     }
 
+    /**
+     * Adds the items to the item list (unique only)
+     */
     public void addObjectsToList() {
         //MAKES EVERY ITEM UNIQUE
         for(int i = 0; i < buttons.size(); i++) {
@@ -109,6 +112,9 @@ public class BuyPanel extends AbstractPanel {
         }
     }
 
+    /**
+     * Sets the buttons up for the shop
+     */
     public void setButtons() {
         int x = (int)HXOuter;
         int y = (int)VXOuter;
@@ -192,6 +198,10 @@ public class BuyPanel extends AbstractPanel {
         buttons.add(item6);
     }
 
+    /**
+     * Changes selected item based on button movement
+     * Indexes work like a 2D array
+     */
     @Override
     public void setSelected() {
         if (keyHandler.upPress) {
@@ -218,6 +228,10 @@ public class BuyPanel extends AbstractPanel {
         selectedButton.isSelected = true;
     }
 
+    /**
+     * Buy item if selected
+     * Replace item if no space in inventory!
+     */
     @Override
     public void handleSelection() {
         if (cooldownCounter > 0) {
@@ -246,6 +260,10 @@ public class BuyPanel extends AbstractPanel {
 
     }
 
+    /**
+     * Draws the buy panel
+     * @param g the <code>Graphics</code> object to protect
+     */
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
