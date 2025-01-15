@@ -24,8 +24,8 @@ public class SpawnPoint {
 
     // HANDLING ALL FINAL SPAWN POINT VALUES
     public final int MIN_ENEMIES = 1;
-    public final int MAX_ENEMIES = 1;
-    private final int secondsBetweenSpawn = random.nextInt(5, 10);
+    public final int MAX_ENEMIES = 4;
+    private final int secondsBetweenSpawn = random.nextInt(3, 6);
     private final int framesBetweenSpawn = secondsBetweenSpawn * (int) GamePanel.FPS;
 
 

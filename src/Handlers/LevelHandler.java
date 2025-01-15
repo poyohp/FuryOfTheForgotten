@@ -256,8 +256,8 @@ public class LevelHandler {
         levels[2] = new Level("Maps/Level3Map.json", "Assets/Tilesets/facilityTileset.png", nonWalkableValues3(), 16, 2);
         levels[3] = new Level("Maps/Level4Map.json", "Assets/Tilesets/catacombTileset.png", nonWalkableValues4(), 16, 3);
         levels[4] = new Level("Maps/Level5Map.json", "Assets/Tilesets/cuteTileset.png", nonWalkableValues5(), 16, 4);
-        levels[0] = new Level("Maps/Level6Map.json", "Assets/Tilesets/catacombTileset.png", nonWalkableValues6(), 16, 5);
-        levels[0].lastLevel = true;
+        levels[5] = new Level("Maps/Level6Map.json", "Assets/Tilesets/catacombTileset.png", nonWalkableValues6(), 16, 5);
+        levels[5].lastLevel = true;
     }
 
     /**
