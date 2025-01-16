@@ -233,16 +233,16 @@ public class LevelHandler {
             g2.drawString("Enemies Remaining: " + totalEnemies, (int)(GamePanel.screenWidth - 300), (150));
         }
 
-        for (Enemy enemy : currentLevel.contactEnemies) {
-            enemy.draw(g2);
+        for (int i = 0; i < currentLevel.contactEnemies.size(); i++) {
+            currentLevel.contactEnemies.get(i).draw(g2);
         }
 
-        for (Enemy enemy : currentLevel.unkillableEnemies) {
-            enemy.draw(g2);
+        for (int i = 0; i < currentLevel.unkillableEnemies.size(); i++) {
+            currentLevel.contactEnemies.get(i).draw(g2);
         }
 
-        for (Enemy enemy : currentLevel.archerEnemies) {
-            enemy.draw(g2);
+        for (int i = 0; i < currentLevel.archerEnemies.size(); i++) {
+            currentLevel.contactEnemies.get(i).draw(g2);
         }
 
     }
