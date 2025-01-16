@@ -128,17 +128,17 @@ public class GamePanel extends JPanel implements Runnable{
 
     void drawBackground(Graphics2D g2) {
         if (levelHandler.getCurrentLevel() == levelHandler.levels[0]) {
-            g2.drawImage(background1, 0, 0, (int)screenWidth, (int)screenHeight, new Color(0, 0, 0, 0), null);
+            g2.drawImage(background1, 0, 0, (int)screenWidth, (int)screenHeight, null);
         } else if (levelHandler.getCurrentLevel() == levelHandler.levels[1]) {
-            g2.drawImage(background2, 0, 0, (int)screenWidth, (int)screenHeight, new Color(0, 0, 0, 0), null);
+            g2.drawImage(background2, 0, 0, (int)screenWidth, (int)screenHeight, null);
         } else if (levelHandler.getCurrentLevel() == levelHandler.levels[2]) {
-            g2.drawImage(background3, 0, 0, (int)screenWidth, (int)screenHeight, new Color(0, 0, 0, 0), null);
+            g2.drawImage(background3, 0, 0, (int)screenWidth, (int)screenHeight, null);
         } else if (levelHandler.getCurrentLevel() == levelHandler.levels[3]) {
-            g2.drawImage(background4, 0, 0, (int)screenWidth, (int)screenHeight, new Color(0, 0, 0, 0), null);
+            g2.drawImage(background4, 0, 0, (int)screenWidth, (int)screenHeight, null);
         } else if (levelHandler.getCurrentLevel() == levelHandler.levels[4]) {
-            g2.drawImage(background5, 0, 0, (int)screenWidth, (int)screenHeight, new Color(0, 0, 0, 0), null);
+            g2.drawImage(background5, 0, 0, (int)screenWidth, (int)screenHeight, null);
         } else if (levelHandler.getCurrentLevel() == levelHandler.levels[5]) {
-            g2.drawImage(backgroundBoss, 0, 0, (int)screenWidth, (int)screenHeight, new Color(0, 0, 0, 0), null);
+            g2.drawImage(backgroundBoss, 0, 0, (int)screenWidth, (int)screenHeight, null);
         }
     }
 
