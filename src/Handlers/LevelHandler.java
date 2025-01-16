@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class LevelHandler {
 
     // Holds all levels and level data
-    private final Level[] levels;
+    public final Level[] levels;
     private Level currentLevel;
     int currentLevelIndex;
     MusicHandler musicHandler;

@@ -14,6 +14,8 @@ import Handlers.Spawners.SpawnHandler;
 import Pathfinding.APathfinding;
 import World.Map;
 import World.Tile;
+
+import java.awt.image.BufferedImage;
 import java.util.Random;
 
 
@@ -30,6 +32,12 @@ public class GamePanel extends JPanel implements Runnable{
     public static final double screenWidth = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
     public static final double screenHeight = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
     public static final double FPS = 60;
+    BufferedImage background1 = ImageHandler.loadImage("Assets/Backgrounds/Level1Background.png");
+    BufferedImage background2 = ImageHandler.loadImage("Assets/Backgrounds/Level2Background.png");
+    BufferedImage background3 = ImageHandler.loadImage("Assets/Backgrounds/Level3Background.png");
+    BufferedImage background4 = ImageHandler.loadImage("Assets/Backgrounds/Level4Background.png");
+    BufferedImage background5 = ImageHandler.loadImage("Assets/Backgrounds/Level5Background.png");
+    BufferedImage backgroundBoss = ImageHandler.loadImage("Assets/Backgrounds/BossLevelBackground.png");
 
     //Create objects for GAME RUNNING
     Thread gameThread;
@@ -69,6 +77,8 @@ public class GamePanel extends JPanel implements Runnable{
      */
     public GamePanel() {
         isPaused = false;
+
+
 
         this.setDoubleBuffered(true);
         this.setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
@@ -114,6 +124,22 @@ public class GamePanel extends JPanel implements Runnable{
         else if (CharacterSelectionPanel.selectedCharacter.equals("goblin")) player = new Goblin(6, 5, Tile.tileSize, Tile.tileSize, "Goblin", 0, 0, 4*Tile.tileSize/Tile.normalTileSize, 6*Tile.tileSize/Tile.normalTileSize-1, 8*Tile.tileSize/Tile.normalTileSize, 10*Tile.tileSize/Tile.normalTileSize, keyHandler);
         else if (CharacterSelectionPanel.selectedCharacter.equals("vampire")) player = new Vampire(6, 5, Tile.tileSize, Tile.tileSize, "Vampire", 0, 0, 4*Tile.tileSize/Tile.normalTileSize, 6*Tile.tileSize/Tile.normalTileSize-1, 8*Tile.tileSize/Tile.normalTileSize, 9*Tile.tileSize/Tile.normalTileSize, keyHandler);
         else System.out.println("Invalid character");
+    }
+
+    void drawBackground(Graphics2D g2) {
+        if (levelHandler.getCurrentLevel() == levelHandler.levels[0]) {
+            g2.drawImage(background1, 0, 0, (int)screenWidth, (int)screenHeight, new Color(0, 0, 0, 0), null);
+        } else if (levelHandler.getCurrentLevel() == levelHandler.levels[1]) {
+            g2.drawImage(background2, 0, 0, (int)screenWidth, (int)screenHeight, new Color(0, 0, 0, 0), null);
+        } else if (levelHandler.getCurrentLevel() == levelHandler.levels[2]) {
+            g2.drawImage(background3, 0, 0, (int)screenWidth, (int)screenHeight, new Color(0, 0, 0, 0), null);
+        } else if (levelHandler.getCurrentLevel() == levelHandler.levels[3]) {
+            g2.drawImage(background4, 0, 0, (int)screenWidth, (int)screenHeight, new Color(0, 0, 0, 0), null);
+        } else if (levelHandler.getCurrentLevel() == levelHandler.levels[4]) {
+            g2.drawImage(background5, 0, 0, (int)screenWidth, (int)screenHeight, new Color(0, 0, 0, 0), null);
+        } else if (levelHandler.getCurrentLevel() == levelHandler.levels[5]) {
+            g2.drawImage(backgroundBoss, 0, 0, (int)screenWidth, (int)screenHeight, new Color(0, 0, 0, 0), null);
+        }
     }
 
     /**
@@ -205,13 +231,14 @@ public class GamePanel extends JPanel implements Runnable{
         Graphics2D g2 = (Graphics2D)g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
+        drawBackground(g2);
+
         levelHandler.draw(g2, player, spawnHandler, keyHandler);
         levelHandler.getCurrentLevel().drawItems(g2);
 
         attackHandler.draw(g2);
         ghost.draw(g2);
         snail.draw(g2);
-        //royalKnight.draw(g2);
 
         spawnHandler.drawSpawns(g2, player);
 
