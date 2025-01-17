@@ -25,10 +25,10 @@ public class MenuPanel extends AbstractPanel {
             timer.stop();
             if (selectedButton == start) {
                 Main.updateGameState(6); // Go to character selection screen
-            } else if (selectedButton == help) { // Update for help later
-                Main.updateGameState(5); // Show ending screen!
+            } else if (selectedButton == help) {
+                Main.updateGameState(5); // Help screen
             } else if (selectedButton == quit) {
-                System.exit(0);
+                System.exit(0); // End game
             }
         }
     }

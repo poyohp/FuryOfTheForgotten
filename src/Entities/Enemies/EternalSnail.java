@@ -26,7 +26,7 @@ public class EternalSnail extends Enemy{
     //Drawing values
     BufferedImage idleSprites = ImageHandler.loadImage("Assets/Entities/Enemies/Medieval Manuscripts/ElderSnail_idle.png");
     int spriteW = 64/4, spriteH = 64/4; // Sizes for the vampire sprites
-    int maxCol;
+    int maxCol = 4;
     int currentCol = 0, currentRow = 0;
 
 
@@ -181,6 +181,7 @@ public class EternalSnail extends Enemy{
 
             currentCol = animationState;
             if (currentCol > maxCol) currentCol = 0;
+            System.out.println(maxCol);
 
             g2.drawImage(idleSprites, (int)this.screenX, (int)this.screenY, (int)this.screenX + this.getWidth(), (int)this.screenY + this.getHeight(),
                     currentCol * spriteW, currentRow * spriteH, (currentCol + 1) * spriteW, (currentRow + 1) * spriteW,
