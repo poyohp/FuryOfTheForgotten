@@ -22,6 +22,7 @@ public class APathfinding {
     public Node currentNode;
 
     boolean goalReached; // Whether path is found
+    int steps = 0;
     public ArrayList<Node> shortestPath = new ArrayList<Node>(); // Keeps track of shortest path
 
     public APathfinding (Tile[][] tileArray) {
@@ -121,8 +122,9 @@ public class APathfinding {
      * @return returns false if no path is found, true if a path is found
      */
     public boolean findPath() {
+        steps = 0;
         // Searches for a path while goal is not reached
-        while (!goalReached) {
+        while (!goalReached && steps < 999) {
             int row = currentNode.row;
             int col = currentNode.col;
 
@@ -150,6 +152,7 @@ public class APathfinding {
                 goalReached = true;
                 getShortestPath();
             }
+            steps++;
         }
         return goalReached;
     }
