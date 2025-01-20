@@ -93,7 +93,8 @@ public class BuyPanel extends AbstractPanel {
      */
     public void addObjectsToList() {
         //MAKES EVERY ITEM UNIQUE
-        for(int i = 0; i < buttons.size(); i++) {
+        int counter = 0;
+        for(int i = 0; i < buttons.size() && counter < 9999; i++) {
             Object objectToAdd = ObjectHandler.getRandomObject(itemSize, itemSize, 0, 0,0, 0, 0, true);
             boolean addItem = true;
 
@@ -109,6 +110,7 @@ public class BuyPanel extends AbstractPanel {
             } else {
                 i--;
             }
+            counter++;
         }
     }
 
